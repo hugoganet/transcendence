@@ -15,7 +15,6 @@ As this is a group project, proper team organization is crucial for success. You
 Your team must assign the following roles (one person can have multiple roles if the team has 4 members):
 - Product Owner (PO): Defines the product vision, prioritizes features, and ensures the project meets user needs.
   - Maintains the product backlog.
-
   - Makes decisions on features and priorities.
   - Validates completed work.
   - Communicates with stakeholders (evaluators, peers).
