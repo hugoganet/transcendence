@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>transcendence — Design Direction: Guided Path</title>
+<style>
+  /* ===== DESIGN TOKENS ===== */
+  :root {
+    /* Primary - Cool Teal */
+    --primary: #2B9E9E;
+    --primary-light: #E0F4F4;
+    --primary-dark: #1E7A7A;
+
+    /* Secondary - Warm Amber/Gold */
+    --secondary: #D4A843;
+    --secondary-light: #FFF3D6;
+
+    /* Neutral - Warm tinted */
+    --neutral-50: #FAFAF7;
+    --neutral-100: #F3F2EE;
+    --neutral-200: #E5E3DD;
+    --neutral-300: #C8C5BC;
+    --neutral-500: #8A8680;
+    --neutral-700: #4A4740;
+    --neutral-900: #2A2824;
+
+    /* Semantic */
+    --success: #5BA67A;
+    --success-light: #E8F5ED;
+    --error: #D4736A;
+    --error-light: #FDECEA;
+    --warning: #D4A843;
+    --warning-light: #FFF3D6;
+    --info: #5B8BD4;
+    --info-light: #EBF1FA;
+
+    /* Spacing */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+
+    /* Typography */
+    --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'Source Sans 3', 'Source Sans Pro', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Radius */
+    --rounded-sm: 4px;
+    --rounded-md: 8px;
+    --rounded-lg: 12px;
+    --rounded-xl: 16px;
+    --rounded-full: 9999px;
+
+    /* Shadows - warm tinted */
+    --shadow-sm: 0 1px 3px rgba(42, 40, 36, 0.06);
+    --shadow-md: 0 4px 12px rgba(42, 40, 36, 0.08);
+    --shadow-lg: 0 8px 24px rgba(42, 40, 36, 0.12);
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap');
+
+  /* ===== RESET & BASE ===== */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--neutral-700);
+    background: var(--neutral-100);
+    line-height: 1.5;
+    font-size: 16px;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--neutral-900);
+    line-height: 1.2;
+  }
+
+  /* ===== SHOWCASE LAYOUT ===== */
+  .showcase-header {
+    background: var(--neutral-900);
+    color: var(--neutral-50);
+    padding: var(--space-8) var(--space-6);
+    text-align: center;
+  }
+  .showcase-header h1 {
+    color: var(--neutral-50);
+    font-size: 30px;
+    margin-bottom: var(--space-2);
+  }
+  .showcase-header p {
+    color: var(--neutral-300);
+    font-size: 16px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .showcase-header .badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--rounded-full);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    letter-spacing: 0.5px;
+  }
+
+  .showcase-nav {
+    background: var(--neutral-50);
+    border-bottom: 1px solid var(--neutral-200);
+    padding: var(--space-3) var(--space-6);
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .showcase-nav a {
+    text-decoration: none;
+    color: var(--neutral-500);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--rounded-md);
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .showcase-nav a:hover {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+  }
+
+  .screen-section {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: var(--space-12) var(--space-6);
+  }
+  .screen-section + .screen-section {
+    border-top: 1px solid var(--neutral-200);
+  }
+
+  .section-label {
+    font-family: var(--font-heading);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-2);
+  }
+  .section-title {
+    font-size: 24px;
+    margin-bottom: var(--space-2);
+  }
+  .section-desc {
+    color: var(--neutral-500);
+    margin-bottom: var(--space-8);
+    max-width: 600px;
+  }
+
+  /* ===== PHONE FRAME ===== */
+  .phone-frame {
+    width: 375px;
+    height: 812px;
+    background: var(--neutral-50);
+    border-radius: 40px;
+    border: 8px solid var(--neutral-900);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+    margin: 0 auto;
+  }
+  .phone-frame .status-bar {
+    height: 44px;
+    background: var(--neutral-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--neutral-900);
+  }
+  .phone-frame .screen-content {
+    height: calc(100% - 44px - 64px);
+    overflow-y: auto;
+    padding: var(--space-4);
+  }
+  .phone-frame .bottom-nav {
+    height: 64px;
+    background: var(--neutral-50);
+    border-top: 1px solid var(--neutral-200);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 10px;
+    color: var(--neutral-500);
+    font-weight: 500;
+  }
+  .bottom-nav .nav-item.active {
+    color: var(--primary);
+  }
+  .bottom-nav .nav-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--rounded-sm);
+    background: var(--neutral-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .bottom-nav .nav-item.active .nav-icon {
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  /* ===== SCREENS SIDE BY SIDE ===== */
+  .screens-row {
+    display: flex;
+    gap: var(--space-8);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .screen-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .screen-wrapper .screen-name {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--neutral-700);
+  }
+
+  /* ===== HOME SCREEN COMPONENTS ===== */
+  .greeting {
+    margin-bottom: var(--space-6);
+  }
+  .greeting .hello {
+    font-size: 14px;
+    color: var(--neutral-500);
+  }
+  .greeting h2 {
+    font-size: 24px;
+    color: var(--neutral-900);
+  }
+
+  .streak-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--neutral-100);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--rounded-lg);
+    margin-bottom: var(--space-6);
+  }
+  .streak-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--rounded-full);
+    background: var(--secondary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .streak-info {
+    flex: 1;
+  }
+  .streak-info .streak-label {
+    font-size: 12px;
+    color: var(--neutral-500);
+  }
+  .streak-info .streak-count {
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--neutral-900);
+  }
+
+  .next-mission-card {
+    background: white;
+    border-radius: var(--rounded-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+    margin-bottom: var(--space-6);
+  }
+  .next-mission-card .card-label {
+    font-size: 12px;
+    color: var(--primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-2);
+  }
+  .next-mission-card h3 {
+    font-size: 20px;
+    margin-bottom: var(--space-1);
+  }
+  .next-mission-card .mission-topic {
+    font-size: 14px;
+    color: var(--neutral-500);
+    margin-bottom: var(--space-4);
+  }
+  .next-mission-card .mission-meta {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+    font-size: 13px;
+    color: var(--neutral-500);
+  }
+  .next-mission-card .mission-meta span {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+  }
+
+  .btn-primary {
+    display: block;
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--rounded-md);
+    font-family: var(--font-heading);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.15s;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-primary:hover {
+    background: var(--primary-dark);
+  }
+
+  .btn-ghost {
+    display: block;
+    width: 100%;
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--neutral-200);
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--rounded-md);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    min-height: 44px;
+  }
+
+  .progress-preview {
+    background: white;
+    border-radius: var(--rounded-xl);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+  }
+  .progress-preview .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-3);
+  }
+  .progress-preview .progress-header h4 {
+    font-size: 14px;
+  }
+  .progress-preview .progress-header a {
+    font-size: 13px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .progress-bar-track {
+    height: 8px;
+    background: var(--neutral-100);
+    border-radius: var(--rounded-full);
+    overflow: hidden;
+    margin-bottom: var(--space-2);
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: var(--rounded-full);
+    transition: width 0.3s ease;
+  }
+  .progress-label {
+    font-size: 12px;
+    color: var(--neutral-500);
+  }
+
+  /* ===== CURRICULUM MAP ===== */
+  .curriculum-path {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: var(--space-4) 0;
+  }
+  .path-node {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    padding: var(--space-3) 0;
+  }
+  .node-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--rounded-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .node-dot.completed {
+    background: var(--primary);
+    color: white;
+  }
+  .node-dot.current {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border: 2px solid var(--primary);
+  }
+  .node-dot.locked {
+    background: var(--neutral-100);
+    color: var(--neutral-300);
+    border: 2px solid var(--neutral-200);
+  }
+  .node-info {
+    flex: 1;
+  }
+  .node-info .node-title {
+    font-family: var(--font-heading);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--neutral-900);
+  }
+  .node-info .node-title.locked {
+    color: var(--neutral-300);
+  }
+  .node-info .node-sub {
+    font-size: 13px;
+    color: var(--neutral-500);
+  }
+  .node-info .node-sub.locked {
+    color: var(--neutral-300);
+  }
+  .path-connector {
+    width: 2px;
+    height: 20px;
+    background: var(--neutral-200);
+    margin-left: 19px;
+  }
+  .path-connector.completed {
+    background: var(--primary);
+  }
+
+  /* ===== EXERCISE SCREEN ===== */
+  .exercise-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-4);
+  }
+  .exercise-header .close-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--rounded-full);
+    background: var(--neutral-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--neutral-500);
+    border: none;
+    cursor: pointer;
+  }
+  .exercise-progress {
+    flex: 1;
+    margin: 0 var(--space-3);
+  }
+  .exercise-progress .progress-bar-track {
+    height: 6px;
+  }
+  .gas-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: 13px;
+    color: var(--neutral-500);
+    font-weight: 500;
+  }
+  .gas-indicator .gas-icon {
+    font-size: 14px;
+  }
+
+  .exercise-content {
+    margin-bottom: var(--space-6);
+  }
+  .exercise-question {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--neutral-900);
+    margin-bottom: var(--space-2);
+    line-height: 1.3;
+  }
+  .exercise-instruction {
+    font-size: 15px;
+    color: var(--neutral-500);
+    margin-bottom: var(--space-6);
+  }
+
+  .matching-exercise {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .match-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: white;
+    border: 2px solid var(--neutral-200);
+    border-radius: var(--rounded-lg);
+    padding: var(--space-3) var(--space-4);
+    cursor: pointer;
+    transition: all 0.15s;
+    min-height: 52px;
+  }
+  .match-item:hover {
+    border-color: var(--primary-light);
+    background: var(--primary-light);
+  }
+  .match-item.selected {
+    border-color: var(--primary);
+    background: var(--primary-light);
+  }
+  .match-item .match-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--rounded-full);
+    background: var(--neutral-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--neutral-700);
+    flex-shrink: 0;
+  }
+  .match-item.selected .match-letter {
+    background: var(--primary);
+    color: white;
+  }
+  .match-item .match-text {
+    font-size: 15px;
+    color: var(--neutral-700);
+  }
+
+  .tooltip-demo {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    border-bottom: 1px dashed var(--primary);
+    color: var(--primary);
+    cursor: pointer;
+    position: relative;
+  }
+  .tooltip-popup {
+    background: var(--neutral-900);
+    color: var(--neutral-50);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--rounded-lg);
+    font-size: 13px;
+    line-height: 1.5;
+    max-width: 280px;
+    box-shadow: var(--shadow-lg);
+    margin-top: var(--space-3);
+  }
+  .tooltip-popup .tooltip-term {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--secondary);
+    font-size: 14px;
+    margin-bottom: var(--space-1);
+  }
+  .tooltip-popup .tooltip-analogy {
+    color: var(--neutral-300);
+    font-style: italic;
+    margin-top: var(--space-2);
+    font-size: 12px;
+  }
+
+  /* ===== FEEDBACK STATES ===== */
+  .feedback-correct {
+    background: var(--success-light);
+    border: 1px solid var(--success);
+    border-radius: var(--rounded-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .feedback-correct .feedback-icon {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--success);
+    margin-bottom: var(--space-2);
+  }
+  .feedback-correct .feedback-text {
+    font-size: 14px;
+    color: var(--neutral-700);
+  }
+  .feedback-correct .gas-cost {
+    font-size: 12px;
+    color: var(--neutral-500);
+    margin-top: var(--space-2);
+  }
+
+  .feedback-incorrect {
+    background: var(--error-light);
+    border: 1px solid var(--error);
+    border-radius: var(--rounded-lg);
+    padding: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .feedback-incorrect .feedback-icon {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--error);
+    margin-bottom: var(--space-2);
+  }
+  .feedback-incorrect .feedback-text {
+    font-size: 14px;
+    color: var(--neutral-700);
+  }
+  .feedback-incorrect .gas-cost {
+    font-size: 12px;
+    color: var(--neutral-500);
+    margin-top: var(--space-2);
+  }
+
+  /* ===== MISSION COMPLETE ===== */
+  .mission-complete {
+    text-align: center;
+    padding: var(--space-8) var(--space-4);
+  }
+  .mission-complete .complete-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--rounded-full);
+    background: var(--success-light);
+    color: var(--success);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto var(--space-6);
+  }
+  .mission-complete h2 {
+    font-size: 22px;
+    margin-bottom: var(--space-2);
+  }
+  .mission-complete .concept-learned {
+    font-size: 15px;
+    color: var(--neutral-500);
+    margin-bottom: var(--space-6);
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+  .stat-item {
+    text-align: center;
+  }
+  .stat-item .stat-value {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--neutral-900);
+  }
+  .stat-item .stat-value.tokens {
+    color: var(--secondary);
+  }
+  .stat-item .stat-label {
+    font-size: 12px;
+    color: var(--neutral-500);
+  }
+
+  /* ===== WALLET PROFILE ===== */
+  .wallet-header {
+    text-align: center;
+    padding: var(--space-6) var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+  .wallet-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--rounded-full);
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 auto var(--space-3);
+  }
+  .wallet-name {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--neutral-900);
+    margin-bottom: var(--space-1);
+  }
+  .wallet-joined {
+    font-size: 13px;
+    color: var(--neutral-500);
+  }
+  .wallet-balance {
+    text-align: center;
+    padding: var(--space-6);
+    background: white;
+    border-radius: var(--rounded-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+    margin-bottom: var(--space-4);
+  }
+  .wallet-balance .balance-label {
+    font-size: 12px;
+    color: var(--neutral-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--space-1);
+  }
+  .wallet-balance .balance-amount {
+    font-family: var(--font-heading);
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--secondary);
+    line-height: 1.1;
+  }
+  .wallet-balance .balance-unit {
+    font-size: 14px;
+    color: var(--neutral-500);
+    font-weight: 400;
+  }
+
+  .wallet-stats {
+    display: flex;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+  .wallet-stat-card {
+    flex: 1;
+    background: white;
+    border-radius: var(--rounded-lg);
+    padding: var(--space-4);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+  }
+  .wallet-stat-card .wstat-value {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--neutral-900);
+  }
+  .wallet-stat-card .wstat-label {
+    font-size: 11px;
+    color: var(--neutral-500);
+  }
+
+  .transaction-list {
+    background: white;
+    border-radius: var(--rounded-xl);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+    overflow: hidden;
+  }
+  .transaction-list .tx-header {
+    padding: var(--space-4);
+    border-bottom: 1px solid var(--neutral-100);
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .tx-item {
+    display: flex;
+    align-items: center;
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--neutral-100);
+  }
+  .tx-item:last-child {
+    border-bottom: none;
+  }
+  .tx-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--rounded-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    margin-right: var(--space-3);
+    flex-shrink: 0;
+  }
+  .tx-icon.earned {
+    background: var(--success-light);
+    color: var(--success);
+  }
+  .tx-icon.spent {
+    background: var(--neutral-100);
+    color: var(--neutral-500);
+  }
+  .tx-details {
+    flex: 1;
+  }
+  .tx-details .tx-title {
+    font-size: 14px;
+    color: var(--neutral-700);
+    font-weight: 500;
+  }
+  .tx-details .tx-time {
+    font-size: 12px;
+    color: var(--neutral-500);
+  }
+  .tx-amount {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .tx-amount.positive {
+    color: var(--success);
+  }
+  .tx-amount.negative {
+    color: var(--neutral-500);
+  }
+
+  /* ===== COLOR SWATCH SECTION ===== */
+  .swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+  }
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+  }
+  .swatch .swatch-color {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--rounded-lg);
+    border: 1px solid var(--neutral-200);
+  }
+  .swatch .swatch-name {
+    font-size: 11px;
+    color: var(--neutral-500);
+    font-family: var(--font-mono);
+  }
+
+  .type-specimen {
+    background: white;
+    border-radius: var(--rounded-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+    margin-bottom: var(--space-6);
+  }
+  .type-specimen h1 { font-size: 36px; margin-bottom: var(--space-3); }
+  .type-specimen h2 { font-size: 30px; margin-bottom: var(--space-3); }
+  .type-specimen h3 { font-size: 24px; margin-bottom: var(--space-3); }
+  .type-specimen h4 { font-size: 20px; margin-bottom: var(--space-3); }
+  .type-specimen p { margin-bottom: var(--space-3); }
+  .type-specimen .mono { font-family: var(--font-mono); font-size: 14px; color: var(--neutral-500); }
+
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+  }
+  .component-card {
+    background: white;
+    border-radius: var(--rounded-xl);
+    padding: var(--space-6);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--neutral-200);
+  }
+  .component-card h4 {
+    font-size: 14px;
+    margin-bottom: var(--space-4);
+    color: var(--neutral-500);
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== SHOWCASE HEADER ===== -->
+<div class="showcase-header">
+  <div class="badge">DESIGN DIRECTION</div>
+  <h1>transcendence — Guided Path</h1>
+  <p>Calm, guided, trust-first. Duolingo mechanics with Headspace soul. Mobile-primary, warm-cool blend, progressive reveal.</p>
+</div>
+
+<!-- ===== NAV ===== -->
+<div class="showcase-nav">
+  <a href="#home">Home</a>
+  <a href="#exercise">Exercise</a>
+  <a href="#feedback">Feedback</a>
+  <a href="#complete">Mission Complete</a>
+  <a href="#curriculum">Curriculum Map</a>
+  <a href="#wallet">Wallet Profile</a>
+  <a href="#tokens">Design Tokens</a>
+  <a href="#components">Components</a>
+</div>
+
+<!-- ===== 1. HOME SCREEN ===== -->
+<div class="screen-section" id="home">
+  <div class="section-label">Screen 1</div>
+  <h2 class="section-title">Home Screen</h2>
+  <p class="section-desc">Next mission front and center. One tap to start. Streak and progress visible but not competing for attention. The app knows what's next.</p>
+
+  <div class="phone-frame">
+    <div class="status-bar">9:41</div>
+    <div class="screen-content">
+      <div class="greeting">
+        <div class="hello">Good morning</div>
+        <h2>Sarah</h2>
+      </div>
+
+      <div class="streak-bar">
+        <div class="streak-icon">🔥</div>
+        <div class="streak-info">
+          <div class="streak-label">Current streak</div>
+          <div class="streak-count">Day 5</div>
+        </div>
+        <div style="font-size: 13px; color: var(--secondary); font-weight: 600;">+12 KT today</div>
+      </div>
+
+      <div class="next-mission-card">
+        <div class="card-label">Next Mission</div>
+        <h3>What Is a Hash?</h3>
+        <div class="mission-topic">Module 1: Blockchain Basics</div>
+        <div class="mission-meta">
+          <span>⏱ ~3 min</span>
+          <span>📝 4 exercises</span>
+        </div>
+        <button class="btn-primary">Start Mission</button>
+      </div>
+
+      <div class="progress-preview">
+        <div class="progress-header">
+          <h4>Module 1: Blockchain Basics</h4>
+          <a href="#">View Map</a>
+        </div>
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" style="width: 35%"></div>
+        </div>
+        <div class="progress-label">4 of 12 missions completed</div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <div class="nav-icon">🏠</div>
+        <span>Home</span>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">📚</div>
+        <span>Curriculum</span>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">👛</div>
+        <span>Wallet</span>
+      </div>
+      <div class="nav-item">
+        <div class="nav-icon">⚙️</div>
+        <span>Settings</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 2. EXERCISE SCREEN ===== -->
+<div class="screen-section" id="exercise">
+  <div class="section-label">Screen 2</div>
+  <h2 class="section-title">Exercise View — Concept Matching</h2>
+  <p class="section-desc">Minimal UI during exercises. Progress bar at top, gas indicator subtle. Full attention on the learning interaction. Touch-first targets.</p>
+
+  <div class="phone-frame">
+    <div class="status-bar">9:43</div>
+    <div class="screen-content" style="padding-top: var(--space-4);">
+      <div class="exercise-header">
+        <button class="close-btn">✕</button>
+        <div class="exercise-progress">
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" style="width: 50%"></div>
+          </div>
+        </div>
+        <div class="gas-indicator">
+          <span class="gas-icon">⛽</span>
+          <span>24</span>
+        </div>
+      </div>
+
+      <div class="exercise-content">
+        <div class="exercise-question">Match each term to its real-world equivalent</div>
+        <div class="exercise-instruction">Tap the crypto term, then tap its match</div>
+      </div>
+
+      <div class="matching-exercise">
+        <div class="match-item selected">
+          <div class="match-letter">A</div>
+          <div class="match-text">Private Key</div>
+        </div>
+        <div class="match-item">
+          <div class="match-letter">B</div>
+          <div class="match-text">Wallet</div>
+        </div>
+        <div class="match-item">
+          <div class="match-letter">C</div>
+          <div class="match-text">Seed Phrase</div>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--neutral-200);">
+        <div style="font-size: 13px; color: var(--neutral-500); margin-bottom: var(--space-3);">Match with:</div>
+        <div class="matching-exercise">
+          <div class="match-item">
+            <div class="match-letter">1</div>
+            <div class="match-text">Your bank account number</div>
+          </div>
+          <div class="match-item" style="border-color: var(--primary); background: var(--primary-light);">
+            <div class="match-letter" style="background: var(--primary); color: white;">2</div>
+            <div class="match-text">Your PIN code</div>
+          </div>
+          <div class="match-item">
+            <div class="match-letter">3</div>
+            <div class="match-text">Your master password backup</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-6);">
+        <div class="tooltip-demo" style="font-size: 14px;">
+          What's a private key? ℹ️
+        </div>
+        <div class="tooltip-popup" style="margin-top: var(--space-2);">
+          <div class="tooltip-term">Private Key</div>
+          A secret code that proves you own your crypto. It lets you send cryptocurrency from your wallet.
+          <div class="tooltip-analogy">💡 Think of it like your bank PIN — it proves you're the account owner.</div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-nav" style="opacity: 0.3;">
+      <div class="nav-item"><div class="nav-icon">🏠</div><span>Home</span></div>
+      <div class="nav-item"><div class="nav-icon">📚</div><span>Curriculum</span></div>
+      <div class="nav-item"><div class="nav-icon">👛</div><span>Wallet</span></div>
+      <div class="nav-item"><div class="nav-icon">⚙️</div><span>Settings</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 3. FEEDBACK STATES ===== -->
+<div class="screen-section" id="feedback">
+  <div class="section-label">Screen 3</div>
+  <h2 class="section-title">Feedback States</h2>
+  <p class="section-desc">Correct feedback is calm and confirming. Incorrect feedback is neutral and educational — not punitive. Gas cost shown for both. Mistakes are transactions, not failures.</p>
+
+  <div class="screens-row">
+    <div class="screen-wrapper">
+      <div class="screen-name">Correct Answer</div>
+      <div class="phone-frame" style="height: 400px;">
+        <div class="status-bar">9:44</div>
+        <div class="screen-content">
+          <div class="feedback-correct">
+            <div class="feedback-icon">✓ Correct</div>
+            <div class="feedback-text">A private key is like your PIN — it's the secret proof that you own your crypto wallet. Never share it with anyone.</div>
+            <div class="gas-cost">⛽ Gas used: 2 KT</div>
+          </div>
+          <button class="btn-primary">Continue</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-wrapper">
+      <div class="screen-name">Incorrect Answer</div>
+      <div class="phone-frame" style="height: 400px;">
+        <div class="status-bar">9:44</div>
+        <div class="screen-content">
+          <div class="feedback-incorrect">
+            <div class="feedback-icon">✗ Not quite</div>
+            <div class="feedback-text">A seed phrase is more like a master password backup — it can restore your entire wallet if you lose access. A PIN only unlocks one thing.</div>
+            <div class="gas-cost">⛽ Gas used: 2 KT</div>
+          </div>
+          <button class="btn-primary">Try Again</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 4. MISSION COMPLETE ===== -->
+<div class="screen-section" id="complete">
+  <div class="section-label">Screen 4</div>
+  <h2 class="section-title">Mission Complete</h2>
+  <p class="section-desc">Concept summary first — what you learned matters more than what you earned. Stats are secondary. One tap to continue, one tap to browse.</p>
+
+  <div class="phone-frame">
+    <div class="status-bar">9:47</div>
+    <div class="screen-content">
+      <div class="mission-complete">
+        <div class="complete-icon">✓</div>
+        <h2>Mission Complete</h2>
+        <div class="concept-learned">You just learned: what private keys, wallets, and seed phrases are — and their real-world equivalents.</div>
+
+        <div class="stats-row">
+          <div class="stat-item">
+            <div class="stat-value">+1</div>
+            <div class="stat-label">XP</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value tokens">+8</div>
+            <div class="stat-label">Tokens earned</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Gas used</div>
+          </div>
+        </div>
+
+        <button class="btn-primary" style="margin-bottom: var(--space-3);">Continue to Next Mission</button>
+        <button class="btn-ghost">View Curriculum Map</button>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item active"><div class="nav-icon">🏠</div><span>Home</span></div>
+      <div class="nav-item"><div class="nav-icon">📚</div><span>Curriculum</span></div>
+      <div class="nav-item"><div class="nav-icon">👛</div><span>Wallet</span></div>
+      <div class="nav-item"><div class="nav-icon">⚙️</div><span>Settings</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 5. CURRICULUM MAP ===== -->
+<div class="screen-section" id="curriculum">
+  <div class="section-label">Screen 5</div>
+  <h2 class="section-title">Curriculum Map</h2>
+  <p class="section-desc">Vertical path with nodes — Duolingo-style progression. Completed nodes are solid, current is highlighted, locked nodes are dimmed. The user always knows where they are.</p>
+
+  <div class="phone-frame">
+    <div class="status-bar">9:41</div>
+    <div class="screen-content">
+      <h3 style="font-size: 20px; margin-bottom: var(--space-4);">Your Learning Path</h3>
+
+      <div class="curriculum-path">
+        <div class="path-node">
+          <div class="node-dot completed">✓</div>
+          <div class="node-info">
+            <div class="node-title">What Is a Blockchain?</div>
+            <div class="node-sub">Completed · 3 min</div>
+          </div>
+        </div>
+        <div class="path-connector completed"></div>
+        <div class="path-node">
+          <div class="node-dot completed">✓</div>
+          <div class="node-info">
+            <div class="node-title">Blocks and Chains</div>
+            <div class="node-sub">Completed · 4 min</div>
+          </div>
+        </div>
+        <div class="path-connector completed"></div>
+        <div class="path-node">
+          <div class="node-dot completed">✓</div>
+          <div class="node-info">
+            <div class="node-title">What Is a Hash?</div>
+            <div class="node-sub">Completed · 3 min</div>
+          </div>
+        </div>
+        <div class="path-connector completed"></div>
+        <div class="path-node">
+          <div class="node-dot completed">✓</div>
+          <div class="node-info">
+            <div class="node-title">Why Hashes Matter</div>
+            <div class="node-sub">Completed · 2 min</div>
+          </div>
+        </div>
+        <div class="path-connector"></div>
+        <div class="path-node">
+          <div class="node-dot current">5</div>
+          <div class="node-info">
+            <div class="node-title">Wallets & Keys</div>
+            <div class="node-sub">Up next · ~3 min</div>
+          </div>
+        </div>
+        <div class="path-connector"></div>
+        <div class="path-node">
+          <div class="node-dot locked">6</div>
+          <div class="node-info">
+            <div class="node-title locked">Sending Crypto</div>
+            <div class="node-sub locked">Locked</div>
+          </div>
+        </div>
+        <div class="path-connector"></div>
+        <div class="path-node">
+          <div class="node-dot locked">7</div>
+          <div class="node-info">
+            <div class="node-title locked">What Are Tokens?</div>
+            <div class="node-sub locked">Locked</div>
+          </div>
+        </div>
+        <div class="path-connector"></div>
+        <div class="path-node">
+          <div class="node-dot locked">8</div>
+          <div class="node-info">
+            <div class="node-title locked">Gas Fees Explained</div>
+            <div class="node-sub locked">Locked</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item"><div class="nav-icon">🏠</div><span>Home</span></div>
+      <div class="nav-item active"><div class="nav-icon">📚</div><span>Curriculum</span></div>
+      <div class="nav-item"><div class="nav-icon">👛</div><span>Wallet</span></div>
+      <div class="nav-item"><div class="nav-icon">⚙️</div><span>Settings</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 6. WALLET PROFILE ===== -->
+<div class="screen-section" id="wallet">
+  <div class="section-label">Screen 6</div>
+  <h2 class="section-title">Wallet Profile</h2>
+  <p class="section-desc">Revolut-inspired balance display. Token balance is the hero. Transaction history shows earned/spent. XP and streak as secondary stats. The profile IS a wallet — teaching by existing.</p>
+
+  <div class="phone-frame">
+    <div class="status-bar">9:41</div>
+    <div class="screen-content">
+      <div class="wallet-header">
+        <div class="wallet-avatar">S</div>
+        <div class="wallet-name">Sarah</div>
+        <div class="wallet-joined">Learning since Feb 2026</div>
+      </div>
+
+      <div class="wallet-balance">
+        <div class="balance-label">Knowledge Token Balance</div>
+        <div class="balance-amount">247 <span class="balance-unit">KT</span></div>
+      </div>
+
+      <div class="wallet-stats">
+        <div class="wallet-stat-card">
+          <div class="wstat-value">23</div>
+          <div class="wstat-label">XP (missions)</div>
+        </div>
+        <div class="wallet-stat-card">
+          <div class="wstat-value">5</div>
+          <div class="wstat-label">Day streak</div>
+        </div>
+        <div class="wallet-stat-card">
+          <div class="wstat-value">2/8</div>
+          <div class="wstat-label">Modules</div>
+        </div>
+      </div>
+
+      <div class="transaction-list">
+        <div class="tx-header">Recent Transactions</div>
+        <div class="tx-item">
+          <div class="tx-icon earned">+</div>
+          <div class="tx-details">
+            <div class="tx-title">Mission completed: Wallets & Keys</div>
+            <div class="tx-time">Today, 9:47 AM</div>
+          </div>
+          <div class="tx-amount positive">+8 KT</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-icon spent">⛽</div>
+          <div class="tx-details">
+            <div class="tx-title">Gas fees: Wallets & Keys</div>
+            <div class="tx-time">Today, 9:43-9:47 AM</div>
+          </div>
+          <div class="tx-amount negative">-12 KT</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-icon earned">+</div>
+          <div class="tx-details">
+            <div class="tx-title">Mission completed: Why Hashes Matter</div>
+            <div class="tx-time">Yesterday, 8:12 AM</div>
+          </div>
+          <div class="tx-amount positive">+8 KT</div>
+        </div>
+        <div class="tx-item">
+          <div class="tx-icon earned">🔥</div>
+          <div class="tx-details">
+            <div class="tx-title">Daily streak bonus</div>
+            <div class="tx-time">Yesterday</div>
+          </div>
+          <div class="tx-amount positive">+5 KT</div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-nav">
+      <div class="nav-item"><div class="nav-icon">🏠</div><span>Home</span></div>
+      <div class="nav-item"><div class="nav-icon">📚</div><span>Curriculum</span></div>
+      <div class="nav-item active"><div class="nav-icon">👛</div><span>Wallet</span></div>
+      <div class="nav-item"><div class="nav-icon">⚙️</div><span>Settings</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 7. DESIGN TOKENS ===== -->
+<div class="screen-section" id="tokens">
+  <div class="section-label">Foundation</div>
+  <h2 class="section-title">Design Tokens</h2>
+  <p class="section-desc">The visual language of transcendence — warm neutrals, cool teal for action, warm amber for reward.</p>
+
+  <h4 style="font-size: 16px; margin-bottom: var(--space-4);">Color Palette</h4>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--primary);"></div><div class="swatch-name">primary</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--primary-light);"></div><div class="swatch-name">primary-lt</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--primary-dark);"></div><div class="swatch-name">primary-dk</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--secondary);"></div><div class="swatch-name">secondary</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--secondary-light);"></div><div class="swatch-name">second-lt</div></div>
+  </div>
+  <div class="swatches">
+    <div class="swatch"><div class="swatch-color" style="background: var(--neutral-50);"></div><div class="swatch-name">neutral-50</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--neutral-100);"></div><div class="swatch-name">neutral-100</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--neutral-200);"></div><div class="swatch-name">neutral-200</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--neutral-300);"></div><div class="swatch-name">neutral-300</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--neutral-500);"></div><div class="swatch-name">neutral-500</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--neutral-700);"></div><div class="swatch-name">neutral-700</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--neutral-900);"></div><div class="swatch-name">neutral-900</div></div>
+  </div>
+  <div class="swatches" style="margin-bottom: var(--space-8);">
+    <div class="swatch"><div class="swatch-color" style="background: var(--success);"></div><div class="swatch-name">success</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--error);"></div><div class="swatch-name">error</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--warning);"></div><div class="swatch-name">warning</div></div>
+    <div class="swatch"><div class="swatch-color" style="background: var(--info);"></div><div class="swatch-name">info</div></div>
+  </div>
+
+  <h4 style="font-size: 16px; margin-bottom: var(--space-4);">Typography Specimen</h4>
+  <div class="type-specimen">
+    <h1>H1 — Screen Title (36px)</h1>
+    <h2>H2 — Page Heading (30px)</h2>
+    <h3>H3 — Section Heading (24px)</h3>
+    <h4>H4 — Subsection (20px)</h4>
+    <p style="font-size: 18px; font-weight: 500;">Large body — Exercise instructions (18px)</p>
+    <p>Body text — This is what most content looks like. It should feel warm, readable, and never strain the eyes. Source Sans 3 at 16px with 1.5 line height. (16px)</p>
+    <p style="font-size: 14px; color: var(--neutral-500);">Small text — Captions, labels, secondary information (14px)</p>
+    <p class="mono">0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D</p>
+  </div>
+</div>
+
+<!-- ===== 8. COMPONENTS ===== -->
+<div class="screen-section" id="components">
+  <div class="section-label">Foundation</div>
+  <h2 class="section-title">Component Samples</h2>
+  <p class="section-desc">Key reusable components showing the design language in action.</p>
+
+  <div class="component-grid">
+    <div class="component-card">
+      <h4>Buttons</h4>
+      <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+        <button class="btn-primary">Primary Action</button>
+        <button class="btn-ghost">Secondary Action</button>
+        <button class="btn-primary" style="background: var(--neutral-200); color: var(--neutral-500); cursor: not-allowed;">Disabled</button>
+      </div>
+    </div>
+
+    <div class="component-card">
+      <h4>Token Display</h4>
+      <div style="text-align: center; padding: var(--space-4);">
+        <div style="font-size: 12px; color: var(--neutral-500); text-transform: uppercase; letter-spacing: 0.5px;">Balance</div>
+        <div style="font-family: var(--font-heading); font-size: 42px; font-weight: 700; color: var(--secondary);">247 <span style="font-size: 14px; color: var(--neutral-500); font-weight: 400;">KT</span></div>
+      </div>
+      <div style="display: flex; justify-content: center; gap: var(--space-6); margin-top: var(--space-3);">
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-heading); font-size: 20px; font-weight: 700;">23</div>
+          <div style="font-size: 11px; color: var(--neutral-500);">XP</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-heading); font-size: 20px; font-weight: 700;">5</div>
+          <div style="font-size: 11px; color: var(--neutral-500);">Streak</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-card">
+      <h4>Feedback Banner</h4>
+      <div class="feedback-correct" style="margin-bottom: var(--space-3);">
+        <div class="feedback-icon">✓ Correct</div>
+        <div class="feedback-text">Great — a private key is indeed like your PIN.</div>
+        <div class="gas-cost">⛽ Gas used: 2 KT</div>
+      </div>
+      <div class="feedback-incorrect">
+        <div class="feedback-icon">✗ Not quite</div>
+        <div class="feedback-text">A seed phrase is a backup, not a PIN.</div>
+        <div class="gas-cost">⛽ Gas used: 2 KT</div>
+      </div>
+    </div>
+
+    <div class="component-card">
+      <h4>Streak Indicator</h4>
+      <div class="streak-bar">
+        <div class="streak-icon">🔥</div>
+        <div class="streak-info">
+          <div class="streak-label">Current streak</div>
+          <div class="streak-count">Day 5</div>
+        </div>
+      </div>
+      <div style="margin-top: var(--space-3); padding: var(--space-3) var(--space-4); background: var(--neutral-100); border-radius: var(--rounded-lg);">
+        <div style="display: flex; gap: var(--space-2); justify-content: center;">
+          <div style="width: 28px; height: 28px; border-radius: var(--rounded-full); background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600;">M</div>
+          <div style="width: 28px; height: 28px; border-radius: var(--rounded-full); background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600;">T</div>
+          <div style="width: 28px; height: 28px; border-radius: var(--rounded-full); background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600;">W</div>
+          <div style="width: 28px; height: 28px; border-radius: var(--rounded-full); background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600;">T</div>
+          <div style="width: 28px; height: 28px; border-radius: var(--rounded-full); background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; border: 2px solid var(--primary);">F</div>
+          <div style="width: 28px; height: 28px; border-radius: var(--rounded-full); background: var(--neutral-100); color: var(--neutral-300); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; border: 2px solid var(--neutral-200);">S</div>
+          <div style="width: 28px; height: 28px; border-radius: var(--rounded-full); background: var(--neutral-100); color: var(--neutral-300); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; border: 2px solid var(--neutral-200);">S</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-card">
+      <h4>Jargon Tooltip</h4>
+      <p style="font-size: 15px; line-height: 1.6;">A blockchain stores data in <span class="tooltip-demo">blocks ℹ️</span> that are linked together using cryptographic hashes.</p>
+      <div class="tooltip-popup" style="margin-top: var(--space-3);">
+        <div class="tooltip-term">Block</div>
+        A container of data on a blockchain. Each block holds a batch of transactions and a link to the previous block.
+        <div class="tooltip-analogy">💡 Think of it like a page in a ledger book — each page records transactions and is numbered in order.</div>
+      </div>
+    </div>
+
+    <div class="component-card">
+      <h4>Curriculum Node States</h4>
+      <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+        <div class="path-node">
+          <div class="node-dot completed">✓</div>
+          <div class="node-info">
+            <div class="node-title">Completed Mission</div>
+            <div class="node-sub">Done · 3 min</div>
+          </div>
+        </div>
+        <div class="path-node">
+          <div class="node-dot current">5</div>
+          <div class="node-info">
+            <div class="node-title">Current / Available</div>
+            <div class="node-sub">Up next · ~3 min</div>
+          </div>
+        </div>
+        <div class="path-node">
+          <div class="node-dot locked">6</div>
+          <div class="node-info">
+            <div class="node-title locked">Locked Mission</div>
+            <div class="node-sub locked">Locked</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align: center; padding: var(--space-12) var(--space-6); color: var(--neutral-500); font-size: 14px;">
+  transcendence — UX Design Direction: Guided Path<br>
+  Generated for UX Design Specification, Step 9
+</div>
+
+</body>
+</html>
