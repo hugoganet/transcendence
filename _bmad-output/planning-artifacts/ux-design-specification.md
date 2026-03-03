@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8]
+stepsCompleted: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 inputDocuments:
   - product-brief-transcendence-2026-02-20.md
   - prd.md
@@ -745,3 +745,976 @@ All shadows use warm-tinted black (not pure black) for softness.
 - Default animation duration: 150-300ms (fast enough to feel responsive, slow enough to be perceived)
 - No auto-playing animations that can't be paused
 - Exercise feedback animations are subtle — opacity changes, gentle slides — not bounces or shakes
+
+## Design Direction Decision
+
+### Design Directions Explored
+
+Three design directions were evaluated against transcendence's emotional goals (calm confidence, trust-first, anti-crypto-bro) and platform requirements (mobile-primary SPA):
+
+**Direction 1: "Focused Flow"** — Ultra-minimal, Headspace-dominant. Next mission only on home, bottom nav hidden during exercises. Maximum calm but potentially too stripped for curriculum visibility.
+
+**Direction 2: "Guided Path"** — Balanced Duolingo-meets-Headspace. Next mission + curriculum progress + streak on home, persistent progress bar during exercises, vertical path curriculum map. Balance of information and calm.
+
+**Direction 3: "Dashboard Lite"** — Notion-dominant. Soft dashboard home with multiple data points, grid-based curriculum map. More information density, risk of feeling too data-heavy for intimidated beginners.
+
+### Chosen Direction
+
+**Direction 2: "Guided Path"** — selected as the design direction for transcendence.
+
+The Guided Path balances the calm emotional register (Headspace influence) with enough information to orient the user (Duolingo influence). The user always knows where they are, what's next, and how they're progressing — without being overwhelmed by data.
+
+### Design Rationale
+
+1. **Home screen serves the "zero-decision start."** Next mission is the hero with one-tap start. Streak and curriculum progress are visible but secondary — the user can glance at progress without it competing with the core action.
+
+2. **Vertical path curriculum map matches the mental model.** A linear, top-to-bottom path with completed/current/locked nodes is immediately understandable. It communicates progressive unlocking visually without explanation. Duolingo proved this pattern works for sequential learning.
+
+3. **Exercise view is focused but not stripped.** Progress bar at top provides orientation within the mission. Gas indicator is subtle but always present (after activation). Bottom nav fades during exercises — present but not distracting. The user stays in flow.
+
+4. **Feedback is calm and educational.** Correct answers get soft green confirmation with a reinforcing explanation. Incorrect answers get soft coral with educational context — never red alerts or failure messaging. Gas cost shown identically for both, reinforcing "mistakes are transactions."
+
+5. **Wallet profile borrows directly from banking apps.** Large centered token balance (Revolut-inspired), XP/streak as secondary stats, chronological transaction list. Users already trust this visual language for financial data.
+
+6. **Color application validated.** Cool teal for actions, warm amber for tokens/rewards, warm neutrals for backgrounds. The palette reads as professional-calm, not crypto-exchange. Soft coral for errors avoids the alarming red of typical error states.
+
+### Implementation Approach
+
+**Reference Implementation:** The HTML mockup at `_bmad-output/planning-artifacts/ux-design-directions.html` serves as the visual reference for all screens. It includes:
+
+- Exact CSS custom properties matching Tailwind design tokens
+- All 6 core screens at mobile viewport (375px)
+- Component samples for the 12 design system components
+- Color palette, typography specimen, and spacing demonstrations
+- Feedback states showing both correct and incorrect patterns
+
+**From Mockup to Code:**
+
+- Design tokens from the HTML mockup map directly to `tailwind.config` values
+- Component structures translate to React components with Tailwind utility classes
+- Screen layouts become page compositions using the component library
+- Responsive behavior extends mobile-first designs to tablet and desktop breakpoints
+
+**Key Visual Decisions Locked:**
+
+- Warm off-white page background (`neutral-50`) — not pure white
+- Cool teal primary (`#2B9E9E`) for all action elements
+- Warm amber/gold secondary (`#D4A843`) for token-related displays
+- Soft coral for error states — not bright red
+- Rounded corners (`12px` cards, `8px` buttons) — Headspace softness
+- Warm-tinted shadows — not pure black
+- Bottom navigation with 4 items: Home, Curriculum, Wallet, Settings
+
+## User Journey Flows
+
+### Journey 1: First-Time User (Onboarding → First Mission)
+
+**Entry:** User arrives from search/referral → lands on marketing landing page.
+
+**Goal:** Sign up, complete first mission, feel "I actually get this" — all within 5 minutes of landing.
+
+**Flow diagram:** See `user-journey-flows.md` — Journey 1
+
+**Key Design Decisions:**
+
+- **Landing page is trust-first.** Clean, calm, no crypto noise. The value prop is "learn blockchain without the jargon" — not feature lists. Sign-up buttons are prominent but not aggressive.
+- **Micro-onboarding is 1 screen max.** A single "What brings you here?" question (Invest / Understand / Curiosity) personalizes the welcome message tone but doesn't gate anything. Skippable.
+- **Home screen surfaces the first mission immediately.** No dashboard, no feature tour. The user sees "What is a Blockchain?" with a big "Start" button. Zero decision fatigue.
+- **First mission is XP-only.** No tokens, no gas, no wallet. The user's only cognitive load is the exercise itself. Progressive reveal hasn't started yet.
+- **Mission complete screen celebrates understanding, not points.** "You just learned: how blocks link together in a chain" — the concept is the hero, XP is secondary.
+
+**Flow summary:** Landing Page → Sign Up (OAuth or Email) → Welcome Screen → Micro-Onboarding (1 screen, skippable) → Home Screen (next mission surfaced) → Tap Start → Mission Intro Card → Exercise Flow (action → feedback → next) → Mission Complete (XP +1, concept summary) → Continue / Curriculum Map / Close.
+
+### Journey 2: Daily Session (Return → Mission → Chain)
+
+**Entry:** User opens app (has completed 3+ missions previously).
+
+**Goal:** Resume learning with zero friction, complete 1-3 missions, maintain streak.
+
+**Flow diagram:** See `user-journey-flows.md` — Journey 2
+
+**Key Design Decisions:**
+
+- **App open = instant resume.** Home screen shows the next mission based on curriculum progress. No menu navigation, no decisions. The Headspace "next session" pattern.
+- **Mission chaining is 1 tap.** "Continue" button on mission complete leads directly to the next mission. The user never returns to a menu unless they choose to. The "one more lesson" pull is the primary retention mechanic.
+- **Gentle break after 3+ missions.** Not a blocker — a suggestion. "Nice session! Take a break or keep going?" The app cares about the user, not engagement metrics.
+- **Streak increments silently.** The streak counter on home updates after the first mission of the day. No fanfare, no "Don't lose your streak!" — just quiet momentum.
+- **Token/gas displays appear only after curriculum activation.** A user who hasn't reached the token curriculum milestone sees only XP on the mission complete screen.
+
+**Flow summary:** Open App → Home Screen (next mission + streak) → Tap Start → Mission Intro → Exercise Flow → Mission Complete (XP, tokens*, gas*) → Continue (1 tap, chains to next) / Curriculum Map / Close. After 3+ chained missions: gentle break suggestion (keep going or done).
+
+### Journey 3: Progressive Mechanic Reveal (XP → Tokens → Gas → Wallet)
+
+**Entry:** User progresses through curriculum milestones that unlock platform mechanics.
+
+**Goal:** Each reveal is an aha moment that teaches a crypto concept through the user's own experience of the platform.
+
+**Flow diagram:** See `user-journey-flows.md` — Journey 3
+
+**Key Design Decisions:**
+
+- **Each reveal is triggered by the corresponding curriculum mission.** The user learns "what are tokens" → the UI reveals tokens. The reveal IS the lesson landing. No teaching needed because the curriculum just taught it.
+- **Reveals are warm, not flashy.** A brief moment of delight — warm amber highlight, gentle animation — not confetti or fireworks. The emotional register is "knowing smile," not "slot machine jackpot."
+- **Retroactive token count on reveal.** When tokens are introduced, the user sees they've already been accumulating them. This reinforces "you've been earning tokens without knowing" — the aha moment is stronger when there's already a balance.
+- **Gas fees apply identically to correct and incorrect.** Every submission costs gas. Wrong answers cost more only because the user resubmits. This mirrors real blockchain: every transaction costs gas regardless of outcome.
+- **Wallet-profile is the deepest payoff.** The profile page the user has been visiting transforms into a recognizable wallet interface. The realization is the reward — "my profile page was teaching me what a wallet looks like this whole time."
+- **Token debt mechanic.** After gas activation, users can go negative mid-mission (mission never interrupted) but can't start a new mission while in debt. A gentle message: "Complete a mission to earn more tokens before starting a new one."
+
+**Phase summary:** Phase 1 (XP only, early missions) → Phase 2 (Tokens introduced when curriculum teaches tokens — retroactive balance revealed) → Phase 3 (Gas fees activated when curriculum teaches gas — every submission costs tokens) → Phase 4 (Wallet-profile revealed when curriculum teaches wallets — profile transforms into wallet view).
+
+### Journey 4: Drop-off & Return
+
+**Entry:** User returns after days/weeks of inactivity.
+
+**Goal:** Make return feel welcoming, preserve all progress, resume with confidence.
+
+**Flow diagram:** See `user-journey-flows.md` — Journey 4
+
+**Key Design Decisions:**
+
+- **No streak shame.** The streak counter resets but is never the hero of the return screen. Cumulative progress (missions completed, modules mastered, tokens earned) is always more prominent than streak status.
+- **Welcome back is tiered by absence length.** Short absence (1-3 days) = normal home screen, no special treatment. Medium absence (4-14 days) = warm welcome-back card. Long absence (14+ days) = full progress summary emphasizing everything that's preserved.
+- **Concept refresher is offered, not forced.** "Want a quick refresher before continuing?" leads to a 1-2 minute review exercise. The user decides, never the app.
+- **Progress is permanent.** Tokens, XP, completed missions, module progress — nothing disappears. The emotional message: "everything you earned is still here."
+- **Re-engagement notification tone.** Push notification (if enabled): "Your learning journey is still here. Pick up where you left off." Never: "You're falling behind!" or "Don't lose your progress!"
+
+**Flow summary:** Open App (after absence) → Tiered by absence length: 1-3 days (normal home), 4-14 days (welcome back card), 14+ days (full progress summary) → Progress Summary (missions, modules, tokens preserved) → Resume Point + optional refresher → Start Mission / Quick Refresher / Curriculum Map → Normal mission flow.
+
+### Journey 5: Curriculum Navigation
+
+**Entry:** User taps "Curriculum" in bottom navigation from any screen.
+
+**Goal:** See the full learning path, understand progress, select any available mission.
+
+**Flow diagram:** See `user-journey-flows.md` — Journey 5
+
+**Key Design Decisions:**
+
+- **Vertical path, not grid.** The curriculum map is a single vertical scrolling path (Duolingo-inspired). Modules are nodes on the path, connected by a visual line. This communicates sequential progression without explanation.
+- **Four clear node states.** Completed (green), In Progress (blue/teal), Available (white/open), Locked (gray with lock). The user instantly understands what they can and can't access.
+- **Module detail on tap.** Tapping any node opens a detail view listing all missions within the module, their completion state, and estimated time. No separate "module page" — it's an inline expansion or bottom sheet.
+- **Locked modules show dependencies.** If a module is locked, the user sees exactly which prerequisite module they need to complete. No mystery, no frustration.
+- **Review without reward.** Completed missions can be replayed for review but don't earn additional XP or tokens. This prevents gaming while supporting learning.
+- **Current module is always visible on scroll.** When the map loads, it auto-scrolls to the current in-progress module. The user's position in the curriculum is immediately clear.
+
+**Flow summary:** Tap Curriculum → Vertical scrolling path (modules as nodes: completed/in-progress/available/locked) → Tap node → Module Detail (missions listed, progress shown) → Start/Continue mission or Review completed mission → Back to map at any time.
+
+### Journey Patterns
+
+**Navigation Patterns:**
+- **Zero-decision start.** Home screen always surfaces the next action. The user never needs to decide where to go — the app knows.
+- **1-tap depth.** Any screen is reachable within 2 taps from anywhere via the persistent bottom navigation (Home, Curriculum, Wallet, Settings).
+- **Back = safe.** Navigation never loses progress. Leaving a mission mid-flow auto-saves position. Returning picks up exactly where the user stopped.
+
+**Feedback Patterns:**
+- **Instant response (<200ms).** Every user action gets immediate visual feedback. No loading states during exercise interactions.
+- **Calm confirmation.** Correct answers: soft green highlight + brief reinforcing explanation. No fireworks, no sound effects.
+- **Neutral correction.** Incorrect answers: soft coral highlight + educational explanation of why. Gas cost shown identically to correct answers. Mistakes are transactions, not failures.
+
+**Decision Patterns:**
+- **Binary choices only.** At any decision point, the user faces at most 2 clear options (Continue / Curriculum Map, Start / Refresher, Keep Going / Done). No multi-option menus during flow.
+- **Default is always forward.** The primary button always moves the user toward the next learning moment. Secondary options are visible but not competing.
+
+**Progressive Disclosure Patterns:**
+- **Curriculum-triggered reveals.** New UI elements (tokens, gas, wallet) appear only when the corresponding curriculum milestone is reached. Nothing before its time.
+- **Gentle introductions.** Each new mechanic gets a 1-screen explanation with warm amber highlighting before becoming a permanent part of the UI.
+- **Complexity grows with comprehension.** Early screens are minimal (XP only). Later screens show richer data (token balance, gas history, transaction log). The UI's information density matches the user's knowledge level.
+
+### Flow Optimization Principles
+
+1. **Minimum steps to value.** From app open to learning something: 1 tap (returning user) or 3 taps (new user: sign up → start → exercise). No journey exceeds this.
+
+2. **No dead ends.** Every screen has a clear forward path. Mission complete → Continue. Curriculum map → Start mission. Welcome back → Resume. The user is never stranded.
+
+3. **Graceful interruption handling.** If the user closes the app mid-mission, progress is saved. Returning reopens at the exact point. The app accommodates Sarah's bus-ride interruptions without penalty.
+
+4. **Error states as teaching moments.** Wrong answers teach through the gas mechanic. Token debt teaches budgeting. Locked modules teach prerequisites. Every "block" is reframed as a learning opportunity.
+
+5. **Delight through recognition, not animation.** The emotional high points are aha moments — "oh, I've been earning tokens!" — not UI spectacles. The design creates space for the user's own realization rather than celebrating for them.
+
+## Component Strategy
+
+### Design System Components
+
+**Tailwind CSS provides the token infrastructure** — colors, typography, spacing, shadows, radii, breakpoints — configured in `tailwind.config`. No pre-built UI components from Tailwind; every component below is custom-built using Tailwind utility classes.
+
+**Total component count: 20** (12 original from design system foundation + 8 new from journey analysis).
+
+### Original Components (from Design System Foundation)
+
+#### 1. Button
+
+**Purpose:** Primary interactive element across all screens.
+**Variants:**
+- **Primary** — Cool teal background, white text. Main actions (Start Mission, Continue, Submit).
+- **Secondary** — Teal outline, teal text. Alternative actions (Curriculum Map, Back).
+- **Ghost** — No background, teal text. Tertiary actions (Skip, Cancel).
+- **Token** — Warm amber background, white text. Token-related actions (reserved for post-reveal).
+
+**States:** Default, Hover (slight darken), Active/Pressed (scale 98%), Disabled (neutral-300, no interaction), Loading (spinner replaces text).
+**Sizing:** Minimum 44x44px touch target. Full-width on mobile by default. Auto-width on desktop.
+**Accessibility:** `role="button"`, `aria-disabled` when disabled, visible focus ring (2px primary), keyboard-activatable (Enter/Space).
+
+#### 2. Card
+
+**Purpose:** Primary content container for mission cards, module cards, and achievement displays.
+**Variants:**
+- **MissionCard** — Title, topic, estimated time, progress indicator. Used on home screen and curriculum detail.
+- **ModuleCard** — Module title, mission count, progress bar. Used in curriculum map detail views.
+- **AchievementCard** — Badge icon, title, description. Used in wallet-profile.
+
+**States:** Default (shadow-sm), Hover/Tap (shadow-md, slight lift), Active (scale 98%), Locked (reduced opacity, lock icon overlay).
+**Anatomy:** Rounded-lg (12px), neutral-50 background, space-4 padding (mobile) / space-6 (desktop). Optional header accent stripe using primary or secondary color.
+**Accessibility:** Semantic `<article>` or `<section>`, descriptive heading hierarchy, interactive cards use `role="link"` or wrapping `<a>`.
+
+#### 3. ExerciseContainer
+
+**Purpose:** Unified wrapper for all 4 exercise types — provides consistent structure for header, exercise area, feedback area, and gas display.
+**Anatomy:**
+- **Header:** Mission title + exercise count ("3 of 5") + progress bar.
+- **Exercise Area:** Full-width, flexible height. Each exercise type renders its own layout within this area.
+- **Feedback Area:** Slides in from bottom on submission. Contains FeedbackBanner.
+- **Gas Display:** Subtle gas indicator in header (visible only after gas mechanic activation).
+
+**States:** Active (exercise in progress), Feedback (showing correct/incorrect), Transitioning (moving to next exercise — 200ms crossfade).
+**Responsive:** Exercise area fills available viewport height minus header and bottom nav. On mobile, exercises are vertically stacked. On desktop, exercises may use horizontal layouts where appropriate.
+**Accessibility:** `role="main"`, exercise instructions announced on load, feedback announced on submission via `aria-live="polite"`.
+
+#### 4. ProgressBar
+
+**Purpose:** Visual progress indicator across multiple contexts.
+**Variants:**
+- **Linear** — Horizontal bar. Used for mission progress (exercises completed), module progress (missions completed).
+- **Circular** — Ring/donut. Used for curriculum completion percentage on home screen.
+- **Segmented** — Divided into discrete segments. Used for exercise count within a mission (dots or segments).
+
+**States:** Empty, Partial (animated fill), Complete (primary color fill + subtle pulse).
+**Sizing:** Linear: full-width, 6px height (mobile), 8px (desktop). Circular: 48px diameter (compact), 80px (featured). Segmented: adapts to exercise count.
+**Accessibility:** `role="progressbar"`, `aria-valuenow`, `aria-valuemin="0"`, `aria-valuemax`, `aria-label` describing context.
+
+#### 5. TokenDisplay
+
+**Purpose:** Show Knowledge Token balance, XP counter, or gas cost amounts.
+**Variants:**
+- **Balance** — Large centered number (text-display 48px) for wallet-profile hero display. Revolut-inspired.
+- **Compact** — Inline display with icon + number. Used in home screen, mission complete, exercise header.
+- **Cost** — Small inline display with minus sign. Used in gas cost indicators.
+- **Earned** — Small inline display with plus sign and warm amber. Used in mission complete rewards.
+
+**States:** Default, Animating (number count-up on change — 300ms), Debt (warning color when balance negative).
+**Accessibility:** `aria-label` describes the full context ("Knowledge Token balance: 42 tokens"), number changes announced via `aria-live="polite"`.
+
+#### 6. Tooltip
+
+**Purpose:** Jargon tooltip with plain-language definition + real-world analogy. The core "no jargon shock" mechanism.
+**Anatomy:** Trigger text (underlined/dotted underline) → Tooltip popup with: term, plain-language definition, real-world analogy. Optional "Learn more" link to relevant curriculum mission.
+**Trigger:** Tap on mobile, hover on desktop. Tap-outside or scroll to dismiss on mobile.
+**Positioning:** Auto-positioned above or below trigger, centered. Stays within viewport bounds. On mobile, may render as a bottom sheet for longer definitions.
+**States:** Hidden, Visible, Transitioning (150ms fade-in).
+**Accessibility:** `aria-describedby` linking trigger to tooltip content, `role="tooltip"`, dismissible via Escape key, focus-trappable when open on mobile (bottom sheet variant).
+
+#### 7. BottomNav
+
+**Purpose:** Mobile-primary persistent navigation. 4 items: Home, Curriculum, Wallet, Settings.
+**Anatomy:** Fixed to bottom of viewport. 4 equally-spaced items, each with icon + label. Active item highlighted with primary color. Inactive items in neutral-500.
+**States:** Default, Active (primary color icon + label + top indicator bar), Hidden (fades out during exercise flow, reappears on mission complete).
+**Responsive:** Visible on mobile and tablet. On desktop (1024px+), transforms to a sidebar or top navigation (to be determined in responsive patterns step).
+**Accessibility:** `<nav>` element with `aria-label="Main navigation"`, each item is a link with `aria-current="page"` for active, minimum 44x44px touch targets.
+
+#### 8. FeedbackBanner
+
+**Purpose:** Exercise submission feedback — correct or incorrect. Calm, neutral tone.
+**Variants:**
+- **Correct** — Soft green background (success-light), checkmark icon, brief reinforcing explanation, gas cost (after activation).
+- **Incorrect** — Soft coral background (error-light), X icon, educational explanation of why, gas cost (after activation), "Try again" prompt.
+
+**Anatomy:** Slides up from bottom of ExerciseContainer. Icon + status text + explanation (1-2 sentences) + gas cost display (if active).
+**Timing:** Appears on submission (<200ms), stays visible for 2 seconds minimum or until user taps next/retry.
+**Accessibility:** `role="status"`, `aria-live="polite"`, content announced immediately on appearance. Gas cost included in announcement.
+
+#### 9. MissionComplete
+
+**Purpose:** End-of-mission summary screen. Celebrates understanding, not just completion.
+**Anatomy:**
+- **Concept summary** (hero) — "You just learned: [concept]" in text-2xl.
+- **Stats row** — XP earned, tokens earned (after reveal), gas spent (after reveal). Uses TokenDisplay compact variant.
+- **Actions** — Primary: "Continue" (next mission). Secondary: "Curriculum Map."
+- **Streak update** — If first mission of the day, streak increments with subtle animation.
+
+**States:** Default (fresh completion), Chained (after 3+ missions, includes BreakSuggestion).
+**Accessibility:** Focus moves to concept summary on load, screen reader announces full summary including stats.
+
+#### 10. StreakIndicator
+
+**Purpose:** Daily streak display — gentle, progress-first, never punitive.
+**Variants:**
+- **Compact** — Flame icon + day count. Used on home screen.
+- **Expanded** — Flame icon + day count + weekly calendar dots showing active days. Used in wallet-profile.
+
+**States:** Active (primary color flame), Incrementing (flame animation + count-up on first mission of day), Inactive (neutral-300, no special attention drawn to streak loss).
+**Accessibility:** `aria-label="Current streak: X days"`. Never uses negative language in labels.
+
+#### 11. CurriculumNode
+
+**Purpose:** Module node in the vertical curriculum map path.
+**Variants/States:**
+- **Completed** — Green fill, checkmark, fully opaque. Tappable for review.
+- **In Progress** — Primary teal fill with pulse animation, progress indicator. Tappable to continue.
+- **Available** — White/open, subtle border. Tappable to start.
+- **Locked** — Gray fill, lock icon, reduced opacity. Tappable to show prerequisite.
+
+**Anatomy:** Circular node (48px mobile, 56px desktop) on the vertical path line. Module title to the right (or alternating left/right). Mission count and progress bar below title.
+**Accessibility:** `role="listitem"` within curriculum `role="list"`, `aria-label` includes module name and state ("Module 3: Smart Contracts — In Progress, 4 of 7 missions complete").
+
+#### 12. TransactionList
+
+**Purpose:** Chronological list of token transactions — Revolut-inspired. Used in wallet-profile.
+**Anatomy:** Each row: icon (earned/spent) + description ("Completed: What is a Hash?") + amount (+5 / -2) + timestamp. Grouped by date.
+**States:** Default, Empty ("No transactions yet — complete a mission to see your first!"), Loading (skeleton rows).
+**Accessibility:** `<table>` or `<dl>` with semantic structure, each transaction row has complete context in screen reader announcement.
+
+### New Components (from Journey Analysis)
+
+#### 13. AuthForm
+
+**Purpose:** Sign-up and login interface. First touchpoint for new users — must feel safe, simple, and fast.
+**Variants:**
+- **SignUp** — OAuth buttons (Google primary, email/password secondary). "Get started in seconds" messaging.
+- **Login** — Email/password fields + OAuth buttons. "Welcome back" messaging.
+
+**Anatomy:**
+- OAuth buttons: Full-width, branded icons, large touch targets. Google OAuth as primary (most users).
+- Divider: "or" separator.
+- Email/password: Standard form fields with inline validation.
+- Submit button: Primary Button variant.
+- Toggle: "Already have an account? Log in" / "New here? Sign up" link.
+
+**States:** Default, Validating (inline field validation), Submitting (button loading state), Error (field-level error messages — soft coral, never alarming).
+**Accessibility:** `<form>` with `aria-label`, field labels linked via `for`/`id`, error messages linked via `aria-describedby`, autofocus on first field, keyboard-navigable.
+
+#### 14. MicroOnboarding
+
+**Purpose:** Single-screen personalization after sign-up. "What brings you here?" Skippable, never blocks.
+**Anatomy:**
+- Heading: "What brings you here?" in text-2xl.
+- 3 option cards: "I want to invest" / "I want to understand" / "Just curious" — each with icon and 1-line description.
+- Skip link: "Skip for now" in ghost text.
+
+**Interaction:** Tap an option → brief visual confirmation → auto-advance to home screen (300ms delay). Skip → immediate advance.
+**States:** Default (3 options), Selected (tapped option highlights with primary color, others fade), Skipped.
+**Accessibility:** Options are `role="radio"` within `role="radiogroup"`, skip link is keyboard-accessible, selection announced.
+
+#### 15. WelcomeBack
+
+**Purpose:** Tiered return screen after user absence. Celebrates preserved progress, never shames.
+**Variants:**
+- **Medium (4-14 days)** — Welcome-back card overlaying home screen. Progress summary + resume button.
+- **Extended (14+ days)** — Full-screen welcome with detailed progress summary, concept refresher offer, and resume path.
+
+**Anatomy:**
+- Greeting: "Welcome back!" in text-2xl.
+- Progress summary: Missions completed, modules mastered, tokens earned — using TokenDisplay compact variants.
+- Resume point: "Pick up from: [mission name]" with primary Button.
+- Refresher offer (extended variant): "Want a quick refresher?" secondary Button.
+- Curriculum Map link: Ghost button for users who want to browse.
+
+**States:** Default, Dismissing (fade-out on action selection, 200ms).
+**Accessibility:** Focus moves to greeting on load, progress stats announced, all actions keyboard-accessible.
+
+#### 16. MechanicReveal
+
+**Purpose:** Full-screen takeover for aha moments when platform mechanics are revealed (tokens, gas fees, wallet-profile). The emotional climax of the progressive reveal system.
+
+**Variants:**
+- **TokenReveal** — "You've been earning Knowledge Tokens!" Reveals retroactive token count.
+- **GasReveal** — "Every action on a blockchain costs gas — even yours." Introduces gas cost mechanic.
+- **WalletReveal** — "Your profile has been a wallet all along." Transforms profile understanding.
+
+**Anatomy:**
+- **Backdrop:** Full-screen warm amber gradient overlay (secondary color at 10-15% opacity), blurring the content behind.
+- **Content card:** Centered, rounded-xl, generous padding (space-8).
+  - Icon/illustration: Mechanic-specific (token coin, gas flame, wallet icon) — warm amber accent, 64px.
+  - Headline: The aha statement in text-3xl, bold.
+  - Explanation: 2-3 sentences connecting the mechanic to the crypto concept just learned. text-lg.
+  - Visual proof: TokenReveal shows retroactive balance count-up animation. GasReveal shows a sample gas cost indicator. WalletReveal shows a mini wallet-profile preview.
+  - CTA: "Got it" primary Button → dismisses and returns to flow with new mechanic now active in UI.
+
+**Animation:**
+- Entrance: Fade-in backdrop (300ms) → card slides up from bottom (300ms, ease-out).
+- Visual proof animation: Starts 500ms after card appears (token count-up: 1.5s, gas indicator pulse, wallet preview build).
+- Exit: Card slides down (200ms) → backdrop fades (200ms) → mechanic now visible in underlying UI.
+
+**States:** Entering, Active (content visible, awaiting user action), Exiting.
+**Accessibility:** Focus trapped within modal, `role="dialog"`, `aria-modal="true"`, `aria-labelledby` pointing to headline, "Got it" button focused by default. Content announced on appearance via `aria-live`. Escape key dismisses.
+
+#### 17. GasIndicator
+
+**Purpose:** Inline gas cost display during exercises. Distinct from TokenDisplay — shows the cost of the current/last action, not the balance.
+**Anatomy:** Small inline element: gas flame icon (16px) + cost number ("-1") + "gas" label. Positioned in ExerciseContainer header, next to progress bar.
+**States:**
+- **Hidden** — Before gas mechanic is activated in curriculum.
+- **Idle** — Shows current gas price for next submission.
+- **Spent** — Brief animation on submission: number decrements, flame flickers (200ms).
+- **Debt Warning** — Amber color when user is approaching zero balance.
+
+**Accessibility:** `aria-label="Gas cost: 1 Knowledge Token per submission"`, cost changes announced via `aria-live="polite"`.
+
+#### 18. MissionIntroCard
+
+**Purpose:** Brief context-setter shown before exercises begin. Frames the concept for the mission.
+**Anatomy:**
+- Module label: Small, neutral-500 text ("Module 2: Wallets & Keys").
+- Mission title: text-2xl ("What is a Private Key?").
+- Context: 1-2 sentences framing the concept in plain language (text-base, neutral-700).
+- Estimated time: "~3 min" with clock icon.
+- Start button: Primary Button, full-width on mobile.
+
+**Animation:** Fades in on mission load (200ms), transitions to first exercise on tap (crossfade 200ms).
+**States:** Default (awaiting start), Transitioning (fading to exercise).
+**Accessibility:** Focus on mission title on load, content announced. Start button keyboard-accessible.
+
+#### 19. ConceptRefresher
+
+**Purpose:** Quick 1-2 minute review exercise offered on return after extended absence. Reinforces previous module concepts before continuing.
+**Anatomy:**
+- Header: "Quick refresher" label + module name being reviewed.
+- Exercise: A single lightweight exercise (typically concept-matching or interactive placement) covering key concepts from the last completed module.
+- Uses ExerciseContainer internally but with a "review" visual indicator (subtle neutral border instead of primary).
+- Completion: "All caught up!" message → transitions to normal mission flow. No XP or tokens earned.
+
+**States:** Offered (within WelcomeBack component), Active (review in progress), Complete (transition to next mission).
+**Accessibility:** Same as ExerciseContainer. Clearly labeled as review, not new content.
+
+#### 20. BreakSuggestion
+
+**Purpose:** Gentle suggestion to take a break after 3+ consecutive missions. The app cares about the user.
+**Anatomy:**
+- Appears as an overlay card on the MissionComplete screen after 3rd chained mission.
+- Heading: "Nice session!" in text-xl.
+- Stats: Session summary — missions completed, time spent, concepts learned.
+- Actions: Primary: "Keep going" (continues chaining). Secondary: "Done for now" (returns to home).
+- Tone: Warm, congratulatory, never blocking. The "keep going" button is equally prominent — this is a suggestion, not a gate.
+
+**Animation:** Slides up gently from bottom of MissionComplete card (200ms).
+**States:** Visible (on 3rd+ chained mission), Dismissed (user selects action).
+**Accessibility:** `role="complementary"`, announced on appearance, both actions keyboard-accessible.
+
+### Component Implementation Strategy
+
+**Build Order Principle:** Components are built in the order they're needed by the user journey, starting with the first-time user flow and progressing through daily usage to advanced features.
+
+**Shared Foundation:**
+
+All 20 components consume the same Tailwind design tokens:
+- Colors from `tailwind.config` extend palette
+- Typography from `tailwind.config` font families and scale
+- Spacing from `tailwind.config` spacing scale
+- Border radius and shadows from `tailwind.config` theme extend
+
+**Component Architecture:**
+
+- Each component is a standalone React component with its own file
+- Props-driven variants (no CSS class manipulation from outside)
+- All components accept a `className` prop for layout-level overrides (margin, width) but not internal styling
+- States managed via props or internal state — never global state for UI-only concerns
+- All components include TypeScript interfaces for props
+
+### Implementation Roadmap
+
+**Phase 1 — Core Flow (MVP Launch Blockers):**
+
+Must ship for any user to complete the first-time user journey.
+
+| Priority | Component | Needed For |
+|----------|-----------|------------|
+| 1 | Button | Every screen |
+| 2 | AuthForm | Sign-up/login (Journey 1 entry) |
+| 3 | BottomNav | App shell navigation |
+| 4 | Card | Mission cards, module cards |
+| 5 | MissionIntroCard | Mission start (all journeys) |
+| 6 | ExerciseContainer | All exercise flows |
+| 7 | FeedbackBanner | Exercise feedback loop |
+| 8 | ProgressBar | Mission and module progress |
+| 9 | MissionComplete | Mission end flow |
+| 10 | CurriculumNode | Curriculum map navigation |
+
+**Phase 2 — Engagement Layer (MVP Pre-Launch):**
+
+Needed for daily session flow and retention mechanics.
+
+| Priority | Component | Needed For |
+|----------|-----------|------------|
+| 11 | MicroOnboarding | First-time personalization |
+| 12 | StreakIndicator | Daily engagement |
+| 13 | Tooltip | Jargon resolution (critical for trust) |
+| 14 | BreakSuggestion | Mission chaining health |
+| 15 | WelcomeBack | Return user flow |
+| 16 | ConceptRefresher | Return after extended absence |
+
+**Phase 3 — Progressive Reveal System (Curriculum-Gated):**
+
+Built before launch but activated by curriculum milestones — no user sees these until they reach the corresponding lesson.
+
+| Priority | Component | Needed For |
+|----------|-----------|------------|
+| 17 | TokenDisplay | Token reveal + ongoing display |
+| 18 | GasIndicator | Gas fee reveal + exercise display |
+| 19 | MechanicReveal | All three aha-moment takeovers |
+| 20 | TransactionList | Wallet-profile reveal |
+
+## UX Consistency Patterns
+
+### Exercise Interaction Patterns
+
+**Universal Exercise Behavior (applies to all 4 exercise types):**
+
+| Pattern | Rule | Rationale |
+|---------|------|-----------|
+| **Instruction clarity** | Every exercise opens with a 1-sentence instruction in text-lg, visible at all times during the exercise | Users must never wonder "what am I supposed to do?" |
+| **Action feedback** | Every user action (drag, tap, select) gets visual feedback in <200ms | Instant response maintains calm focus state |
+| **Submission** | Explicit submit action required — no auto-submit on selection | Prevents accidental gas spend, gives user control |
+| **Feedback duration** | FeedbackBanner stays 2s minimum, dismisses on tap or auto-advances after 3s | Long enough to read, never blocking |
+| **Transition** | 200ms crossfade between exercises within a mission | Seamless flow, no perceived page load |
+| **Progress visibility** | Segmented ProgressBar always visible in ExerciseContainer header | User always knows "3 of 5" position |
+| **Exit safety** | Leaving mid-exercise auto-saves position, return resumes exactly | Sarah's bus-ride interruptions handled gracefully |
+
+**Exercise-Specific Interaction Rules:**
+
+**Interactive Placement (drag-and-drop):**
+- Drag targets: minimum 48x48px, with 8px gap between targets
+- Visual lift on grab (shadow-md + scale 105%)
+- Drop zones highlight on approach (primary-light background)
+- Snap animation on successful drop (150ms ease-out)
+- Keyboard alternative: arrow keys to select item, arrow keys to move position, Enter to place
+
+**Concept Matching:**
+- Tap-to-select on mobile (first tap selects source, second tap selects target)
+- Drag-to-connect on desktop (line drawn between matched pairs)
+- Matched pairs dim to 50% opacity, keeping focus on remaining items
+- Incorrect match: brief shake animation (150ms), items return to unmatched state
+
+**Simulated Transactions (step-by-step):**
+- Each step is a discrete screen within the exercise
+- "Next Step" button advances — user controls the pace
+- Micro-explanations appear inline below each action (text-sm, neutral-500)
+- Running transaction summary visible as steps accumulate
+
+**Scenario Interpretation:**
+- Multiple-choice options presented as tappable cards (Card component)
+- Selected option highlights with primary border
+- Submit button confirms selection (not auto-submit on tap)
+- Feedback includes explanation for both correct answer AND why other options were wrong
+
+### Feedback Patterns
+
+**Feedback Hierarchy:**
+
+All feedback in transcendence follows a consistent emotional register — calm, informational, never punitive.
+
+| Feedback Type | Visual Treatment | Icon | Tone | Duration |
+|---------------|-----------------|------|------|----------|
+| **Correct** | Soft green background (success-light) | Checkmark | "That's right. [Reinforcing explanation]" | 2-3s, auto-advance |
+| **Incorrect** | Soft coral background (error-light) | X mark | "Not quite. [Educational explanation]" | Stays until user taps Retry |
+| **Gas Spent** | Inline amber text in FeedbackBanner | Gas flame | "-1 gas" (neutral, same for correct/incorrect) | Appears with feedback |
+| **Token Earned** | Inline amber text in MissionComplete | Token coin | "+5 tokens" | Appears on mission complete |
+| **Streak Update** | Subtle animation in StreakIndicator | Flame | Day count increments silently | 500ms animation |
+| **Token Debt** | Warning amber banner at top of home | Warning triangle | "Complete a mission to earn tokens before starting a new one" | Persistent until resolved |
+| **System Error** | Soft coral card with retry action | Alert circle | "Something went wrong. Your progress is saved." | Persistent until dismissed |
+
+**Feedback Principles:**
+
+1. **Same gas cost display for correct and incorrect.** The gas indicator behaves identically regardless of answer correctness. This reinforces "gas is the cost of doing, not the cost of failing."
+2. **Explanation always accompanies feedback.** A bare checkmark or X is never sufficient. Every correct answer gets a reinforcing sentence. Every incorrect answer gets an educational sentence.
+3. **No sound effects.** The calm register is maintained through visual-only feedback. No correct/incorrect sounds, no celebration jingles. Silent by default.
+4. **No negative language.** Never: "Wrong!", "Try again!", "You failed." Always: "Not quite.", "Let's look at this differently.", "Here's why."
+5. **Progress feedback is additive.** The app always tells users what they gained, never what they lost. "+1 XP" not "-1 life." "14 missions completed" not "86% remaining."
+
+### Form Patterns
+
+**Form Design Rules (AuthForm + Settings):**
+
+| Pattern | Rule |
+|---------|------|
+| **Label position** | Above field, always visible (never placeholder-only labels) |
+| **Field sizing** | Full-width on mobile, max-width 400px on desktop |
+| **Validation timing** | On blur (not on keystroke) — respects the user's pace |
+| **Error display** | Inline below field, soft coral text, icon + message. Linked via `aria-describedby` |
+| **Success display** | Inline checkmark on valid field (green, subtle) |
+| **Submit button** | Full-width below fields, disabled until required fields valid |
+| **Loading state** | Button shows spinner, fields become readonly |
+| **OAuth buttons** | Full-width, branded, above email/password with "or" divider |
+
+**Error Message Tone:**
+
+- Email field: "Please enter a valid email address" (not "Invalid email!")
+- Password field: "Password needs at least 8 characters" (not "Password too short!")
+- Auth failure: "We couldn't find that account. Double-check your email or sign up." (not "Login failed!")
+
+### Navigation Patterns
+
+**Navigation Hierarchy:**
+
+| Level | Mechanism | Components |
+|-------|-----------|------------|
+| **App-level** | BottomNav (persistent) | Home, Curriculum, Wallet, Settings |
+| **Screen-level** | Back arrow in top-left header | Returns to previous screen |
+| **In-mission** | ExerciseContainer header with progress | Forward-only within mission (no back to previous exercise) |
+| **In-curriculum** | CurriculumNode tap → Module detail | Drill-down with back to map |
+
+**Navigation Rules:**
+
+1. **BottomNav is always accessible.** Visible on all screens except during active exercise flow (where it fades to minimize distraction). Reappears on mission complete.
+2. **No hamburger menus.** All navigation is visible. Four bottom nav items cover the entire app. Settings is a full screen, not a drawer.
+3. **Back is always predictable.** Back arrow returns to the previous screen in the navigation stack. Never skips levels. Never loses data.
+4. **Forward is always obvious.** The primary action on every screen is visually dominant (primary Button) and moves the user forward in their journey.
+5. **Deep links preserve context.** If a user arrives at a specific mission (from notification or share link), back navigates to the curriculum map, not to the home screen.
+6. **No horizontal navigation.** No tab bars, no swipe-to-navigate between sections. Vertical scrolling only. This simplifies the mobile experience and prevents accidental navigation during exercises.
+
+**Screen Transition Animations:**
+
+| Transition | Animation | Duration |
+|------------|-----------|----------|
+| Screen push (forward navigation) | Slide in from right | 200ms ease-out |
+| Screen pop (back navigation) | Slide in from left | 200ms ease-out |
+| Modal/overlay open | Fade backdrop + slide up content | 300ms ease-out |
+| Modal/overlay close | Slide down content + fade backdrop | 200ms ease-in |
+| Exercise transition (within mission) | Crossfade | 200ms |
+
+### Loading & Empty States
+
+**Loading States:**
+
+| Context | Treatment |
+|---------|-----------|
+| **App launch** | Splash screen with logo (max 2s), then home screen. If data isn't ready, show home screen skeleton. |
+| **Screen navigation** | Instant screen shell with skeleton content (gray placeholder blocks matching expected layout). No spinners for screen loads. |
+| **Exercise load** | ExerciseContainer shell with pulsing placeholder. Exercise content fades in when ready. Target: <500ms. |
+| **Action submission** | Button shows inline spinner. No full-screen loading overlay. The action feels instant. |
+| **Data refresh** | Pull-to-refresh on mobile (curriculum map, wallet). Subtle spinner at top, content updates in place. |
+
+**Skeleton Design:**
+- Rounded rectangles matching the expected content dimensions
+- Neutral-100 background with subtle pulse animation (opacity 0.5 → 1.0, 1.5s loop)
+- Same layout as loaded state — no layout shift when content appears
+
+**Empty States:**
+
+| Screen | Empty State Message | Action |
+|--------|-------------------|--------|
+| **Curriculum map (new user)** | "Your learning journey starts here." | Primary button: "Start first mission" |
+| **Wallet-profile (pre-token reveal)** | Shows XP only. No empty state — XP exists from mission 1. | — |
+| **Wallet-profile (post-reveal, no transactions)** | "Complete a mission to see your first transaction." | Primary button: "Start mission" |
+| **Transaction list (empty)** | "No transactions yet. Your history will appear as you learn." | — |
+
+**Empty State Principles:**
+1. **Never show a blank screen.** Every empty state has a message and (where applicable) an action.
+2. **Tone is inviting.** Empty states frame the absence as an opportunity, not a deficiency.
+3. **One clear action.** If the user can fix the empty state, show exactly one button to do so.
+
+### Modal & Overlay Patterns
+
+**Overlay Hierarchy (from lightest to heaviest):**
+
+| Type | Use Case | Components | Behavior |
+|------|----------|------------|----------|
+| **Tooltip** | Jargon definitions | Tooltip | Tap/hover to open, tap-outside to dismiss. Positioned inline. |
+| **Bottom Sheet** | Long tooltip content, module detail on mobile | — (pattern, not a component) | Slides up from bottom, 50% screen max height, drag to dismiss. |
+| **Overlay Card** | BreakSuggestion, WelcomeBack (medium) | BreakSuggestion, WelcomeBack | Appears over current content with light backdrop. Tap action to dismiss. |
+| **Full-Screen Takeover** | MechanicReveal, WelcomeBack (extended) | MechanicReveal, WelcomeBack | Full viewport, blurred backdrop. Focus-trapped. Explicit dismiss action required. |
+
+**Overlay Rules:**
+
+1. **Maximum one overlay at a time.** Never stack modals, tooltips, or sheets. If a new overlay is triggered while one is open, the previous one closes first.
+2. **Always dismissible.** Every overlay can be closed: Escape key, tap-outside (except full-screen takeover), explicit close/action button.
+3. **Focus management.** On open: focus moves into overlay. On close: focus returns to trigger element. Full-screen takeovers trap focus.
+4. **No overlay during exercises.** Tooltips are the only overlay allowed during active exercise flow. No modals, no bottom sheets, no interruptions to the core loop.
+5. **Backdrop treatment.** Overlay cards: semi-transparent neutral-900 at 20% opacity. Full-screen takeovers: secondary-warm at 10-15% opacity with backdrop blur.
+
+### Progressive Disclosure Patterns
+
+**UI Element Visibility Rules:**
+
+| UI Element | Visibility Condition | Reveal Trigger |
+|------------|---------------------|----------------|
+| XP counter | Always (from first mission) | Immediate |
+| Token balance | After token curriculum milestone | TokenReveal (MechanicReveal) |
+| Gas indicator | After gas curriculum milestone | GasReveal (MechanicReveal) |
+| Wallet-profile full view | After wallet curriculum milestone | WalletReveal (MechanicReveal) |
+| Transaction list | After wallet curriculum milestone | Part of wallet-profile reveal |
+| Gas cost in FeedbackBanner | After gas curriculum milestone | Automatic — appears in feedback |
+| Token earned in MissionComplete | After token curriculum milestone | Automatic — appears in summary |
+
+**Reveal Animation Pattern:**
+
+All progressive reveals follow the same animation sequence:
+1. **Pre-reveal:** UI element's slot is simply absent (not hidden or placeholder). The layout is complete without it.
+2. **Trigger:** User completes the corresponding curriculum mission.
+3. **MechanicReveal takeover:** Full-screen moment (see component spec #16).
+4. **Post-dismiss:** UI element fades into its permanent position (300ms). Surrounding layout adjusts smoothly (200ms).
+5. **Permanent:** Element is now always visible in its position. No re-reveal on subsequent visits.
+
+**Disclosure Principles:**
+
+1. **No placeholder or "coming soon" indicators.** Users don't see locked slots for features they don't know about. The UI is simply smaller/simpler early on.
+2. **Layout never breaks on reveal.** New elements are designed to insert cleanly into existing layouts. The home screen, mission complete, and exercise views all have predefined slots that activate gracefully.
+3. **One reveal per mission.** If multiple mechanics could theoretically unlock in the same session, they queue — one MechanicReveal per mission complete, never stacked.
+
+### Micro-Interaction Patterns
+
+**Touch Interaction Standards:**
+
+| Interaction | Feedback | Timing |
+|-------------|----------|--------|
+| **Tap** | Subtle scale (98%) + opacity change | 100ms |
+| **Long press** | Not used anywhere in the app | — |
+| **Drag** | Element lifts (shadow-md), origin shows ghost | Immediate on grab |
+| **Swipe** | Not used for navigation. Only for dismiss on bottom sheets (vertical swipe down). | — |
+| **Pull to refresh** | Spinner appears at top of scrollable area | Activates after 60px pull |
+
+**Animation Standards:**
+
+| Category | Duration | Easing | Notes |
+|----------|----------|--------|-------|
+| **Micro-feedback** (tap, hover) | 100-150ms | ease-out | Fastest — feels instant |
+| **Component transitions** (fade, slide) | 200ms | ease-out | Standard for most UI changes |
+| **Screen transitions** | 200ms | ease-out | Push/pop navigation |
+| **Overlay enter** | 300ms | ease-out | Slightly slower for emphasis |
+| **Overlay exit** | 200ms | ease-in | Faster exit than enter |
+| **Number count-up** (tokens, XP) | 300ms | ease-out | Satisfying but not slow |
+| **MechanicReveal proof animation** | 1-1.5s | custom ease | The one moment of extended animation — the aha payoff |
+| **Skeleton pulse** | 1.5s loop | ease-in-out | Slow, calming pulse |
+
+**`prefers-reduced-motion` Overrides:**
+
+When the user has reduced motion enabled:
+- All transitions become instant (0ms) or use opacity-only fades (150ms)
+- Skeleton pulse becomes static (neutral-100 background, no animation)
+- MechanicReveal proof animation becomes a simple fade-in of the final state
+- Number count-ups become instant number display
+- Drag feedback uses opacity change instead of lift/shadow
+
+## Responsive Design & Accessibility
+
+### Responsive Strategy
+
+**Design Philosophy:** Mobile defines the design, desktop enhances it. Every screen is authored mobile-first and progressively enhanced for larger viewports. The mobile experience is never a compressed version of desktop — desktop is an expanded version of mobile.
+
+**Breakpoints (Tailwind mobile-first):**
+
+| Breakpoint | Range | Prefix | Primary User |
+|------------|-------|--------|-------------|
+| **Default** | 320px+ | (none) | Sarah — bus ride, one-handed |
+| **sm** | 640px+ | `sm:` | Large phones, small tablets |
+| **md** | 768px+ | `md:` | Tablets — touch-friendly, more real estate |
+| **lg** | 1024px+ | `lg:` | Desktop — Marc's evening sessions |
+
+### Screen-by-Screen Responsive Adaptation
+
+#### Home Screen
+
+| Element | Mobile (default) | Tablet (md) | Desktop (lg) |
+|---------|-----------------|-------------|--------------|
+| **Navigation** | BottomNav (fixed bottom) | BottomNav (fixed bottom) | TopNav (fixed top, logo left, 4 items right) |
+| **Next mission card** | Full-width, stacked layout | Full-width, stacked | Max-width 600px, centered |
+| **Streak indicator** | Compact (flame + count) below mission card | Compact, beside mission card | Compact, in TopNav area or beside mission card |
+| **Curriculum progress** | Circular ProgressBar below streak | Beside streak (horizontal row) | Sidebar summary or inline with mission card |
+| **Layout** | Single column, 16px padding | Single column, 24px padding | Centered content column (max 768px), 32px padding |
+
+#### Exercise View
+
+| Element | Mobile (default) | Tablet (md) | Desktop (lg) |
+|---------|-----------------|-------------|--------------|
+| **ExerciseContainer** | Full viewport height minus header | Full viewport height minus header | Max-width 800px centered, generous vertical padding |
+| **Exercise header** | Mission title + segmented progress + gas indicator | Same, slightly more spacious | Same, with more whitespace |
+| **Interactive Placement** | Vertical stack, full-width drag targets (48x48px) | Vertical or horizontal layout depending on exercise | Horizontal layout possible, larger drag targets (56x56px) |
+| **Concept Matching** | Tap-to-select (two sequential taps) | Tap-to-select or drag-to-connect | Drag-to-connect (lines between columns), side-by-side columns |
+| **Simulated Transaction** | Vertical steps, full-width | Vertical steps with wider context panel | Two-column: steps left, running summary right |
+| **Scenario Interpretation** | Stacked option cards, full-width | Stacked cards, wider | 2-column grid of option cards |
+| **FeedbackBanner** | Slides up from bottom, full-width | Same, full-width | Max-width 800px centered, same slide-up |
+| **BottomNav** | Fades out during exercise, reappears on complete | Same behavior | TopNav remains visible (less intrusive at top) |
+
+#### Curriculum Map
+
+| Element | Mobile (default) | Tablet (md) | Desktop (lg) |
+|---------|-----------------|-------------|--------------|
+| **Path layout** | Vertical scrolling path, nodes centered | Vertical path, nodes alternate left/right with more detail | Vertical path centered in content area, module detail panel to the right on node tap |
+| **CurriculumNode** | 48px circular nodes, title to the right | 56px nodes, title + mission count visible | 56px nodes, expanded detail inline or in side panel |
+| **Module detail** | Bottom sheet on node tap | Bottom sheet or inline expansion | Side panel (right, 320px wide) — no navigation away from map |
+| **Scroll position** | Auto-scrolls to current module on load | Same | Same |
+
+#### Wallet-Profile
+
+| Element | Mobile (default) | Tablet (md) | Desktop (lg) |
+|---------|-----------------|-------------|--------------|
+| **Token balance** | Large centered display (48px) | Same | Same, with more surrounding whitespace |
+| **Stats row** | XP + Streak, stacked or horizontal | Horizontal row | Horizontal row with more spacing |
+| **Transaction list** | Full-width list, grouped by date | Same, wider rows | Max-width 600px centered, same grouping |
+| **Layout** | Single column, vertical scroll | Single column | Two-column option: balance/stats left, transactions right |
+
+#### MechanicReveal (Full-Screen Takeover)
+
+| Element | Mobile (default) | Tablet (md) | Desktop (lg) |
+|---------|-----------------|-------------|--------------|
+| **Backdrop** | Full viewport, amber gradient + blur | Same | Same |
+| **Content card** | Near full-width (16px margin), slides up from bottom | Centered, max-width 500px, slides up | Centered, max-width 500px, fades in (no slide — desktop feels more refined with fade) |
+| **Icon** | 48px | 56px | 64px |
+| **Headline** | text-2xl | text-3xl | text-3xl |
+
+### Desktop Navigation — TopNav
+
+**At lg breakpoint (1024px+), BottomNav transforms to TopNav:**
+
+**Anatomy:**
+- Fixed to top of viewport, full-width, 64px height
+- Logo/wordmark on the left (links to home)
+- 4 navigation items on the right: Home, Curriculum, Wallet, Settings
+- Active item: primary color text + underline indicator
+- Inactive items: neutral-500 text
+- Warm off-white background (neutral-50) with subtle bottom border (neutral-200)
+
+**Behavior:**
+- Always visible on all screens including during exercises (top position is less intrusive than bottom for desktop exercise flow)
+- No collapse/hamburger — all 4 items always visible
+- Hover states on items (primary-light background)
+
+**Accessibility:** Same `<nav>` structure as BottomNav, `aria-current="page"` on active item, keyboard-navigable with Tab.
+
+### Accessibility Strategy
+
+**Compliance Target: WCAG 2.1 AA**
+
+This is the industry standard for good UX and covers the needs of transcendence's audience. AAA is not targeted but several AAA criteria are met incidentally (generous spacing, large text, no time limits on exercises).
+
+#### Color Accessibility
+
+| Requirement | Target | Implementation |
+|-------------|--------|----------------|
+| **Normal text contrast** | 4.5:1 minimum | All neutral-700/900 on neutral-50/100 backgrounds verified |
+| **Large text contrast** | 3:1 minimum | All heading text on backgrounds verified |
+| **Non-text contrast** | 3:1 minimum | Icons, borders, focus rings against backgrounds |
+| **Color independence** | Never color-only | Feedback uses icon + text + color. Progress uses shape + color. States use icon + label. |
+| **Focus indicators** | 2px ring, primary color | Visible on all interactive elements, not just browser default |
+
+#### Keyboard Navigation
+
+**Tab Order by Screen:**
+
+| Screen | Tab Order |
+|--------|-----------|
+| **Home** | Skip link → Nav items → Streak → Mission card → Start button |
+| **Exercise** | Skip link → Progress bar (informational) → Exercise interaction zone → Submit button → Feedback (when visible) |
+| **Curriculum** | Skip link → Nav items → Current module node → Next nodes (sequential) |
+| **Wallet** | Skip link → Nav items → Token balance → Stats → Transaction list items |
+
+**Keyboard Interactions:**
+
+| Component | Keys | Action |
+|-----------|------|--------|
+| **Button** | Enter, Space | Activate |
+| **Card (interactive)** | Enter | Navigate to destination |
+| **BottomNav/TopNav** | Tab between items, Enter to select | Navigate |
+| **Drag-and-drop** | Tab to select item, Arrow keys to move, Enter to place | Keyboard alternative to drag |
+| **Concept matching** | Tab to source, Enter to select, Tab to target, Enter to match | Sequential tap equivalent |
+| **Tooltip** | Focus trigger = show tooltip, Escape = dismiss | Keyboard equivalent of hover/tap |
+| **Modal/Overlay** | Tab cycles within modal, Escape = close | Focus trap |
+| **Scenario options** | Tab between cards, Enter to select, Tab to Submit | Card selection |
+
+**Skip Links:**
+- "Skip to main content" link visible on keyboard focus, hidden visually
+- Appears on every screen, targets the main content area (exercise, mission card, curriculum map)
+- Styled as primary Button when focused, positioned absolutely at top-left
+
+#### Screen Reader Support
+
+**ARIA Live Regions:**
+
+| Region | Type | Announces |
+|--------|------|-----------|
+| **Exercise feedback** | `aria-live="polite"` | "Correct. [Explanation]. Gas cost: 1 token." or "Not quite. [Explanation]. Gas cost: 1 token." |
+| **Progress update** | `aria-live="polite"` | "Exercise 3 of 5 complete" |
+| **Token balance change** | `aria-live="polite"` | "Knowledge Token balance: 37 tokens" |
+| **Mission complete** | `aria-live="polite"` | "Mission complete. You learned: [concept]. XP: +1." |
+| **Streak update** | `aria-live="polite"` | "Streak: day 5" |
+| **Gas indicator** | `aria-live="polite"` | "Gas spent: 1 token. Remaining: 36 tokens." |
+
+**Semantic Structure:**
+
+| Component | HTML Element | ARIA |
+|-----------|-------------|------|
+| **App shell** | `<main>`, `<nav>`, `<header>` | Landmark roles |
+| **ExerciseContainer** | `<main>` | `role="main"`, `aria-label="Exercise: [title]"` |
+| **FeedbackBanner** | `<div>` | `role="status"`, `aria-live="polite"` |
+| **MechanicReveal** | `<div>` | `role="dialog"`, `aria-modal="true"`, `aria-labelledby` |
+| **Tooltip** | `<div>` | `role="tooltip"`, `aria-describedby` on trigger |
+| **CurriculumNode** | `<li>` inside `<ol>` | `aria-label="Module [n]: [name] — [state]"` |
+| **ProgressBar** | `<div>` | `role="progressbar"`, `aria-valuenow`, `aria-valuemax` |
+| **BottomNav/TopNav** | `<nav>` | `aria-label="Main navigation"`, `aria-current="page"` |
+
+#### Motion & Animation Accessibility
+
+- All animations gated behind `prefers-reduced-motion` check (defined in micro-interaction patterns)
+- No auto-playing animations that can't be paused
+- No flashing content (WCAG 2.3.1 — three flashes threshold)
+- Exercise feedback is never animation-only — always accompanied by text and ARIA announcement
+
+#### Touch Accessibility
+
+| Requirement | Standard | Implementation |
+|-------------|----------|----------------|
+| **Touch target size** | 44x44px minimum (WCAG 2.5.5 AAA, adopted voluntarily) | All buttons, nav items, cards, exercise targets |
+| **Target spacing** | 8px minimum between adjacent targets | Prevents mis-taps on mobile |
+| **Gesture alternatives** | All gestures have tap/button alternatives | Drag-and-drop has keyboard alternative; swipe-to-dismiss has close button |
+| **Input modality** | Support touch, mouse, and keyboard | No interaction locked to a single input method |
+
+### Testing Strategy
+
+**Responsive Testing:**
+
+| Test Type | Tools | Frequency |
+|-----------|-------|-----------|
+| **Viewport testing** | Browser DevTools responsive mode | Every component, every PR |
+| **Real device testing** | Physical iPhone (Safari), Android (Chrome) | Before each milestone release |
+| **Cross-browser** | Chrome (primary), Firefox, Safari | Every PR for critical paths |
+| **Breakpoint transitions** | Manual resize through breakpoints | Every layout component |
+
+**Target Devices:**
+- iPhone SE (375px) — smallest supported mobile
+- iPhone 14/15 (390px) — common mobile
+- iPad (768px) — tablet baseline
+- MacBook 13" (1440px) — common desktop
+- External monitor (1920px) — wide desktop
+
+**Accessibility Testing:**
+
+| Test Type | Tools | Frequency |
+|-----------|-------|-----------|
+| **Automated audit** | axe-core (via browser extension or CI) | Every PR — zero violations policy |
+| **Keyboard navigation** | Manual testing (Tab, Enter, Escape, Arrows) | Every new component, every interactive flow |
+| **Screen reader** | VoiceOver (macOS/iOS) — primary team testing | Every new component, key flow changes |
+| **Color contrast** | Automated (axe-core) + manual spot-check | Design token changes, new color usage |
+| **Reduced motion** | Toggle `prefers-reduced-motion` in OS settings | Every animated component |
+
+**Acceptance Criteria for Accessibility:**
+- Zero axe-core violations on all pages
+- All interactive elements keyboard-operable
+- All exercise flows completable via keyboard alone
+- Screen reader announces all feedback, progress changes, and navigation
+- No color-only information — always redundant icon/text
+
+### Implementation Guidelines
+
+**Responsive Development Rules:**
+
+1. **Write mobile styles first.** Default CSS/Tailwind classes target mobile. Add `sm:`, `md:`, `lg:` prefixes only for larger viewport enhancements.
+2. **Use relative units.** `rem` for typography and spacing. `%` or `vw` for widths where fluid behavior is needed. `px` only for borders, shadows, and fixed-dimension elements (icons, touch target minimums).
+3. **Test at 320px.** If it works at 320px, it works everywhere. This is the floor — the narrowest supported viewport.
+4. **No horizontal scroll.** Ever. On any viewport. If content overflows horizontally, the layout is broken.
+5. **Images and media.** Use `max-width: 100%` and `height: auto` on all media. Serve appropriately sized assets (not desktop images on mobile).
+
+**Accessibility Development Rules:**
+
+1. **Semantic HTML first.** Use `<button>` for buttons, `<a>` for links, `<nav>` for navigation, `<main>` for main content. ARIA is a supplement, not a substitute for correct HTML.
+2. **Label everything.** Every interactive element has a visible label or `aria-label`. Every image has `alt` text (or `alt=""` if decorative).
+3. **Test with keyboard.** Before any component is considered complete, navigate it using only Tab, Enter, Escape, and Arrow keys.
+4. **Announce dynamic changes.** Any content that updates without a page reload (feedback, progress, token balance) uses `aria-live` to announce the change.
+5. **Focus management.** When opening modals/overlays, move focus in. When closing, return focus to trigger. Never leave focus in a removed element.
