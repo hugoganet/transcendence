@@ -8,18 +8,44 @@ The idea: most people are confused by blockchain, crypto, NFTs, and all that wor
 
 The proposition: a structured, progressive curriculum where you learn by doing — interactive missions, quizzes, simulations — all wrapped in crypto-themed gamification (Knowledge Tokens, streaks, leaderboards). No crypto-bro vibes, just clean and professional design.
 
-## Key Documents
+## Planning Artifacts
 
-- **[Product Brief](_bmad-output/planning-artifacts/product-brief-transcendence-2026-02-20.md)** — The full product vision, target users, success metrics, MVP scope, and future roadmap.
+All planning documents live in [`_bmad-output/planning-artifacts/`](_bmad-output/planning-artifacts/). Here's the reading order:
 
+### 1. Vision & Research
+
+- **[Product Brief](_bmad-output/planning-artifacts/product-brief-transcendence-2026-02-20.md)** — Product vision, target users, success metrics, MVP scope, and future roadmap.
 - **[Market Research](_bmad-output/planning-artifacts/research/market-blockchain-crypto-nft-learning-products-research-2026-02-20.md)** — Competitive landscape, user segments, pain points, and market opportunity.
+
+### 2. Product Requirements
+
+- **[PRD](_bmad-output/planning-artifacts/prd.md)** — Detailed product requirements: features, user stories, token economy, and acceptance criteria.
+- **[PRD Validation Report](_bmad-output/planning-artifacts/prd-validation-report.md)** — Independent review of the PRD (4/5 — usable with minor measurability fixes needed).
+
+### 3. UX & Design
+
+- **[UX Design Specification](_bmad-output/planning-artifacts/ux-design-specification.md)** — Full UX spec: design system (colors, typography, components), interaction patterns, mobile-first approach, Duolingo-meets-Headspace direction.
+- **[User Journey Flows](_bmad-output/planning-artifacts/user-journey-flows.md)** — 5 user journey flows with Mermaid diagrams (onboarding, daily session, token economy, social, re-engagement).
+- **[Visual Design Directions](_bmad-output/planning-artifacts/ux-design-directions.html)** — Open in a browser to see the interactive HTML mockup with color palettes, typography, and component previews.
+
+### 4. Curriculum
+
+- **[Curriculum Roadmap](_bmad-output/planning-artifacts/curriculum-roadmap.md)** — 6 categories → 18 chapters → 69 missions. Every mission defined with exercise type, difficulty, token rewards, and progressive reveal moments.
+
+### 5. Technical Architecture
+
+- **[Architecture](_bmad-output/planning-artifacts/architecture.md)** — Tech stack (React 19, Express 5, Prisma 7, PostgreSQL, Redis), monorepo structure, API design, auth strategy, deployment with Docker.
+
+### 6. Development Plan
+
+- **[Epics & Stories](_bmad-output/planning-artifacts/epics.md)** — 8 epics, 48 stories. Backend-first workflow, each story tagged [BE]/[FE]/[SHARED] with acceptance criteria and story points.
 
 ## Module Mapping
 
 Features mapped to Transcendence subject modules (22 points total):
 
 | # | Subject Module | Pts | Features |
-|---|---------------|-----|----------|
+| --- | --------------- | ----- | ---------- |
 | 1 | Web: FE + BE Frameworks (Major) | 2 | React/Next.js + NestJS/Express |
 | 2 | Web: Real-time features (Major) | 2 | Live market ticker, real-time notifications, WebSocket updates |
 | 3 | Web: User interaction (Major) | 2 | Community resources, profiles, friends system |
