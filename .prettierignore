@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+.turbo/
+*.tsbuildinfo
+pnpm-lock.yaml
+pnpm.lock.tmp
+_bmad*/
+_bmad-output/
+.github/
+.agent/
+.codex/
+.cursor/
+.windsurf/
+.claude/
+transcendence.subject.md
