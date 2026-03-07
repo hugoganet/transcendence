@@ -1,0 +1,121 @@
+# generated: 2026-03-07
+# project: transcendence
+# project_key: NOKEY
+# tracking_system: file-system
+# story_location: _bmad-output/implementation-artifacts
+
+# STATUS DEFINITIONS:
+# ==================
+# Epic Status:
+#   - backlog: Epic not yet started
+#   - in-progress: Epic actively being worked on
+#   - done: All stories in epic completed
+#
+# Epic Status Transitions:
+#   - backlog → in-progress: Automatically when first story is created (via create-story)
+#   - in-progress → done: Manually when all stories reach 'done' status
+#
+# Story Status:
+#   - backlog: Story only exists in epic file
+#   - ready-for-dev: Story file created in stories folder
+#   - in-progress: Developer actively working on implementation
+#   - review: Ready for code review (via Dev's code-review workflow)
+#   - done: Story completed
+#
+# Retrospective Status:
+#   - optional: Can be completed but not required
+#   - done: Retrospective has been completed
+#
+# WORKFLOW NOTES:
+# ===============
+# - Epic transitions to 'in-progress' automatically when first story is created
+# - Stories can be worked in parallel if team capacity allows
+# - SM typically creates next story after previous one is 'done' to incorporate learnings
+# - Dev moves story to 'review', then runs code-review (fresh context, different LLM recommended)
+
+generated: 2026-03-07
+project: transcendence
+project_key: NOKEY
+tracking_system: file-system
+story_location: _bmad-output/implementation-artifacts
+
+development_status:
+  # Epic 1: Project Foundation & Infrastructure
+  epic-1: backlog
+  1-1-monorepo-scaffold-and-dev-tooling: backlog
+  1-2-database-schema-and-prisma-setup: backlog
+  1-3-express-server-and-security-middleware: backlog
+  1-4-redis-and-session-infrastructure: backlog
+  1-5-docker-compose-and-https-deployment: backlog
+  1-6-privacy-policy-and-terms-of-service-pages: backlog
+  epic-1-retrospective: optional
+
+  # Epic 2: User Authentication & Profiles
+  epic-2: backlog
+  2-1-email-password-registration-and-login: backlog
+  2-2-logout-and-session-management: backlog
+  2-3-oauth-2-0-authentication: backlog
+  2-4-password-reset: backlog
+  2-5-two-factor-authentication: backlog
+  2-6-user-profile-management: backlog
+  2-7-financial-disclaimer-and-onboarding-gate: backlog
+  2-8-auth-frontend-registration-login-and-profile-pages: backlog
+  epic-2-retrospective: optional
+
+  # Epic 3: Curriculum Engine & Learning Path
+  epic-3: backlog
+  3-1-curriculum-content-json-structure-and-loader: backlog
+  3-2-curriculum-progress-api: backlog
+  3-3-mission-completion-and-progress-tracking: backlog
+  3-4-jargon-tooltips-api: backlog
+  3-5-learning-chain-visualization-api: backlog
+  3-6-curriculum-frontend-map-mission-flow-and-tooltips: backlog
+  epic-3-retrospective: optional
+
+  # Epic 4: Interactive Exercise Framework
+  epic-4: backlog
+  4-1-exercise-submission-api-and-feedback-engine: backlog
+  4-2-interactive-placement-exercise-component: backlog
+  4-3-concept-matching-exercise-component: backlog
+  4-4-step-by-step-simulated-transaction-component: backlog
+  4-5-scenario-based-interpretation-component: backlog
+  4-6-exercisecontainer-and-mission-flow-integration: backlog
+  epic-4-retrospective: optional
+
+  # Epic 5: Token Economy & Gamification
+  epic-5: backlog
+  5-1-token-ledger-and-balance-api: backlog
+  5-2-gas-fee-mechanic-api: backlog
+  5-3-streak-tracking-api: backlog
+  5-4-achievements-api: backlog
+  5-5-leaderboard-api: backlog
+  5-6-progressive-mechanic-reveal-api: backlog
+  5-7-wallet-profile-and-gamification-frontend: backlog
+  epic-5-retrospective: optional
+
+  # Epic 6: Social & Community
+  epic-6: backlog
+  6-1-friends-system-api: backlog
+  6-2-online-presence-via-socket-io: backlog
+  6-3-public-profiles-api: backlog
+  6-4-certificate-generation-and-sharing-api: backlog
+  6-5-social-frontend-friends-profiles-and-certificates: backlog
+  epic-6-retrospective: optional
+
+  # Epic 7: Real-Time Notifications & Engagement
+  epic-7: backlog
+  7-1-notification-system-api-and-socket-io-push: backlog
+  7-2-re-engagement-and-streak-reminder-logic: backlog
+  7-3-concept-refresher-api: backlog
+  7-4-engagement-frontend-notifications-welcomeback-and-refresher: backlog
+  epic-7-retrospective: optional
+
+  # Epic 8: Accessibility, i18n & Compliance
+  epic-8: backlog
+  8-1-i18n-infrastructure-and-language-switching: backlog
+  8-2-gdpr-data-export-and-deletion-api: backlog
+  8-3-email-service-integration: backlog
+  8-4-design-system-component-library: backlog
+  8-5-cross-browser-testing-and-keyboard-navigation: backlog
+  8-6-gdpr-and-settings-frontend: backlog
+  epic-8-retrospective: optional
