@@ -217,36 +217,43 @@ Users can access a deployed, secure platform via HTTPS with Docker. Delivers the
 Users can register (email/password or OAuth), log in, manage their profile (display name, bio, avatar), reset passwords, enable 2FA, and see the financial disclaimer. Complete identity system with age eligibility gate.
 **FRs covered:** FR1, FR2, FR3, FR4, FR5, FR7, FR8, FR50, FR51
 **NFRs addressed:** NFR6, NFR9, NFR10, NFR11, NFR12, NFR26, NFR27
+**Note:** Stories tagged [BE], [FE], [SHARED] to enable backend-first development.
 
 ### Epic 3: Curriculum Engine & Learning Path
 Users can view the curriculum map, follow a sequential learning path (69 missions across 18 chapters and 6 categories), resume where they left off, track overall progress, access jargon tooltips, view learning chain visualization, and complete post-module self-assessments. Curriculum content served from static JSON files.
 **FRs covered:** FR9, FR10, FR11, FR12, FR14, FR16, FR17, FR48, FR52, FR53
 **NFRs addressed:** NFR2, NFR14
+**Note:** Stories tagged [BE], [FE], [SHARED] to enable backend-first development.
 
 ### Epic 4: Interactive Exercise Framework
 Users can complete all 4 exercise types (interactive placement, concept matching, simulated transactions, scenario interpretation) with immediate feedback (<200ms), touch + mouse support, and keyboard navigation. The exercise-feedback-reward micro-loop works end-to-end.
 **FRs covered:** FR18, FR19, FR20, FR21, FR22, FR23
 **NFRs addressed:** NFR1, NFR18, NFR22
+**Note:** Stories tagged [BE], [FE], [SHARED] to enable backend-first development.
 
 ### Epic 5: Token Economy & Gamification
 Users can earn Knowledge Tokens, experience gas-fee mechanics (flat cost per submission), maintain streaks, earn achievements, view leaderboards, and access their wallet-profile with token balance and earning history. Progressive mechanic reveal tied to curriculum milestones (Tokens at 2.2.4, Wallet-profile at 3.1.4, Gas-fee at 3.3.3, Full dashboard at 6.3.4).
 **FRs covered:** FR6, FR24, FR25, FR26, FR27, FR28, FR29, FR30
 **NFRs addressed:** NFR4, NFR15
+**Note:** Stories tagged [BE], [FE], [SHARED] to enable backend-first development.
 
 ### Epic 6: Social & Community
 Users can add/remove friends, see friend online status, view public profiles, earn and share certificates upon curriculum completion, and share achievements to external platforms (LinkedIn, Twitter/X).
 **FRs covered:** FR15, FR31, FR32, FR33, FR34
 **NFRs addressed:** NFR3 (presence via Socket.IO)
+**Note:** Stories tagged [BE], [FE], [SHARED] to enable backend-first development.
 
 ### Epic 7: Real-Time Notifications & Engagement
 Users receive real-time notifications (streak reminders, milestones, re-engagement after 7+ days), welcome-back experience with progress-first messaging, concept refresher after extended absence, and break suggestions after 3+ consecutive missions. Socket.IO push system with auto-reconnect and HTTP fallback.
 **FRs covered:** FR13, FR35, FR36, FR37, FR38
 **NFRs addressed:** NFR3, NFR13, NFR16
+**Note:** Stories tagged [BE], [FE], [SHARED] to enable backend-first development.
 
 ### Epic 8: Accessibility, i18n & Compliance
 Users can switch languages (FR/EN/+1), access the platform across all viewports with adapted layouts, navigate with keyboard, use the platform on Chrome/Firefox/Safari, request GDPR data export and account deletion with confirmation emails. Design system delivers 10+ reusable components with WCAG AA compliance.
 **FRs covered:** FR39, FR40, FR41, FR42, FR43, FR44, FR45, FR49
 **NFRs addressed:** NFR17, NFR19, NFR20, NFR21, NFR25
+**Note:** Stories tagged [BE], [FE], [SHARED] to enable backend-first development.
 
 ## Epic 1: Project Foundation & Infrastructure
 

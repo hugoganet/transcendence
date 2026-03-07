@@ -43,7 +43,7 @@ development_status:
   # Epic 1: Project Foundation & Infrastructure
   epic-1: in-progress
   1-1-monorepo-scaffold-and-dev-tooling: done
-  1-2-database-schema-and-prisma-setup: backlog
+  1-2-database-schema-and-prisma-setup: done
   1-3-express-server-and-security-middleware: backlog
   1-4-redis-and-session-infrastructure: backlog
   1-5-docker-compose-and-https-deployment: backlog
