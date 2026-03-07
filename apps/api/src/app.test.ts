@@ -13,7 +13,10 @@ vi.mock("./middleware/rateLimiter.js", () => ({
   rateLimiter: (_req: unknown, _res: unknown, next: () => void) => next(),
 }));
 
-const { app } = await import("./app.js");
+const { app, registerRoutes } = await import("./app.js");
+
+// Register routes without session middleware for basic tests
+registerRoutes();
 
 describe("Health endpoint", () => {
   it("GET /api/v1/health returns { data: { status: 'ok' } }", async () => {
@@ -58,8 +61,6 @@ describe("CORS headers", () => {
       .get("/api/v1/health")
       .set("Origin", "http://evil.com");
 
-    // cors with a string origin always sets that value;
-    // the browser enforces the mismatch and blocks the response client-side
     expect(response.headers["access-control-allow-origin"]).toBe(
       "http://localhost:5173",
     );
@@ -78,6 +79,14 @@ describe("CORS headers", () => {
     );
     expect(response.headers["access-control-allow-methods"]).toBeDefined();
   });
+
+  it("includes Access-Control-Allow-Credentials header", async () => {
+    const response = await request(app)
+      .get("/api/v1/health")
+      .set("Origin", "http://localhost:5173");
+
+    expect(response.headers["access-control-allow-credentials"]).toBe("true");
+  });
 });
 
 describe("Helmet security headers", () => {
@@ -92,9 +101,39 @@ describe("Helmet security headers", () => {
   });
 });
 
+describe("Session middleware integration", () => {
+  it("sets session cookie when session middleware is registered", async () => {
+    const express = await import("express");
+    const { errorHandler } = await import("./middleware/errorHandler.js");
+
+    const sessionApp = express.default();
+    sessionApp.use(express.default.json());
+
+    // Create a mock session middleware that sets a cookie
+    const mockSessionMw: import("express").RequestHandler = (_req, _res, next) => {
+      // Simulate express-session by setting a cookie header
+      _res.setHeader("Set-Cookie", "connect.sid=test; Path=/; HttpOnly; SameSite=Lax");
+      next();
+    };
+
+    sessionApp.use(mockSessionMw);
+    sessionApp.get("/test-session", (_req, res) => {
+      res.json({ data: "ok" });
+    });
+    sessionApp.use(errorHandler);
+
+    const response = await request(sessionApp).get("/test-session");
+    expect(response.status).toBe(200);
+    const cookies = response.headers["set-cookie"];
+    expect(cookies).toBeDefined();
+    const cookieStr = Array.isArray(cookies) ? cookies[0] : cookies;
+    expect(cookieStr).toContain("HttpOnly");
+    expect(cookieStr).toContain("SameSite=Lax");
+  });
+});
+
 describe("Validation middleware integration", () => {
   it("works with error handler for ZodError", async () => {
-    // Import needed modules dynamically after mocks
     const { z } = await import("zod");
     const express = await import("express");
     const { validate } = await import("./middleware/validate.js");

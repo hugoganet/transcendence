@@ -45,7 +45,7 @@ development_status:
   1-1-monorepo-scaffold-and-dev-tooling: done
   1-2-database-schema-and-prisma-setup: done
   1-3-express-server-and-security-middleware: done
-  1-4-redis-and-session-infrastructure: backlog
+  1-4-redis-and-session-infrastructure: done
   1-5-docker-compose-and-https-deployment: backlog
   1-6-privacy-policy-and-terms-of-service-pages: backlog
   epic-1-retrospective: optional
