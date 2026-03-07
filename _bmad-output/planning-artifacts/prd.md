@@ -209,9 +209,9 @@ SEO is not a concern for the in-app experience. Marketing/landing pages can be s
 
 | Viewport | Priority | Experience |
 | --- | --- | --- |
-| **Desktop** (1024px+) | Primary | Full layout — curriculum map, leaderboard, profile |
+| **Mobile** (320-767px) | Primary | Single-column — mission-focused, swipeable exercises, bottom nav |
 | **Tablet** (768-1023px) | Secondary | Adapted layout — touch-friendly exercises |
-| **Mobile** (320-767px) | Secondary | Single-column — mission-focused, swipeable exercises, bottom nav |
+| **Desktop** (1024px+) | Secondary | Full layout — curriculum map, leaderboard, profile |
 
 Interactive exercises (drag-and-drop, simulations) must work with both mouse and touch input.
 
@@ -345,7 +345,7 @@ Post-MVP potential: up to 24 total points (15 MVP + 9 growth).
 
 - **FR9:** Users can view a curriculum map showing all available modules and their progression
 - **FR10:** Users can follow a progressive learning path where each module unlocks sequentially (Module N requires Module N-1 completion)
-- **FR11:** Users can complete missions of 10-15 minutes each covering blockchain topics (distributed ledgers, consensus mechanisms, cryptocurrencies, wallets, smart contracts, NFTs, DeFi, real-world applications)
+- **FR11:** Users can complete missions of 2-5 minutes each covering blockchain topics (distributed ledgers, consensus mechanisms, cryptocurrencies, wallets, smart contracts, NFTs, DeFi, real-world applications)
 - **FR12:** Users can resume their learning from exactly where they left off after any absence
 - **FR13:** Users can receive a concept refresher when returning after 7 or more days of inactivity
 - **FR14:** Users can view their overall curriculum progress and completion percentage
@@ -367,7 +367,7 @@ Post-MVP potential: up to 24 total points (15 MVP + 9 growth).
 
 - **FR24:** Users can earn Knowledge Tokens by completing missions and exercises
 - **FR25:** Users can maintain and view daily learning streaks
-- **FR26:** Users experience a gas-fee cooldown mechanic when making exercise mistakes, with a brief delay before continuing
+- **FR26:** Users experience a gas-fee mechanic where every exercise submission costs Knowledge Tokens (flat cost per submission, correct or incorrect)
 - **FR27:** Users can view their position on leaderboards
 - **FR28:** Users can earn achievements for completing modules, reaching Knowledge Token thresholds, and maintaining streak targets
 - **FR29:** Users see their cumulative progress (missions completed, modules mastered) highlighted after a streak reset, rather than a zero-streak counter

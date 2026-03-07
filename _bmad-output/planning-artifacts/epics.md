@@ -269,6 +269,7 @@ So that the team can begin development with a consistent, type-safe foundation.
 **And** ESLint + Prettier are configured with project conventions (camelCase, PascalCase components)
 **And** Vitest is configured in apps/web and apps/api with a passing placeholder test each
 **And** `.gitignore` includes node_modules, dist, .env, and build artifacts
+**And** `README.md` exists at the repo root with all 42-required sections (project description, setup instructions, environment variables, usage, team members)
 
 ### Story 1.2: Database Schema & Prisma Setup `[BE]`
 
