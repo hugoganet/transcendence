@@ -62,6 +62,11 @@ WORKDIR /app/apps/api
 EXPOSE 3000
 
 # Run migrations then start server
-# Note: tsx is used because Prisma 7 generates extensionless ESM imports
-# that Node.js strict ESM resolution rejects. Tracked as tech debt.
+#
+# TECH DEBT: tsx runtime workaround (Epic 1, Story 1.5)
+# Prisma 7 generated code uses extensionless ESM imports (e.g., ./internal/class)
+# which Node.js strict ESM resolution rejects. tsx handles these at runtime.
+# Revisit when Prisma releases a fix for extensionless imports.
+# Track: https://github.com/prisma/prisma/issues — search "extensionless ESM"
+# If fixed, replace tsx with: node dist/src/index.js
 CMD ["sh", "-c", "./node_modules/.bin/prisma migrate deploy && ./node_modules/.bin/tsx dist/src/index.js"]

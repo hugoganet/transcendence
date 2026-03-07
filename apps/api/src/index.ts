@@ -13,9 +13,18 @@ const io = createSocketServer(httpServer, sessionMiddleware);
 
 export { io };
 
+// Graceful Shutdown Chain (Epic 1 — finalized in Story 1.4 review)
+// Order matters — close consumers before backends:
+//   1. httpServer.close()       — stop accepting new HTTP connections
+//   2. io.close()               — close Socket.IO server + its internal ioredis pub/sub clients
+//   3. disconnectSessionRedis() — close node-redis session store client
+//   4. disconnectRedis()        — close ioredis rate limiter client
+//   5. prisma.$disconnect()     — close Prisma client
+//   6. prismaPool.end()         — close pg connection pool
+// When adding new infrastructure (e.g., Resend, Passport), add shutdown here
+// AFTER consumers and BEFORE databases.
 function gracefulShutdown(signal: string) {
   console.log(`Received ${signal}. Shutting down...`);
-  // Close HTTP server first (stops accepting new connections), then Socket.IO (closes adapter + pub/sub clients)
   httpServer.close(() => {
     io.close()
       .then(() => disconnectSessionRedis())
