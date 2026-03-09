@@ -8,17 +8,44 @@ datasource db {
   // URL configured in prisma.config.ts — NOT here
 }
 
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+  FACEBOOK
+  INSTAGRAM
+}
+
 model User {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  passwordHash  String?
-  displayName   String?
-  bio           String?
-  avatarUrl     String?
-  locale        String    @default("en")
-  ageConfirmed  Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id                 String       @id @default(uuid())
+  email              String?      @unique
+  passwordHash       String?
+  authProvider       AuthProvider @default(LOCAL)
+  displayName        String?
+  bio                String?
+  avatarUrl          String?
+  locale             String       @default("en")
+  ageConfirmed       Boolean      @default(false)
+  twoFactorSecret    String?
+  twoFactorEnabled   Boolean      @default(false)
+  disclaimerAcceptedAt DateTime?
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  oauthAccounts      OAuthAccount[]
 
   @@index([createdAt])
+}
+
+model OAuthAccount {
+  id                String       @id @default(uuid())
+  provider          AuthProvider
+  providerAccountId String
+  accessToken       String?
+  refreshToken      String?
+  userId            String
+  user              User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }

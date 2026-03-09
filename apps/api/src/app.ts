@@ -2,9 +2,11 @@ import "dotenv/config";
 import express, { type Express, type RequestHandler } from "express";
 import helmet from "helmet";
 import cors from "cors";
+import passport from "./config/passport.js";
 import { rateLimiter } from "./middleware/rateLimiter.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { AppError } from "./utils/AppError.js";
+import { authRouter } from "./routes/auth.js";
 
 const app: Express = express();
 
@@ -22,28 +24,36 @@ app.use(
 // 3. Body parsing
 app.use(express.json());
 
-// 4. Rate limiting
+// 4. Form body parsing (required for Passport)
+app.use(express.urlencoded({ extended: false }));
+
+// 5. Rate limiting
 app.use(rateLimiter);
 
 // Session middleware slot — registered via registerRoutes() after session is available
-// 5. Routes, 6. 404, 7. Error handler are deferred to registerRoutes()
+// 6. Routes, 7. 404, 8. Error handler are deferred to registerRoutes()
 
 function registerRoutes(sessionMw?: RequestHandler) {
   if (sessionMw) {
     app.use(sessionMw);
   }
 
-  // 5. Routes
+  // Passport initialization (after session middleware)
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  // 6. Routes
   app.get("/api/v1/health", (_req, res) => {
     res.json({ data: { status: "ok" } });
   });
+  app.use("/api/v1/auth", authRouter);
 
-  // 6. 404 catch-all (Express 5 named wildcard)
+  // 7. 404 catch-all (Express 5 named wildcard)
   app.all("/{*splat}", (_req, _res, next) => {
     next(AppError.notFound("Route not found"));
   });
 
-  // 7. Global error handler (must be last)
+  // 8. Global error handler (must be last)
   app.use(errorHandler);
 }
 

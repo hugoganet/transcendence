@@ -39,6 +39,11 @@ if (process.env.NODE_ENV === "production" && sessionSecret === "change-me-in-pro
 }
 
 const ttlSeconds = parseInt(process.env.SESSION_TTL_SECONDS ?? "1800", 10);
+if (isNaN(ttlSeconds) || ttlSeconds < 900 || ttlSeconds > 7200) {
+  throw new Error(
+    "SESSION_TTL_SECONDS must be between 900 (15 min) and 7200 (120 min)",
+  );
+}
 
 const store = new RedisStore({
   client: sessionRedisClient,
@@ -49,6 +54,7 @@ export const sessionMiddleware = session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
+  rolling: true,
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

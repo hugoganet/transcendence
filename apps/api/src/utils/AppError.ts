@@ -35,6 +35,13 @@ export class AppError extends Error {
     return new AppError(404, "NOT_FOUND", message);
   }
 
+  static conflict(
+    message = "Conflict",
+    details?: Record<string, string>,
+  ): AppError {
+    return new AppError(409, "CONFLICT", message, details);
+  }
+
   static internal(message = "Internal server error"): AppError {
     return new AppError(500, "INTERNAL_ERROR", message);
   }

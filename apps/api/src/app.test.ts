@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
+import session from "express-session";
 import request from "supertest";
 
 // Mock Redis before importing app (which imports rateLimiter → redis)
@@ -13,10 +14,25 @@ vi.mock("./middleware/rateLimiter.js", () => ({
   rateLimiter: (_req: unknown, _res: unknown, next: () => void) => next(),
 }));
 
+// Mock database (used by passport config)
+vi.mock("./config/database.js", () => ({
+  prisma: {
+    user: {
+      findUnique: vi.fn().mockResolvedValue(null),
+      create: vi.fn(),
+    },
+  },
+}));
+
 const { app, registerRoutes } = await import("./app.js");
 
-// Register routes without session middleware for basic tests
-registerRoutes();
+// Register routes with session middleware (required for Passport)
+const sessionMw = session({
+  secret: "test-secret",
+  resave: false,
+  saveUninitialized: false,
+});
+registerRoutes(sessionMw);
 
 describe("Health endpoint", () => {
   it("GET /api/v1/health returns { data: { status: 'ok' } }", async () => {
