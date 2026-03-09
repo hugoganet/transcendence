@@ -55,6 +55,8 @@ export type {
   CompleteMissionBody,
   CompleteMissionResponse,
   ResumeResponse,
+  ChainBlock,
+  LearningChainResponse,
 } from "./types/progress.js";
 export type {
   ExerciseType,

@@ -30,7 +30,7 @@ vi.mock("../utils/contentLoader.js", () => ({
   getContent: mockGetContent,
 }));
 
-const { getCurriculumWithProgress, getMissionDetail, getMissionAccessStatus, completeMission, getResumePoint } =
+const { getCurriculumWithProgress, getMissionDetail, getMissionAccessStatus, completeMission, getResumePoint, getLearningChain } =
   await import("./curriculumService.js");
 
 import { createMockContent } from "../__fixtures__/curriculum.js";
@@ -479,5 +479,97 @@ describe("getResumePoint", () => {
 
     expect(result).not.toBeNull();
     expect(result!.missionTitle).toBe("Who Do You Trust?");
+  });
+});
+
+describe("getLearningChain", () => {
+  it("returns 3 blocks in chronological order for user with 3 completed missions", async () => {
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
+      { missionId: "1.1.2", completedAt: new Date("2026-03-02T10:00:00Z") },
+      { missionId: "2.1.1", completedAt: new Date("2026-03-03T10:00:00Z") },
+    ]);
+
+    const result = await getLearningChain("user-1", "en");
+
+    expect(result.totalBlocks).toBe(3);
+    expect(result.blocks).toHaveLength(3);
+    expect(result.blocks[0].missionId).toBe("1.1.1");
+    expect(result.blocks[1].missionId).toBe("1.1.2");
+    expect(result.blocks[2].missionId).toBe("2.1.1");
+    // Verify block fields: index, categoryId, categoryName
+    expect(result.blocks[0].index).toBe(0);
+    expect(result.blocks[1].index).toBe(1);
+    expect(result.blocks[2].index).toBe(2);
+    expect(result.blocks[0].categoryId).toBe("1");
+    expect(result.blocks[2].categoryId).toBe("2");
+    expect(result.blocks[0].categoryName).toBe("Category One");
+    expect(result.blocks[2].categoryName).toBe("Category Two");
+  });
+
+  it("blocks are linked: block[1].previousMissionId === block[0].missionId", async () => {
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
+      { missionId: "1.1.2", completedAt: new Date("2026-03-02T10:00:00Z") },
+    ]);
+
+    const result = await getLearningChain("user-1", "en");
+
+    expect(result.blocks[1].previousMissionId).toBe("1.1.1");
+  });
+
+  it("first block has previousMissionId === null", async () => {
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
+    ]);
+
+    const result = await getLearningChain("user-1", "en");
+
+    expect(result.blocks[0].previousMissionId).toBeNull();
+  });
+
+  it("new user (no completions) → empty chain response", async () => {
+    mockPrisma.userProgress.findMany.mockResolvedValue([]);
+
+    const result = await getLearningChain("user-1", "en");
+
+    expect(result.blocks).toEqual([]);
+    expect(result.totalBlocks).toBe(0);
+    expect(result.categoriesReached).toBe(0);
+    expect(result.latestBlockAt).toBeNull();
+  });
+
+  it("locale fallback: non-existent locale → English content used", async () => {
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
+    ]);
+
+    const result = await getLearningChain("user-1", "fr");
+
+    expect(result.blocks[0].missionTitle).toBe("Who Do You Trust?");
+  });
+
+  it("categoriesReached counts distinct categories", async () => {
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
+      { missionId: "1.1.2", completedAt: new Date("2026-03-02T10:00:00Z") },
+      { missionId: "2.1.1", completedAt: new Date("2026-03-03T10:00:00Z") },
+    ]);
+
+    const result = await getLearningChain("user-1", "en");
+
+    expect(result.categoriesReached).toBe(2);
+  });
+
+  it("latestBlockAt matches last block's completedAt", async () => {
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
+      { missionId: "1.1.2", completedAt: new Date("2026-03-02T10:00:00Z") },
+    ]);
+
+    const result = await getLearningChain("user-1", "en");
+
+    expect(result.latestBlockAt).toBe("2026-03-02T10:00:00.000Z");
+    expect(result.latestBlockAt).toBe(result.blocks[result.blocks.length - 1].completedAt);
   });
 });

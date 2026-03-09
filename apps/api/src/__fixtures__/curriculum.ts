@@ -108,7 +108,11 @@ export function createMockContent(mockGetContent: ReturnType<typeof vi.fn>) {
       blockchain: { term: "blockchain", definition: "A chain of blocks" },
     });
     const uiStringsMap = new Map();
-    uiStringsMap.set("en", {});
+    uiStringsMap.set("en", {
+      categories: { cat1: "Category One", cat2: "Category Two" },
+      chapters: {},
+      exerciseTypes: {},
+    });
 
     mockGetContent.mockReturnValue({
       curriculum: minimalCurriculum,

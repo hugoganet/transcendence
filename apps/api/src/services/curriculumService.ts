@@ -12,6 +12,8 @@ import type {
   MissionProgressOverlay,
   CompleteMissionResponse,
   ResumeResponse,
+  ChainBlock,
+  LearningChainResponse,
 } from "@transcendence/shared";
 import type { Category, Chapter, Mission } from "@transcendence/shared";
 
@@ -476,6 +478,61 @@ export async function completeMission(
     nextMissionId,
     completionPercentage,
     progressiveReveal: mission.progressiveReveal,
+  };
+}
+
+export async function getLearningChain(
+  userId: string,
+  locale: string,
+): Promise<LearningChainResponse> {
+  const completedMissions = await prisma.userProgress.findMany({
+    where: { userId, status: "COMPLETED" },
+    orderBy: { completedAt: "asc" },
+    select: { missionId: true, completedAt: true },
+  });
+
+  if (completedMissions.length === 0) {
+    return { blocks: [], totalBlocks: 0, categoriesReached: 0, latestBlockAt: null };
+  }
+
+  const content = getContent();
+  let missions = content.missions.get(locale);
+  if (!missions) {
+    missions = content.missions.get("en");
+  }
+  if (!missions) {
+    throw new AppError(500, "CONTENT_UNAVAILABLE", "Mission content not available");
+  }
+
+  const structure = content.curriculum;
+  const uiStrings = content.uiStrings.get(locale) ?? content.uiStrings.get("en");
+  const categorySet = new Set<string>();
+
+  const blocks: ChainBlock[] = completedMissions.map((progress, index) => {
+    const categoryId = progress.missionId.split(".")[0];
+    categorySet.add(categoryId);
+    const category = structure.find((c) => c.id === categoryId);
+    const missionContent = missions[progress.missionId];
+    const categoryName = (category && uiStrings?.categories[category.name])
+      ?? category?.name
+      ?? `Category ${categoryId}`;
+
+    return {
+      index,
+      missionId: progress.missionId,
+      missionTitle: missionContent?.title ?? `Mission ${progress.missionId}`,
+      categoryId,
+      categoryName,
+      completedAt: progress.completedAt?.toISOString() ?? new Date().toISOString(),
+      previousMissionId: index > 0 ? completedMissions[index - 1].missionId : null,
+    };
+  });
+
+  return {
+    blocks,
+    totalBlocks: blocks.length,
+    categoriesReached: categorySet.size,
+    latestBlockAt: blocks[blocks.length - 1].completedAt,
   };
 }
 

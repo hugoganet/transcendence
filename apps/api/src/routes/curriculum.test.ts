@@ -347,6 +347,48 @@ describe("Curriculum Routes", () => {
     });
   });
 
+  describe("GET /api/v1/curriculum/chain", () => {
+    it("returns 200 with blocks for authenticated user with completions", async () => {
+      mockPrisma.userProgress.findMany.mockResolvedValue([
+        { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
+        { missionId: "1.1.2", completedAt: new Date("2026-03-02T10:00:00Z") },
+      ]);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/curriculum/chain");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.totalBlocks).toBe(2);
+      expect(res.body.data.blocks).toHaveLength(2);
+      expect(res.body.data.blocks[0].missionId).toBe("1.1.1");
+      expect(res.body.data.blocks[0].previousMissionId).toBeNull();
+      expect(res.body.data.blocks[1].previousMissionId).toBe("1.1.1");
+      expect(res.body.data.categoriesReached).toBe(1);
+      expect(res.body.data.latestBlockAt).toBe("2026-03-02T10:00:00.000Z");
+    });
+
+    it("returns 200 with empty chain for authenticated user with no completions", async () => {
+      mockPrisma.userProgress.findMany.mockResolvedValue([]);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/curriculum/chain");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.blocks).toEqual([]);
+      expect(res.body.data.totalBlocks).toBe(0);
+      expect(res.body.data.categoriesReached).toBe(0);
+      expect(res.body.data.latestBlockAt).toBeNull();
+    });
+
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/curriculum/chain");
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+  });
+
   describe("GET /api/v1/curriculum/resume", () => {
     it("returns 200 with first mission for new user", async () => {
       const app = createTestApp(true);

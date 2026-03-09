@@ -69,3 +69,20 @@ export interface ResumeResponse {
   categoryId: string;
   completionPercentage: number;
 }
+
+export interface ChainBlock {
+  index: number;
+  missionId: string;
+  missionTitle: string;
+  categoryId: string;
+  categoryName: string;
+  completedAt: string;
+  previousMissionId: string | null;
+}
+
+export interface LearningChainResponse {
+  blocks: ChainBlock[];
+  totalBlocks: number;
+  categoriesReached: number;
+  latestBlockAt: string | null;
+}

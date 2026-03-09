@@ -7,6 +7,7 @@ import {
   getMissionDetail,
   completeMission,
   getResumePoint,
+  getLearningChain,
 } from "../services/curriculumService.js";
 
 export const curriculumRouter = Router();
@@ -18,6 +19,18 @@ curriculumRouter.get(
   async (req: Request, res: Response) => {
     const user = req.user as Express.User;
     const data = await getCurriculumWithProgress(user.id);
+    res.json({ data });
+  },
+);
+
+// GET /api/v1/curriculum/chain — authenticated, returns learning chain visualization
+curriculumRouter.get(
+  "/chain",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const user = req.user as Express.User;
+    const locale = user.locale ?? "en";
+    const data = await getLearningChain(user.id, locale);
     res.json({ data });
   },
 );
