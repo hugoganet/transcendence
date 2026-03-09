@@ -13,4 +13,8 @@ export {
   type LoginInput,
   type UserProfile,
 } from "./schemas/auth.js";
+export {
+  updateProfileSchema,
+  type UpdateProfileInput,
+} from "./schemas/user.js";
 export { API_VERSION, DEFAULT_PORT, SESSION_TIMEOUT_MS } from "./constants/config.js";

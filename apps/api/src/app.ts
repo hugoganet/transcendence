@@ -7,6 +7,7 @@ import { rateLimiter } from "./middleware/rateLimiter.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 import { AppError } from "./utils/AppError.js";
 import { authRouter } from "./routes/auth.js";
+import { usersRouter } from "./routes/users.js";
 
 const app: Express = express();
 
@@ -47,6 +48,7 @@ function registerRoutes(sessionMw?: RequestHandler) {
     res.json({ data: { status: "ok" } });
   });
   app.use("/api/v1/auth", authRouter);
+  app.use("/api/v1/users", usersRouter);
 
   // 7. 404 catch-all (Express 5 named wildcard)
   app.all("/{*splat}", (_req, _res, next) => {
