@@ -41,6 +41,7 @@ export {
   missionStatusSchema,
   chapterStatusSchema,
   categoryStatusSchema,
+  completeMissionBodySchema,
 } from "./schemas/progress.js";
 export type {
   MissionStatusValue,
@@ -51,6 +52,9 @@ export type {
   CategoryProgressOverlay,
   CurriculumWithProgress,
   MissionDetailResponse,
+  CompleteMissionBody,
+  CompleteMissionResponse,
+  ResumeResponse,
 } from "./types/progress.js";
 export type {
   ExerciseType,

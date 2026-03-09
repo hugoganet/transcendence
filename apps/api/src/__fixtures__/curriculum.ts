@@ -39,7 +39,10 @@ export const minimalCurriculum = [
             exerciseType: "CM",
             estimatedMinutes: 3,
             lastReviewedDate: "2026-03-09",
-            progressiveReveal: null,
+            progressiveReveal: {
+              mechanic: "tokensRevealed",
+              description: "You've unlocked Knowledge Tokens!",
+            },
           },
         ],
       },

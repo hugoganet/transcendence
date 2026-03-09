@@ -7,13 +7,22 @@ import { errorHandler } from "../middleware/errorHandler.js";
 
 // Mock database
 const mockPrisma = vi.hoisted(() => ({
+  $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) => {
+    return callback(mockPrisma);
+  }),
   userProgress: {
     findMany: vi.fn(),
     findUnique: vi.fn(),
+    findFirst: vi.fn(),
     count: vi.fn(),
+    upsert: vi.fn(),
   },
   chapterProgress: {
     findMany: vi.fn(),
+    upsert: vi.fn(),
+  },
+  selfAssessment: {
+    upsert: vi.fn(),
   },
 }));
 
@@ -120,7 +129,11 @@ beforeEach(() => {
   mockPrisma.userProgress.findMany.mockResolvedValue([]);
   mockPrisma.chapterProgress.findMany.mockResolvedValue([]);
   mockPrisma.userProgress.findUnique.mockResolvedValue(null);
+  mockPrisma.userProgress.findFirst.mockResolvedValue(null);
   mockPrisma.userProgress.count.mockResolvedValue(0);
+  mockPrisma.userProgress.upsert.mockResolvedValue({});
+  mockPrisma.chapterProgress.upsert.mockResolvedValue({});
+  mockPrisma.selfAssessment.upsert.mockResolvedValue({});
 });
 
 describe("Curriculum Routes", () => {
@@ -237,6 +250,148 @@ describe("Curriculum Routes", () => {
 
       expect(res.status).toBe(403);
       expect(res.body.error.code).toBe("MISSION_LOCKED");
+    });
+  });
+
+  describe("POST /api/v1/curriculum/missions/:missionId/complete", () => {
+    it("returns 200 with CompleteMissionResponse for valid completion", async () => {
+      // 1.1.1 is first mission, always available
+      mockPrisma.userProgress.count.mockResolvedValueOnce(1); // chapter check: 1 of 2
+      mockPrisma.userProgress.count.mockResolvedValueOnce(1); // total completed
+
+      const app = createTestApp(true);
+      const res = await request(app)
+        .post("/api/v1/curriculum/missions/1.1.1/complete")
+        .send({});
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.missionId).toBe("1.1.1");
+      expect(res.body.data.status).toBe("completed");
+      expect(res.body.data.nextMissionId).toBe("1.1.2");
+      expect(res.body.data.chapterCompleted).toBe(false);
+    });
+
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app)
+        .post("/api/v1/curriculum/missions/1.1.1/complete")
+        .send({});
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+
+    it("returns 403 MISSION_LOCKED for locked mission", async () => {
+      // 2.1.1 is locked (category 1 not completed)
+      const app = createTestApp(true);
+      const res = await request(app)
+        .post("/api/v1/curriculum/missions/2.1.1/complete")
+        .send({});
+
+      expect(res.status).toBe(403);
+      expect(res.body.error.code).toBe("MISSION_LOCKED");
+    });
+
+    it("returns 409 MISSION_ALREADY_COMPLETED for already completed mission", async () => {
+      mockPrisma.userProgress.findUnique.mockResolvedValue({
+        status: "COMPLETED",
+      });
+
+      const app = createTestApp(true);
+      const res = await request(app)
+        .post("/api/v1/curriculum/missions/1.1.1/complete")
+        .send({});
+
+      expect(res.status).toBe(409);
+      expect(res.body.error.code).toBe("MISSION_ALREADY_COMPLETED");
+    });
+
+    it("returns 404 MISSION_NOT_FOUND for non-existent mission", async () => {
+      const app = createTestApp(true);
+      const res = await request(app)
+        .post("/api/v1/curriculum/missions/99.99.99/complete")
+        .send({});
+
+      expect(res.status).toBe(404);
+      expect(res.body.error.code).toBe("MISSION_NOT_FOUND");
+    });
+
+    it("returns 400 INVALID_INPUT for invalid mission ID format", async () => {
+      const app = createTestApp(true);
+      const res = await request(app)
+        .post("/api/v1/curriculum/missions/invalid/complete")
+        .send({});
+
+      expect(res.status).toBe(400);
+      expect(res.body.error.code).toBe("INVALID_INPUT");
+    });
+
+    it("stores confidenceRating for self-assessment mission", async () => {
+      // 1.1.2 is the last mission of category 1 (self-assessment)
+      mockPrisma.userProgress.findUnique
+        .mockResolvedValueOnce(null)
+        .mockResolvedValueOnce({ status: "COMPLETED" });
+      mockPrisma.userProgress.count.mockResolvedValueOnce(2); // chapter: 2/2
+      mockPrisma.userProgress.count.mockResolvedValueOnce(2); // total
+      mockPrisma.chapterProgress.findMany.mockResolvedValue([
+        { chapterId: "1.1", status: "COMPLETED" },
+      ]);
+
+      const app = createTestApp(true);
+      const res = await request(app)
+        .post("/api/v1/curriculum/missions/1.1.2/complete")
+        .send({ confidenceRating: 4 });
+
+      expect(res.status).toBe(200);
+      expect(mockPrisma.selfAssessment.upsert).toHaveBeenCalled();
+    });
+  });
+
+  describe("GET /api/v1/curriculum/resume", () => {
+    it("returns 200 with first mission for new user", async () => {
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/curriculum/resume");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.missionId).toBe("1.1.1");
+      expect(res.body.data.chapterId).toBe("1.1");
+      expect(res.body.data.categoryId).toBe("1");
+    });
+
+    it("returns 200 with next mission for user with progress", async () => {
+      mockPrisma.userProgress.findFirst.mockResolvedValue({
+        missionId: "1.1.1",
+        completedAt: new Date("2026-03-05"),
+      });
+      mockPrisma.userProgress.count.mockResolvedValue(1);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/curriculum/resume");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.missionId).toBe("1.1.2");
+    });
+
+    it("returns 200 with null data when curriculum complete", async () => {
+      mockPrisma.userProgress.findFirst.mockResolvedValue({
+        missionId: "2.1.1",
+        completedAt: new Date("2026-03-05"),
+      });
+      mockPrisma.userProgress.count.mockResolvedValue(3);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/curriculum/resume");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toBeNull();
+    });
+
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/curriculum/resume");
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
     });
   });
 });

@@ -3,6 +3,7 @@ import type {
   missionStatusSchema,
   chapterStatusSchema,
   categoryStatusSchema,
+  completeMissionBodySchema,
 } from "../schemas/progress.js";
 
 export type MissionStatusValue = z.infer<typeof missionStatusSchema>;
@@ -46,4 +47,25 @@ export interface MissionDetailResponse {
   status: MissionStatusValue;
   progressiveReveal: { mechanic: string; description: string } | null;
   tooltipTerms?: string[];
+}
+
+export type CompleteMissionBody = z.infer<typeof completeMissionBodySchema>;
+
+export interface CompleteMissionResponse {
+  missionId: string;
+  status: "completed";
+  chapterCompleted: boolean;
+  categoryCompleted: boolean;
+  nextMissionId: string | null;
+  completionPercentage: number;
+  progressiveReveal: { mechanic: string; description: string } | null;
+}
+
+export interface ResumeResponse {
+  missionId: string;
+  missionTitle: string;
+  chapterId: string;
+  chapterTitle: string;
+  categoryId: string;
+  completionPercentage: number;
 }

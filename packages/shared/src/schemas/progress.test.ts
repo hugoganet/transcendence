@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { missionIdParamSchema, missionStatusSchema, chapterStatusSchema, categoryStatusSchema } from "./progress.js";
+import { missionIdParamSchema, missionStatusSchema, chapterStatusSchema, categoryStatusSchema, completeMissionBodySchema } from "./progress.js";
 
 describe("missionIdParamSchema", () => {
   it("validates '1.1.1'", () => {
@@ -73,5 +73,35 @@ describe("categoryStatusSchema", () => {
 
   it("rejects invalid status", () => {
     expect(() => categoryStatusSchema.parse("unknown")).toThrow();
+  });
+});
+
+describe("completeMissionBodySchema", () => {
+  it("validates { confidenceRating: 4 }", () => {
+    expect(
+      completeMissionBodySchema.parse({ confidenceRating: 4 }),
+    ).toEqual({ confidenceRating: 4 });
+  });
+
+  it("accepts empty object (confidenceRating is optional)", () => {
+    expect(completeMissionBodySchema.parse({})).toEqual({});
+  });
+
+  it("rejects confidenceRating: 0 (min is 1)", () => {
+    expect(() =>
+      completeMissionBodySchema.parse({ confidenceRating: 0 }),
+    ).toThrow();
+  });
+
+  it("rejects confidenceRating: 6 (max is 5)", () => {
+    expect(() =>
+      completeMissionBodySchema.parse({ confidenceRating: 6 }),
+    ).toThrow();
+  });
+
+  it("rejects confidenceRating: 2.5 (must be integer)", () => {
+    expect(() =>
+      completeMissionBodySchema.parse({ confidenceRating: 2.5 }),
+    ).toThrow();
   });
 });

@@ -10,6 +10,8 @@ import type {
   CategoryProgressOverlay,
   ChapterProgressOverlay,
   MissionProgressOverlay,
+  CompleteMissionResponse,
+  ResumeResponse,
 } from "@transcendence/shared";
 import type { Category, Chapter, Mission } from "@transcendence/shared";
 
@@ -296,5 +298,253 @@ export async function getMissionDetail(
     estimatedMinutes: foundMission.estimatedMinutes,
     status: missionStatus,
     progressiveReveal: foundMission.progressiveReveal,
+  };
+}
+
+/**
+ * Finds a mission in the curriculum structure by ID.
+ * Returns the mission object and its position (catIdx, chapIdx, missIdx).
+ */
+function findMissionInCurriculum(
+  curriculum: Category[],
+  missionId: string,
+): { mission: Mission; catIdx: number; chapIdx: number; missIdx: number } | null {
+  for (let catIdx = 0; catIdx < curriculum.length; catIdx++) {
+    for (let chapIdx = 0; chapIdx < curriculum[catIdx].chapters.length; chapIdx++) {
+      const missIdx = curriculum[catIdx].chapters[chapIdx].missions.findIndex(
+        (m) => m.id === missionId,
+      );
+      if (missIdx !== -1) {
+        return {
+          mission: curriculum[catIdx].chapters[chapIdx].missions[missIdx],
+          catIdx,
+          chapIdx,
+          missIdx,
+        };
+      }
+    }
+  }
+  return null;
+}
+
+/**
+ * Returns the next mission ID in the sequential curriculum order.
+ * Within chapter → next mission by order.
+ * End of chapter → first mission of next chapter in same category.
+ * End of category → first mission of next category.
+ * End of curriculum → null.
+ */
+export function getNextMissionId(
+  curriculum: Category[],
+  currentMissionId: string,
+): string | null {
+  const found = findMissionInCurriculum(curriculum, currentMissionId);
+  if (!found) return null;
+
+  const { catIdx, chapIdx, missIdx } = found;
+  const chapter = curriculum[catIdx].chapters[chapIdx];
+
+  // Next mission in same chapter
+  if (missIdx + 1 < chapter.missions.length) {
+    return chapter.missions[missIdx + 1].id;
+  }
+
+  // Next chapter in same category
+  if (chapIdx + 1 < curriculum[catIdx].chapters.length) {
+    return curriculum[catIdx].chapters[chapIdx + 1].missions[0].id;
+  }
+
+  // Next category
+  if (catIdx + 1 < curriculum.length) {
+    return curriculum[catIdx + 1].chapters[0].missions[0].id;
+  }
+
+  // End of curriculum
+  return null;
+}
+
+export async function completeMission(
+  userId: string,
+  missionId: string,
+  confidenceRating?: number,
+): Promise<CompleteMissionResponse> {
+  const content = getContent();
+  const curriculum = content.curriculum;
+
+  // 1. Find mission in curriculum structure
+  const found = findMissionInCurriculum(curriculum, missionId);
+  if (!found) {
+    throw new AppError(404, "MISSION_NOT_FOUND", `Mission ${missionId} not found`);
+  }
+
+  const { mission, catIdx, chapIdx } = found;
+  const chapter = curriculum[catIdx].chapters[chapIdx];
+  const category = curriculum[catIdx];
+
+  // 2. Check access status
+  const accessStatus = await getMissionAccessStatus(userId, missionId);
+  if (accessStatus === "locked") {
+    throw new AppError(403, "MISSION_LOCKED", `Mission ${missionId} is locked`);
+  }
+  if (accessStatus === "completed") {
+    throw new AppError(409, "MISSION_ALREADY_COMPLETED", `Mission ${missionId} is already completed`);
+  }
+
+  // 3. Determine if this is a self-assessment mission (last mission of the category)
+  const lastChapter = category.chapters[category.chapters.length - 1];
+  const lastMission = lastChapter.missions[lastChapter.missions.length - 1];
+  const isSelfAssessmentMission = mission.id === lastMission.id;
+
+  // 4. Transaction: upsert progress + check chapter/category completion atomically
+  const chapterMissionIds = chapter.missions.map((m) => m.id);
+
+  const txResult = await prisma.$transaction(async (tx) => {
+    // a. Upsert UserProgress
+    await tx.userProgress.upsert({
+      where: { userId_missionId: { userId, missionId } },
+      update: { status: "COMPLETED", completedAt: new Date() },
+      create: { userId, missionId, status: "COMPLETED", completedAt: new Date() },
+    });
+
+    // b. Check if all missions in the chapter are now completed
+    const completedInChapter = await tx.userProgress.count({
+      where: {
+        userId,
+        missionId: { in: chapterMissionIds },
+        status: "COMPLETED",
+      },
+    });
+    const chapterJustCompleted = completedInChapter === chapterMissionIds.length;
+
+    if (chapterJustCompleted) {
+      await tx.chapterProgress.upsert({
+        where: { userId_chapterId: { userId, chapterId: chapter.id } },
+        update: { status: "COMPLETED", completedAt: new Date() },
+        create: { userId, chapterId: chapter.id, status: "COMPLETED", completedAt: new Date() },
+      });
+    }
+
+    // c. If confidenceRating provided AND this is a self-assessment mission, store it
+    if (confidenceRating !== undefined && isSelfAssessmentMission) {
+      await tx.selfAssessment.upsert({
+        where: { userId_categoryId: { userId, categoryId: category.id } },
+        update: { confidenceRating },
+        create: { userId, categoryId: category.id, confidenceRating },
+      });
+    }
+
+    // d. Count total completed missions (inside transaction for consistency)
+    const totalCompleted = await tx.userProgress.count({
+      where: { userId, status: "COMPLETED" },
+    });
+
+    // e. Check category completion if chapter just completed
+    let categoryCompleted = false;
+    if (chapterJustCompleted) {
+      const completedChapters = await tx.chapterProgress.findMany({
+        where: {
+          userId,
+          chapterId: { in: category.chapters.map((ch) => ch.id) },
+          status: "COMPLETED",
+        },
+      });
+      categoryCompleted = completedChapters.length === category.chapters.length;
+    }
+
+    return { chapterJustCompleted, categoryCompleted, totalCompleted };
+  });
+
+  // 5. Compute response fields (pure computation, no DB queries)
+  const nextMissionId = getNextMissionId(curriculum, missionId);
+
+  const totalMissions = curriculum.reduce(
+    (sum, cat) =>
+      sum + cat.chapters.reduce((s, ch) => s + ch.missions.length, 0),
+    0,
+  );
+
+  const completionPercentage =
+    totalMissions > 0
+      ? Math.round((txResult.totalCompleted / totalMissions) * 1000) / 10
+      : 0;
+
+  return {
+    missionId,
+    status: "completed",
+    chapterCompleted: txResult.chapterJustCompleted,
+    categoryCompleted: txResult.categoryCompleted,
+    nextMissionId,
+    completionPercentage,
+    progressiveReveal: mission.progressiveReveal,
+  };
+}
+
+export async function getResumePoint(
+  userId: string,
+  locale: string,
+): Promise<ResumeResponse | null> {
+  const content = getContent();
+  const curriculum = content.curriculum;
+
+  // Find last completed mission
+  const lastCompleted = await prisma.userProgress.findFirst({
+    where: { userId, status: "COMPLETED" },
+    orderBy: { completedAt: "desc" },
+  });
+
+  let resumeMissionId: string;
+
+  if (!lastCompleted) {
+    // New user → first mission
+    resumeMissionId = curriculum[0].chapters[0].missions[0].id;
+  } else {
+    const nextId = getNextMissionId(curriculum, lastCompleted.missionId);
+    if (!nextId) {
+      // Curriculum complete
+      return null;
+    }
+    resumeMissionId = nextId;
+  }
+
+  // Find the mission and its context in curriculum structure
+  const found = findMissionInCurriculum(curriculum, resumeMissionId);
+  if (!found) return null;
+
+  const { catIdx, chapIdx } = found;
+  const chapter = curriculum[catIdx].chapters[chapIdx];
+  const category = curriculum[catIdx];
+
+  // Get titles from content cache (locale-aware with fallback)
+  let missionsContent = content.missions.get(locale);
+  if (!missionsContent) {
+    missionsContent = content.missions.get("en");
+  }
+
+  const missionTitle = missionsContent?.[resumeMissionId]?.title ?? resumeMissionId;
+  const chapterTitle = chapter.name;
+
+  // Compute completion percentage
+  const totalCompleted = await prisma.userProgress.count({
+    where: { userId, status: "COMPLETED" },
+  });
+
+  const totalMissions = curriculum.reduce(
+    (sum, cat) =>
+      sum + cat.chapters.reduce((s, ch) => s + ch.missions.length, 0),
+    0,
+  );
+
+  const completionPercentage =
+    totalMissions > 0
+      ? Math.round((totalCompleted / totalMissions) * 1000) / 10
+      : 0;
+
+  return {
+    missionId: resumeMissionId,
+    missionTitle,
+    chapterId: chapter.id,
+    chapterTitle,
+    categoryId: category.id,
+    completionPercentage,
   };
 }

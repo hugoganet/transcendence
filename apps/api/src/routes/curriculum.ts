@@ -1,10 +1,12 @@
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
-import { missionIdParamSchema } from "@transcendence/shared";
+import { missionIdParamSchema, completeMissionBodySchema } from "@transcendence/shared";
 import {
   getCurriculumWithProgress,
   getMissionDetail,
+  completeMission,
+  getResumePoint,
 } from "../services/curriculumService.js";
 
 export const curriculumRouter = Router();
@@ -30,6 +32,32 @@ curriculumRouter.get(
     const locale = user.locale ?? "en";
     const missionId = req.params.missionId as string;
     const data = await getMissionDetail(user.id, missionId, locale);
+    res.json({ data });
+  },
+);
+
+// POST /api/v1/curriculum/missions/:missionId/complete — authenticated, marks mission completed
+curriculumRouter.post(
+  "/missions/:missionId/complete",
+  requireAuth,
+  validate({ params: missionIdParamSchema, body: completeMissionBodySchema }),
+  async (req: Request, res: Response) => {
+    const user = req.user as Express.User;
+    const missionId = req.params.missionId as string;
+    const { confidenceRating } = req.body;
+    const data = await completeMission(user.id, missionId, confidenceRating);
+    res.json({ data });
+  },
+);
+
+// GET /api/v1/curriculum/resume — authenticated, returns resume point
+curriculumRouter.get(
+  "/resume",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const user = req.user as Express.User;
+    const locale = user.locale ?? "en";
+    const data = await getResumePoint(user.id, locale);
     res.json({ data });
   },
 );
