@@ -4,6 +4,15 @@ import { prisma, prismaPool } from "./config/database.js";
 import { disconnectRedis } from "./config/redis.js";
 import { sessionRedisClient, disconnectSessionRedis, sessionMiddleware } from "./config/session.js";
 import { createSocketServer } from "./socket/index.js";
+import { initializeContent } from "./utils/contentLoader.js";
+
+// Load and validate curriculum content before anything else (synchronous, blocking)
+try {
+  initializeContent(["en", "fr"]);
+} catch (err) {
+  console.error("Failed to initialize curriculum content. Server cannot start.", err);
+  process.exit(1);
+}
 
 // Register routes with session middleware injected between rate limiter and routes
 registerRoutes(sessionMiddleware);

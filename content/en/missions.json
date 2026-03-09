@@ -1,0 +1,1215 @@
+{
+  "1.1.1": {
+    "title": "Who Do You Trust?",
+    "description": "Every time you buy coffee with a card, send money to a friend, or sign a contract, someone in the middle makes it happen. But who are these middlemen, and why do we trust them?",
+    "learningObjective": "Understand that most daily transactions rely on middlemen (banks, PayPal, notaries)",
+    "exerciseContent": {
+      "scenario": "You just bought a vintage guitar online for 800 euros. The seller is someone you have never met, living in another country. You paid using your bank's online transfer. Think about everything that had to happen behind the scenes for this transaction to work.",
+      "question": "Which of the following best describes the role your bank played in this transaction?",
+      "options": [
+        {
+          "id": "a",
+          "text": "The bank physically moved cash from your vault to the seller's vault",
+          "isCorrect": false,
+          "explanation": "Banks don't physically move cash for online transfers. They update digital records in their databases to reflect the new balances. No physical money changes hands."
+        },
+        {
+          "id": "b",
+          "text": "The bank acted as a trusted middleman, verifying your identity, checking your balance, and updating both accounts",
+          "isCorrect": true,
+          "explanation": "Exactly right. Your bank verified you are who you say you are, confirmed you had enough funds, deducted the amount from your account, and coordinated with the seller's bank to credit their account. Without this trusted middleman, two strangers would have no way to safely exchange value."
+        },
+        {
+          "id": "c",
+          "text": "The bank simply forwarded your money like an email, with no verification involved",
+          "isCorrect": false,
+          "explanation": "Banks don't just pass money along blindly. They perform identity checks, fraud detection, balance verification, and regulatory compliance before processing any transfer. That's precisely why they exist as trusted intermediaries."
+        },
+        {
+          "id": "d",
+          "text": "The bank was not involved at all since online transfers are direct between buyer and seller",
+          "isCorrect": false,
+          "explanation": "Traditional online transfers always go through banks or payment processors. The money doesn't travel directly from you to the seller. It passes through multiple intermediaries who verify and process the transaction."
+        }
+      ]
+    }
+  },
+  "1.1.2": {
+    "title": "What Could Go Wrong?",
+    "description": "Middlemen like banks and payment processors make transactions possible, but they also create vulnerabilities. When the middleman fails, everyone depending on them is affected.",
+    "learningObjective": "Understand single points of failure — what happens when the middleman fails",
+    "exerciseContent": {
+      "scenario": "It is a Friday evening. You are trying to pay for dinner at a restaurant, but your card keeps getting declined. You check your phone and see a notification: 'Our systems are currently experiencing an outage. We apologize for the inconvenience.' Your bank's entire digital infrastructure is down. You have money in your account, but you cannot access it.",
+      "question": "What does this situation reveal about relying on a single middleman for your money?",
+      "options": [
+        {
+          "id": "a",
+          "text": "It shows that digital payments are unreliable and we should go back to using only cash",
+          "isCorrect": false,
+          "explanation": "Cash has its own limitations — it can be lost, stolen, or counterfeited, and it doesn't work for online purchases. The issue isn't digital payments themselves, but rather depending on a single point of control."
+        },
+        {
+          "id": "b",
+          "text": "It shows that when a centralized system goes down, everyone who depends on it loses access, even if their money still exists",
+          "isCorrect": true,
+          "explanation": "This is the core problem of a 'single point of failure.' Your money is real and still in your account, but because one organization controls the access point, their problem becomes your problem. Millions of customers can be locked out simultaneously by one server crash, one cyberattack, or one policy decision."
+        },
+        {
+          "id": "c",
+          "text": "It shows that banks are intentionally preventing people from spending money",
+          "isCorrect": false,
+          "explanation": "Bank outages are usually technical failures, not intentional blocks. However, the scenario does highlight that a centralized entity has the power to — intentionally or not — prevent you from accessing your own money."
+        },
+        {
+          "id": "d",
+          "text": "It is just a minor inconvenience that rarely happens, so it is not a real concern",
+          "isCorrect": false,
+          "explanation": "Bank outages happen more often than you might think. Major banks experience multiple outages per year. And it's not just outages — governments can freeze accounts, companies can go bankrupt, and policies can change. The underlying issue is that someone else controls access to your money."
+        }
+      ]
+    }
+  },
+  "1.1.3": {
+    "title": "A World Without Middlemen",
+    "description": "What if two people could transact directly, without needing a bank, a notary, or any other authority to vouch for them? That is the core promise of blockchain technology.",
+    "learningObjective": "Understand the core value proposition of blockchain: peer-to-peer trust",
+    "exerciseContent": {
+      "instruction": "Match each traditional concept with its blockchain equivalent. Think about how blockchain replaces the need for trusted middlemen.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "Bank verifying your balance",
+          "definition": "The entire network checks every transaction collectively",
+          "analogy": "Instead of one bank teller checking your account, imagine thousands of independent witnesses all confirming your balance at the same time"
+        },
+        {
+          "id": "2",
+          "term": "A notary certifying a document",
+          "definition": "A permanent, tamper-proof record on the blockchain",
+          "analogy": "Instead of paying someone to stamp your contract, the document is recorded in a ledger that millions of people hold copies of and nobody can alter"
+        },
+        {
+          "id": "3",
+          "term": "PayPal processing your payment",
+          "definition": "A peer-to-peer transfer that settles without any company in the middle",
+          "analogy": "Instead of a company moving money between accounts on their servers, you hand value directly to the other person like giving them cash — but digitally and across any distance"
+        },
+        {
+          "id": "4",
+          "term": "A central server storing all records",
+          "definition": "A distributed ledger copied across thousands of computers worldwide",
+          "analogy": "Instead of one filing cabinet in one office, imagine the same filing cabinet duplicated in thousands of offices around the world, all automatically staying in sync"
+        }
+      ]
+    }
+  },
+  "1.2.1": {
+    "title": "What is a Block?",
+    "description": "A block is the fundamental building unit of a blockchain. Let's explore what's inside one.",
+    "learningObjective": "Understand that a block is a container of data (transactions) with a timestamp and ID",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each component in its correct position within the block structure.",
+      "items": [
+        { "id": "1", "label": "Transaction data", "correctPosition": 0 },
+        { "id": "2", "label": "Timestamp", "correctPosition": 1 },
+        { "id": "3", "label": "Block hash (unique ID)", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Block body" },
+        { "id": "z2", "label": "Block metadata" },
+        { "id": "z3", "label": "Block header" }
+      ]
+    }
+  },
+  "1.2.2": {
+    "title": "Chaining Blocks Together",
+    "description": "Blocks don't exist in isolation. Each one is linked to the previous, forming an unbreakable chain.",
+    "learningObjective": "Understand how blocks link via hashes and why changing one breaks the chain",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Arrange the steps that show how blocks link together in the correct order.",
+      "items": [
+        { "id": "1", "label": "Block A is created with its own hash", "correctPosition": 0 },
+        { "id": "2", "label": "Block B includes Block A's hash as a reference", "correctPosition": 1 },
+        { "id": "3", "label": "Changing Block A would change its hash, breaking the link", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Step 1" },
+        { "id": "z2", "label": "Step 2" },
+        { "id": "z3", "label": "Step 3" }
+      ]
+    }
+  },
+  "1.2.3": {
+    "title": "Copies Everywhere",
+    "description": "Unlike a traditional database owned by one company, blockchain data is copied across thousands of computers.",
+    "learningObjective": "Understand distributed ledger — thousands of identical copies, no single owner",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each concept about distributed ledgers with its correct description.",
+      "pairs": [
+        { "id": "1", "term": "Distributed ledger", "definition": "A record book copied across many computers worldwide", "analogy": "Like giving every student in class a copy of the attendance sheet" },
+        { "id": "2", "term": "Single point of failure", "definition": "A weakness that exists when only one copy of data is stored", "analogy": "Like keeping your only house key under the doormat" }
+      ]
+    }
+  },
+  "1.2.4": {
+    "title": "How the Network Agrees",
+    "description": "With thousands of copies, how does everyone agree on which transactions are valid?",
+    "learningObjective": "Understand consensus basics — nodes vote on valid transactions (PoW/PoS as analogies)",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "Imagine a classroom where students must agree on the correct answer without a teacher. Each student checks the work independently.",
+      "question": "Which approach best represents how blockchain consensus works?",
+      "options": [
+        { "id": "a", "text": "One student decides for everyone", "isCorrect": false, "explanation": "This would be a centralized system, not a consensus mechanism." },
+        { "id": "b", "text": "The majority of students must independently verify and agree", "isCorrect": true, "explanation": "Blockchain consensus requires a majority of network participants to validate transactions." }
+      ]
+    }
+  },
+  "1.2.5": {
+    "title": "Blockchain vs. Database",
+    "description": "Blockchain and traditional databases both store data, but they work very differently.",
+    "learningObjective": "Consolidate understanding — what makes blockchain different from a regular database",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each characteristic to whether it describes a blockchain or a traditional database.",
+      "pairs": [
+        { "id": "1", "term": "Controlled by a single organization", "definition": "Traditional database", "analogy": "Like a company's private filing cabinet" },
+        { "id": "2", "term": "Distributed across thousands of independent computers", "definition": "Blockchain", "analogy": "Like a public bulletin board that everyone can read but no one can erase" }
+      ]
+    }
+  },
+  "1.3.1": {
+    "title": "Decentralization in Real Life",
+    "description": "Decentralization isn't a new idea. Many familiar systems already work without a single authority.",
+    "learningObjective": "Connect decentralization to familiar systems (Wikipedia, torrents, farmers markets)",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each real-world example with the decentralization principle it demonstrates.",
+      "pairs": [
+        { "id": "1", "term": "Wikipedia", "definition": "Knowledge maintained collectively by thousands of contributors", "analogy": "No single author controls the encyclopedia" },
+        { "id": "2", "term": "Farmers market", "definition": "Direct trade between producers and consumers without a supermarket chain", "analogy": "Buyers and sellers meet face to face, no corporate middleman" }
+      ]
+    }
+  },
+  "1.3.2": {
+    "title": "Who Uses Blockchain Today?",
+    "description": "Blockchain isn't just theory. Real organizations are using it to solve real problems right now.",
+    "learningObjective": "Understand real-world adoption — supply chain, healthcare records, voting pilots",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A hospital network wants to give patients control over their medical records while allowing any hospital in the network to verify them instantly.",
+      "question": "Why might blockchain be useful for this use case?",
+      "options": [
+        { "id": "a", "text": "It allows patients to own verifiable records that any hospital can check without a central authority", "isCorrect": true, "explanation": "Blockchain enables portable, verifiable records owned by the patient." },
+        { "id": "b", "text": "It makes medical records faster to download", "isCorrect": false, "explanation": "Blockchain is not primarily about download speed but about trust and verification." }
+      ]
+    }
+  },
+  "1.3.3": {
+    "title": "Is Blockchain Always the Answer?",
+    "description": "Blockchain is powerful, but it's not the right tool for every problem. Critical thinking matters.",
+    "learningObjective": "Develop critical thinking — blockchain isn't magic, it has trade-offs",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A small local bakery wants to track its daily inventory of bread and pastries. The owner considers using blockchain for this.",
+      "question": "Is blockchain the right solution for this bakery's inventory tracking?",
+      "options": [
+        { "id": "a", "text": "No, a simple spreadsheet or database would be more practical for a single business's internal records", "isCorrect": true, "explanation": "Blockchain shines when multiple parties need to trust shared data. A single bakery doesn't need decentralization for its own inventory." },
+        { "id": "b", "text": "Yes, blockchain would make the bakery's inventory tamper-proof and more reliable", "isCorrect": false, "explanation": "While technically true, the overhead of blockchain is unnecessary when only one party manages the data. Blockchain adds value when trust between multiple parties is needed." }
+      ]
+    }
+  },
+  "2.1.1": {
+    "title": "The Satoshi Story",
+    "description": "In 2008, during the worst financial crisis in decades, a mysterious figure proposed a radical new form of money.",
+    "learningObjective": "Understand Bitcoin's origin — 2008 crisis, the whitepaper, pseudonymous creator",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "It is October 2008. Banks are collapsing worldwide. Someone using the name 'Satoshi Nakamoto' publishes a paper titled 'Bitcoin: A Peer-to-Peer Electronic Cash System' on a cryptography mailing list.",
+      "question": "What was the key problem Satoshi was trying to solve?",
+      "options": [
+        { "id": "a", "text": "Creating a digital currency that works without needing to trust banks or governments", "isCorrect": true, "explanation": "The 2008 financial crisis showed that trusted institutions could fail. Satoshi proposed a system where trust is built into the protocol itself, not dependent on any institution." },
+        { "id": "b", "text": "Making online shopping faster than credit cards", "isCorrect": false, "explanation": "Speed was not the primary motivation. The whitepaper focused on removing the need for trusted third parties in electronic transactions." }
+      ]
+    }
+  },
+  "2.1.2": {
+    "title": "Digital Money vs. Your Bank Account",
+    "description": "The euros in your bank app and Bitcoin are both digital, but they work in fundamentally different ways.",
+    "learningObjective": "Understand how crypto differs from digital euros in your banking app",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each characteristic with the correct type of digital money.",
+      "pairs": [
+        { "id": "1", "term": "Controlled by a central bank that can print more", "definition": "Digital euros in your bank account", "analogy": "Like a company cafeteria that can add more meal vouchers whenever it wants" },
+        { "id": "2", "term": "Supply fixed by code, no single entity controls it", "definition": "Bitcoin", "analogy": "Like a rare mineral — there is only a set amount and no one can manufacture more" }
+      ]
+    }
+  },
+  "2.1.3": {
+    "title": "Where Does Crypto Live?",
+    "description": "Crypto doesn't live on a server or in a file on your computer. Its existence is quite different from what you might expect.",
+    "learningObjective": "Understand that crypto exists on blockchains, not on servers or in files",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each item in the correct category to show where crypto actually exists.",
+      "items": [
+        { "id": "1", "label": "Recorded on the blockchain ledger", "correctPosition": 0 },
+        { "id": "2", "label": "Verified by thousands of network nodes", "correctPosition": 1 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Where crypto actually lives" },
+        { "id": "z2", "label": "How crypto is maintained" }
+      ]
+    }
+  },
+  "2.1.4": {
+    "title": "Why Would Anyone Use This?",
+    "description": "Crypto can seem abstract. But it solves real problems for real people around the world.",
+    "learningObjective": "Understand the value proposition — borderless, permissionless, 24/7, programmable",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "Maria works in France and wants to send money to her family in the Philippines. A traditional bank transfer takes 3-5 days and costs 25 euros in fees.",
+      "question": "How could cryptocurrency help Maria?",
+      "options": [
+        { "id": "a", "text": "She could send crypto directly to her family in minutes, with minimal fees, without bank hours or borders mattering", "isCorrect": true, "explanation": "Crypto is borderless, available 24/7, and can be sent peer-to-peer with much lower fees than traditional international transfers." },
+        { "id": "b", "text": "Crypto would guarantee her family receives more money due to exchange rate advantages", "isCorrect": false, "explanation": "Crypto does not guarantee better exchange rates. Its advantage is in speed, availability, and lower transfer fees." }
+      ]
+    }
+  },
+  "2.2.1": {
+    "title": "Coins vs. Tokens",
+    "description": "Not all cryptocurrencies are created equal. Some have their own blockchain, others live on someone else's.",
+    "learningObjective": "Understand the difference — coins have their own blockchain, tokens live on another's",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each example with whether it is a coin or a token.",
+      "pairs": [
+        { "id": "1", "term": "Bitcoin (BTC)", "definition": "Coin — runs on its own blockchain", "analogy": "Like a country with its own currency" },
+        { "id": "2", "term": "A reward point built on Ethereum", "definition": "Token — runs on another blockchain", "analogy": "Like a gift card that works within a specific store but is printed by Visa" }
+      ]
+    }
+  },
+  "2.2.2": {
+    "title": "Ethereum: The World Computer",
+    "description": "Ethereum took Bitcoin's idea further. It's not just money — it's a platform for building things.",
+    "learningObjective": "Understand Ethereum's role — not just money but a platform for building things",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A developer wants to create an application that automatically pays musicians every time their song is streamed, without needing Spotify or any other company in the middle.",
+      "question": "Why would the developer build this on Ethereum rather than Bitcoin?",
+      "options": [
+        { "id": "a", "text": "Ethereum supports programmable smart contracts that can automate complex logic, while Bitcoin is primarily designed for simple value transfers", "isCorrect": true, "explanation": "Ethereum was designed to be a general-purpose platform for decentralized applications, not just digital money." },
+        { "id": "b", "text": "Ethereum is faster and cheaper than Bitcoin in all cases", "isCorrect": false, "explanation": "Speed and cost vary. The real difference is that Ethereum was designed to support programmable applications through smart contracts." }
+      ]
+    }
+  },
+  "2.2.3": {
+    "title": "The Token Universe",
+    "description": "Tokens come in many flavors — each designed for a different purpose.",
+    "learningObjective": "Understand token types — utility, governance, stablecoins (simplified)",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each token type in its correct category.",
+      "items": [
+        { "id": "1", "label": "Utility token — grants access to a service", "correctPosition": 0 },
+        { "id": "2", "label": "Governance token — lets holders vote on decisions", "correctPosition": 1 },
+        { "id": "3", "label": "Stablecoin — pegged to a stable asset like the US dollar", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Access & Usage" },
+        { "id": "z2", "label": "Decision Making" },
+        { "id": "z3", "label": "Stability & Payments" }
+      ]
+    }
+  },
+  "2.2.4": {
+    "title": "Your Knowledge Tokens",
+    "description": "The Knowledge Tokens you earn on this platform work just like real tokens. Let's connect the dots.",
+    "learningObjective": "Understand that transcendence's Knowledge Tokens mirror real token mechanics",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each platform mechanic with the real-world blockchain concept it mirrors.",
+      "pairs": [
+        { "id": "1", "term": "Earning Knowledge Tokens by completing missions", "definition": "Mining or earning tokens through contribution to a network", "analogy": "Like earning airline miles by flying — your participation creates value" },
+        { "id": "2", "term": "Spending tokens to submit answers", "definition": "Paying gas fees to execute transactions on a blockchain", "analogy": "Like paying postage to send a letter — every action on the network has a cost" }
+      ]
+    }
+  },
+  "2.3.1": {
+    "title": "Why Does Crypto Have Value?",
+    "description": "Why would something purely digital be worth real money? The answer is more familiar than you think.",
+    "learningObjective": "Understand value drivers — scarcity, utility, network effects, belief",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each value driver with its explanation.",
+      "pairs": [
+        { "id": "1", "term": "Scarcity", "definition": "Limited supply makes something more desirable", "analogy": "Like gold — there's only so much of it on Earth" },
+        { "id": "2", "term": "Network effects", "definition": "Something becomes more valuable as more people use it", "analogy": "Like a telephone — one phone is useless, but millions make it essential" }
+      ]
+    }
+  },
+  "2.3.2": {
+    "title": "Reading a Price Chart",
+    "description": "You don't need to be a trader, but being able to read a basic price chart is part of crypto literacy.",
+    "learningObjective": "Understand basic price chart elements — not trading, just literacy",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each chart element in its correct position on the price chart.",
+      "items": [
+        { "id": "1", "label": "Price axis (vertical)", "correctPosition": 0 },
+        { "id": "2", "label": "Time axis (horizontal)", "correctPosition": 1 },
+        { "id": "3", "label": "Price line showing value over time", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Y-axis" },
+        { "id": "z2", "label": "X-axis" },
+        { "id": "z3", "label": "Chart body" }
+      ]
+    }
+  },
+  "2.3.3": {
+    "title": "Why Prices Swing So Much",
+    "description": "Crypto prices can move 20% in a single day. Understanding why helps you stay calm.",
+    "learningObjective": "Understand volatility — low liquidity, speculation, news impact, market cycles",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A celebrity tweets about a small cryptocurrency. Within hours, its price jumps 300%. Two days later, it crashes back down 80%.",
+      "question": "What primarily caused this extreme price swing?",
+      "options": [
+        { "id": "a", "text": "Speculation and hype — people bought based on the tweet, not the project's actual value, then panic-sold", "isCorrect": true, "explanation": "Crypto markets are heavily influenced by sentiment. Low liquidity amplifies the effect, causing dramatic swings." },
+        { "id": "b", "text": "The cryptocurrency's technology fundamentally changed overnight", "isCorrect": false, "explanation": "The underlying technology didn't change. The price moved purely based on hype and subsequent panic." }
+      ]
+    }
+  },
+  "2.3.4": {
+    "title": "The Investment Disclaimer",
+    "description": "Learning about crypto is not the same as getting investment advice. Let's make that distinction crystal clear.",
+    "learningObjective": "Understand that education is not financial advice, and recognize the difference",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "After completing several lessons about blockchain, your friend says: 'You seem to know a lot about crypto now. Which coin should I invest in?'",
+      "question": "What is the most responsible response?",
+      "options": [
+        { "id": "a", "text": "I can explain how crypto works, but I'm not qualified to give financial advice. You should consult a licensed financial advisor for investment decisions.", "isCorrect": true, "explanation": "Understanding technology is different from knowing how to invest. Education builds literacy, but investment decisions require personalized financial advice." },
+        { "id": "b", "text": "Bitcoin is always a safe bet because it's the most well-known cryptocurrency.", "isCorrect": false, "explanation": "No investment is 'always safe.' This kind of statement is exactly the sort of unqualified financial advice that can lead to losses." }
+      ]
+    }
+  },
+  "3.1.1": {
+    "title": "What is a Crypto Wallet?",
+    "description": "A crypto wallet doesn't actually hold your crypto. Let's understand what it really does.",
+    "learningObjective": "Understand that a wallet doesn't 'hold' crypto — it holds keys that prove ownership",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each wallet concept with its correct explanation.",
+      "pairs": [
+        { "id": "1", "term": "Crypto wallet", "definition": "A tool that stores your private keys and lets you sign transactions", "analogy": "Like a keychain — it doesn't hold your house, but it holds the keys that prove the house is yours" },
+        { "id": "2", "term": "Your crypto balance", "definition": "A record on the blockchain, not something stored inside your wallet", "analogy": "Like your bank balance being a number in a database, not physical bills in a vault" }
+      ]
+    }
+  },
+  "3.1.2": {
+    "title": "Public Key, Private Key",
+    "description": "Two keys make the whole system work. One you share freely, the other you guard with your life.",
+    "learningObjective": "Understand the key pair — public key = address (mailbox), private key = password (mailbox key)",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each description in the correct category.",
+      "items": [
+        { "id": "1", "label": "Safe to share with anyone", "correctPosition": 0 },
+        { "id": "2", "label": "Must never be shared with anyone", "correctPosition": 1 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Public key (your address)" },
+        { "id": "z2", "label": "Private key (your secret)" }
+      ]
+    }
+  },
+  "3.1.3": {
+    "title": "Hot Wallets vs. Cold Wallets",
+    "description": "Not all wallets are created equal. The trade-off between convenience and security is real.",
+    "learningObjective": "Understand the trade-off — convenience (hot) vs security (cold)",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each wallet type with its characteristics.",
+      "pairs": [
+        { "id": "1", "term": "Hot wallet", "definition": "Connected to the internet, convenient for frequent transactions but more vulnerable to hacks", "analogy": "Like carrying cash in your pocket — easy to use but easier to lose" },
+        { "id": "2", "term": "Cold wallet", "definition": "Offline storage, highly secure but less convenient for daily use", "analogy": "Like a safe deposit box at a bank — very secure but you can't access it instantly" }
+      ]
+    }
+  },
+  "3.1.4": {
+    "title": "Set Up Your First Wallet",
+    "description": "Time to experience creating a wallet yourself. Don't worry — this is a safe simulation.",
+    "learningObjective": "Experience the wallet creation flow in a safe simulation",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Follow the steps to set up a simulated crypto wallet.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "First, you need to choose a wallet application. What should you check before downloading?",
+          "options": [
+            { "id": "a", "text": "Verify it is an official, reputable wallet from a trusted source", "isCorrect": true, "explanation": "Always verify authenticity to avoid fake wallet apps that steal your keys." },
+            { "id": "b", "text": "Choose the one with the most colorful logo", "isCorrect": false, "explanation": "Appearance has nothing to do with security. Always research reputation first." }
+          ],
+          "microExplanation": "Downloading from official sources is your first line of defense."
+        },
+        {
+          "id": "2",
+          "prompt": "The wallet generates a seed phrase. What should you do with it?",
+          "options": [
+            { "id": "a", "text": "Write it down on paper and store it in a secure physical location", "isCorrect": true, "explanation": "Physical, offline storage is the safest way to protect your seed phrase." },
+            { "id": "b", "text": "Save it in a note on your phone for easy access", "isCorrect": false, "explanation": "Digital storage on a connected device is vulnerable to hacking." }
+          ],
+          "microExplanation": "Your seed phrase is the master key to your wallet. Offline storage is critical."
+        }
+      ]
+    }
+  },
+  "3.2.1": {
+    "title": "Anatomy of a Transaction",
+    "description": "A crypto transaction is more than just sending money. Let's break down what's inside.",
+    "learningObjective": "Understand what a crypto transaction contains (sender, recipient, amount, fee, signature)",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each component in its correct position within a crypto transaction.",
+      "items": [
+        { "id": "1", "label": "Sender's address", "correctPosition": 0 },
+        { "id": "2", "label": "Recipient's address", "correctPosition": 1 },
+        { "id": "3", "label": "Amount to send", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "From" },
+        { "id": "z2", "label": "To" },
+        { "id": "z3", "label": "Value" }
+      ]
+    }
+  },
+  "3.2.2": {
+    "title": "Sending Your First Crypto",
+    "description": "Let's walk through sending crypto step by step in a safe simulation.",
+    "learningObjective": "Experience sending crypto step-by-step in simulation",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Complete each step to send your first simulated crypto transaction.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "You want to send 0.5 ETH to a friend. What is the first thing you need?",
+          "options": [
+            { "id": "a", "text": "Your friend's public wallet address", "isCorrect": true, "explanation": "You need the recipient's public address to send crypto to them." },
+            { "id": "b", "text": "Your friend's private key", "isCorrect": false, "explanation": "You should never need or ask for someone else's private key." }
+          ],
+          "microExplanation": "Public addresses are like email addresses — you need them to send something to someone."
+        },
+        {
+          "id": "2",
+          "prompt": "Before confirming, you notice a 'gas fee' attached to the transaction. What should you do?",
+          "options": [
+            { "id": "a", "text": "Review the fee and confirm — gas fees are normal costs for processing transactions", "isCorrect": true, "explanation": "Gas fees compensate the network for processing your transaction." },
+            { "id": "b", "text": "Cancel the transaction because fees mean something is wrong", "isCorrect": false, "explanation": "Gas fees are a standard part of every blockchain transaction, not an error." }
+          ],
+          "microExplanation": "Every transaction requires a fee to incentivize network validators."
+        }
+      ]
+    }
+  },
+  "3.2.3": {
+    "title": "Waiting for Confirmation",
+    "description": "You hit 'send' but the transaction isn't instant. What's happening behind the scenes?",
+    "learningObjective": "Understand confirmation times, mempool, and why transactions aren't instant",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You sent 1 ETH to a friend 30 seconds ago. Your wallet shows 'pending.' Your friend says they haven't received anything yet.",
+      "question": "What is most likely happening?",
+      "options": [
+        { "id": "a", "text": "The transaction is in the mempool, waiting to be included in the next block by validators", "isCorrect": true, "explanation": "Transactions don't settle instantly. They wait in a queue (mempool) until a validator includes them in a block." },
+        { "id": "b", "text": "The transaction failed and the money is lost", "isCorrect": false, "explanation": "A pending status means the transaction is being processed, not that it has failed." }
+      ]
+    }
+  },
+  "3.2.4": {
+    "title": "Transaction on the Blockchain",
+    "description": "Once confirmed, your transaction is permanently recorded. Let's explore what that means.",
+    "learningObjective": "Understand that every transaction is permanently recorded and publicly viewable",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Follow the steps to explore a confirmed transaction on a block explorer.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "Your transaction is confirmed. Where can you view its details?",
+          "options": [
+            { "id": "a", "text": "On a block explorer — a public website that shows all blockchain transactions", "isCorrect": true, "explanation": "Block explorers are like search engines for blockchain data." },
+            { "id": "b", "text": "Only inside your wallet app, nowhere else", "isCorrect": false, "explanation": "Blockchain transactions are public. Anyone can view them on a block explorer." }
+          ],
+          "microExplanation": "Blockchain transparency means every transaction is publicly verifiable."
+        },
+        {
+          "id": "2",
+          "prompt": "You notice the transaction shows wallet addresses but not names. Why?",
+          "options": [
+            { "id": "a", "text": "Blockchain is pseudonymous — addresses are public but not linked to real identities by default", "isCorrect": true, "explanation": "Blockchain provides transparency of transactions while preserving pseudonymity of users." },
+            { "id": "b", "text": "The blockchain is broken and missing data", "isCorrect": false, "explanation": "This is by design. Blockchains use addresses, not personal names." }
+          ],
+          "microExplanation": "Pseudonymity is a core feature of blockchain design."
+        }
+      ]
+    }
+  },
+  "3.3.1": {
+    "title": "What is Gas?",
+    "description": "Gas is the fuel that powers every action on a blockchain. No gas, no action.",
+    "learningObjective": "Understand gas as the computational cost of doing anything on a blockchain",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each gas concept with its correct explanation.",
+      "pairs": [
+        { "id": "1", "term": "Gas", "definition": "A unit measuring the computational effort needed to process a blockchain operation", "analogy": "Like the fuel your car needs to drive — more complex trips use more fuel" },
+        { "id": "2", "term": "Gas fee", "definition": "The actual cost you pay, calculated as gas units multiplied by the current gas price", "analogy": "Like your fuel bill — gallons used times the price per gallon" }
+      ]
+    }
+  },
+  "3.3.2": {
+    "title": "Why Gas Prices Change",
+    "description": "Gas prices aren't fixed. They fluctuate based on how busy the network is.",
+    "learningObjective": "Understand supply/demand for block space — busy network = expensive gas",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A popular NFT collection just launched and millions of people are trying to buy one at the same time. You try to send a simple transfer and see that the gas fee is 10 times higher than usual.",
+      "question": "Why did the gas fee spike?",
+      "options": [
+        { "id": "a", "text": "High demand for block space — everyone is competing to get their transaction processed, driving up the price", "isCorrect": true, "explanation": "Block space is limited. When demand spikes, users bid higher gas fees to get priority." },
+        { "id": "b", "text": "The blockchain increased its fees to make more profit", "isCorrect": false, "explanation": "Blockchains don't set fees for profit. Gas prices are determined by supply and demand among users." }
+      ]
+    }
+  },
+  "3.3.3": {
+    "title": "Gas in Action",
+    "description": "Experience how gas fees work in a multi-step blockchain operation.",
+    "learningObjective": "Experience gas fees firsthand in a simulated multi-step operation",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Complete a simulated multi-step transaction and observe how gas fees accumulate.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "You want to swap Token A for Token B on a decentralized exchange. The first step is approving the exchange to access your tokens. This costs gas. Should you proceed?",
+          "options": [
+            { "id": "a", "text": "Yes — approval is a separate transaction that costs its own gas fee", "isCorrect": true, "explanation": "Many blockchain operations require multiple steps, each consuming gas." },
+            { "id": "b", "text": "No — you should only pay gas once for the whole operation", "isCorrect": false, "explanation": "Complex operations often require multiple transactions, each with its own gas cost." }
+          ],
+          "microExplanation": "Approvals and swaps are separate transactions, each requiring gas."
+        },
+        {
+          "id": "2",
+          "prompt": "The approval went through. Now you execute the swap — another gas fee. Your total gas cost for this operation is the sum of both fees. What can you learn from this?",
+          "options": [
+            { "id": "a", "text": "Complex operations cost more gas because they involve multiple transactions", "isCorrect": true, "explanation": "Each step in a multi-step operation is a separate transaction on the blockchain." },
+            { "id": "b", "text": "The exchange is overcharging you by splitting it into two steps", "isCorrect": false, "explanation": "This is how blockchain works by design. Each smart contract interaction is a separate transaction." }
+          ],
+          "microExplanation": "Understanding total gas costs helps you plan blockchain operations."
+        }
+      ]
+    }
+  },
+  "3.3.4": {
+    "title": "Oops — Failed Transaction, Gas Still Paid",
+    "description": "One of the most painful lessons in crypto: even failed transactions cost gas.",
+    "learningObjective": "Understand that failed transactions still consume gas",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You tried to buy an NFT but someone else bought it one second before you. Your transaction failed. You check your wallet and notice the gas fee was still deducted from your balance.",
+      "question": "Why did you still pay gas for a failed transaction?",
+      "options": [
+        { "id": "a", "text": "Validators still used computational resources to process and verify your transaction, even though it ultimately failed", "isCorrect": true, "explanation": "Gas compensates for the work done, regardless of the outcome. The network still had to process your request." },
+        { "id": "b", "text": "It is a bug in the blockchain that should be fixed", "isCorrect": false, "explanation": "This is intentional design. Without it, people could spam the network with failing transactions at no cost." }
+      ]
+    }
+  },
+  "3.4.1": {
+    "title": "Your Seed Phrase is Everything",
+    "description": "Your seed phrase is the ultimate backup for your wallet. Lose it, and you could lose everything.",
+    "learningObjective": "Understand seed phrases — what they are, why they must never be shared",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Follow the steps to understand how seed phrases work and how to protect them.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "Your wallet shows you 12 random words and asks you to write them down. What are these words?",
+          "options": [
+            { "id": "a", "text": "Your seed phrase — a human-readable backup of your private key that can restore your wallet on any device", "isCorrect": true, "explanation": "The seed phrase generates your private key. With it, you can recover your wallet even if your device is lost or broken." },
+            { "id": "b", "text": "A password that you can change later if you forget it", "isCorrect": false, "explanation": "Seed phrases cannot be changed or reset. They are generated once and are permanent." }
+          ],
+          "microExplanation": "Your seed phrase is your wallet's ultimate backup — permanent and irreplaceable."
+        },
+        {
+          "id": "2",
+          "prompt": "Someone online claims to be from wallet support and asks for your seed phrase to 'verify your account.' What should you do?",
+          "options": [
+            { "id": "a", "text": "Never share it — no legitimate service will ever ask for your seed phrase", "isCorrect": true, "explanation": "This is a scam. No real support team needs your seed phrase. Sharing it gives complete control of your wallet to someone else." },
+            { "id": "b", "text": "Share it if they seem professional and trustworthy", "isCorrect": false, "explanation": "Scammers often appear very professional. Never share your seed phrase with anyone, ever." }
+          ],
+          "microExplanation": "Rule number one: never share your seed phrase with anyone, for any reason."
+        }
+      ]
+    }
+  },
+  "3.4.2": {
+    "title": "Spot the Scam",
+    "description": "Crypto scams are everywhere. Learning to recognize them is essential for staying safe.",
+    "learningObjective": "Recognize common crypto scam patterns (phishing, fake airdrops, rug pulls)",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You receive an email that says: 'Congratulations! You have been selected for an exclusive airdrop of 10,000 FREE tokens. Click here and connect your wallet to claim them before they expire!'",
+      "question": "What should you do?",
+      "options": [
+        { "id": "a", "text": "Ignore and delete it — this is a classic phishing scam designed to steal your wallet credentials", "isCorrect": true, "explanation": "Unsolicited offers of free tokens are almost always scams. Connecting your wallet to a malicious site can drain your funds." },
+        { "id": "b", "text": "Click the link to check if the offer is legitimate", "isCorrect": false, "explanation": "Even clicking the link can be dangerous. Malicious sites can prompt wallet connections that authorize fund transfers." }
+      ]
+    }
+  },
+  "3.4.3": {
+    "title": "Security Best Practices",
+    "description": "Protecting your crypto requires good habits. Here are the rules that matter most.",
+    "learningObjective": "Know the actionable rules — 2FA, hardware wallets, verify URLs, never share keys",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each security practice with why it matters.",
+      "pairs": [
+        { "id": "1", "term": "Enable two-factor authentication (2FA)", "definition": "Adds a second layer of protection so that a stolen password alone is not enough to access your account", "analogy": "Like needing both a key and a code to open a safe" },
+        { "id": "2", "term": "Verify website URLs before connecting your wallet", "definition": "Prevents you from connecting to fake sites that mimic legitimate ones", "analogy": "Like checking the address on an envelope before opening it" }
+      ]
+    }
+  },
+  "3.4.4": {
+    "title": "The Security Checklist",
+    "description": "Let's consolidate everything you've learned about security into a personal checklist.",
+    "learningObjective": "Consolidate all safety knowledge into a personal checklist",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each security measure in its correct priority level.",
+      "items": [
+        { "id": "1", "label": "Never share your seed phrase or private keys", "correctPosition": 0 },
+        { "id": "2", "label": "Enable 2FA on all crypto accounts", "correctPosition": 1 },
+        { "id": "3", "label": "Use a hardware wallet for large holdings", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Critical — do this first" },
+        { "id": "z2", "label": "Important — do this soon" },
+        { "id": "z3", "label": "Recommended — do this when ready" }
+      ]
+    }
+  },
+  "4.1.1": {
+    "title": "The Vending Machine Analogy",
+    "description": "Smart contracts are simpler than they sound. Think of them as digital vending machines.",
+    "learningObjective": "Understand smart contracts as automated if/then agreements",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You walk up to a vending machine, insert a coin, and press B3. The machine checks if you paid enough, then automatically dispenses your snack. No human was involved in the decision.",
+      "question": "How is this similar to a smart contract?",
+      "options": [
+        { "id": "a", "text": "Both execute automatically based on predefined conditions — if the conditions are met, the action happens with no human needed", "isCorrect": true, "explanation": "Smart contracts are essentially 'if this, then that' rules encoded in software that execute automatically when conditions are met." },
+        { "id": "b", "text": "Both require a person to manually approve each transaction", "isCorrect": false, "explanation": "The whole point of both vending machines and smart contracts is that they work without human intervention." }
+      ]
+    }
+  },
+  "4.1.2": {
+    "title": "Code That Keeps Promises",
+    "description": "Unlike a human who might forget or change their mind, smart contracts always do what they're programmed to do.",
+    "learningObjective": "Understand that smart contracts execute automatically, without human intervention",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each event in the correct order of a smart contract execution.",
+      "items": [
+        { "id": "1", "label": "Contract conditions are defined in code", "correctPosition": 0 },
+        { "id": "2", "label": "A trigger event occurs (e.g., payment is received)", "correctPosition": 1 },
+        { "id": "3", "label": "Contract executes automatically without any human approval", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Setup phase" },
+        { "id": "z2", "label": "Trigger phase" },
+        { "id": "z3", "label": "Execution phase" }
+      ]
+    }
+  },
+  "4.1.3": {
+    "title": "Smart Contracts on the Blockchain",
+    "description": "Smart contracts don't run on a regular server. They live on the blockchain with unique properties.",
+    "learningObjective": "Understand that smart contracts live on blockchains, are transparent, and can't be changed",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each property of blockchain smart contracts with its meaning.",
+      "pairs": [
+        { "id": "1", "term": "Immutable", "definition": "Once deployed, the code cannot be changed by anyone", "analogy": "Like carving words in stone — once it is written, it stays forever" },
+        { "id": "2", "term": "Transparent", "definition": "Anyone can read the contract's code and verify what it does", "analogy": "Like a glass vending machine where you can see all the gears working" }
+      ]
+    }
+  },
+  "4.1.4": {
+    "title": "When Smart Contracts Go Wrong",
+    "description": "Smart contracts are powerful, but bugs in the code can have permanent consequences.",
+    "learningObjective": "Understand limitations — bugs are permanent, code is law, 'The DAO hack' simplified",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "In 2016, a smart contract called 'The DAO' held 150 million dollars. A hacker found a bug in the code and drained 60 million dollars. The code worked exactly as written — it just wasn't written correctly.",
+      "question": "What key lesson does The DAO hack teach us about smart contracts?",
+      "options": [
+        { "id": "a", "text": "Smart contracts execute exactly as coded, so bugs can be exploited and cannot be easily patched after deployment", "isCorrect": true, "explanation": "Immutability is both a strength and a risk. Code must be audited thoroughly before deployment because there is no undo button." },
+        { "id": "b", "text": "Smart contracts are too dangerous to use and should be avoided entirely", "isCorrect": false, "explanation": "The lesson is not to avoid smart contracts but to understand that they require careful coding and auditing. Billions of dollars operate safely in smart contracts today." }
+      ]
+    }
+  },
+  "4.2.1": {
+    "title": "Smart Contracts at Work",
+    "description": "Smart contracts are already being used in insurance, real estate, and supply chains.",
+    "learningObjective": "Understand real applications — insurance claims, supply chain, real estate escrow",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A farmer buys crop insurance powered by a smart contract. The contract is connected to weather data. If rainfall drops below a certain threshold during the growing season, the farmer is automatically paid without filing a claim.",
+      "question": "What is the main advantage of this smart contract approach over traditional insurance?",
+      "options": [
+        { "id": "a", "text": "Automatic payout removes delays, paperwork, and the possibility of the insurer denying a valid claim", "isCorrect": true, "explanation": "Smart contracts remove human bias and bureaucracy. If conditions are met, payment is guaranteed." },
+        { "id": "b", "text": "The farmer gets a lower premium because smart contracts are cheaper to build", "isCorrect": false, "explanation": "The main advantage is reliability and speed of payout, not necessarily lower premiums." }
+      ]
+    }
+  },
+  "4.2.2": {
+    "title": "Running a Smart Contract",
+    "description": "Let's simulate triggering and executing a real smart contract from start to finish.",
+    "learningObjective": "Experience triggering a simulated smart contract end-to-end",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Walk through the steps of interacting with a simple escrow smart contract.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "You are buying a digital artwork. The smart contract says: 'Hold buyer's payment. Release to seller when buyer confirms receipt.' You send your payment to the contract. What happens next?",
+          "options": [
+            { "id": "a", "text": "The contract holds the funds securely until you confirm you received the artwork", "isCorrect": true, "explanation": "Escrow contracts hold funds as a neutral third party, releasing them only when conditions are met." },
+            { "id": "b", "text": "The seller receives the payment immediately", "isCorrect": false, "explanation": "In an escrow contract, the seller only gets paid when the buyer confirms receipt." }
+          ],
+          "microExplanation": "Smart contract escrow eliminates the need to trust the other party."
+        },
+        {
+          "id": "2",
+          "prompt": "You received the artwork and it matches the description. You click 'confirm receipt' in the app. What happens?",
+          "options": [
+            { "id": "a", "text": "The smart contract automatically releases the payment to the seller", "isCorrect": true, "explanation": "Your confirmation triggers the contract's release condition, sending funds to the seller." },
+            { "id": "b", "text": "A human administrator reviews your confirmation before releasing payment", "isCorrect": false, "explanation": "Smart contracts execute automatically. No human review is needed." }
+          ],
+          "microExplanation": "Once conditions are met, the contract executes instantly and automatically."
+        }
+      ]
+    }
+  },
+  "4.2.3": {
+    "title": "Marc's Lunch Moment",
+    "description": "Can you explain smart contracts to a friend over lunch? This is your capstone test.",
+    "learningObjective": "Capstone: explain smart contracts simply and correctly",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You are having lunch with your friend Marc. He asks: 'I keep hearing about smart contracts. What are they exactly?' You want to give him a clear, accurate answer using an everyday analogy.",
+      "question": "Which explanation would be the most accurate and easy to understand?",
+      "options": [
+        { "id": "a", "text": "A smart contract is like a vending machine made of code — you put in what's required, and it automatically gives you the result. No person in the middle deciding whether to follow through. It lives on the blockchain, so everyone can verify it works as promised.", "isCorrect": true, "explanation": "This hits all the key points: automatic execution, no intermediary, transparency, and uses a relatable analogy." },
+        { "id": "b", "text": "Smart contracts are basically legal contracts that lawyers write in computer code instead of English.", "isCorrect": false, "explanation": "Smart contracts are not legal contracts. They are self-executing programs that enforce rules through code, regardless of legal systems." }
+      ]
+    }
+  },
+  "5.1.1": {
+    "title": "Fungible vs. Non-Fungible",
+    "description": "To understand NFTs, you first need to understand what 'non-fungible' means — and it's simpler than it sounds.",
+    "learningObjective": "Understand the core concept — interchangeable (dollar bill) vs unique (painting)",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each item with whether it is fungible or non-fungible.",
+      "pairs": [
+        { "id": "1", "term": "A 10-euro bill", "definition": "Fungible — any 10-euro bill is interchangeable with any other", "analogy": "Like a liter of water — one is as good as another" },
+        { "id": "2", "term": "The Mona Lisa painting", "definition": "Non-fungible — it is one of a kind and cannot be replaced by a copy", "analogy": "Like your childhood photo album — irreplaceable and unique" }
+      ]
+    }
+  },
+  "5.1.2": {
+    "title": "Digital Ownership Before NFTs",
+    "description": "You've 'bought' plenty of digital things. But do you really own them?",
+    "learningObjective": "Understand the problem — you don't 'own' your Kindle books, Spotify playlists, or game skins",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You have spent 500 euros on ebooks on a platform. One day, the company changes its terms of service and removes several books from your library. You paid for them, but they are gone.",
+      "question": "What does this reveal about digital ownership today?",
+      "options": [
+        { "id": "a", "text": "You don't actually own digital purchases — you have a revocable license that the company can change or take away at any time", "isCorrect": true, "explanation": "Most digital purchases are licenses, not ownership. The company retains control over your access." },
+        { "id": "b", "text": "This is illegal and could never happen to a legitimate company", "isCorrect": false, "explanation": "This happens regularly and is typically covered in the terms of service you agree to. Companies legally retain control over digital content." }
+      ]
+    }
+  },
+  "5.1.3": {
+    "title": "How NFTs Work",
+    "description": "An NFT is a smart contract that proves ownership of a unique digital item on the blockchain.",
+    "learningObjective": "Understand that an NFT is a smart contract proving you own a unique digital item",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each component in its correct position within the NFT structure.",
+      "items": [
+        { "id": "1", "label": "Smart contract with unique token ID", "correctPosition": 0 },
+        { "id": "2", "label": "Metadata pointing to the digital asset", "correctPosition": 1 },
+        { "id": "3", "label": "Owner's wallet address recorded on blockchain", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "What makes it unique" },
+        { "id": "z2", "label": "What it represents" },
+        { "id": "z3", "label": "Who owns it" }
+      ]
+    }
+  },
+  "5.1.4": {
+    "title": "Creating Your First NFT",
+    "description": "Experience the NFT minting process in a safe simulation.",
+    "learningObjective": "Experience minting a simulated NFT",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Follow the steps to mint your first simulated NFT.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "You have a digital artwork you want to turn into an NFT. What is the first step?",
+          "options": [
+            { "id": "a", "text": "Connect your wallet to an NFT marketplace and upload the artwork with metadata", "isCorrect": true, "explanation": "Minting starts with connecting your wallet and uploading the asset you want to tokenize." },
+            { "id": "b", "text": "Email the artwork to the blockchain", "isCorrect": false, "explanation": "You can't email things to a blockchain. You interact with it through wallet-connected applications." }
+          ],
+          "microExplanation": "Minting is the process of creating a new NFT on the blockchain."
+        },
+        {
+          "id": "2",
+          "prompt": "You click 'Mint' and your wallet asks you to confirm a transaction with a gas fee. Why?",
+          "options": [
+            { "id": "a", "text": "Minting creates a new smart contract on the blockchain, which requires computational work and therefore costs gas", "isCorrect": true, "explanation": "Creating an NFT is a blockchain transaction that needs to be processed and validated by the network." },
+            { "id": "b", "text": "The marketplace is charging you a subscription fee disguised as gas", "isCorrect": false, "explanation": "Gas fees go to network validators, not the marketplace. They pay for the computational work of recording your NFT on the blockchain." }
+          ],
+          "microExplanation": "Every blockchain action — including minting — requires gas to process."
+        }
+      ]
+    }
+  },
+  "5.2.1": {
+    "title": "NFTs in Gaming, Music & Identity",
+    "description": "NFTs are more than just digital art. They are being used in gaming, music, and identity verification.",
+    "learningObjective": "Understand NFT use cases beyond profile pictures",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each use case with how NFTs enable it.",
+      "pairs": [
+        { "id": "1", "term": "In-game items as NFTs", "definition": "Players truly own their swords, skins, and characters and can trade or sell them outside the game", "analogy": "Like owning a physical trading card you can sell at any shop, not just within one game" },
+        { "id": "2", "term": "Music as NFTs", "definition": "Musicians can sell directly to fans, with automatic royalties on every resale", "analogy": "Like getting a cut every time someone resells your concert ticket" }
+      ]
+    }
+  },
+  "5.2.2": {
+    "title": "NFTs and Creators",
+    "description": "NFTs change the economics of being a creator. Royalties on resale are a game-changer.",
+    "learningObjective": "Understand how NFTs change creator economics — royalties on resale, direct sales",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "An artist sells a digital painting as an NFT for 1 ETH. The smart contract includes a 10% royalty on all future resales. The first buyer later resells it for 5 ETH.",
+      "question": "What happens to the artist?",
+      "options": [
+        { "id": "a", "text": "The artist automatically receives 0.5 ETH (10% of the 5 ETH resale) thanks to the smart contract royalty", "isCorrect": true, "explanation": "NFT royalties are encoded in the smart contract and pay creators automatically on every resale." },
+        { "id": "b", "text": "The artist gets nothing because they already sold the original piece", "isCorrect": false, "explanation": "Unlike traditional art sales, NFT smart contracts can enforce automatic royalty payments on every resale." }
+      ]
+    }
+  },
+  "5.2.3": {
+    "title": "The Ownership Question",
+    "description": "When you buy an NFT, what do you actually own? The answer might surprise you.",
+    "learningObjective": "Understand what you actually own with an NFT — the token, not necessarily the file",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You buy an NFT of a famous digital artwork. You proudly tell your friend: 'I own this image now.' Your friend responds: 'But I can right-click and save the exact same image.'",
+      "question": "Who is right, and what do you actually own?",
+      "options": [
+        { "id": "a", "text": "You own the blockchain token proving ownership, not exclusive access to the image file. Your friend can copy the file but cannot own the token.", "isCorrect": true, "explanation": "NFT ownership is about the verifiable token on the blockchain, not exclusive access to the underlying file. It is similar to owning an original painting — anyone can photograph it, but only you own the original." },
+        { "id": "b", "text": "You own all rights to the image and your friend is committing copyright theft by saving it", "isCorrect": false, "explanation": "NFTs typically don't transfer copyright or exclusive image rights. You own the token, which proves ownership on the blockchain, but the file itself can usually be freely viewed and copied." }
+      ]
+    }
+  },
+  "5.3.1": {
+    "title": "The NFT Boom and Bust",
+    "description": "The NFT market exploded in 2021 and then crashed hard. What happened?",
+    "learningObjective": "Understand the market cycle — 2021 hype, prices, crash, what survived",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "In 2021, an NFT collection of cartoon apes sold for millions of dollars each. By 2023, many similar collections had lost 90% or more of their value. Meanwhile, some projects with real utility continued to grow.",
+      "question": "What best explains this pattern?",
+      "options": [
+        { "id": "a", "text": "Speculation drove prices to unsustainable levels. Projects with real utility survived while pure hype projects collapsed.", "isCorrect": true, "explanation": "Market bubbles follow this pattern across all asset classes. The technology itself isn't dead — just the speculative excess." },
+        { "id": "b", "text": "NFTs were proven to be a scam and have no future", "isCorrect": false, "explanation": "A market correction is not proof that the technology is worthless. Many useful NFT applications continue to develop." }
+      ]
+    }
+  },
+  "5.3.2": {
+    "title": "Spotting NFT Red Flags",
+    "description": "Learn to recognize the warning signs of NFT scams and manipulated markets.",
+    "learningObjective": "Recognize common NFT scam patterns — wash trading, rug pulls, fake collections",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You discover a new NFT collection. The website looks professional, but you notice: the team is anonymous, the project appeared yesterday, the floor price has gone up 1000% in one day, and the transaction history shows the same wallets buying and selling to each other.",
+      "question": "What red flags can you identify?",
+      "options": [
+        { "id": "a", "text": "Multiple red flags: anonymous team, no track record, suspicious price pump, and wash trading (same wallets trading with each other to fake demand)", "isCorrect": true, "explanation": "Each of these is a classic warning sign. Together they strongly suggest a manipulated or fraudulent project." },
+        { "id": "b", "text": "The rising price proves the project is legitimate and popular", "isCorrect": false, "explanation": "Price alone is not proof of legitimacy. Wash trading can artificially inflate prices to attract real buyers before a rug pull." }
+      ]
+    }
+  },
+  "5.3.3": {
+    "title": "What's Actually Valuable?",
+    "description": "Not all NFT projects are equal. Let's build a framework for evaluating them.",
+    "learningObjective": "Develop framework for evaluating NFT projects critically",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each evaluation criterion with its importance for assessing an NFT project.",
+      "pairs": [
+        { "id": "1", "term": "Real utility beyond speculation", "definition": "The NFT provides actual functionality, access, or rights — not just a collectible image", "analogy": "Like buying a tool versus buying a decorative object — the tool has inherent value" },
+        { "id": "2", "term": "Transparent, known team", "definition": "The creators are identifiable and accountable, with a track record", "analogy": "Like buying from a store with a physical address versus a pop-up stall that appeared overnight" }
+      ]
+    }
+  },
+  "5.3.4": {
+    "title": "The Honest Take",
+    "description": "Let's consolidate a balanced, honest perspective on NFTs — potential, limitations, and reality.",
+    "learningObjective": "Consolidate a balanced view — potential + limitations + personal stance",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A news headline reads: 'NFTs are dead.' Another says: 'NFTs will revolutionize everything.' Your colleague asks you for an honest take.",
+      "question": "Which response shows the most balanced understanding?",
+      "options": [
+        { "id": "a", "text": "NFTs as a technology have real potential for digital ownership, creator royalties, and identity, but the speculative market was overhyped. The technology is evolving while the hype is cooling, which is healthy.", "isCorrect": true, "explanation": "A balanced view acknowledges both the genuine utility and the speculative excess. Technology and hype cycles are different things." },
+        { "id": "b", "text": "NFTs are either the future of everything or a complete scam — there is no middle ground.", "isCorrect": false, "explanation": "This is a false binary. Most technologies exist on a spectrum between transformative and useless. Critical thinking requires nuance." }
+      ]
+    }
+  },
+  "6.1.1": {
+    "title": "What is DeFi?",
+    "description": "Imagine banking services — lending, borrowing, trading — without any bank. That's DeFi.",
+    "learningObjective": "Understand decentralized finance — financial services without institutions",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each traditional financial service with its DeFi equivalent.",
+      "pairs": [
+        { "id": "1", "term": "Bank savings account earning interest", "definition": "DeFi lending protocol where you deposit crypto and earn yield from borrowers", "analogy": "Like lending your lawnmower to a neighbor for a fee, but automated and trustless" },
+        { "id": "2", "term": "Stock exchange for buying and selling", "definition": "Decentralized exchange (DEX) where you trade directly from your wallet", "analogy": "Like a swap meet where buyers and sellers trade directly, with a smart contract as referee" }
+      ]
+    }
+  },
+  "6.1.2": {
+    "title": "Lending & Borrowing Without a Bank",
+    "description": "DeFi lets you lend your crypto to earn interest or borrow against your holdings — all through smart contracts.",
+    "learningObjective": "Understand DeFi lending — liquidity pools, interest rates, collateral",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Walk through the steps of lending crypto on a DeFi protocol.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "You want to earn interest on your idle crypto. You deposit 10 ETH into a DeFi lending protocol. What happens to your ETH?",
+          "options": [
+            { "id": "a", "text": "It enters a liquidity pool where borrowers can access it, and you earn interest from their repayments", "isCorrect": true, "explanation": "DeFi lending pools aggregate deposits from many lenders and distribute them to borrowers, with interest flowing back to lenders." },
+            { "id": "b", "text": "It is converted into a stablecoin automatically", "isCorrect": false, "explanation": "Your ETH stays as ETH in the lending pool. It is not converted." }
+          ],
+          "microExplanation": "Liquidity pools are the backbone of DeFi lending."
+        },
+        {
+          "id": "2",
+          "prompt": "A borrower wants to borrow 5 ETH from the pool. What must they provide?",
+          "options": [
+            { "id": "a", "text": "Collateral worth more than the loan — typically 150% or more of the borrowed amount", "isCorrect": true, "explanation": "DeFi lending is over-collateralized because there is no credit check. Smart contracts automatically liquidate collateral if its value drops too low." },
+            { "id": "b", "text": "Just their wallet address and a promise to repay", "isCorrect": false, "explanation": "DeFi has no identity checks or promises. It uses over-collateralization and automatic liquidation instead." }
+          ],
+          "microExplanation": "Over-collateralization replaces the trust and credit checks that banks use."
+        }
+      ]
+    }
+  },
+  "6.1.3": {
+    "title": "Trading Without an Exchange",
+    "description": "Decentralized exchanges let you trade crypto without creating an account or trusting a company.",
+    "learningObjective": "Understand DEXs and how they differ from Coinbase/Binance",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "You want to swap ETH for USDC. On a centralized exchange like Coinbase, you would create an account, verify your identity, deposit funds, and place an order. On a DEX, you connect your wallet and swap directly.",
+      "question": "What is the main trade-off between a centralized exchange and a DEX?",
+      "options": [
+        { "id": "a", "text": "DEXs give you full control of your funds and require no account, but may have less liquidity and no customer support if something goes wrong", "isCorrect": true, "explanation": "DEXs trade convenience and support for self-sovereignty and permissionless access." },
+        { "id": "b", "text": "DEXs are always cheaper and faster than centralized exchanges", "isCorrect": false, "explanation": "DEX gas fees can be higher than centralized exchange fees, especially during network congestion." }
+      ]
+    }
+  },
+  "6.1.4": {
+    "title": "The Risks of DeFi",
+    "description": "DeFi is powerful, but it comes with significant risks that you need to understand.",
+    "learningObjective": "Understand DeFi risks — smart contract bugs, impermanent loss, rug pulls",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A new DeFi protocol offers 500% annual yield on deposits. Thousands of users rush to deposit their crypto. Two weeks later, the protocol's smart contract is exploited and all deposited funds are drained.",
+      "question": "What key DeFi risks does this scenario illustrate?",
+      "options": [
+        { "id": "a", "text": "Unrealistic yields are often a red flag, smart contracts can have exploitable bugs, and there is no insurance or customer support to recover lost funds", "isCorrect": true, "explanation": "DeFi operates without safety nets. High yields often indicate high risk. Smart contract audits help but cannot eliminate all bugs." },
+        { "id": "b", "text": "The only risk in DeFi is that prices might go down", "isCorrect": false, "explanation": "DeFi risks go far beyond price volatility — smart contract exploits, rug pulls, and protocol failures can result in total loss of funds." }
+      ]
+    }
+  },
+  "6.2.1": {
+    "title": "DAOs: Organizations Without Bosses",
+    "description": "What if an organization was run by its members through voting, with no CEO or board of directors?",
+    "learningObjective": "Understand DAOs — voting, treasuries, governance",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A group of 10,000 people from around the world pool their crypto into a shared treasury. Decisions about how to spend it are made through token-based voting. No CEO, no headquarters, no hierarchy.",
+      "question": "What type of organization is this?",
+      "options": [
+        { "id": "a", "text": "A DAO (Decentralized Autonomous Organization) — governed by smart contracts and member votes rather than executives", "isCorrect": true, "explanation": "DAOs use blockchain governance to let members propose and vote on decisions. Token holders are the decision-makers." },
+        { "id": "b", "text": "A traditional crowdfunding campaign with extra steps", "isCorrect": false, "explanation": "Unlike crowdfunding, DAO members actively govern the organization through ongoing votes, not just one-time contributions." }
+      ]
+    }
+  },
+  "6.2.2": {
+    "title": "Web3: The Next Internet?",
+    "description": "Web3 promises an internet where users own their data and platforms are decentralized.",
+    "learningObjective": "Understand Web3 vision — user-owned data, decentralized apps, token economies",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Match each internet era with its defining characteristic.",
+      "pairs": [
+        { "id": "1", "term": "Web1 (1990s-2000s)", "definition": "Read-only — static websites you could browse but not interact with", "analogy": "Like a digital library — you could read but not write" },
+        { "id": "2", "term": "Web2 (2000s-present)", "definition": "Read-write — social media, user content, but platforms own your data", "analogy": "Like renting an apartment — you live there but the landlord owns everything" },
+        { "id": "3", "term": "Web3 (emerging)", "definition": "Read-write-own — users control their data and digital assets through blockchain", "analogy": "Like owning your home — you control the property and its value" }
+      ]
+    }
+  },
+  "6.2.3": {
+    "title": "Blockchain in Your Daily Life",
+    "description": "Blockchain is already quietly entering everyday life in ways you might not expect.",
+    "learningObjective": "Understand near-term real-world integration — CBDCs, supply chain, digital identity",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "The European Central Bank announces a digital euro (CBDC) that would work on a blockchain-like infrastructure. Unlike crypto, it would be issued and controlled by the central bank.",
+      "question": "How does a CBDC differ from a cryptocurrency like Bitcoin?",
+      "options": [
+        { "id": "a", "text": "A CBDC is government-issued and centrally controlled, while Bitcoin is decentralized with no single authority. CBDCs use blockchain technology but not blockchain philosophy.", "isCorrect": true, "explanation": "CBDCs borrow the technology but maintain centralized control. They are the opposite of Bitcoin's vision of decentralized money." },
+        { "id": "b", "text": "There is no real difference — a digital euro is the same as Bitcoin but backed by the government", "isCorrect": false, "explanation": "The differences are fundamental. CBDCs are centralized, controlled by governments, and can be surveilled and frozen. Bitcoin is decentralized and permissionless." }
+      ]
+    }
+  },
+  "6.2.4": {
+    "title": "The Skeptic's Questions",
+    "description": "Every technology faces legitimate criticism. Engaging with skeptics makes you smarter, not weaker.",
+    "learningObjective": "Engage with legitimate criticisms — energy use, scalability, regulation, adoption barriers",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A skeptic says: 'Blockchain is a solution looking for a problem. It uses massive amounts of energy, is too slow for real-world use, and most people will never need it.'",
+      "question": "What is the most thoughtful response?",
+      "options": [
+        { "id": "a", "text": "Those are valid concerns. Energy use has improved significantly with Proof of Stake, scalability is being addressed by layer-2 solutions, and adoption is growing in specific use cases. But blockchain is not the answer to everything — it works best where trustless coordination between parties is needed.", "isCorrect": true, "explanation": "Engaging honestly with criticism shows real understanding. Acknowledging problems while pointing to ongoing solutions is the mark of genuine expertise." },
+        { "id": "b", "text": "The skeptic doesn't understand blockchain and should do more research before criticizing it.", "isCorrect": false, "explanation": "Dismissing criticism is not a valid response. The concerns raised are real and widely discussed within the blockchain community itself." }
+      ]
+    }
+  },
+  "6.3.1": {
+    "title": "The Full Picture",
+    "description": "Everything you've learned connects together. Let's see the big picture of how blockchain concepts relate.",
+    "learningObjective": "Synthesize the entire curriculum — how all concepts connect",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Place each concept in the correct layer of the blockchain ecosystem.",
+      "items": [
+        { "id": "1", "label": "Blockchain (the distributed ledger)", "correctPosition": 0 },
+        { "id": "2", "label": "Smart contracts (programmable rules)", "correctPosition": 1 },
+        { "id": "3", "label": "Tokens, NFTs, DeFi (applications built on top)", "correctPosition": 2 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Foundation layer" },
+        { "id": "z2", "label": "Logic layer" },
+        { "id": "z3", "label": "Application layer" }
+      ]
+    }
+  },
+  "6.3.2": {
+    "title": "Explain It Like You Get It",
+    "description": "The ultimate test of understanding is being able to explain things simply and correctly.",
+    "learningObjective": "Prove understanding by selecting the best explanations for core concepts",
+    "exerciseContent": {
+      "placeholder": true,
+      "scenario": "A friend who knows nothing about blockchain asks you: 'In one sentence, what is blockchain?' You want to give the clearest, most accurate answer possible.",
+      "question": "Which explanation is the most accurate and accessible?",
+      "options": [
+        { "id": "a", "text": "A blockchain is a shared digital record book that thousands of computers maintain together, so no single person or company controls it and no one can secretly change what's written in it.", "isCorrect": true, "explanation": "This captures the key elements: shared, distributed, immutable, and no central authority — all in plain language." },
+        { "id": "b", "text": "Blockchain is a type of cryptocurrency that lets you make money online.", "isCorrect": false, "explanation": "Blockchain is not a cryptocurrency. Blockchain is the underlying technology. Cryptocurrencies are just one application built on top of it." }
+      ]
+    }
+  },
+  "6.3.3": {
+    "title": "Your Blockchain Confidence Score",
+    "description": "Time for a final self-assessment. How well do you really understand blockchain?",
+    "learningObjective": "Final self-assessment and reflection",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Complete each reflection step to assess your blockchain knowledge.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "How confident are you explaining what a blockchain is to someone who has never heard of it?",
+          "options": [
+            { "id": "a", "text": "I can explain it clearly using everyday analogies", "isCorrect": true, "explanation": "Being able to explain complex topics simply is the hallmark of true understanding." },
+            { "id": "b", "text": "I understand it but struggle to explain it to others", "isCorrect": true, "explanation": "This is natural. Understanding often comes before the ability to teach. Practice explaining to friends!" }
+          ],
+          "microExplanation": "Self-awareness about your knowledge level is itself a valuable skill."
+        },
+        {
+          "id": "2",
+          "prompt": "If someone asked you whether they should invest in crypto, what would you say?",
+          "options": [
+            { "id": "a", "text": "I would explain the technology but recommend they consult a financial advisor for investment decisions", "isCorrect": true, "explanation": "Knowing the boundary between education and financial advice is a sign of maturity and responsibility." },
+            { "id": "b", "text": "I would tell them which coins to buy based on what I've learned", "isCorrect": false, "explanation": "Education about technology does not qualify anyone to give investment advice. Always recommend professional financial guidance." }
+          ],
+          "microExplanation": "Knowing what you know — and what you don't — is wisdom."
+        }
+      ]
+    }
+  },
+  "6.3.4": {
+    "title": "Graduation",
+    "description": "You've completed the entire curriculum. Time to receive your certificate and reflect on your journey.",
+    "learningObjective": "Earn and view your completion certificate",
+    "exerciseContent": {
+      "placeholder": true,
+      "instruction": "Complete the final steps to earn your blockchain literacy certificate.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "You have completed all 69 missions across 6 categories. What is the most important thing you take away?",
+          "options": [
+            { "id": "a", "text": "Blockchain literacy — I understand the technology, its applications, its limitations, and how to stay safe", "isCorrect": true, "explanation": "Congratulations! Blockchain literacy means understanding the technology well enough to make informed decisions." },
+            { "id": "b", "text": "I am now an expert and can trade crypto professionally", "isCorrect": false, "explanation": "This course provides literacy, not professional expertise. Understanding technology and being a professional trader are very different things." }
+          ],
+          "microExplanation": "Literacy is the foundation. What you build on it is up to you."
+        },
+        {
+          "id": "2",
+          "prompt": "Your blockchain literacy certificate is ready. This is an NFT-style achievement recorded on the platform. What does this remind you of?",
+          "options": [
+            { "id": "a", "text": "It mirrors how real blockchain credentials work — a verifiable digital certificate that proves an achievement", "isCorrect": true, "explanation": "Your certificate works just like a real blockchain credential. You have come full circle — learning about the technology by experiencing it." },
+            { "id": "b", "text": "It is just a picture with no connection to what I learned", "isCorrect": false, "explanation": "Your certificate is a digital credential that mirrors real-world blockchain-verified achievements, tying together everything you learned." }
+          ],
+          "microExplanation": "Your journey through this platform has been a living example of blockchain concepts in action."
+        }
+      ]
+    }
+  }
+}

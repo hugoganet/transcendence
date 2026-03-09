@@ -60,11 +60,11 @@ development_status:
   2-6-user-profile-management: done
   2-7-financial-disclaimer-and-onboarding-gate: done
   2-8-auth-frontend-registration-login-and-profile-pages: backlog
-  epic-2-retrospective: optional
+  epic-2-retrospective: done
 
   # Epic 3: Curriculum Engine & Learning Path
-  epic-3: backlog
-  3-1-curriculum-content-json-structure-and-loader: backlog
+  epic-3: in-progress
+  3-1-curriculum-content-json-structure-and-loader: done
   3-2-curriculum-progress-api: backlog
   3-3-mission-completion-and-progress-tracking: backlog
   3-4-jargon-tooltips-api: backlog

@@ -1,0 +1,416 @@
+{
+  "1.1.1": {
+    "title": "À qui faites-vous confiance ?",
+    "description": "Explorez comment les intermédiaires interviennent dans presque toutes vos transactions quotidiennes.",
+    "learningObjective": "Comprendre que la plupart des transactions quotidiennes reposent sur des intermédiaires.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.1.2": {
+    "title": "Que pourrait-il mal tourner ?",
+    "description": "Découvrez ce qui se passe quand un point central de contrôle tombe en panne.",
+    "learningObjective": "Comprendre les points de défaillance uniques.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.1.3": {
+    "title": "Un monde sans intermédiaires",
+    "description": "Imaginez un système où la confiance ne dépend d'aucune entité centrale.",
+    "learningObjective": "Comprendre la confiance pair-à-pair de la blockchain.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.2.1": {
+    "title": "Qu'est-ce qu'un bloc ?",
+    "description": "Découvrez l'unité de base de la blockchain : le bloc.",
+    "learningObjective": "Un bloc est un conteneur de données avec un horodatage et un identifiant.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.2.2": {
+    "title": "Enchaîner les blocs",
+    "description": "Comprenez comment les blocs se lient les uns aux autres grâce aux hashs.",
+    "learningObjective": "Comment les blocs se lient entre eux via les hashs.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.2.3": {
+    "title": "Des copies partout",
+    "description": "Découvrez pourquoi la blockchain est copiée sur des milliers d'ordinateurs.",
+    "learningObjective": "Le concept de registre distribué.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.2.4": {
+    "title": "Comment le réseau se met d'accord",
+    "description": "Explorez comment des milliers d'ordinateurs parviennent à un accord commun.",
+    "learningObjective": "Les bases du consensus.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.2.5": {
+    "title": "Blockchain vs. Base de données",
+    "description": "Comparez la blockchain avec les bases de données traditionnelles.",
+    "learningObjective": "Ce qui rend la blockchain différente.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.3.1": {
+    "title": "La décentralisation dans la vie réelle",
+    "description": "Reliez le concept de décentralisation à des systèmes que vous connaissez déjà.",
+    "learningObjective": "Faire le lien avec des systèmes familiers.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.3.2": {
+    "title": "Qui utilise la blockchain aujourd'hui ?",
+    "description": "Découvrez des exemples concrets d'adoption de la blockchain dans le monde.",
+    "learningObjective": "L'adoption dans le monde réel.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "1.3.3": {
+    "title": "La blockchain est-elle toujours la solution ?",
+    "description": "Développez un regard critique sur les avantages et les limites de la blockchain.",
+    "learningObjective": "Esprit critique sur les compromis.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.1.1": {
+    "title": "L'histoire de Satoshi",
+    "description": "Découvrez les origines mystérieuses du Bitcoin et de son créateur.",
+    "learningObjective": "L'origine du Bitcoin.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.1.2": {
+    "title": "Argent numérique vs. Compte bancaire",
+    "description": "Comprenez en quoi la crypto diffère de l'argent sur votre compte en banque.",
+    "learningObjective": "En quoi la crypto diffère.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.1.3": {
+    "title": "Où vit la crypto ?",
+    "description": "Découvrez que les cryptomonnaies existent sur des blockchains, pas dans des banques.",
+    "learningObjective": "La crypto sur les blockchains.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.1.4": {
+    "title": "Pourquoi quelqu'un utiliserait ça ?",
+    "description": "Explorez les raisons concrètes pour lesquelles les gens utilisent la cryptomonnaie.",
+    "learningObjective": "La proposition de valeur.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.2.1": {
+    "title": "Pièces vs. Jetons",
+    "description": "Apprenez la différence entre les cryptos qui ont leur propre blockchain et celles qui vivent sur une autre.",
+    "learningObjective": "Les pièces ont leur propre blockchain vs les jetons.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.2.2": {
+    "title": "Ethereum : L'ordinateur mondial",
+    "description": "Découvrez le rôle unique d'Ethereum dans l'écosystème blockchain.",
+    "learningObjective": "Le rôle d'Ethereum.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.2.3": {
+    "title": "L'univers des jetons",
+    "description": "Explorez les différents types de jetons et leurs utilisations.",
+    "learningObjective": "Les types de jetons.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.2.4": {
+    "title": "Vos Jetons de Connaissance",
+    "description": "Découvrez les jetons de la plateforme que vous gagnez en apprenant.",
+    "learningObjective": "Les jetons de la plateforme.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.3.1": {
+    "title": "Pourquoi la crypto a-t-elle de la valeur ?",
+    "description": "Comprenez les facteurs qui donnent de la valeur aux cryptomonnaies.",
+    "learningObjective": "Les facteurs de valeur.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.3.2": {
+    "title": "Lire un graphique de prix",
+    "description": "Apprenez les bases de la lecture d'un graphique de cours.",
+    "learningObjective": "Les bases des graphiques de prix.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.3.3": {
+    "title": "Pourquoi les prix bougent autant",
+    "description": "Découvrez pourquoi les cryptomonnaies sont si volatiles.",
+    "learningObjective": "La volatilité.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "2.3.4": {
+    "title": "L'avertissement sur l'investissement",
+    "description": "Comprenez que l'éducation n'est pas un conseil financier.",
+    "learningObjective": "L'éducation n'est pas un conseil financier.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.1.1": {
+    "title": "Qu'est-ce qu'un portefeuille crypto ?",
+    "description": "Découvrez comment les clés prouvent la propriété de vos actifs numériques.",
+    "learningObjective": "Les clés prouvent la propriété.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.1.2": {
+    "title": "Clé publique, clé privée",
+    "description": "Comprenez le fonctionnement des paires de clés cryptographiques.",
+    "learningObjective": "Les concepts de paire de clés.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.1.3": {
+    "title": "Portefeuilles chauds vs. Portefeuilles froids",
+    "description": "Découvrez le compromis entre facilité d'utilisation et sécurité.",
+    "learningObjective": "Praticité vs sécurité.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.1.4": {
+    "title": "Créez votre premier portefeuille",
+    "description": "Simulez la création de votre tout premier portefeuille crypto.",
+    "learningObjective": "Simulation de création de portefeuille.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.2.1": {
+    "title": "Anatomie d'une transaction",
+    "description": "Décortiquez les composants d'une transaction blockchain.",
+    "learningObjective": "Les composants d'une transaction.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.2.2": {
+    "title": "Envoyer votre première crypto",
+    "description": "Simulez l'envoi de cryptomonnaie étape par étape.",
+    "learningObjective": "Simulation d'envoi de crypto.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.2.3": {
+    "title": "En attente de confirmation",
+    "description": "Comprenez pourquoi les transactions prennent du temps à être confirmées.",
+    "learningObjective": "Les temps de confirmation.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.2.4": {
+    "title": "La transaction sur la blockchain",
+    "description": "Découvrez comment une transaction est enregistrée de façon permanente.",
+    "learningObjective": "L'enregistrement permanent.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.3.1": {
+    "title": "Qu'est-ce que le gas ?",
+    "description": "Découvrez le coût de calcul nécessaire pour exécuter des opérations sur la blockchain.",
+    "learningObjective": "Le coût de calcul.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.3.2": {
+    "title": "Pourquoi les prix du gas changent",
+    "description": "Comprenez l'offre et la demande d'espace dans les blocs.",
+    "learningObjective": "L'offre et la demande d'espace dans les blocs.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.3.3": {
+    "title": "Le gas en action",
+    "description": "Simulez le paiement de frais de gas lors d'une transaction.",
+    "learningObjective": "Simulation des frais de gas.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.3.4": {
+    "title": "Oups — Transaction échouée, gas quand même payé",
+    "description": "Découvrez pourquoi les frais de gas sont prélevés même quand une transaction échoue.",
+    "learningObjective": "Le coût en gas des transactions échouées.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.4.1": {
+    "title": "Votre phrase de récupération, c'est tout",
+    "description": "Comprenez pourquoi votre phrase de récupération est la chose la plus importante à protéger.",
+    "learningObjective": "L'importance de la phrase de récupération.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.4.2": {
+    "title": "Repérer l'arnaque",
+    "description": "Apprenez à reconnaître les schémas d'arnaque les plus courants.",
+    "learningObjective": "Reconnaître les schémas d'arnaque.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.4.3": {
+    "title": "Les bonnes pratiques de sécurité",
+    "description": "Découvrez les règles essentielles pour protéger vos actifs numériques.",
+    "learningObjective": "Les règles de sécurité.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "3.4.4": {
+    "title": "La checklist de sécurité",
+    "description": "Passez en revue une liste de vérification complète pour sécuriser vos cryptos.",
+    "learningObjective": "La liste de vérification de sécurité.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "4.1.1": {
+    "title": "L'analogie du distributeur automatique",
+    "description": "Comprenez les contrats intelligents comme des accords automatiques « si/alors ».",
+    "learningObjective": "Des accords automatiques si/alors.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "4.1.2": {
+    "title": "Du code qui tient ses promesses",
+    "description": "Découvrez comment les contrats intelligents s'exécutent automatiquement.",
+    "learningObjective": "L'exécution automatique.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "4.1.3": {
+    "title": "Les contrats intelligents sur la blockchain",
+    "description": "Explorez la transparence et l'immuabilité des contrats intelligents.",
+    "learningObjective": "Transparence, immuabilité.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "4.1.4": {
+    "title": "Quand les contrats intelligents tournent mal",
+    "description": "Découvrez les risques : bugs, le hack du DAO, et les conséquences de code immuable.",
+    "learningObjective": "Les bugs, le hack du DAO.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "4.2.1": {
+    "title": "Les contrats intelligents au travail",
+    "description": "Explorez les applications concrètes des contrats intelligents.",
+    "learningObjective": "Les applications réelles.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "4.2.2": {
+    "title": "Exécuter un contrat intelligent",
+    "description": "Simulez l'exécution d'un contrat intelligent étape par étape.",
+    "learningObjective": "Simulation.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "4.2.3": {
+    "title": "Le moment déjeuner de Marc",
+    "description": "Expliquez un contrat intelligent simplement, comme à un ami.",
+    "learningObjective": "Expliquer simplement.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.1.1": {
+    "title": "Fongible vs. Non-fongible",
+    "description": "Comprenez la différence entre les actifs interchangeables et les actifs uniques.",
+    "learningObjective": "Interchangeable vs unique.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.1.2": {
+    "title": "La propriété numérique avant les NFTs",
+    "description": "Explorez le problème de la propriété numérique avant l'arrivée des NFTs.",
+    "learningObjective": "Le problème de la propriété numérique.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.1.3": {
+    "title": "Comment fonctionnent les NFTs",
+    "description": "Découvrez comment un contrat intelligent prouve la propriété numérique.",
+    "learningObjective": "Un contrat intelligent prouvant la propriété.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.1.4": {
+    "title": "Créer votre premier NFT",
+    "description": "Simulez le processus de création (minting) d'un NFT.",
+    "learningObjective": "Simulation de minting.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.2.1": {
+    "title": "Les NFTs dans le jeu vidéo, la musique et l'identité",
+    "description": "Découvrez les cas d'usage des NFTs au-delà de l'art numérique.",
+    "learningObjective": "Les cas d'usage.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.2.2": {
+    "title": "Les NFTs et les créateurs",
+    "description": "Explorez comment les NFTs transforment l'économie des créateurs.",
+    "learningObjective": "L'économie des créateurs.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.2.3": {
+    "title": "La question de la propriété",
+    "description": "Comprenez ce que vous possédez réellement quand vous achetez un NFT.",
+    "learningObjective": "Ce que vous possédez réellement.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.3.1": {
+    "title": "L'essor et la chute des NFTs",
+    "description": "Retracez le cycle de marché des NFTs, de l'euphorie à la correction.",
+    "learningObjective": "Le cycle de marché.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.3.2": {
+    "title": "Repérer les signaux d'alarme NFT",
+    "description": "Apprenez à identifier les schémas d'arnaque dans le monde des NFTs.",
+    "learningObjective": "Les schémas d'arnaque.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.3.3": {
+    "title": "Qu'est-ce qui a vraiment de la valeur ?",
+    "description": "Développez un cadre d'évaluation pour juger de la valeur d'un NFT.",
+    "learningObjective": "Le cadre d'évaluation.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "5.3.4": {
+    "title": "Le bilan honnête",
+    "description": "Formez-vous une vision équilibrée du monde des NFTs.",
+    "learningObjective": "Une vision équilibrée.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.1.1": {
+    "title": "Qu'est-ce que la DeFi ?",
+    "description": "Découvrez la finance décentralisée et comment elle fonctionne sans intermédiaires.",
+    "learningObjective": "La finance décentralisée.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.1.2": {
+    "title": "Prêter et emprunter sans banque",
+    "description": "Explorez comment le prêt et l'emprunt fonctionnent en DeFi.",
+    "learningObjective": "Le prêt en DeFi.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.1.3": {
+    "title": "Échanger sans plateforme d'échange",
+    "description": "Comprenez le fonctionnement des échanges décentralisés (DEX).",
+    "learningObjective": "Les DEX.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.1.4": {
+    "title": "Les risques de la DeFi",
+    "description": "Découvrez les risques et les défis de la finance décentralisée.",
+    "learningObjective": "Les risques de la DeFi.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.2.1": {
+    "title": "Les DAOs : Des organisations sans patron",
+    "description": "Découvrez comment les organisations décentralisées autonomes fonctionnent.",
+    "learningObjective": "Les DAOs.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.2.2": {
+    "title": "Web3 : Le prochain Internet ?",
+    "description": "Explorez la vision d'un Internet décentralisé.",
+    "learningObjective": "La vision du Web3.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.2.3": {
+    "title": "La blockchain dans votre quotidien",
+    "description": "Découvrez comment la blockchain s'intègre déjà dans la vie de tous les jours.",
+    "learningObjective": "L'intégration dans le monde réel.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.2.4": {
+    "title": "Les questions du sceptique",
+    "description": "Examinez les critiques légitimes adressées à la blockchain.",
+    "learningObjective": "Les critiques légitimes.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.3.1": {
+    "title": "La vue d'ensemble",
+    "description": "Synthétisez tout ce que vous avez appris au cours du programme.",
+    "learningObjective": "Synthétiser le programme.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.3.2": {
+    "title": "Expliquez comme si vous maîtrisiez",
+    "description": "Prouvez votre compréhension en expliquant les concepts clés.",
+    "learningObjective": "Prouver sa compréhension.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.3.3": {
+    "title": "Votre score de confiance blockchain",
+    "description": "Évaluez votre niveau de confiance et de compréhension de la blockchain.",
+    "learningObjective": "Auto-évaluation.",
+    "exerciseContent": { "placeholder": true }
+  },
+  "6.3.4": {
+    "title": "Diplôme",
+    "description": "Félicitations ! Recevez votre certificat de fin de programme.",
+    "learningObjective": "Certificat de fin de programme.",
+    "exerciseContent": { "placeholder": true }
+  }
+}

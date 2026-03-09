@@ -1,0 +1,122 @@
+{
+  "blockchain": {
+    "term": "Blockchain",
+    "definition": "A shared digital record that stores information in linked blocks across many computers.",
+    "analogy": "Like a shared Google Doc that everyone can read but nobody can secretly edit.",
+    "relatedTerms": ["block", "hash", "distributed-ledger", "decentralization"]
+  },
+  "block": {
+    "term": "Block",
+    "definition": "A container that holds a batch of transactions, like a page in a ledger.",
+    "analogy": "Like a page in a notebook that gets sealed once it's full.",
+    "relatedTerms": ["blockchain", "hash", "mining"]
+  },
+  "hash": {
+    "term": "Hash",
+    "definition": "A unique digital fingerprint created from data that always produces the same result for the same input.",
+    "analogy": "Like a fingerprint — unique to each person and impossible to fake.",
+    "relatedTerms": ["block", "blockchain", "mining"]
+  },
+  "consensus": {
+    "term": "Consensus",
+    "definition": "The process by which all participants in a network agree on what's true.",
+    "analogy": "Like a group vote where the majority must agree before anything is official.",
+    "relatedTerms": ["blockchain", "mining", "staking", "decentralization"]
+  },
+  "distributed-ledger": {
+    "term": "Distributed Ledger",
+    "definition": "A record book that's copied across thousands of computers, with no single owner.",
+    "analogy": "Like having identical copies of a town's record book in every house.",
+    "relatedTerms": ["blockchain", "decentralization", "peer-to-peer"]
+  },
+  "cryptocurrency": {
+    "term": "Cryptocurrency",
+    "definition": "Digital money that uses cryptography for security and runs on a blockchain without banks.",
+    "analogy": "Like digital cash that doesn't need a bank to work.",
+    "relatedTerms": ["blockchain", "bitcoin", "ethereum", "token", "wallet"]
+  },
+  "token": {
+    "term": "Token",
+    "definition": "A digital asset that represents something of value and lives on an existing blockchain.",
+    "analogy": "Like arcade tokens — they have value within their system.",
+    "relatedTerms": ["cryptocurrency", "ethereum", "nft", "smart-contract"]
+  },
+  "bitcoin": {
+    "term": "Bitcoin",
+    "definition": "The first cryptocurrency, created in 2009 by the pseudonymous Satoshi Nakamoto.",
+    "analogy": "Like digital gold — scarce, valuable, and not controlled by any government.",
+    "relatedTerms": ["cryptocurrency", "blockchain", "mining"]
+  },
+  "ethereum": {
+    "term": "Ethereum",
+    "definition": "A blockchain platform that lets developers build applications and create tokens on top of it.",
+    "analogy": "Like an app store where anyone can build and run programs.",
+    "relatedTerms": ["blockchain", "smart-contract", "token", "gas-fee", "defi"]
+  },
+  "wallet": {
+    "term": "Wallet",
+    "definition": "A tool that stores the digital keys you need to access your cryptocurrency.",
+    "analogy": "Like a keychain — it doesn't hold your money, but holds the keys to access it.",
+    "relatedTerms": ["private-key", "public-key", "cryptocurrency"]
+  },
+  "private-key": {
+    "term": "Private Key",
+    "definition": "A secret code that proves you own your crypto and lets you send it.",
+    "analogy": "Like the PIN to your bank account — never share it with anyone.",
+    "relatedTerms": ["public-key", "wallet", "cryptocurrency"]
+  },
+  "public-key": {
+    "term": "Public Key",
+    "definition": "Your crypto address that others use to send you funds.",
+    "analogy": "Like your email address — safe to share so others can reach you.",
+    "relatedTerms": ["private-key", "wallet", "cryptocurrency"]
+  },
+  "gas-fee": {
+    "term": "Gas Fee",
+    "definition": "The cost you pay to use a blockchain network, like a processing fee.",
+    "analogy": "Like postage stamps — you need them to send anything through the network.",
+    "relatedTerms": ["ethereum", "smart-contract", "mining", "staking"]
+  },
+  "smart-contract": {
+    "term": "Smart Contract",
+    "definition": "A self-executing program stored on a blockchain that runs automatically when conditions are met.",
+    "analogy": "Like a vending machine — put in the right amount and it automatically gives you what you selected.",
+    "relatedTerms": ["ethereum", "defi", "gas-fee", "token"]
+  },
+  "nft": {
+    "term": "NFT",
+    "definition": "A unique digital certificate of ownership stored on a blockchain.",
+    "analogy": "Like a signed certificate of authenticity for a piece of art.",
+    "relatedTerms": ["token", "smart-contract", "ethereum"]
+  },
+  "defi": {
+    "term": "DeFi",
+    "definition": "Financial services (lending, borrowing, trading) that operate without banks or middlemen, using smart contracts instead.",
+    "analogy": "Like a farmer's market for money — people deal directly with each other.",
+    "relatedTerms": ["smart-contract", "ethereum", "decentralization", "peer-to-peer"]
+  },
+  "mining": {
+    "term": "Mining",
+    "definition": "The process of using computing power to validate transactions and add new blocks.",
+    "analogy": "Like solving a math puzzle — whoever solves it first gets to add the next page to the ledger and earns a reward.",
+    "relatedTerms": ["block", "consensus", "hash", "bitcoin"]
+  },
+  "staking": {
+    "term": "Staking",
+    "definition": "Locking up your crypto to help validate transactions on the network and earn rewards.",
+    "analogy": "Like putting money in a savings account — you commit it for a period and earn interest.",
+    "relatedTerms": ["consensus", "ethereum", "cryptocurrency"]
+  },
+  "decentralization": {
+    "term": "Decentralization",
+    "definition": "A system where control is spread across many participants instead of being held by one authority.",
+    "analogy": "Like Wikipedia — thousands of editors instead of one publisher.",
+    "relatedTerms": ["blockchain", "distributed-ledger", "peer-to-peer", "consensus"]
+  },
+  "peer-to-peer": {
+    "term": "Peer-to-Peer",
+    "definition": "A network where participants interact directly with each other without going through a central server.",
+    "analogy": "Like passing a note directly to someone instead of sending it through a teacher.",
+    "relatedTerms": ["decentralization", "distributed-ledger", "blockchain"]
+  }
+}

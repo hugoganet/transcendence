@@ -1,0 +1,920 @@
+[
+  {
+    "id": "1",
+    "order": 1,
+    "name": "blockchainFoundations",
+    "description": "blockchainFoundationsDesc",
+    "platformMechanic": "xpOnly",
+    "chapters": [
+      {
+        "id": "1.1",
+        "order": 1,
+        "name": "theTrustProblem",
+        "description": "theTrustProblemDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "1.1.1",
+            "order": 1,
+            "name": "whoDoYouTrust",
+            "description": "whoDoYouTrustDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.1.2",
+            "order": 2,
+            "name": "whatCouldGoWrong",
+            "description": "whatCouldGoWrongDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.1.3",
+            "order": 3,
+            "name": "aWorldWithoutMiddlemen",
+            "description": "aWorldWithoutMiddlemenDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "1.2",
+        "order": 2,
+        "name": "blocksChainsAndConsensus",
+        "description": "blocksChainsAndConsensusDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "1.2.1",
+            "order": 1,
+            "name": "whatIsABlock",
+            "description": "whatIsABlockDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.2.2",
+            "order": 2,
+            "name": "chainingBlocksTogether",
+            "description": "chainingBlocksTogetherDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.2.3",
+            "order": 3,
+            "name": "copiesEverywhere",
+            "description": "copiesEverywhereDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.2.4",
+            "order": 4,
+            "name": "howTheNetworkAgrees",
+            "description": "howTheNetworkAgreesDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.2.5",
+            "order": 5,
+            "name": "blockchainVsDatabase",
+            "description": "blockchainVsDatabaseDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "1.3",
+        "order": 3,
+        "name": "whyDecentralizationMatters",
+        "description": "whyDecentralizationMattersDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "1.3.1",
+            "order": 1,
+            "name": "decentralizationInRealLife",
+            "description": "decentralizationInRealLifeDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.3.2",
+            "order": 2,
+            "name": "whoUsesBlockchainToday",
+            "description": "whoUsesBlockchainTodayDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "1.3.3",
+            "order": 3,
+            "name": "isBlockchainAlwaysTheAnswer",
+            "description": "isBlockchainAlwaysTheAnswerDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "order": 2,
+    "name": "cryptoAndTokens",
+    "description": "cryptoAndTokensDesc",
+    "platformMechanic": "tokensRevealed",
+    "chapters": [
+      {
+        "id": "2.1",
+        "order": 1,
+        "name": "digitalMoney",
+        "description": "digitalMoneyDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "2.1.1",
+            "order": 1,
+            "name": "theSatoshiStory",
+            "description": "theSatoshiStoryDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.1.2",
+            "order": 2,
+            "name": "digitalMoneyVsYourBankAccount",
+            "description": "digitalMoneyVsYourBankAccountDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.1.3",
+            "order": 3,
+            "name": "whereDoesCryptoLive",
+            "description": "whereDoesCryptoLiveDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.1.4",
+            "order": 4,
+            "name": "whyWouldAnyoneUseThis",
+            "description": "whyWouldAnyoneUseThisDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "2.2",
+        "order": 2,
+        "name": "coinsTokensAndTheCryptoZoo",
+        "description": "coinsTokensAndTheCryptoZooDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "2.2.1",
+            "order": 1,
+            "name": "coinsVsTokens",
+            "description": "coinsVsTokensDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.2.2",
+            "order": 2,
+            "name": "ethereumTheWorldComputer",
+            "description": "ethereumTheWorldComputerDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.2.3",
+            "order": 3,
+            "name": "theTokenUniverse",
+            "description": "theTokenUniverseDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.2.4",
+            "order": 4,
+            "name": "yourKnowledgeTokens",
+            "description": "yourKnowledgeTokensDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": {
+              "mechanic": "tokensRevealed",
+              "description": "Knowledge Tokens become visible in the UI"
+            }
+          }
+        ]
+      },
+      {
+        "id": "2.3",
+        "order": 3,
+        "name": "valuePriceAndVolatility",
+        "description": "valuePriceAndVolatilityDesc",
+        "disclaimerRequired": true,
+        "missions": [
+          {
+            "id": "2.3.1",
+            "order": 1,
+            "name": "whyDoesCryptoHaveValue",
+            "description": "whyDoesCryptoHaveValueDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.3.2",
+            "order": 2,
+            "name": "readingAPriceChart",
+            "description": "readingAPriceChartDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.3.3",
+            "order": 3,
+            "name": "whyPricesSwingSoMuch",
+            "description": "whyPricesSwingSoMuchDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "2.3.4",
+            "order": 4,
+            "name": "theInvestmentDisclaimer",
+            "description": "theInvestmentDisclaimerDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "order": 3,
+    "name": "walletsAndGas",
+    "description": "walletsAndGasDesc",
+    "platformMechanic": "walletAndGasRevealed",
+    "chapters": [
+      {
+        "id": "3.1",
+        "order": 1,
+        "name": "yourDigitalWallet",
+        "description": "yourDigitalWalletDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "3.1.1",
+            "order": 1,
+            "name": "whatIsACryptoWallet",
+            "description": "whatIsACryptoWalletDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.1.2",
+            "order": 2,
+            "name": "publicKeyPrivateKey",
+            "description": "publicKeyPrivateKeyDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.1.3",
+            "order": 3,
+            "name": "hotWalletsVsColdWallets",
+            "description": "hotWalletsVsColdWalletsDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.1.4",
+            "order": 4,
+            "name": "setUpYourFirstWallet",
+            "description": "setUpYourFirstWalletDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 5,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": {
+              "mechanic": "walletRevealed",
+              "description": "Profile transforms into wallet interface"
+            }
+          }
+        ]
+      },
+      {
+        "id": "3.2",
+        "order": 2,
+        "name": "makingATransaction",
+        "description": "makingATransactionDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "3.2.1",
+            "order": 1,
+            "name": "anatomyOfATransaction",
+            "description": "anatomyOfATransactionDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.2.2",
+            "order": 2,
+            "name": "sendingYourFirstCrypto",
+            "description": "sendingYourFirstCryptoDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 5,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.2.3",
+            "order": 3,
+            "name": "waitingForConfirmation",
+            "description": "waitingForConfirmationDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.2.4",
+            "order": 4,
+            "name": "transactionOnTheBlockchain",
+            "description": "transactionOnTheBlockchainDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "3.3",
+        "order": 3,
+        "name": "gasFees",
+        "description": "gasFeesDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "3.3.1",
+            "order": 1,
+            "name": "whatIsGas",
+            "description": "whatIsGasDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.3.2",
+            "order": 2,
+            "name": "whyGasPricesChange",
+            "description": "whyGasPricesChangeDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.3.3",
+            "order": 3,
+            "name": "gasInAction",
+            "description": "gasInActionDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 5,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": {
+              "mechanic": "gasRevealed",
+              "description": "Platform gas costs begin"
+            }
+          },
+          {
+            "id": "3.3.4",
+            "order": 4,
+            "name": "failedTransactionGasStillPaid",
+            "description": "failedTransactionGasStillPaidDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "3.4",
+        "order": 4,
+        "name": "stayingSafe",
+        "description": "stayingSafeDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "3.4.1",
+            "order": 1,
+            "name": "yourSeedPhraseIsEverything",
+            "description": "yourSeedPhraseIsEverythingDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.4.2",
+            "order": 2,
+            "name": "spotTheScam",
+            "description": "spotTheScamDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.4.3",
+            "order": 3,
+            "name": "securityBestPractices",
+            "description": "securityBestPracticesDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "3.4.4",
+            "order": 4,
+            "name": "theSecurityChecklist",
+            "description": "theSecurityChecklistDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "order": 4,
+    "name": "smartContracts",
+    "description": "smartContractsDesc",
+    "platformMechanic": "xpOnly",
+    "chapters": [
+      {
+        "id": "4.1",
+        "order": 1,
+        "name": "whatAreSmartContracts",
+        "description": "whatAreSmartContractsDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "4.1.1",
+            "order": 1,
+            "name": "theVendingMachineAnalogy",
+            "description": "theVendingMachineAnalogyDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "4.1.2",
+            "order": 2,
+            "name": "codeThatKeepsPromises",
+            "description": "codeThatKeepsPromisesDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "4.1.3",
+            "order": 3,
+            "name": "smartContractsOnTheBlockchain",
+            "description": "smartContractsOnTheBlockchainDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "4.1.4",
+            "order": 4,
+            "name": "whenSmartContractsGoWrong",
+            "description": "whenSmartContractsGoWrongDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "4.2",
+        "order": 2,
+        "name": "smartContractsEverywhere",
+        "description": "smartContractsEverywhereDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "4.2.1",
+            "order": 1,
+            "name": "smartContractsAtWork",
+            "description": "smartContractsAtWorkDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "4.2.2",
+            "order": 2,
+            "name": "runningASmartContract",
+            "description": "runningASmartContractDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 5,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "4.2.3",
+            "order": 3,
+            "name": "marcsLunchMoment",
+            "description": "marcsLunchMomentDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "order": 5,
+    "name": "nftsAndDigitalOwnership",
+    "description": "nftsAndDigitalOwnershipDesc",
+    "platformMechanic": "xpOnly",
+    "chapters": [
+      {
+        "id": "5.1",
+        "order": 1,
+        "name": "whatIsAnNft",
+        "description": "whatIsAnNftDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "5.1.1",
+            "order": 1,
+            "name": "fungibleVsNonFungible",
+            "description": "fungibleVsNonFungibleDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.1.2",
+            "order": 2,
+            "name": "digitalOwnershipBeforeNfts",
+            "description": "digitalOwnershipBeforeNftsDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.1.3",
+            "order": 3,
+            "name": "howNftsWork",
+            "description": "howNftsWorkDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.1.4",
+            "order": 4,
+            "name": "creatingYourFirstNft",
+            "description": "creatingYourFirstNftDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 5,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "5.2",
+        "order": 2,
+        "name": "nftsBeyondArt",
+        "description": "nftsBeyondArtDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "5.2.1",
+            "order": 1,
+            "name": "nftsInGamingMusicAndIdentity",
+            "description": "nftsInGamingMusicAndIdentityDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.2.2",
+            "order": 2,
+            "name": "nftsAndCreators",
+            "description": "nftsAndCreatorsDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.2.3",
+            "order": 3,
+            "name": "theOwnershipQuestion",
+            "description": "theOwnershipQuestionDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "5.3",
+        "order": 3,
+        "name": "hypeScamsAndReality",
+        "description": "hypeScamsAndRealityDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "5.3.1",
+            "order": 1,
+            "name": "theNftBoomAndBust",
+            "description": "theNftBoomAndBustDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.3.2",
+            "order": 2,
+            "name": "spottingNftRedFlags",
+            "description": "spottingNftRedFlagsDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.3.3",
+            "order": 3,
+            "name": "whatsActuallyValuable",
+            "description": "whatsActuallyValuableDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "5.3.4",
+            "order": 4,
+            "name": "theHonestTake",
+            "description": "theHonestTakeDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "order": 6,
+    "name": "defiAndBeyond",
+    "description": "defiAndBeyondDesc",
+    "platformMechanic": "fullDashboard",
+    "chapters": [
+      {
+        "id": "6.1",
+        "order": 1,
+        "name": "defiBankingWithoutBanks",
+        "description": "defiBankingWithoutBanksDesc",
+        "disclaimerRequired": true,
+        "missions": [
+          {
+            "id": "6.1.1",
+            "order": 1,
+            "name": "whatIsDefi",
+            "description": "whatIsDefiDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.1.2",
+            "order": 2,
+            "name": "lendingAndBorrowingWithoutABank",
+            "description": "lendingAndBorrowingWithoutABankDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 5,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.1.3",
+            "order": 3,
+            "name": "tradingWithoutAnExchange",
+            "description": "tradingWithoutAnExchangeDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.1.4",
+            "order": 4,
+            "name": "theRisksOfDefi",
+            "description": "theRisksOfDefiDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "6.2",
+        "order": 2,
+        "name": "theBiggerPicture",
+        "description": "theBiggerPictureDesc",
+        "disclaimerRequired": true,
+        "missions": [
+          {
+            "id": "6.2.1",
+            "order": 1,
+            "name": "daosOrganizationsWithoutBosses",
+            "description": "daosOrganizationsWithoutBossesDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.2.2",
+            "order": 2,
+            "name": "web3TheNextInternet",
+            "description": "web3TheNextInternetDesc",
+            "exerciseType": "CM",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.2.3",
+            "order": 3,
+            "name": "blockchainInYourDailyLife",
+            "description": "blockchainInYourDailyLifeDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.2.4",
+            "order": 4,
+            "name": "theSkepticsQuestions",
+            "description": "theSkepticsQuestionsDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          }
+        ]
+      },
+      {
+        "id": "6.3",
+        "order": 3,
+        "name": "everythingConnected",
+        "description": "everythingConnectedDesc",
+        "disclaimerRequired": false,
+        "missions": [
+          {
+            "id": "6.3.1",
+            "order": 1,
+            "name": "theFullPicture",
+            "description": "theFullPictureDesc",
+            "exerciseType": "IP",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.3.2",
+            "order": 2,
+            "name": "explainItLikeYouGetIt",
+            "description": "explainItLikeYouGetItDesc",
+            "exerciseType": "SI",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.3.3",
+            "order": 3,
+            "name": "yourBlockchainConfidenceScore",
+            "description": "yourBlockchainConfidenceScoreDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 4,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": null
+          },
+          {
+            "id": "6.3.4",
+            "order": 4,
+            "name": "graduation",
+            "description": "graduationDesc",
+            "exerciseType": "ST",
+            "estimatedMinutes": 3,
+            "lastReviewedDate": "2026-03-09",
+            "progressiveReveal": {
+              "mechanic": "dashboardRevealed",
+              "description": "Complete stats and certificate unlocked"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

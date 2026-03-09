@@ -1,0 +1,122 @@
+{
+  "blockchain": {
+    "term": "Blockchain",
+    "definition": "Un registre numérique partagé qui stocke des informations dans des blocs liés entre eux, répartis sur de nombreux ordinateurs.",
+    "analogy": "Comme un Google Doc partagé que tout le monde peut lire, mais que personne ne peut modifier en secret.",
+    "relatedTerms": ["block", "hash", "distributed-ledger", "decentralization"]
+  },
+  "block": {
+    "term": "Bloc",
+    "definition": "Un conteneur qui regroupe un lot de transactions, comme une page dans un registre.",
+    "analogy": "Comme une page dans un cahier qui est scellée une fois pleine.",
+    "relatedTerms": ["blockchain", "hash", "mining"]
+  },
+  "hash": {
+    "term": "Hash",
+    "definition": "Une empreinte numérique unique créée à partir de données, qui produit toujours le même résultat pour la même entrée.",
+    "analogy": "Comme une empreinte digitale — unique pour chaque personne et impossible à falsifier.",
+    "relatedTerms": ["block", "blockchain", "mining"]
+  },
+  "consensus": {
+    "term": "Consensus",
+    "definition": "Le processus par lequel tous les participants d'un réseau se mettent d'accord sur ce qui est vrai.",
+    "analogy": "Comme un vote de groupe où la majorité doit être d'accord avant que quoi que ce soit ne devienne officiel.",
+    "relatedTerms": ["blockchain", "mining", "staking", "decentralization"]
+  },
+  "distributed-ledger": {
+    "term": "Registre distribué",
+    "definition": "Un registre copié sur des milliers d'ordinateurs, sans propriétaire unique.",
+    "analogy": "Comme avoir des copies identiques du registre d'une ville dans chaque maison.",
+    "relatedTerms": ["blockchain", "decentralization", "peer-to-peer"]
+  },
+  "cryptocurrency": {
+    "term": "Cryptomonnaie",
+    "definition": "De l'argent numérique qui utilise la cryptographie pour sa sécurité et fonctionne sur une blockchain sans banque.",
+    "analogy": "Comme de l'argent liquide numérique qui n'a pas besoin d'une banque pour fonctionner.",
+    "relatedTerms": ["blockchain", "bitcoin", "ethereum", "token", "wallet"]
+  },
+  "token": {
+    "term": "Jeton",
+    "definition": "Un actif numérique qui représente quelque chose de valeur et existe sur une blockchain existante.",
+    "analogy": "Comme des jetons de salle d'arcade — ils ont de la valeur au sein de leur système.",
+    "relatedTerms": ["cryptocurrency", "ethereum", "nft", "smart-contract"]
+  },
+  "bitcoin": {
+    "term": "Bitcoin",
+    "definition": "La première cryptomonnaie, créée en 2009 par le pseudonyme Satoshi Nakamoto.",
+    "analogy": "Comme de l'or numérique — rare, précieux, et non contrôlé par un gouvernement.",
+    "relatedTerms": ["cryptocurrency", "blockchain", "mining"]
+  },
+  "ethereum": {
+    "term": "Ethereum",
+    "definition": "Une plateforme blockchain qui permet aux développeurs de créer des applications et des jetons.",
+    "analogy": "Comme un magasin d'applications où n'importe qui peut créer et exécuter des programmes.",
+    "relatedTerms": ["blockchain", "smart-contract", "token", "gas-fee", "defi"]
+  },
+  "wallet": {
+    "term": "Portefeuille",
+    "definition": "Un outil qui stocke les clés numériques dont vous avez besoin pour accéder à vos cryptomonnaies.",
+    "analogy": "Comme un trousseau de clés — il ne contient pas votre argent, mais les clés pour y accéder.",
+    "relatedTerms": ["private-key", "public-key", "cryptocurrency"]
+  },
+  "private-key": {
+    "term": "Clé privée",
+    "definition": "Un code secret qui prouve que vous possédez vos cryptos et vous permet de les envoyer.",
+    "analogy": "Comme le code PIN de votre compte bancaire — ne le partagez jamais avec personne.",
+    "relatedTerms": ["public-key", "wallet", "cryptocurrency"]
+  },
+  "public-key": {
+    "term": "Clé publique",
+    "definition": "Votre adresse crypto que les autres utilisent pour vous envoyer des fonds.",
+    "analogy": "Comme votre adresse e-mail — vous pouvez la partager sans risque pour que les gens puissent vous contacter.",
+    "relatedTerms": ["private-key", "wallet", "cryptocurrency"]
+  },
+  "gas-fee": {
+    "term": "Frais de gas",
+    "definition": "Le coût que vous payez pour utiliser un réseau blockchain, comme des frais de traitement.",
+    "analogy": "Comme des timbres postaux — vous en avez besoin pour envoyer quoi que ce soit à travers le réseau.",
+    "relatedTerms": ["ethereum", "smart-contract", "mining", "staking"]
+  },
+  "smart-contract": {
+    "term": "Contrat intelligent",
+    "definition": "Un programme auto-exécutable stocké sur une blockchain qui se déclenche automatiquement lorsque les conditions sont remplies.",
+    "analogy": "Comme un distributeur automatique — insérez le bon montant et il vous donne automatiquement ce que vous avez choisi.",
+    "relatedTerms": ["ethereum", "defi", "gas-fee", "token"]
+  },
+  "nft": {
+    "term": "NFT",
+    "definition": "Un certificat numérique unique de propriété stocké sur une blockchain.",
+    "analogy": "Comme un certificat d'authenticité signé pour une œuvre d'art.",
+    "relatedTerms": ["token", "smart-contract", "ethereum"]
+  },
+  "defi": {
+    "term": "DeFi",
+    "definition": "Des services financiers (prêt, emprunt, échange) qui fonctionnent sans banques ni intermédiaires, en utilisant des contrats intelligents.",
+    "analogy": "Comme un marché fermier pour l'argent — les gens traitent directement entre eux.",
+    "relatedTerms": ["smart-contract", "ethereum", "decentralization", "peer-to-peer"]
+  },
+  "mining": {
+    "term": "Minage",
+    "definition": "Le processus d'utilisation de la puissance de calcul pour valider des transactions et ajouter de nouveaux blocs.",
+    "analogy": "Comme résoudre un puzzle mathématique — celui qui le résout en premier peut ajouter la prochaine page au registre et gagne une récompense.",
+    "relatedTerms": ["block", "consensus", "hash", "bitcoin"]
+  },
+  "staking": {
+    "term": "Staking",
+    "definition": "Le fait de verrouiller vos cryptos pour aider à valider les transactions sur le réseau et gagner des récompenses.",
+    "analogy": "Comme mettre de l'argent sur un compte épargne — vous le bloquez pour une période et gagnez des intérêts.",
+    "relatedTerms": ["consensus", "ethereum", "cryptocurrency"]
+  },
+  "decentralization": {
+    "term": "Décentralisation",
+    "definition": "Un système où le contrôle est réparti entre de nombreux participants au lieu d'être détenu par une seule autorité.",
+    "analogy": "Comme Wikipédia — des milliers d'éditeurs au lieu d'un seul éditeur.",
+    "relatedTerms": ["blockchain", "distributed-ledger", "peer-to-peer", "consensus"]
+  },
+  "peer-to-peer": {
+    "term": "Pair-à-pair",
+    "definition": "Un réseau où les participants interagissent directement entre eux sans passer par un serveur central.",
+    "analogy": "Comme passer un mot directement à quelqu'un au lieu de l'envoyer par l'intermédiaire d'un professeur.",
+    "relatedTerms": ["decentralization", "distributed-ledger", "blockchain"]
+  }
+}
