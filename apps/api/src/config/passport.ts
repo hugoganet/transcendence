@@ -20,6 +20,8 @@ declare global {
       avatarUrl: string | null;
       locale: string;
       ageConfirmed: boolean;
+      twoFactorEnabled: boolean;
+      twoFactorSecret: string | null;
       createdAt: Date;
       updatedAt: Date;
     }

@@ -37,10 +37,13 @@ vi.mock("bcryptjs", () => ({
 }));
 
 // Use vi.hoisted for mocks referenced inside vi.mock factories
-const mockSessionRedis = vi.hoisted(() => ({
-  scan: vi.fn().mockResolvedValue({ cursor: 0, keys: [] }),
-  get: vi.fn(),
-  del: vi.fn(),
+const { mockSessionRedis, mockTotpValidate } = vi.hoisted(() => ({
+  mockSessionRedis: {
+    scan: vi.fn().mockResolvedValue({ cursor: 0, keys: [] }),
+    get: vi.fn(),
+    del: vi.fn(),
+  },
+  mockTotpValidate: vi.fn(),
 }));
 
 // Mock session Redis client (for invalidateUserSessions)
@@ -52,6 +55,40 @@ vi.mock("../config/session.js", () => ({
 // Mock email service
 vi.mock("../services/emailService.js", () => ({
   sendPasswordResetEmail: vi.fn().mockResolvedValue(undefined),
+}));
+
+// Mock totpCrypto
+vi.mock("../utils/totpCrypto.js", () => ({
+  encryptTotpSecret: vi.fn().mockReturnValue("encrypted-secret-hex"),
+  decryptTotpSecret: vi.fn().mockReturnValue("JBSWY3DPEHPK3PXP"),
+}));
+
+// Mock OTPAuth
+vi.mock("otpauth", () => ({
+  Secret: class MockSecret {
+    base32: string;
+    constructor() {
+      this.base32 = "JBSWY3DPEHPK3PXP";
+    }
+    static fromBase32(str: string) {
+      return { base32: str };
+    }
+  },
+  TOTP: class MockTOTP {
+    toString() {
+      return "otpauth://totp/Transcendence:test@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Transcendence";
+    }
+    validate(opts: { token: string; window: number }) {
+      return mockTotpValidate(opts);
+    }
+  },
+}));
+
+// Mock QRCode
+vi.mock("qrcode", () => ({
+  default: {
+    toDataURL: vi.fn().mockResolvedValue("data:image/png;base64,qrcode"),
+  },
 }));
 
 // Mock ioredis for rate limiter — must return proper values for rate-limit-redis
@@ -756,5 +793,249 @@ describe("POST /api/v1/auth/reset-password", () => {
 
     expect(res.status).toBe(200);
     expect(mockSessionRedis.del).toHaveBeenCalledWith("sess:abc");
+  });
+});
+
+describe("2FA routes", () => {
+  const userWith2FA = {
+    ...mockUser,
+    twoFactorSecret: "encrypted-secret-hex",
+    twoFactorEnabled: true,
+  };
+
+  describe("POST /api/v1/auth/2fa/setup", () => {
+    it("returns 200 with QR data when authenticated", async () => {
+      mockPrisma.user.create.mockResolvedValue(mockUser);
+      mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+      mockPrisma.user.update.mockResolvedValue({
+        ...mockUser,
+        twoFactorSecret: "encrypted-secret-hex",
+      });
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      // Register to establish session
+      await agent.post("/api/v1/auth/register").send({
+        email: "test@example.com",
+        password: "Test1234",
+        ageConfirmed: true,
+      });
+
+      const res = await agent.post("/api/v1/auth/2fa/setup");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toHaveProperty("qrCodeDataUri");
+      expect(res.body.data).toHaveProperty("manualKey");
+      expect(res.body.data).toHaveProperty("otpauthUri");
+    });
+
+    it("returns 401 when not authenticated", async () => {
+      const testApp = createTestApp();
+      const res = await request(testApp).post("/api/v1/auth/2fa/setup");
+
+      expect(res.status).toBe(401);
+    });
+  });
+
+  describe("POST /api/v1/auth/2fa/verify-setup", () => {
+    it("returns 200 with success message for valid code", async () => {
+      mockPrisma.user.create.mockResolvedValue(mockUser);
+      mockPrisma.user.findUnique.mockResolvedValue({
+        ...mockUser,
+        twoFactorSecret: "encrypted-secret-hex",
+      });
+      mockPrisma.user.update.mockResolvedValue({
+        ...mockUser,
+        twoFactorEnabled: true,
+      });
+      mockTotpValidate.mockReturnValue(0); // valid
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      await agent.post("/api/v1/auth/register").send({
+        email: "test@example.com",
+        password: "Test1234",
+        ageConfirmed: true,
+      });
+
+      const res = await agent
+        .post("/api/v1/auth/2fa/verify-setup")
+        .send({ code: "123456" });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.message).toBe(
+        "Two-factor authentication has been enabled.",
+      );
+    });
+
+    it("returns 401 with INVALID_2FA_CODE for invalid code", async () => {
+      mockPrisma.user.create.mockResolvedValue(mockUser);
+      mockPrisma.user.findUnique.mockResolvedValue({
+        ...mockUser,
+        twoFactorSecret: "encrypted-secret-hex",
+      });
+      mockTotpValidate.mockReturnValue(null); // invalid
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      await agent.post("/api/v1/auth/register").send({
+        email: "test@example.com",
+        password: "Test1234",
+        ageConfirmed: true,
+      });
+
+      const res = await agent
+        .post("/api/v1/auth/2fa/verify-setup")
+        .send({ code: "000000" });
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("INVALID_2FA_CODE");
+    });
+
+    it("returns 400 for invalid body", async () => {
+      mockPrisma.user.create.mockResolvedValue(mockUser);
+      mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      await agent.post("/api/v1/auth/register").send({
+        email: "test@example.com",
+        password: "Test1234",
+        ageConfirmed: true,
+      });
+
+      const res = await agent
+        .post("/api/v1/auth/2fa/verify-setup")
+        .send({ code: "abc" });
+
+      expect(res.status).toBe(400);
+      expect(res.body.error.code).toBe("INVALID_INPUT");
+    });
+  });
+
+  describe("Login with 2FA enabled", () => {
+    it("returns requires2FA: true when user has 2FA enabled", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      (bcrypt.compare as ReturnType<typeof vi.fn>).mockResolvedValue(true);
+
+      const testApp = createTestApp();
+      const res = await request(testApp)
+        .post("/api/v1/auth/login")
+        .send({ email: "test@example.com", password: "Test1234" });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toEqual({ requires2FA: true });
+      expect(res.body.data).not.toHaveProperty("email");
+    });
+  });
+
+  describe("POST /api/v1/auth/2fa/verify", () => {
+    it("returns 200 with user profile for valid code after login", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      (bcrypt.compare as ReturnType<typeof vi.fn>).mockResolvedValue(true);
+      mockTotpValidate.mockReturnValue(0);
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      // Login — should get pending2FA session
+      await agent
+        .post("/api/v1/auth/login")
+        .send({ email: "test@example.com", password: "Test1234" });
+
+      // Verify 2FA
+      const res = await agent
+        .post("/api/v1/auth/2fa/verify")
+        .send({ code: "123456" });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toHaveProperty("id");
+      expect(res.body.data).toHaveProperty("email");
+    });
+
+    it("returns 401 with INVALID_2FA_CODE for invalid code", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      (bcrypt.compare as ReturnType<typeof vi.fn>).mockResolvedValue(true);
+      mockTotpValidate.mockReturnValue(null);
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      await agent
+        .post("/api/v1/auth/login")
+        .send({ email: "test@example.com", password: "Test1234" });
+
+      const res = await agent
+        .post("/api/v1/auth/2fa/verify")
+        .send({ code: "000000" });
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("INVALID_2FA_CODE");
+    });
+
+    it("returns 401 without pending2FA session", async () => {
+      const testApp = createTestApp();
+      const res = await request(testApp)
+        .post("/api/v1/auth/2fa/verify")
+        .send({ code: "123456" });
+
+      expect(res.status).toBe(401);
+    });
+  });
+
+  describe("Protected endpoints with pending2FA session (AC #7)", () => {
+    it("returns 401 for /me with pending2FA session", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      (bcrypt.compare as ReturnType<typeof vi.fn>).mockResolvedValue(true);
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      // Login — pending2FA
+      await agent
+        .post("/api/v1/auth/login")
+        .send({ email: "test@example.com", password: "Test1234" });
+
+      // Try accessing protected endpoint
+      const meRes = await agent.get("/api/v1/auth/me");
+      expect(meRes.status).toBe(401);
+    });
+  });
+
+  describe("POST /api/v1/auth/2fa/disable", () => {
+    it("returns 200 with success message for valid code", async () => {
+      mockPrisma.user.create.mockResolvedValue(userWith2FA);
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      mockPrisma.user.update.mockResolvedValue({
+        ...mockUser,
+        twoFactorEnabled: false,
+        twoFactorSecret: null,
+      });
+      mockTotpValidate.mockReturnValue(0);
+      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+
+      const testApp = createTestApp();
+      const agent = request.agent(testApp);
+
+      // Register to establish session (user already has 2FA)
+      await agent.post("/api/v1/auth/register").send({
+        email: "test@example.com",
+        password: "Test1234",
+        ageConfirmed: true,
+      });
+
+      const res = await agent
+        .post("/api/v1/auth/2fa/disable")
+        .send({ code: "123456" });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.message).toBe(
+        "Two-factor authentication has been disabled.",
+      );
+    });
   });
 });

@@ -8,6 +8,10 @@ import {
   requestPasswordReset,
   resetPassword,
   invalidateUserSessions,
+  setup2FA,
+  verifyAndEnable2FA,
+  verify2FALogin,
+  disable2FA,
 } from "./authService.js";
 import { AppError } from "../utils/AppError.js";
 
@@ -43,13 +47,24 @@ vi.mock("bcryptjs", () => ({
 }));
 
 // Use vi.hoisted for mocks referenced inside vi.mock factories
-const { mockSessionRedis, mockSendPasswordResetEmail } = vi.hoisted(() => ({
+const {
+  mockSessionRedis,
+  mockSendPasswordResetEmail,
+  mockEncryptTotpSecret,
+  mockDecryptTotpSecret,
+  mockTotpValidate,
+  mockQRCodeToDataURL,
+} = vi.hoisted(() => ({
   mockSessionRedis: {
     scan: vi.fn(),
     get: vi.fn(),
     del: vi.fn(),
   },
   mockSendPasswordResetEmail: vi.fn().mockResolvedValue(undefined),
+  mockEncryptTotpSecret: vi.fn().mockReturnValue("encrypted-secret-hex"),
+  mockDecryptTotpSecret: vi.fn().mockReturnValue("JBSWY3DPEHPK3PXP"),
+  mockTotpValidate: vi.fn(),
+  mockQRCodeToDataURL: vi.fn().mockResolvedValue("data:image/png;base64,qrcode"),
 }));
 
 // Mock session Redis client
@@ -61,6 +76,40 @@ vi.mock("../config/session.js", () => ({
 // Mock email service
 vi.mock("./emailService.js", () => ({
   sendPasswordResetEmail: mockSendPasswordResetEmail,
+}));
+
+// Mock totpCrypto
+vi.mock("../utils/totpCrypto.js", () => ({
+  encryptTotpSecret: mockEncryptTotpSecret,
+  decryptTotpSecret: mockDecryptTotpSecret,
+}));
+
+// Mock OTPAuth
+vi.mock("otpauth", () => ({
+  Secret: class MockSecret {
+    base32: string;
+    constructor() {
+      this.base32 = "JBSWY3DPEHPK3PXP";
+    }
+    static fromBase32(str: string) {
+      return { base32: str };
+    }
+  },
+  TOTP: class MockTOTP {
+    toString() {
+      return "otpauth://totp/Transcendence:test@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Transcendence";
+    }
+    validate(opts: { token: string; window: number }) {
+      return mockTotpValidate(opts);
+    }
+  },
+}));
+
+// Mock QRCode
+vi.mock("qrcode", () => ({
+  default: {
+    toDataURL: mockQRCodeToDataURL,
+  },
 }));
 
 const { prisma } = await import("../config/database.js");
@@ -173,6 +222,7 @@ describe("authService", () => {
         avatarUrl: null,
         locale: "en",
         ageConfirmed: true,
+        twoFactorEnabled: false,
         createdAt: "2026-01-01T00:00:00.000Z",
       });
       expect(result).not.toHaveProperty("passwordHash");
@@ -507,6 +557,188 @@ describe("authService", () => {
       expect(mockSessionRedis.scan).toHaveBeenCalledTimes(2);
       expect(mockSessionRedis.del).toHaveBeenCalledWith("sess:page1-match");
       expect(mockSessionRedis.del).not.toHaveBeenCalledWith("sess:page2-other");
+    });
+  });
+
+  describe("setup2FA", () => {
+    it("returns QR code data URI, manual key, and otpauth URI", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+      mockPrisma.user.update.mockResolvedValue({ ...mockUser, twoFactorSecret: "encrypted-secret-hex" });
+
+      const result = await setup2FA("test-uuid");
+
+      expect(result).toHaveProperty("qrCodeDataUri");
+      expect(result).toHaveProperty("manualKey");
+      expect(result).toHaveProperty("otpauthUri");
+      expect(result.qrCodeDataUri).toBe("data:image/png;base64,qrcode");
+      expect(result.manualKey).toBe("JBSWY3DPEHPK3PXP");
+      expect(result.otpauthUri).toContain("otpauth://totp/");
+    });
+
+    it("stores encrypted secret in DB (not plaintext)", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+      mockPrisma.user.update.mockResolvedValue({ ...mockUser, twoFactorSecret: "encrypted-secret-hex" });
+
+      await setup2FA("test-uuid");
+
+      expect(mockEncryptTotpSecret).toHaveBeenCalledWith("JBSWY3DPEHPK3PXP");
+      expect(mockPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: "test-uuid" },
+        data: {
+          twoFactorSecret: "encrypted-secret-hex",
+          twoFactorEnabled: false,
+        },
+      });
+    });
+
+    it("overwrites existing unverified secret (AC #6)", async () => {
+      const userWithSecret = { ...mockUser, twoFactorSecret: "old-encrypted-secret" };
+      mockPrisma.user.findUnique.mockResolvedValue(userWithSecret);
+      mockPrisma.user.update.mockResolvedValue({ ...userWithSecret, twoFactorSecret: "encrypted-secret-hex" });
+
+      await setup2FA("test-uuid");
+
+      expect(mockPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: "test-uuid" },
+        data: {
+          twoFactorSecret: "encrypted-secret-hex",
+          twoFactorEnabled: false,
+        },
+      });
+    });
+
+    it("throws NOT_FOUND for non-existent user", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(null);
+
+      await expect(setup2FA("non-existent")).rejects.toMatchObject({
+        statusCode: 404,
+        code: "NOT_FOUND",
+      });
+    });
+
+    it("does not set twoFactorEnabled = true before verification", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+      mockPrisma.user.update.mockResolvedValue({ ...mockUser, twoFactorSecret: "encrypted-secret-hex" });
+
+      await setup2FA("test-uuid");
+
+      expect(mockPrisma.user.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            twoFactorEnabled: false,
+          }),
+        }),
+      );
+    });
+  });
+
+  describe("verifyAndEnable2FA", () => {
+    const userWithSecret = {
+      ...mockUser,
+      twoFactorSecret: "encrypted-secret-hex",
+      twoFactorEnabled: false,
+    };
+
+    it("valid TOTP code enables 2FA", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWithSecret);
+      mockTotpValidate.mockReturnValue(0); // valid (delta = 0)
+      mockPrisma.user.update.mockResolvedValue({ ...userWithSecret, twoFactorEnabled: true });
+
+      await verifyAndEnable2FA("test-uuid", "123456");
+
+      expect(mockDecryptTotpSecret).toHaveBeenCalledWith("encrypted-secret-hex");
+      expect(mockPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: "test-uuid" },
+        data: { twoFactorEnabled: true },
+      });
+    });
+
+    it("invalid TOTP code throws INVALID_2FA_CODE", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWithSecret);
+      mockTotpValidate.mockReturnValue(null); // invalid
+
+      await expect(verifyAndEnable2FA("test-uuid", "000000")).rejects.toMatchObject({
+        statusCode: 401,
+        code: "INVALID_2FA_CODE",
+      });
+    });
+
+    it("no secret stored throws TWO_FACTOR_NOT_SETUP", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({ ...mockUser, twoFactorSecret: null });
+
+      await expect(verifyAndEnable2FA("test-uuid", "123456")).rejects.toMatchObject({
+        statusCode: 400,
+        code: "TWO_FACTOR_NOT_SETUP",
+      });
+    });
+  });
+
+  describe("verify2FALogin", () => {
+    const userWith2FA = {
+      ...mockUser,
+      twoFactorSecret: "encrypted-secret-hex",
+      twoFactorEnabled: true,
+    };
+
+    it("valid code returns user", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      mockTotpValidate.mockReturnValue(0);
+
+      const result = await verify2FALogin("test-uuid", "123456");
+
+      expect(result).toEqual(userWith2FA);
+    });
+
+    it("invalid code throws INVALID_2FA_CODE", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      mockTotpValidate.mockReturnValue(null);
+
+      await expect(verify2FALogin("test-uuid", "000000")).rejects.toMatchObject({
+        statusCode: 401,
+        code: "INVALID_2FA_CODE",
+      });
+    });
+  });
+
+  describe("disable2FA", () => {
+    const userWith2FA = {
+      ...mockUser,
+      twoFactorSecret: "encrypted-secret-hex",
+      twoFactorEnabled: true,
+    };
+
+    it("valid code disables 2FA, nulls secret, invalidates sessions", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      mockTotpValidate.mockReturnValue(0);
+      mockPrisma.user.update.mockResolvedValue({ ...mockUser, twoFactorEnabled: false, twoFactorSecret: null });
+      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+
+      await disable2FA("test-uuid", "123456");
+
+      expect(mockPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: "test-uuid" },
+        data: { twoFactorEnabled: false, twoFactorSecret: null },
+      });
+      expect(mockSessionRedis.scan).toHaveBeenCalled();
+    });
+
+    it("invalid code throws INVALID_2FA_CODE", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
+      mockTotpValidate.mockReturnValue(null);
+
+      await expect(disable2FA("test-uuid", "000000")).rejects.toMatchObject({
+        statusCode: 401,
+        code: "INVALID_2FA_CODE",
+      });
+    });
+
+    it("2FA not enabled throws TWO_FACTOR_NOT_ENABLED", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({ ...mockUser, twoFactorEnabled: false, twoFactorSecret: null });
+
+      await expect(disable2FA("test-uuid", "123456")).rejects.toMatchObject({
+        statusCode: 400,
+        code: "TWO_FACTOR_NOT_ENABLED",
+      });
     });
   });
 });

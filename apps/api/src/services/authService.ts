@@ -1,12 +1,30 @@
 import crypto from "node:crypto";
 import bcrypt from "bcryptjs";
+import * as OTPAuth from "otpauth";
+import QRCode from "qrcode";
 import type { AuthProvider } from "../../generated/prisma/client.js";
 import { prisma } from "../config/database.js";
 import { sessionRedisClient } from "../config/session.js";
 import { sendPasswordResetEmail } from "./emailService.js";
 import { AppError } from "../utils/AppError.js";
+import { encryptTotpSecret, decryptTotpSecret } from "../utils/totpCrypto.js";
 
 const BCRYPT_COST_FACTOR = 12;
+
+function createTotpInstance(
+  email: string | null,
+  userId: string,
+  secret: OTPAuth.Secret | { base32: string },
+): OTPAuth.TOTP {
+  return new OTPAuth.TOTP({
+    issuer: "Transcendence",
+    label: email ?? userId,
+    algorithm: "SHA1",
+    digits: 6,
+    period: 30,
+    secret: secret instanceof OTPAuth.Secret ? secret : OTPAuth.Secret.fromBase32(secret.base32),
+  });
+}
 
 export interface OAuthProfile {
   providerAccountId: string;
@@ -216,6 +234,103 @@ export async function invalidateUserSessions(
   } while (cursor !== 0);
 }
 
+export async function setup2FA(userId: string) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) {
+    throw AppError.notFound("User not found");
+  }
+
+  const secret = new OTPAuth.Secret({ size: 20 }); // 160-bit (RFC 4226 minimum)
+  const totp = createTotpInstance(user.email, userId, secret);
+
+  const otpauthUri = totp.toString();
+  const qrCodeDataUri = await QRCode.toDataURL(otpauthUri, {
+    errorCorrectionLevel: "M",
+    width: 256,
+    margin: 2,
+  });
+
+  const encryptedSecret = encryptTotpSecret(secret.base32);
+
+  // Overwrite if exists (AC #6 — no stale secrets)
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      twoFactorSecret: encryptedSecret,
+      twoFactorEnabled: false,
+    },
+  });
+
+  return { qrCodeDataUri, manualKey: secret.base32, otpauthUri };
+}
+
+export async function verifyAndEnable2FA(userId: string, code: string) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user || !user.twoFactorSecret) {
+    throw new AppError(
+      400,
+      "TWO_FACTOR_NOT_SETUP",
+      "2FA setup has not been initiated",
+    );
+  }
+
+  const decryptedSecret = decryptTotpSecret(user.twoFactorSecret);
+  const totp = createTotpInstance(user.email, userId, { base32: decryptedSecret });
+
+  const delta = totp.validate({ token: code, window: 1 });
+  if (delta === null) {
+    throw new AppError(401, "INVALID_2FA_CODE", "Invalid two-factor code");
+  }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { twoFactorEnabled: true },
+  });
+}
+
+export async function verify2FALogin(userId: string, code: string) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user || !user.twoFactorEnabled || !user.twoFactorSecret) {
+    throw new AppError(401, "INVALID_2FA_CODE", "Invalid two-factor code");
+  }
+
+  const decryptedSecret = decryptTotpSecret(user.twoFactorSecret);
+  const totp = createTotpInstance(user.email, userId, { base32: decryptedSecret });
+
+  const delta = totp.validate({ token: code, window: 1 });
+  if (delta === null) {
+    throw new AppError(401, "INVALID_2FA_CODE", "Invalid two-factor code");
+  }
+
+  return user;
+}
+
+export async function disable2FA(userId: string, code: string) {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user || !user.twoFactorEnabled || !user.twoFactorSecret) {
+    throw new AppError(
+      400,
+      "TWO_FACTOR_NOT_ENABLED",
+      "Two-factor authentication is not enabled",
+    );
+  }
+
+  const decryptedSecret = decryptTotpSecret(user.twoFactorSecret);
+  const totp = createTotpInstance(user.email, userId, { base32: decryptedSecret });
+
+  const delta = totp.validate({ token: code, window: 1 });
+  if (delta === null) {
+    throw new AppError(401, "INVALID_2FA_CODE", "Invalid two-factor code");
+  }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { twoFactorEnabled: false, twoFactorSecret: null },
+  });
+
+  await invalidateUserSessions(userId);
+}
+
 export function sanitizeUser(user: {
   id: string;
   email: string | null;
@@ -224,6 +339,7 @@ export function sanitizeUser(user: {
   avatarUrl: string | null;
   locale: string;
   ageConfirmed: boolean;
+  twoFactorEnabled: boolean;
   createdAt: Date;
 }) {
   return {
@@ -234,6 +350,7 @@ export function sanitizeUser(user: {
     avatarUrl: user.avatarUrl,
     locale: user.locale,
     ageConfirmed: user.ageConfirmed,
+    twoFactorEnabled: user.twoFactorEnabled,
     createdAt: user.createdAt.toISOString(),
   };
 }

@@ -7,6 +7,7 @@ import { RedisStore } from "connect-redis";
 declare module "express-session" {
   interface SessionData {
     userId: string;
+    pending2FA?: boolean;
   }
 }
 

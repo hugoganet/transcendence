@@ -24,6 +24,7 @@ export const userProfileSchema = z.object({
   avatarUrl: z.string().nullable(),
   locale: z.string(),
   ageConfirmed: z.boolean(),
+  twoFactorEnabled: z.boolean(),
   createdAt: z.string(),
 });
 
@@ -39,6 +40,13 @@ export const passwordResetSchema = z.object({
     .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
     .regex(/[a-z]/, "Password must contain at least one lowercase letter")
     .regex(/[0-9]/, "Password must contain at least one number"),
+});
+
+export const totpCodeSchema = z.object({
+  code: z
+    .string()
+    .length(6, "Code must be exactly 6 digits")
+    .regex(/^\d{6}$/, "Code must be 6 digits"),
 });
 
 export const oauthProviderSchema = z.enum(["google", "facebook"]);

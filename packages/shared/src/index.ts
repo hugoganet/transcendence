@@ -5,6 +5,7 @@ export {
   loginSchema,
   passwordResetRequestSchema,
   passwordResetSchema,
+  totpCodeSchema,
   userProfileSchema,
   oauthProviderSchema,
   type OAuthProvider,

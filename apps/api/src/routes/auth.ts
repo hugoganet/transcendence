@@ -10,12 +10,17 @@ import {
   loginSchema,
   passwordResetRequestSchema,
   passwordResetSchema,
+  totpCodeSchema,
 } from "@transcendence/shared";
 import {
   register,
   sanitizeUser,
   requestPasswordReset,
   resetPassword,
+  setup2FA,
+  verifyAndEnable2FA,
+  verify2FALogin,
+  disable2FA,
 } from "../services/authService.js";
 import { AppError } from "../utils/AppError.js";
 
@@ -57,6 +62,10 @@ authRouter.post(
         }
         req.login(user, (loginErr) => {
           if (loginErr) return next(loginErr);
+          if (user.twoFactorEnabled && req.session) {
+            req.session.pending2FA = true;
+            return res.json({ data: { requires2FA: true } });
+          }
           res.json({ data: sanitizeUser(user) });
         });
       },
@@ -158,6 +167,85 @@ authRouter.post(
     await resetPassword(req.body.token, req.body.password);
     res.json({
       data: { message: "Password has been reset successfully." },
+    });
+  },
+);
+
+// Stricter rate limiter for 2FA verify endpoints (3 per 15 minutes per IP)
+// Only 1,000,000 possible 6-digit codes — brute-force prevention is critical
+const twoFactorVerifyLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 3,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  store: new RedisStore({
+    sendCommand: (command: string, ...args: string[]) =>
+      redisClient.call(command, ...args) as Promise<never>,
+    prefix: "rl:2fa-verify:",
+  }),
+  handler: (_req, res) => {
+    res.status(429).json({
+      error: {
+        code: "RATE_LIMIT_EXCEEDED",
+        message: "Too many requests, please try again later",
+      },
+    });
+  },
+});
+
+// POST /api/v1/auth/2fa/setup
+authRouter.post(
+  "/2fa/setup",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const result = await setup2FA((req.user as Express.User).id);
+    res.json({ data: result });
+  },
+);
+
+// POST /api/v1/auth/2fa/verify-setup
+authRouter.post(
+  "/2fa/verify-setup",
+  requireAuth,
+  twoFactorVerifyLimiter,
+  validate({ body: totpCodeSchema }),
+  async (req: Request, res: Response) => {
+    await verifyAndEnable2FA((req.user as Express.User).id, req.body.code);
+    res.json({
+      data: { message: "Two-factor authentication has been enabled." },
+    });
+  },
+);
+
+// POST /api/v1/auth/2fa/verify (special auth — pending2FA session only)
+// Auth check runs before rate limiter so unauthenticated requests don't consume rate limit quota
+authRouter.post(
+  "/2fa/verify",
+  (req: Request, _res: Response, next: NextFunction) => {
+    if (!req.isAuthenticated() || !req.session?.pending2FA) {
+      return next(AppError.unauthorized("Authentication required"));
+    }
+    next();
+  },
+  twoFactorVerifyLimiter,
+  validate({ body: totpCodeSchema }),
+  async (req: Request, res: Response) => {
+    await verify2FALogin((req.user as Express.User).id, req.body.code);
+    delete req.session.pending2FA;
+    res.json({ data: sanitizeUser(req.user as Express.User) });
+  },
+);
+
+// POST /api/v1/auth/2fa/disable
+authRouter.post(
+  "/2fa/disable",
+  requireAuth,
+  twoFactorVerifyLimiter,
+  validate({ body: totpCodeSchema }),
+  async (req: Request, res: Response) => {
+    await disable2FA((req.user as Express.User).id, req.body.code);
+    res.json({
+      data: { message: "Two-factor authentication has been disabled." },
     });
   },
 );
