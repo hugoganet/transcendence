@@ -223,6 +223,7 @@ describe("authService", () => {
         locale: "en",
         ageConfirmed: true,
         twoFactorEnabled: false,
+        disclaimerAcceptedAt: null,
         createdAt: "2026-01-01T00:00:00.000Z",
       });
       expect(result).not.toHaveProperty("passwordHash");

@@ -17,4 +17,5 @@ export {
   updateProfileSchema,
   type UpdateProfileInput,
 } from "./schemas/user.js";
+export { moduleIdParamSchema } from "./schemas/disclaimer.js";
 export { API_VERSION, DEFAULT_PORT, SESSION_TIMEOUT_MS } from "./constants/config.js";

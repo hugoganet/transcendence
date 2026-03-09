@@ -66,6 +66,7 @@ const mockUser = {
   locale: "en",
   ageConfirmed: true,
   twoFactorEnabled: false,
+  disclaimerAcceptedAt: null,
   createdAt: new Date("2026-01-01T00:00:00Z"),
   passwordHash: "hashed",
   authProvider: "LOCAL" as const,

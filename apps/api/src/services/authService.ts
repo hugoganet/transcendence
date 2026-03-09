@@ -340,6 +340,7 @@ export function sanitizeUser(user: {
   locale: string;
   ageConfirmed: boolean;
   twoFactorEnabled: boolean;
+  disclaimerAcceptedAt: Date | null;
   createdAt: Date;
 }) {
   return {
@@ -351,6 +352,7 @@ export function sanitizeUser(user: {
     locale: user.locale,
     ageConfirmed: user.ageConfirmed,
     twoFactorEnabled: user.twoFactorEnabled,
+    disclaimerAcceptedAt: user.disclaimerAcceptedAt?.toISOString() ?? null,
     createdAt: user.createdAt.toISOString(),
   };
 }

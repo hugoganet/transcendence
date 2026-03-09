@@ -25,6 +25,7 @@ export const userProfileSchema = z.object({
   locale: z.string(),
   ageConfirmed: z.boolean(),
   twoFactorEnabled: z.boolean(),
+  disclaimerAcceptedAt: z.string().nullable(),
   createdAt: z.string(),
 });
 
