@@ -1,9 +1,22 @@
 import { Router, type Request, type Response, type NextFunction } from "express";
+import rateLimit from "express-rate-limit";
+import { RedisStore } from "rate-limit-redis";
 import passport, { configuredStrategies } from "../config/passport.js";
+import { redisClient } from "../config/redis.js";
 import { validate } from "../middleware/validate.js";
 import { requireAuth } from "../middleware/auth.js";
-import { registerSchema, loginSchema } from "@transcendence/shared";
-import { register, sanitizeUser } from "../services/authService.js";
+import {
+  registerSchema,
+  loginSchema,
+  passwordResetRequestSchema,
+  passwordResetSchema,
+} from "@transcendence/shared";
+import {
+  register,
+  sanitizeUser,
+  requestPasswordReset,
+  resetPassword,
+} from "../services/authService.js";
 import { AppError } from "../utils/AppError.js";
 
 export const authRouter = Router();
@@ -17,18 +30,14 @@ authRouter.post(
   "/register",
   validate({ body: registerSchema }),
   async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const { email, password, ageConfirmed } = req.body;
-      const user = await register(email, password, ageConfirmed);
+    const { email, password, ageConfirmed } = req.body;
+    const user = await register(email, password, ageConfirmed);
 
-      // Log the user in (creates session) with the full Prisma user
-      req.login(user as Express.User, (err) => {
-        if (err) return next(err);
-        res.status(201).json({ data: sanitizeUser(user) });
-      });
-    } catch (err) {
-      next(err);
-    }
+    // Log the user in (creates session) with the full Prisma user
+    req.login(user as Express.User, (err) => {
+      if (err) return next(err);
+      res.status(201).json({ data: sanitizeUser(user) });
+    });
   },
 );
 
@@ -81,6 +90,77 @@ authRouter.post(
 authRouter.get("/me", requireAuth, (req: Request, res: Response) => {
   res.json({ data: sanitizeUser(req.user as Express.User) });
 });
+
+// Stricter rate limiter for password reset requests (5 per 15 minutes per IP)
+const forgotPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  store: new RedisStore({
+    sendCommand: (command: string, ...args: string[]) =>
+      redisClient.call(command, ...args) as Promise<never>,
+    prefix: "rl:forgot-password:",
+  }),
+  handler: (_req, res) => {
+    res.status(429).json({
+      error: {
+        code: "RATE_LIMIT_EXCEEDED",
+        message: "Too many requests, please try again later",
+      },
+    });
+  },
+});
+
+// POST /api/v1/auth/forgot-password
+authRouter.post(
+  "/forgot-password",
+  forgotPasswordLimiter,
+  validate({ body: passwordResetRequestSchema }),
+  async (req: Request, res: Response) => {
+    await requestPasswordReset(req.body.email);
+    res.json({
+      data: {
+        message:
+          "If an account with that email exists, a reset link has been sent.",
+      },
+    });
+  },
+);
+
+// Stricter rate limiter for password reset submissions (5 per 15 minutes per IP)
+const resetPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: "draft-7",
+  legacyHeaders: false,
+  store: new RedisStore({
+    sendCommand: (command: string, ...args: string[]) =>
+      redisClient.call(command, ...args) as Promise<never>,
+    prefix: "rl:reset-password:",
+  }),
+  handler: (_req, res) => {
+    res.status(429).json({
+      error: {
+        code: "RATE_LIMIT_EXCEEDED",
+        message: "Too many requests, please try again later",
+      },
+    });
+  },
+});
+
+// POST /api/v1/auth/reset-password
+authRouter.post(
+  "/reset-password",
+  resetPasswordLimiter,
+  validate({ body: passwordResetSchema }),
+  async (req: Request, res: Response) => {
+    await resetPassword(req.body.token, req.body.password);
+    res.json({
+      data: { message: "Password has been reset successfully." },
+    });
+  },
+);
 
 const FRONTEND_URL = process.env.FRONTEND_URL ?? "http://localhost:5173";
 

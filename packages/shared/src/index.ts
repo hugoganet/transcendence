@@ -3,6 +3,8 @@ export { apiResponseSchema, apiErrorSchema } from "./schemas/common.js";
 export {
   registerSchema,
   loginSchema,
+  passwordResetRequestSchema,
+  passwordResetSchema,
   userProfileSchema,
   oauthProviderSchema,
   type OAuthProvider,

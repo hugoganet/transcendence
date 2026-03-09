@@ -11,12 +11,20 @@ vi.mock("../config/database.js", () => ({
     user: {
       create: vi.fn(),
       findUnique: vi.fn(),
+      update: vi.fn(),
     },
     oAuthAccount: {
       findUnique: vi.fn(),
       create: vi.fn(),
       update: vi.fn(),
     },
+    passwordResetToken: {
+      create: vi.fn(),
+      findUnique: vi.fn(),
+      deleteMany: vi.fn(),
+      update: vi.fn(),
+    },
+    $transaction: vi.fn(),
   },
 }));
 
@@ -25,6 +33,35 @@ vi.mock("bcryptjs", () => ({
   default: {
     hash: vi.fn().mockResolvedValue("$2a$12$hashedpassword"),
     compare: vi.fn(),
+  },
+}));
+
+// Use vi.hoisted for mocks referenced inside vi.mock factories
+const mockSessionRedis = vi.hoisted(() => ({
+  scan: vi.fn().mockResolvedValue({ cursor: 0, keys: [] }),
+  get: vi.fn(),
+  del: vi.fn(),
+}));
+
+// Mock session Redis client (for invalidateUserSessions)
+vi.mock("../config/session.js", () => ({
+  sessionRedisClient: mockSessionRedis,
+  sessionMiddleware: vi.fn(),
+}));
+
+// Mock email service
+vi.mock("../services/emailService.js", () => ({
+  sendPasswordResetEmail: vi.fn().mockResolvedValue(undefined),
+}));
+
+// Mock ioredis for rate limiter — must return proper values for rate-limit-redis
+vi.mock("../config/redis.js", () => ({
+  redisClient: {
+    call: vi.fn().mockImplementation((command: string) => {
+      if (command === "SCRIPT") return Promise.resolve("fakeSHA123");
+      // EVALSHA returns [totalHits, resetTimeMs]
+      return Promise.resolve([1, String(Date.now() + 60000)]);
+    }),
   },
 }));
 
@@ -41,12 +78,20 @@ const mockPrisma = prisma as unknown as {
   user: {
     create: ReturnType<typeof vi.fn>;
     findUnique: ReturnType<typeof vi.fn>;
+    update: ReturnType<typeof vi.fn>;
   };
   oAuthAccount: {
     findUnique: ReturnType<typeof vi.fn>;
     create: ReturnType<typeof vi.fn>;
     update: ReturnType<typeof vi.fn>;
   };
+  passwordResetToken: {
+    create: ReturnType<typeof vi.fn>;
+    findUnique: ReturnType<typeof vi.fn>;
+    deleteMany: ReturnType<typeof vi.fn>;
+    update: ReturnType<typeof vi.fn>;
+  };
+  $transaction: ReturnType<typeof vi.fn>;
 };
 
 const mockUser = {
@@ -545,5 +590,171 @@ describe("Regression: existing auth flows still work", () => {
 
     expect(res.status).toBe(401);
     expect(res.body.error.code).toBe("INVALID_CREDENTIALS");
+  });
+});
+
+describe("POST /api/v1/auth/forgot-password", () => {
+  it("returns 200 with generic message for valid email", async () => {
+    mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+    mockPrisma.passwordResetToken.deleteMany.mockResolvedValue({ count: 0 });
+    mockPrisma.passwordResetToken.create.mockResolvedValue({
+      id: "token-id",
+      token: "a".repeat(64),
+      userId: mockUser.id,
+    });
+
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/forgot-password")
+      .send({ email: "test@example.com" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.message).toContain(
+      "If an account with that email exists",
+    );
+  });
+
+  it("returns 200 with same generic message for unknown email (no enumeration)", async () => {
+    mockPrisma.user.findUnique.mockResolvedValue(null);
+
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/forgot-password")
+      .send({ email: "nobody@example.com" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.message).toContain(
+      "If an account with that email exists",
+    );
+  });
+
+  it("returns 400 for invalid email body", async () => {
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/forgot-password")
+      .send({ email: "not-an-email" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_INPUT");
+  });
+
+  it("returns 400 for missing email field", async () => {
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/forgot-password")
+      .send({});
+
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_INPUT");
+  });
+});
+
+describe("POST /api/v1/auth/reset-password", () => {
+  const validTokenRecord = {
+    id: "token-id",
+    token: "a".repeat(64),
+    userId: mockUser.id,
+    expiresAt: new Date(Date.now() + 3600000),
+    usedAt: null,
+    createdAt: new Date(),
+    user: mockUser,
+  };
+
+  it("returns 200 for valid token and password", async () => {
+    mockPrisma.passwordResetToken.findUnique.mockResolvedValue(validTokenRecord);
+    mockPrisma.$transaction.mockResolvedValue([{}, {}]);
+    mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/reset-password")
+      .send({ token: validTokenRecord.token, password: "NewPass123" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.message).toBe("Password has been reset successfully.");
+  });
+
+  it("returns 400 for expired token", async () => {
+    const expiredToken = {
+      ...validTokenRecord,
+      expiresAt: new Date(Date.now() - 1000),
+    };
+    mockPrisma.passwordResetToken.findUnique.mockResolvedValue(expiredToken);
+
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/reset-password")
+      .send({ token: expiredToken.token, password: "NewPass123" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_RESET_TOKEN");
+  });
+
+  it("returns 400 for already-used token", async () => {
+    const usedToken = {
+      ...validTokenRecord,
+      usedAt: new Date(),
+    };
+    mockPrisma.passwordResetToken.findUnique.mockResolvedValue(usedToken);
+
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/reset-password")
+      .send({ token: usedToken.token, password: "NewPass123" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_RESET_TOKEN");
+  });
+
+  it("returns 400 for non-existent token", async () => {
+    mockPrisma.passwordResetToken.findUnique.mockResolvedValue(null);
+
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/reset-password")
+      .send({ token: "nonexistent", password: "NewPass123" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_RESET_TOKEN");
+  });
+
+  it("returns 400 for weak password", async () => {
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/reset-password")
+      .send({ token: "sometoken", password: "weak" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_INPUT");
+  });
+
+  it("returns 400 for missing token", async () => {
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/reset-password")
+      .send({ password: "NewPass123" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error.code).toBe("INVALID_INPUT");
+  });
+
+  it("invalidates sessions after successful password reset", async () => {
+    const sessionData = JSON.stringify({ passport: { user: mockUser.id } });
+    mockPrisma.passwordResetToken.findUnique.mockResolvedValue(validTokenRecord);
+    mockPrisma.$transaction.mockResolvedValue([{}, {}]);
+    mockSessionRedis.scan.mockResolvedValue({
+      cursor: 0,
+      keys: ["sess:abc"],
+    });
+    mockSessionRedis.get.mockResolvedValue(sessionData);
+    mockSessionRedis.del.mockResolvedValue(1);
+
+    const testApp = createTestApp();
+    const res = await request(testApp)
+      .post("/api/v1/auth/reset-password")
+      .send({ token: validTokenRecord.token, password: "NewPass123" });
+
+    expect(res.status).toBe(200);
+    expect(mockSessionRedis.del).toHaveBeenCalledWith("sess:abc");
   });
 });

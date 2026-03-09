@@ -1,6 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import bcrypt from "bcryptjs";
-import { register, sanitizeUser, getUserById, findOrCreateOAuthUser } from "./authService.js";
+import {
+  register,
+  sanitizeUser,
+  getUserById,
+  findOrCreateOAuthUser,
+  requestPasswordReset,
+  resetPassword,
+  invalidateUserSessions,
+} from "./authService.js";
 import { AppError } from "../utils/AppError.js";
 
 // Mock Prisma
@@ -9,12 +17,20 @@ vi.mock("../config/database.js", () => ({
     user: {
       create: vi.fn(),
       findUnique: vi.fn(),
+      update: vi.fn(),
     },
     oAuthAccount: {
       findUnique: vi.fn(),
       create: vi.fn(),
       update: vi.fn(),
     },
+    passwordResetToken: {
+      create: vi.fn(),
+      findUnique: vi.fn(),
+      deleteMany: vi.fn(),
+      update: vi.fn(),
+    },
+    $transaction: vi.fn(),
   },
 }));
 
@@ -26,17 +42,46 @@ vi.mock("bcryptjs", () => ({
   },
 }));
 
+// Use vi.hoisted for mocks referenced inside vi.mock factories
+const { mockSessionRedis, mockSendPasswordResetEmail } = vi.hoisted(() => ({
+  mockSessionRedis: {
+    scan: vi.fn(),
+    get: vi.fn(),
+    del: vi.fn(),
+  },
+  mockSendPasswordResetEmail: vi.fn().mockResolvedValue(undefined),
+}));
+
+// Mock session Redis client
+vi.mock("../config/session.js", () => ({
+  sessionRedisClient: mockSessionRedis,
+  sessionMiddleware: vi.fn(),
+}));
+
+// Mock email service
+vi.mock("./emailService.js", () => ({
+  sendPasswordResetEmail: mockSendPasswordResetEmail,
+}));
+
 const { prisma } = await import("../config/database.js");
 const mockPrisma = prisma as unknown as {
   user: {
     create: ReturnType<typeof vi.fn>;
     findUnique: ReturnType<typeof vi.fn>;
+    update: ReturnType<typeof vi.fn>;
   };
   oAuthAccount: {
     findUnique: ReturnType<typeof vi.fn>;
     create: ReturnType<typeof vi.fn>;
     update: ReturnType<typeof vi.fn>;
   };
+  passwordResetToken: {
+    create: ReturnType<typeof vi.fn>;
+    findUnique: ReturnType<typeof vi.fn>;
+    deleteMany: ReturnType<typeof vi.fn>;
+    update: ReturnType<typeof vi.fn>;
+  };
+  $transaction: ReturnType<typeof vi.fn>;
 };
 
 const mockUser = {
@@ -275,6 +320,193 @@ describe("authService", () => {
 
       const result = await getUserById("non-existent");
       expect(result).toBeNull();
+    });
+  });
+
+  describe("requestPasswordReset", () => {
+    it("creates token and sends email for existing user", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+      mockPrisma.passwordResetToken.deleteMany.mockResolvedValue({ count: 0 });
+      mockPrisma.passwordResetToken.create.mockResolvedValue({
+        id: "token-id",
+        token: "a".repeat(64),
+        userId: mockUser.id,
+      });
+
+      await requestPasswordReset("test@example.com");
+
+      expect(mockPrisma.user.findUnique).toHaveBeenCalledWith({
+        where: { email: "test@example.com" },
+      });
+      expect(mockPrisma.passwordResetToken.deleteMany).toHaveBeenCalledWith({
+        where: { userId: mockUser.id },
+      });
+      expect(mockPrisma.passwordResetToken.create).toHaveBeenCalledWith({
+        data: expect.objectContaining({
+          userId: mockUser.id,
+        }),
+      });
+      expect(mockSendPasswordResetEmail).toHaveBeenCalledWith(
+        "test@example.com",
+        expect.stringContaining("/reset-password?token="),
+      );
+    });
+
+    it("returns silently for non-existent email (no enumeration)", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(null);
+
+      await expect(
+        requestPasswordReset("nobody@example.com"),
+      ).resolves.toBeUndefined();
+
+      expect(mockPrisma.passwordResetToken.create).not.toHaveBeenCalled();
+      expect(mockSendPasswordResetEmail).not.toHaveBeenCalled();
+    });
+
+    it("returns silently for OAuth-only user (no passwordHash)", async () => {
+      const oauthUser = { ...mockUser, passwordHash: null, authProvider: "GOOGLE" };
+      mockPrisma.user.findUnique.mockResolvedValue(oauthUser);
+
+      await expect(
+        requestPasswordReset("test@example.com"),
+      ).resolves.toBeUndefined();
+
+      expect(mockPrisma.passwordResetToken.create).not.toHaveBeenCalled();
+      expect(mockSendPasswordResetEmail).not.toHaveBeenCalled();
+    });
+
+    it("invalidates old tokens when new request is made", async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(mockUser);
+      mockPrisma.passwordResetToken.deleteMany.mockResolvedValue({ count: 2 });
+      mockPrisma.passwordResetToken.create.mockResolvedValue({
+        id: "new-token-id",
+        token: "b".repeat(64),
+        userId: mockUser.id,
+      });
+
+      await requestPasswordReset("test@example.com");
+
+      expect(mockPrisma.passwordResetToken.deleteMany).toHaveBeenCalledWith({
+        where: { userId: mockUser.id },
+      });
+    });
+  });
+
+  describe("resetPassword", () => {
+    const validToken = {
+      id: "token-id",
+      token: "a".repeat(64),
+      userId: mockUser.id,
+      expiresAt: new Date(Date.now() + 3600000), // 1 hour from now
+      usedAt: null,
+      createdAt: new Date(),
+      user: mockUser,
+    };
+
+    it("updates password, consumes token, and invalidates sessions for valid token", async () => {
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue(validToken);
+      mockPrisma.$transaction.mockResolvedValue([{}, {}]);
+      // Mock session invalidation (no sessions to clear)
+      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+
+      await resetPassword(validToken.token, "NewPass123");
+
+      expect(mockPrisma.passwordResetToken.findUnique).toHaveBeenCalledWith({
+        where: { token: validToken.token },
+        include: { user: true },
+      });
+      expect(bcrypt.hash).toHaveBeenCalledWith("NewPass123", 12);
+      expect(mockPrisma.$transaction).toHaveBeenCalled();
+    });
+
+    it("throws INVALID_RESET_TOKEN for expired token", async () => {
+      const expiredToken = {
+        ...validToken,
+        expiresAt: new Date(Date.now() - 1000), // expired
+      };
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue(expiredToken);
+
+      await expect(
+        resetPassword(expiredToken.token, "NewPass123"),
+      ).rejects.toMatchObject({
+        statusCode: 400,
+        code: "INVALID_RESET_TOKEN",
+      });
+    });
+
+    it("throws INVALID_RESET_TOKEN for already-used token", async () => {
+      const usedToken = {
+        ...validToken,
+        usedAt: new Date(), // already used
+      };
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue(usedToken);
+
+      await expect(
+        resetPassword(usedToken.token, "NewPass123"),
+      ).rejects.toMatchObject({
+        statusCode: 400,
+        code: "INVALID_RESET_TOKEN",
+      });
+    });
+
+    it("throws INVALID_RESET_TOKEN for non-existent token", async () => {
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue(null);
+
+      await expect(
+        resetPassword("nonexistent", "NewPass123"),
+      ).rejects.toMatchObject({
+        statusCode: 400,
+        code: "INVALID_RESET_TOKEN",
+      });
+    });
+  });
+
+  describe("invalidateUserSessions", () => {
+    it("deletes matching sessions from Redis", async () => {
+      const sessionData = JSON.stringify({ passport: { user: "test-uuid" } });
+      const otherSessionData = JSON.stringify({ passport: { user: "other-uuid" } });
+
+      mockSessionRedis.scan.mockResolvedValue({
+        cursor: 0,
+        keys: ["sess:abc", "sess:def"],
+      });
+      mockSessionRedis.get
+        .mockResolvedValueOnce(sessionData)
+        .mockResolvedValueOnce(otherSessionData);
+      mockSessionRedis.del.mockResolvedValue(1);
+
+      await invalidateUserSessions("test-uuid");
+
+      expect(mockSessionRedis.del).toHaveBeenCalledWith("sess:abc");
+      expect(mockSessionRedis.del).not.toHaveBeenCalledWith("sess:def");
+    });
+
+    it("handles empty session store gracefully", async () => {
+      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+
+      await expect(
+        invalidateUserSessions("test-uuid"),
+      ).resolves.toBeUndefined();
+    });
+
+    it("paginates through multiple SCAN pages", async () => {
+      const targetSession = JSON.stringify({ passport: { user: "test-uuid" } });
+      const otherSession = JSON.stringify({ passport: { user: "other-uuid" } });
+
+      // First SCAN returns cursor 42 (more pages), second returns cursor 0 (done)
+      mockSessionRedis.scan
+        .mockResolvedValueOnce({ cursor: 42, keys: ["sess:page1-match"] })
+        .mockResolvedValueOnce({ cursor: 0, keys: ["sess:page2-other"] });
+      mockSessionRedis.get
+        .mockResolvedValueOnce(targetSession)
+        .mockResolvedValueOnce(otherSession);
+      mockSessionRedis.del.mockResolvedValue(1);
+
+      await invalidateUserSessions("test-uuid");
+
+      expect(mockSessionRedis.scan).toHaveBeenCalledTimes(2);
+      expect(mockSessionRedis.del).toHaveBeenCalledWith("sess:page1-match");
+      expect(mockSessionRedis.del).not.toHaveBeenCalledWith("sess:page2-other");
     });
   });
 });

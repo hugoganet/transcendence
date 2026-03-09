@@ -14,6 +14,21 @@ vi.mock("./middleware/rateLimiter.js", () => ({
   rateLimiter: (_req: unknown, _res: unknown, next: () => void) => next(),
 }));
 
+// Mock session Redis client (authService imports session.ts which requires SESSION_SECRET)
+vi.mock("./config/session.js", () => ({
+  sessionRedisClient: {
+    scan: vi.fn(),
+    get: vi.fn(),
+    del: vi.fn(),
+  },
+  sessionMiddleware: vi.fn(),
+}));
+
+// Mock email service
+vi.mock("./services/emailService.js", () => ({
+  sendPasswordResetEmail: vi.fn(),
+}));
+
 // Mock database (used by passport config)
 vi.mock("./config/database.js", () => ({
   prisma: {
