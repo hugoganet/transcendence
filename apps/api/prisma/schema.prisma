@@ -31,6 +31,8 @@ model User {
   updatedAt          DateTime     @updatedAt
   oauthAccounts      OAuthAccount[]
   passwordResetTokens PasswordResetToken[]
+  userProgress       UserProgress[]
+  chapterProgress    ChapterProgress[]
 
   @@index([createdAt])
 }
@@ -58,4 +60,47 @@ model PasswordResetToken {
   expiresAt DateTime
   usedAt    DateTime?
   createdAt DateTime  @default(now())
+}
+
+// Note: AVAILABLE is a computed status — rows are only created with IN_PROGRESS or COMPLETED.
+// AVAILABLE exists in the enum for completeness but should never be persisted.
+enum MissionStatus {
+  AVAILABLE
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum ChapterStatus {
+  LOCKED
+  AVAILABLE
+  IN_PROGRESS
+  COMPLETED
+}
+
+model UserProgress {
+  id          String        @id @default(uuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  missionId   String
+  status      MissionStatus
+  completedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([userId, missionId])
+  @@index([userId])
+}
+
+model ChapterProgress {
+  id          String        @id @default(uuid())
+  userId      String
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapterId   String
+  status      ChapterStatus
+  completedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([userId])
 }

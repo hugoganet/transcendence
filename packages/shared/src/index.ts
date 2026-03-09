@@ -36,6 +36,22 @@ export {
   exerciseContentSchema,
 } from "./schemas/exercise.js";
 export { tooltipSchema, tooltipCollectionSchema } from "./schemas/tooltip.js";
+export {
+  missionIdParamSchema,
+  missionStatusSchema,
+  chapterStatusSchema,
+  categoryStatusSchema,
+} from "./schemas/progress.js";
+export type {
+  MissionStatusValue,
+  ChapterStatusValue,
+  CategoryStatusValue,
+  MissionProgressOverlay,
+  ChapterProgressOverlay,
+  CategoryProgressOverlay,
+  CurriculumWithProgress,
+  MissionDetailResponse,
+} from "./types/progress.js";
 export type {
   ExerciseType,
   ProgressiveReveal,

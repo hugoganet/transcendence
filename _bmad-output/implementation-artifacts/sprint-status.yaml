@@ -65,7 +65,7 @@ development_status:
   # Epic 3: Curriculum Engine & Learning Path
   epic-3: in-progress
   3-1-curriculum-content-json-structure-and-loader: done
-  3-2-curriculum-progress-api: backlog
+  3-2-curriculum-progress-api: done
   3-3-mission-completion-and-progress-tracking: backlog
   3-4-jargon-tooltips-api: backlog
   3-5-learning-chain-visualization-api: backlog
