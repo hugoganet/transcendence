@@ -35,7 +35,7 @@ export {
   stExerciseContentSchema,
   exerciseContentSchema,
 } from "./schemas/exercise.js";
-export { tooltipSchema, tooltipCollectionSchema } from "./schemas/tooltip.js";
+export { tooltipSchema, tooltipCollectionSchema, termParamSchema } from "./schemas/tooltip.js";
 export {
   missionIdParamSchema,
   missionStatusSchema,
@@ -70,6 +70,8 @@ export type {
   ExerciseContent,
   Tooltip,
   TooltipCollection,
+  TooltipResponse,
+  GlossaryResponse,
   MissionContent,
   MissionContentCollection,
   UIStrings,

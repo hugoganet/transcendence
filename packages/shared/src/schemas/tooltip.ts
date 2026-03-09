@@ -8,3 +8,7 @@ export const tooltipSchema = z.object({
 });
 
 export const tooltipCollectionSchema = z.record(z.string(), tooltipSchema);
+
+export const termParamSchema = z.object({
+  term: z.string().min(1).max(100).regex(/^[a-z0-9]+(-[a-z0-9]+)*$/),
+});

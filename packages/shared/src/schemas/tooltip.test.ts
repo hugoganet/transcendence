@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { tooltipSchema, tooltipCollectionSchema } from "./tooltip.js";
+import { tooltipSchema, tooltipCollectionSchema, termParamSchema } from "./tooltip.js";
 
 describe("tooltipSchema", () => {
   const valid = {
@@ -73,5 +73,46 @@ describe("tooltipCollectionSchema", () => {
         bad: { term: "Bad" },
       }),
     ).toThrow();
+  });
+});
+
+describe("termParamSchema", () => {
+  it("validates lowercase term", () => {
+    const result = termParamSchema.parse({ term: "blockchain" });
+    expect(result.term).toBe("blockchain");
+  });
+
+  it("validates kebab-case term with hyphen", () => {
+    const result = termParamSchema.parse({ term: "private-key" });
+    expect(result.term).toBe("private-key");
+  });
+
+  it("rejects empty string", () => {
+    expect(() => termParamSchema.parse({ term: "" })).toThrow();
+  });
+
+  it("rejects uppercase", () => {
+    expect(() => termParamSchema.parse({ term: "UPPERCASE" })).toThrow();
+  });
+
+  it("rejects spaces", () => {
+    expect(() => termParamSchema.parse({ term: "has spaces" })).toThrow();
+  });
+
+  it("rejects special characters", () => {
+    expect(() => termParamSchema.parse({ term: "special!@#" })).toThrow();
+  });
+
+  it("rejects leading hyphen", () => {
+    expect(() => termParamSchema.parse({ term: "-blockchain" })).toThrow();
+  });
+
+  it("rejects trailing hyphen", () => {
+    expect(() => termParamSchema.parse({ term: "blockchain-" })).toThrow();
+  });
+
+  it("rejects term exceeding max length", () => {
+    const longTerm = "a".repeat(101);
+    expect(() => termParamSchema.parse({ term: longTerm })).toThrow();
   });
 });

@@ -10,6 +10,7 @@ import { authRouter } from "./routes/auth.js";
 import { usersRouter } from "./routes/users.js";
 import { disclaimersRouter } from "./routes/disclaimers.js";
 import { curriculumRouter } from "./routes/curriculum.js";
+import { tooltipsRouter } from "./routes/tooltips.js";
 
 const app: Express = express();
 
@@ -53,6 +54,7 @@ function registerRoutes(sessionMw?: RequestHandler) {
   app.use("/api/v1/users", usersRouter);
   app.use("/api/v1/disclaimers", disclaimersRouter);
   app.use("/api/v1/curriculum", curriculumRouter);
+  app.use("/api/v1/tooltips", tooltipsRouter);
 
   // 7. 404 catch-all (Express 5 named wildcard)
   app.all("/{*splat}", (_req, _res, next) => {

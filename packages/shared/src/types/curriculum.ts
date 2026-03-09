@@ -32,6 +32,12 @@ export type ExerciseContent = z.infer<typeof exerciseContentSchema>;
 export type Tooltip = z.infer<typeof tooltipSchema>;
 export type TooltipCollection = z.infer<typeof tooltipCollectionSchema>;
 
+export type TooltipResponse = Tooltip;
+
+export interface GlossaryResponse {
+  terms: TooltipResponse[];
+}
+
 export interface MissionContent {
   title: string;
   description: string;
