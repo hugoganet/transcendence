@@ -63,6 +63,11 @@ vi.mock("../utils/totpCrypto.js", () => ({
   decryptTotpSecret: vi.fn().mockReturnValue("JBSWY3DPEHPK3PXP"),
 }));
 
+// Mock oauthCrypto
+vi.mock("../utils/oauthCrypto.js", () => ({
+  encryptOAuthToken: vi.fn().mockImplementation((val: string) => `encrypted:${val}`),
+}));
+
 // Mock OTPAuth
 vi.mock("otpauth", () => ({
   Secret: class MockSecret {

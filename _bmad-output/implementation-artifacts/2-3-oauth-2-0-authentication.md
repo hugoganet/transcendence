@@ -1,6 +1,6 @@
 # Story 2.3: OAuth 2.0 Authentication
 
-Status: in-progress
+Status: done
 
 <!-- Note: Validation is optional. Run validate-create-story for quality check before dev-story. -->
 
@@ -120,8 +120,8 @@ So that I can access the platform without creating a new password.
 
 ### Review Follow-ups (AI)
 
-- [ ] [AI-Review][HIGH] Remove `INSTAGRAM` from `AuthProvider` enum — dead code contradicts documented scope change. Requires new Prisma migration. [apps/api/prisma/schema.prisma:15]
-- [ ] [AI-Review][HIGH] Encrypt OAuth access/refresh tokens at rest in database (AES-256 with server-side key). Currently stored as plaintext. [apps/api/prisma/schema.prisma:43-44, apps/api/src/services/authService.ts:78-79]
+- [x] [AI-Review][HIGH] Remove `INSTAGRAM` from `AuthProvider` enum — dead code contradicts documented scope change. Requires new Prisma migration. [apps/api/prisma/schema.prisma:15]
+- [x] [AI-Review][HIGH] Encrypt OAuth access/refresh tokens at rest in database (AES-256 with server-side key). Currently stored as plaintext. [apps/api/prisma/schema.prisma:43-44, apps/api/src/services/authService.ts:78-79]
 
 ## Dev Notes
 
@@ -235,6 +235,7 @@ Claude Opus 4.6
 
 - 2026-03-09: Implemented OAuth 2.0 authentication (Google + Facebook) — all 8 tasks completed
 - 2026-03-09: Code review fixes — added null email guard in LocalStrategy (H3), replaced internal `_strategy()` API with strategy registry Set (M2), added CSRF `state` parameter to OAuth flows (M4), added 3 happy-path OAuth integration tests (M3)
+- 2026-03-09: Fixed remaining review items — removed INSTAGRAM from AuthProvider enum (Prisma migration), added AES-256-GCM encryption for OAuth tokens at rest via oauthCrypto.ts (separate key from TOTP). 208 tests pass.
 
 ### File List
 

@@ -54,7 +54,7 @@ development_status:
   epic-2: in-progress
   2-1-email-password-registration-and-login: done
   2-2-logout-and-session-management: done
-  2-3-oauth-2-0-authentication: in-progress
+  2-3-oauth-2-0-authentication: done
   2-4-password-reset: done
   2-5-two-factor-authentication: done
   2-6-user-profile-management: done

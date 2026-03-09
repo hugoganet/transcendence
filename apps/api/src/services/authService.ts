@@ -8,6 +8,7 @@ import { sessionRedisClient } from "../config/session.js";
 import { sendPasswordResetEmail } from "./emailService.js";
 import { AppError } from "../utils/AppError.js";
 import { encryptTotpSecret, decryptTotpSecret } from "../utils/totpCrypto.js";
+import { encryptOAuthToken } from "../utils/oauthCrypto.js";
 
 const BCRYPT_COST_FACTOR = 12;
 
@@ -96,8 +97,8 @@ export async function findOrCreateOAuthUser(
     await prisma.oAuthAccount.update({
       where: { id: existingOAuth.id },
       data: {
-        accessToken: tokens.accessToken ?? null,
-        refreshToken: tokens.refreshToken ?? null,
+        accessToken: tokens.accessToken ? encryptOAuthToken(tokens.accessToken) : null,
+        refreshToken: tokens.refreshToken ? encryptOAuthToken(tokens.refreshToken) : null,
       },
     });
     return existingOAuth.user;
@@ -115,8 +116,8 @@ export async function findOrCreateOAuthUser(
         data: {
           provider,
           providerAccountId: profile.providerAccountId,
-          accessToken: tokens.accessToken ?? null,
-          refreshToken: tokens.refreshToken ?? null,
+          accessToken: tokens.accessToken ? encryptOAuthToken(tokens.accessToken) : null,
+          refreshToken: tokens.refreshToken ? encryptOAuthToken(tokens.refreshToken) : null,
           userId: existingUser.id,
         },
       });
@@ -136,8 +137,8 @@ export async function findOrCreateOAuthUser(
         create: {
           provider,
           providerAccountId: profile.providerAccountId,
-          accessToken: tokens.accessToken ?? null,
-          refreshToken: tokens.refreshToken ?? null,
+          accessToken: tokens.accessToken ? encryptOAuthToken(tokens.accessToken) : null,
+          refreshToken: tokens.refreshToken ? encryptOAuthToken(tokens.refreshToken) : null,
         },
       },
     },

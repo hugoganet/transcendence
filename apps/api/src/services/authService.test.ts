@@ -52,6 +52,7 @@ const {
   mockSendPasswordResetEmail,
   mockEncryptTotpSecret,
   mockDecryptTotpSecret,
+  mockEncryptOAuthToken,
   mockTotpValidate,
   mockQRCodeToDataURL,
 } = vi.hoisted(() => ({
@@ -63,6 +64,7 @@ const {
   mockSendPasswordResetEmail: vi.fn().mockResolvedValue(undefined),
   mockEncryptTotpSecret: vi.fn().mockReturnValue("encrypted-secret-hex"),
   mockDecryptTotpSecret: vi.fn().mockReturnValue("JBSWY3DPEHPK3PXP"),
+  mockEncryptOAuthToken: vi.fn().mockImplementation((val: string) => `encrypted:${val}`),
   mockTotpValidate: vi.fn(),
   mockQRCodeToDataURL: vi.fn().mockResolvedValue("data:image/png;base64,qrcode"),
 }));
@@ -82,6 +84,11 @@ vi.mock("./emailService.js", () => ({
 vi.mock("../utils/totpCrypto.js", () => ({
   encryptTotpSecret: mockEncryptTotpSecret,
   decryptTotpSecret: mockDecryptTotpSecret,
+}));
+
+// Mock oauthCrypto
+vi.mock("../utils/oauthCrypto.js", () => ({
+  encryptOAuthToken: mockEncryptOAuthToken,
 }));
 
 // Mock OTPAuth
@@ -347,8 +354,8 @@ describe("authService", () => {
       expect(mockPrisma.oAuthAccount.update).toHaveBeenCalledWith({
         where: { id: "existing-oauth-id" },
         data: {
-          accessToken: "access-token-123",
-          refreshToken: "refresh-token-123",
+          accessToken: "encrypted:access-token-123",
+          refreshToken: "encrypted:refresh-token-123",
         },
       });
     });

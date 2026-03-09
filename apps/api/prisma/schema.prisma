@@ -12,7 +12,6 @@ enum AuthProvider {
   LOCAL
   GOOGLE
   FACEBOOK
-  INSTAGRAM
 }
 
 model User {
