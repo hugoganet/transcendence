@@ -70,10 +70,11 @@ development_status:
   3-4-jargon-tooltips-api: done
   3-5-learning-chain-visualization-api: done
   3-6-curriculum-frontend-map-mission-flow-and-tooltips: backlog
-  epic-3-retrospective: optional
+  epic-3-retrospective: done
 
   # Epic 4: Interactive Exercise Framework
-  epic-4: backlog
+  epic-4: in-progress
+  4-0-e2e-testing-infrastructure: done
   4-1-exercise-submission-api-and-feedback-engine: backlog
   4-2-interactive-placement-exercise-component: backlog
   4-3-concept-matching-exercise-component: backlog
