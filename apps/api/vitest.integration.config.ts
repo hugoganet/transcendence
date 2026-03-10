@@ -8,6 +8,7 @@ export default defineConfig({
     globalSetup: ["src/__tests__/setup-integration.ts"],
     setupFiles: ["src/__tests__/integration/helpers/setup.ts"],
     sequence: { concurrent: false },
+    fileParallelism: false,
     testTimeout: 15_000,
     env: {
       DATABASE_URL:

@@ -4,6 +4,13 @@ import {
   cmExerciseContentSchema,
   ipExerciseContentSchema,
   stExerciseContentSchema,
+  siSubmissionSchema,
+  cmSubmissionSchema,
+  ipSubmissionSchema,
+  stSubmissionSchema,
+  exerciseSubmissionSchema,
+  exerciseResultSchema,
+  missionExerciseStatusSchema,
 } from "./exercise.js";
 
 describe("siExerciseContentSchema", () => {
@@ -179,5 +186,171 @@ describe("stExerciseContentSchema", () => {
     expect(() =>
       stExerciseContentSchema.parse({ ...valid, steps: [noMicro] }),
     ).toThrow();
+  });
+});
+
+// --- Submission Schema Tests ---
+
+describe("siSubmissionSchema", () => {
+  it("accepts valid SI submission", () => {
+    const result = siSubmissionSchema.parse({ type: "SI", submission: { selectedOptionId: "b" } });
+    expect(result.type).toBe("SI");
+    expect(result.submission.selectedOptionId).toBe("b");
+  });
+
+  it("rejects empty selectedOptionId", () => {
+    expect(() => siSubmissionSchema.parse({ type: "SI", submission: { selectedOptionId: "" } })).toThrow();
+  });
+
+  it("rejects missing submission", () => {
+    expect(() => siSubmissionSchema.parse({ type: "SI" })).toThrow();
+  });
+});
+
+describe("cmSubmissionSchema", () => {
+  it("accepts valid CM submission", () => {
+    const result = cmSubmissionSchema.parse({
+      type: "CM",
+      submission: { matches: [{ termId: "1", definitionId: "2" }, { termId: "2", definitionId: "1" }] },
+    });
+    expect(result.submission.matches).toHaveLength(2);
+  });
+
+  it("rejects empty matches array", () => {
+    expect(() => cmSubmissionSchema.parse({ type: "CM", submission: { matches: [] } })).toThrow();
+  });
+
+  it("rejects match with empty termId", () => {
+    expect(() =>
+      cmSubmissionSchema.parse({ type: "CM", submission: { matches: [{ termId: "", definitionId: "1" }] } }),
+    ).toThrow();
+  });
+});
+
+describe("ipSubmissionSchema", () => {
+  it("accepts valid IP submission", () => {
+    const result = ipSubmissionSchema.parse({
+      type: "IP",
+      submission: { positions: [{ itemId: "1", position: 0 }, { itemId: "2", position: 1 }] },
+    });
+    expect(result.submission.positions).toHaveLength(2);
+  });
+
+  it("rejects negative position", () => {
+    expect(() =>
+      ipSubmissionSchema.parse({ type: "IP", submission: { positions: [{ itemId: "1", position: -1 }] } }),
+    ).toThrow();
+  });
+
+  it("rejects empty positions array", () => {
+    expect(() => ipSubmissionSchema.parse({ type: "IP", submission: { positions: [] } })).toThrow();
+  });
+});
+
+describe("stSubmissionSchema", () => {
+  it("accepts valid ST submission", () => {
+    const result = stSubmissionSchema.parse({
+      type: "ST",
+      submission: { stepAnswers: [{ stepId: "1", selectedOptionId: "a" }] },
+    });
+    expect(result.submission.stepAnswers).toHaveLength(1);
+  });
+
+  it("rejects empty stepAnswers array", () => {
+    expect(() => stSubmissionSchema.parse({ type: "ST", submission: { stepAnswers: [] } })).toThrow();
+  });
+
+  it("rejects empty stepId", () => {
+    expect(() =>
+      stSubmissionSchema.parse({ type: "ST", submission: { stepAnswers: [{ stepId: "", selectedOptionId: "a" }] } }),
+    ).toThrow();
+  });
+});
+
+describe("exerciseSubmissionSchema (discriminated union)", () => {
+  it("parses SI submission correctly", () => {
+    const result = exerciseSubmissionSchema.parse({ type: "SI", submission: { selectedOptionId: "a" } });
+    expect(result.type).toBe("SI");
+  });
+
+  it("parses CM submission correctly", () => {
+    const result = exerciseSubmissionSchema.parse({
+      type: "CM",
+      submission: { matches: [{ termId: "1", definitionId: "1" }] },
+    });
+    expect(result.type).toBe("CM");
+  });
+
+  it("parses IP submission correctly", () => {
+    const result = exerciseSubmissionSchema.parse({
+      type: "IP",
+      submission: { positions: [{ itemId: "1", position: 0 }] },
+    });
+    expect(result.type).toBe("IP");
+  });
+
+  it("parses ST submission correctly", () => {
+    const result = exerciseSubmissionSchema.parse({
+      type: "ST",
+      submission: { stepAnswers: [{ stepId: "1", selectedOptionId: "a" }] },
+    });
+    expect(result.type).toBe("ST");
+  });
+
+  it("rejects invalid type", () => {
+    expect(() =>
+      exerciseSubmissionSchema.parse({ type: "INVALID", submission: {} }),
+    ).toThrow();
+  });
+});
+
+describe("exerciseResultSchema", () => {
+  it("accepts valid result", () => {
+    const result = exerciseResultSchema.parse({
+      correct: true,
+      score: 2,
+      totalPoints: 2,
+      feedback: [
+        { itemId: "a", correct: true, explanation: "Correct!", correctAnswer: null },
+        { itemId: "b", correct: true, explanation: "Good!", correctAnswer: null },
+      ],
+    });
+    expect(result.score).toBe(2);
+  });
+
+  it("accepts result with incorrect items", () => {
+    const result = exerciseResultSchema.parse({
+      correct: false,
+      score: 1,
+      totalPoints: 2,
+      feedback: [
+        { itemId: "a", correct: true, explanation: "Correct!", correctAnswer: null },
+        { itemId: "b", correct: false, explanation: "Wrong.", correctAnswer: "Option C" },
+      ],
+    });
+    expect(result.correct).toBe(false);
+    expect(result.feedback[1].correctAnswer).toBe("Option C");
+  });
+});
+
+describe("missionExerciseStatusSchema", () => {
+  it("accepts valid status", () => {
+    const result = missionExerciseStatusSchema.parse({
+      missionId: "1.1.1",
+      completable: true,
+      attempts: 3,
+      lastAttemptCorrect: true,
+    });
+    expect(result.completable).toBe(true);
+  });
+
+  it("accepts null lastAttemptCorrect", () => {
+    const result = missionExerciseStatusSchema.parse({
+      missionId: "1.1.1",
+      completable: false,
+      attempts: 0,
+      lastAttemptCorrect: null,
+    });
+    expect(result.lastAttemptCorrect).toBeNull();
   });
 });

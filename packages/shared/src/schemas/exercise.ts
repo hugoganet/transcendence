@@ -64,3 +64,80 @@ export const exerciseContentSchema = z.union([
   ipExerciseContentSchema,
   stExerciseContentSchema,
 ]);
+
+// --- Exercise Submission Schemas (user input) ---
+
+export const siSubmissionSchema = z.object({
+  type: z.literal("SI"),
+  submission: z.object({
+    selectedOptionId: z.string().min(1),
+  }),
+});
+
+export const cmSubmissionSchema = z.object({
+  type: z.literal("CM"),
+  submission: z.object({
+    matches: z.array(
+      z.object({
+        termId: z.string().min(1),
+        definitionId: z.string().min(1),
+      }),
+    ).min(1),
+  }),
+});
+
+export const ipSubmissionSchema = z.object({
+  type: z.literal("IP"),
+  submission: z.object({
+    positions: z.array(
+      z.object({
+        itemId: z.string().min(1),
+        position: z.number().int().min(0),
+      }),
+    ).min(1),
+  }),
+});
+
+export const stSubmissionSchema = z.object({
+  type: z.literal("ST"),
+  submission: z.object({
+    stepAnswers: z.array(
+      z.object({
+        stepId: z.string().min(1),
+        selectedOptionId: z.string().min(1),
+      }),
+    ).min(1),
+  }),
+});
+
+export const exerciseSubmissionSchema = z.discriminatedUnion("type", [
+  siSubmissionSchema,
+  cmSubmissionSchema,
+  ipSubmissionSchema,
+  stSubmissionSchema,
+]);
+
+// --- Exercise Result Schema (API response) ---
+
+export const exerciseFeedbackItemSchema = z.object({
+  itemId: z.string(),
+  correct: z.boolean(),
+  explanation: z.string(),
+  correctAnswer: z.string().nullable(),
+});
+
+export const exerciseResultSchema = z.object({
+  correct: z.boolean(),
+  score: z.number().int().min(0),
+  totalPoints: z.number().int().min(1),
+  feedback: z.array(exerciseFeedbackItemSchema),
+});
+
+// --- Mission Status Schema (GET /missions/:missionId/status response) ---
+
+export const missionExerciseStatusSchema = z.object({
+  missionId: z.string(),
+  completable: z.boolean(),
+  attempts: z.number().int().min(0),
+  lastAttemptCorrect: z.boolean().nullable(),
+});

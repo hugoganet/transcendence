@@ -75,7 +75,7 @@ development_status:
   # Epic 4: Interactive Exercise Framework
   epic-4: in-progress
   4-0-e2e-testing-infrastructure: done
-  4-1-exercise-submission-api-and-feedback-engine: backlog
+  4-1-exercise-submission-api-and-feedback-engine: in-progress
   4-2-interactive-placement-exercise-component: backlog
   4-3-concept-matching-exercise-component: backlog
   4-4-step-by-step-simulated-transaction-component: backlog

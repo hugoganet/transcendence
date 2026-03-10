@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import { app, prisma } from "./helpers/app.js";
 import { resetDatabase } from "./helpers/db.js";
-import { sessionRedisClient } from "../../../config/session.js";
+import { sessionRedisClient } from "../../config/session.js";
 
 beforeEach(async () => {
   await resetDatabase();

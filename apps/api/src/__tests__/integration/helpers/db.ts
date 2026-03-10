@@ -4,22 +4,27 @@
  */
 import bcrypt from "bcryptjs";
 import { prisma } from "./app.js";
+import { sessionRedisClient } from "../../../config/session.js";
 
 /**
- * Truncate all user-data tables.
+ * Truncate all user-data tables and flush Redis sessions.
  * CASCADE handles FK dependencies.
  */
 export async function resetDatabase(): Promise<void> {
-  await prisma.$executeRawUnsafe(`
-    TRUNCATE TABLE
-      "SelfAssessment",
-      "ChapterProgress",
-      "UserProgress",
-      "PasswordResetToken",
-      "OAuthAccount",
-      "User"
-    CASCADE;
-  `);
+  await Promise.all([
+    prisma.$executeRawUnsafe(`
+      TRUNCATE TABLE
+        "ExerciseAttempt",
+        "SelfAssessment",
+        "ChapterProgress",
+        "UserProgress",
+        "PasswordResetToken",
+        "OAuthAccount",
+        "User"
+      CASCADE;
+    `),
+    sessionRedisClient.sendCommand(["FLUSHDB"]),
+  ]);
 }
 
 /**

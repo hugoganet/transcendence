@@ -13,6 +13,14 @@ import type {
   ipExerciseContentSchema,
   stExerciseContentSchema,
   exerciseContentSchema,
+  exerciseSubmissionSchema,
+  siSubmissionSchema,
+  cmSubmissionSchema,
+  ipSubmissionSchema,
+  stSubmissionSchema,
+  exerciseResultSchema,
+  exerciseFeedbackItemSchema,
+  missionExerciseStatusSchema,
 } from "../schemas/exercise.js";
 import type { tooltipSchema, tooltipCollectionSchema } from "../schemas/tooltip.js";
 
@@ -37,6 +45,15 @@ export type TooltipResponse = Tooltip;
 export interface GlossaryResponse {
   terms: TooltipResponse[];
 }
+
+export type ExerciseSubmission = z.infer<typeof exerciseSubmissionSchema>;
+export type SISubmission = z.infer<typeof siSubmissionSchema>;
+export type CMSubmission = z.infer<typeof cmSubmissionSchema>;
+export type IPSubmission = z.infer<typeof ipSubmissionSchema>;
+export type STSubmission = z.infer<typeof stSubmissionSchema>;
+export type ExerciseResult = z.infer<typeof exerciseResultSchema>;
+export type ExerciseFeedbackItem = z.infer<typeof exerciseFeedbackItemSchema>;
+export type MissionExerciseStatus = z.infer<typeof missionExerciseStatusSchema>;
 
 export interface MissionContent {
   title: string;

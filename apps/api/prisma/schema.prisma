@@ -34,6 +34,7 @@ model User {
   userProgress       UserProgress[]
   chapterProgress    ChapterProgress[]
   selfAssessments    SelfAssessment[]
+  exerciseAttempts   ExerciseAttempt[]
 
   @@index([createdAt])
 }
@@ -117,4 +118,17 @@ model SelfAssessment {
 
   @@unique([userId, categoryId])
   @@index([userId])
+}
+
+model ExerciseAttempt {
+  id         String   @id @default(cuid())
+  userId     String
+  exerciseId String   // Same as missionId (e.g., "1.1.1")
+  answer     Json     // The raw submission payload (type-specific)
+  correct    Boolean  // Overall result: true if ALL items correct
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, exerciseId])
 }
