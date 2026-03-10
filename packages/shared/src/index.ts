@@ -82,6 +82,7 @@ export type {
 } from "./types/token.js";
 export {
   MISSION_COMPLETION_TOKEN_REWARD,
+  GAS_FEE_PER_SUBMISSION,
   DEFAULT_PAGE_SIZE,
   MAX_PAGE_SIZE,
 } from "./constants/tokens.js";

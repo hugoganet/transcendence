@@ -7,18 +7,35 @@ import { errorHandler } from "../middleware/errorHandler.js";
 
 // Mock database
 const mockPrisma = vi.hoisted(() => ({
+  $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) => {
+    return callback(mockPrisma);
+  }),
   exerciseAttempt: {
     create: vi.fn(),
     findMany: vi.fn(),
+    count: vi.fn(),
   },
   userProgress: {
     findUnique: vi.fn(),
     count: vi.fn(),
   },
+  user: {
+    findUniqueOrThrow: vi.fn(),
+  },
+  tokenTransaction: {
+    create: vi.fn(),
+  },
 }));
 
 vi.mock("../config/database.js", () => ({
   prisma: mockPrisma,
+}));
+
+// Mock tokenService
+vi.mock("../services/tokenService.js", () => ({
+  deductGasFeeWithClient: vi.fn(),
+  checkTokenDebt: vi.fn(),
+  creditMissionTokensWithClient: vi.fn(),
 }));
 
 // Mock session
@@ -122,6 +139,8 @@ function setupMock() {
   // First mission always available
   mockPrisma.userProgress.findUnique.mockResolvedValue(null);
   mockPrisma.exerciseAttempt.create.mockResolvedValue({ id: "attempt-1" });
+  mockPrisma.exerciseAttempt.count.mockResolvedValue(0); // first attempt
+  mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 50 }); // positive balance
 }
 
 function createTestApp(authenticated: boolean) {
@@ -213,12 +232,14 @@ describe("Exercises Routes", () => {
       expect(res.body.error.code).toBe("EXERCISE_NOT_FOUND");
     });
 
-    it("records attempt in database", async () => {
+    it("records attempt and deducts gas fee in transaction", async () => {
       const app = createTestApp(true);
-      await request(app)
+      const res = await request(app)
         .post("/api/v1/exercises/1.1.1/submit")
         .send({ type: "SI", submission: { selectedOptionId: "b" } });
 
+      expect(res.status).toBe(200);
+      expect(mockPrisma.$transaction).toHaveBeenCalledTimes(1);
       expect(mockPrisma.exerciseAttempt.create).toHaveBeenCalledWith({
         data: expect.objectContaining({
           userId: "user-1",
@@ -226,6 +247,8 @@ describe("Exercises Routes", () => {
           correct: true,
         }),
       });
+      expect(res.body.data.gasFee).toBe(2);
+      expect(res.body.data.tokenBalance).toBe(50);
     });
   });
 

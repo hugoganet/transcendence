@@ -1,6 +1,7 @@
 import { prisma } from "../config/database.js";
-import { MISSION_COMPLETION_TOKEN_REWARD } from "@transcendence/shared";
+import { MISSION_COMPLETION_TOKEN_REWARD, GAS_FEE_PER_SUBMISSION } from "@transcendence/shared";
 import type { TokenBalance } from "@transcendence/shared";
+import { AppError } from "../utils/AppError.js";
 
 /** Minimal interface for a Prisma-like client (real or transaction). */
 type DbClient = Pick<typeof prisma, "tokenTransaction" | "user">;
@@ -52,6 +53,60 @@ export async function creditMissionTokens(
   await prisma.$transaction(async (tx) => {
     await creditMissionTokensWithClient(tx, userId, missionId, missionTitle);
   });
+}
+
+/**
+ * Deduct gas fee for an exercise submission using the provided DB client.
+ * Does NOT check for negative balance — debt is allowed mid-mission.
+ */
+export async function deductGasFeeWithClient(
+  client: DbClient,
+  userId: string,
+  exerciseId: string,
+): Promise<void> {
+  await client.tokenTransaction.create({
+    data: {
+      userId,
+      amount: -GAS_FEE_PER_SUBMISSION,
+      type: "GAS_SPEND",
+      exerciseId,
+      description: "Gas fee: exercise submission",
+    },
+  });
+  await client.user.update({
+    where: { id: userId },
+    data: { tokenBalance: { decrement: GAS_FEE_PER_SUBMISSION } },
+  });
+}
+
+/**
+ * Standalone version: wraps in its own interactive transaction.
+ * Use when gas deduction is not part of a larger transaction.
+ */
+export async function deductGasFee(
+  userId: string,
+  exerciseId: string,
+): Promise<void> {
+  await prisma.$transaction(async (tx) => {
+    await deductGasFeeWithClient(tx, userId, exerciseId);
+  });
+}
+
+/**
+ * Check if user has token debt. Throws INSUFFICIENT_TOKENS if balance < 0.
+ */
+export async function checkTokenDebt(userId: string): Promise<void> {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: { id: userId },
+    select: { tokenBalance: true },
+  });
+  if (user.tokenBalance < 0) {
+    throw new AppError(
+      403,
+      "INSUFFICIENT_TOKENS",
+      "You must earn more tokens to start a new mission",
+    );
+  }
 }
 
 /**

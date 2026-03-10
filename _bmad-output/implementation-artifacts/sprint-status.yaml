@@ -86,7 +86,7 @@ development_status:
   # Epic 5: Token Economy & Gamification
   epic-5: in-progress
   5-1-token-ledger-and-balance-api: done
-  5-2-gas-fee-mechanic-api: backlog
+  5-2-gas-fee-mechanic-api: done
   5-3-streak-tracking-api: backlog
   5-4-achievements-api: backlog
   5-5-leaderboard-api: backlog

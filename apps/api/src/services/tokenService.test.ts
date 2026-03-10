@@ -21,8 +21,15 @@ vi.mock("../config/database.js", () => ({
   prisma: mockPrisma,
 }));
 
-const { creditMissionTokens, creditMissionTokensWithClient, getTokenBalance, getTokenHistory } =
-  await import("./tokenService.js");
+const {
+  creditMissionTokens,
+  creditMissionTokensWithClient,
+  getTokenBalance,
+  getTokenHistory,
+  deductGasFee,
+  deductGasFeeWithClient,
+  checkTokenDebt,
+} = await import("./tokenService.js");
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -244,5 +251,85 @@ describe("getTokenHistory", () => {
 
     expect(result.transactions).toHaveLength(0);
     expect(result.total).toBe(0);
+  });
+});
+
+describe("deductGasFee (standalone)", () => {
+  it("creates GAS_SPEND transaction and decrements balance", async () => {
+    mockPrisma.tokenTransaction.create.mockResolvedValue({});
+    mockPrisma.user.update.mockResolvedValue({});
+
+    await deductGasFee("user-1", "1.1.1");
+
+    expect(mockPrisma.$transaction).toHaveBeenCalledTimes(1);
+    expect(mockPrisma.tokenTransaction.create).toHaveBeenCalledWith({
+      data: {
+        userId: "user-1",
+        amount: -2,
+        type: "GAS_SPEND",
+        exerciseId: "1.1.1",
+        description: "Gas fee: exercise submission",
+      },
+    });
+    expect(mockPrisma.user.update).toHaveBeenCalledWith({
+      where: { id: "user-1" },
+      data: { tokenBalance: { decrement: 2 } },
+    });
+  });
+});
+
+describe("deductGasFeeWithClient", () => {
+  it("uses the provided client", async () => {
+    const fakeClient = {
+      tokenTransaction: { create: vi.fn().mockResolvedValue({}) },
+      user: { update: vi.fn().mockResolvedValue({}) },
+    };
+
+    await deductGasFeeWithClient(fakeClient as never, "user-1", "2.1.1");
+
+    expect(fakeClient.tokenTransaction.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        amount: -2,
+        type: "GAS_SPEND",
+        exerciseId: "2.1.1",
+      }),
+    });
+    expect(fakeClient.user.update).toHaveBeenCalledWith({
+      where: { id: "user-1" },
+      data: { tokenBalance: { decrement: 2 } },
+    });
+    expect(mockPrisma.$transaction).not.toHaveBeenCalled();
+  });
+
+  it("does not reject when balance would go negative", async () => {
+    const fakeClient = {
+      tokenTransaction: { create: vi.fn().mockResolvedValue({}) },
+      user: { update: vi.fn().mockResolvedValue({}) },
+    };
+
+    // Should not throw — debt is allowed
+    await expect(
+      deductGasFeeWithClient(fakeClient as never, "user-1", "1.1.1"),
+    ).resolves.toBeUndefined();
+  });
+});
+
+describe("checkTokenDebt", () => {
+  it("does not throw when balance is positive", async () => {
+    mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 10 });
+
+    await expect(checkTokenDebt("user-1")).resolves.toBeUndefined();
+  });
+
+  it("does not throw when balance is zero", async () => {
+    mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 0 });
+
+    await expect(checkTokenDebt("user-1")).resolves.toBeUndefined();
+  });
+
+  it("throws INSUFFICIENT_TOKENS when balance is negative", async () => {
+    mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: -4 });
+
+    await expect(checkTokenDebt("user-1")).rejects.toThrow("You must earn more tokens");
   });
 });

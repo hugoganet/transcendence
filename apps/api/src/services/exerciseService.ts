@@ -2,6 +2,8 @@ import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";
 import { getMissionAccessStatus } from "./curriculumService.js";
+import { deductGasFeeWithClient, checkTokenDebt } from "./tokenService.js";
+import { GAS_FEE_PER_SUBMISSION } from "@transcendence/shared";
 import type {
   ExerciseResult,
   ExerciseFeedbackItem,
@@ -238,23 +240,34 @@ export async function submitExercise(
     throw new AppError(403, "MISSION_LOCKED", `Mission ${exerciseId} is locked`);
   }
 
-  // 3. Load exercise content
+  // 3. Debt check: block first attempt on new mission if balance < 0
+  // NOTE: This check runs outside the transaction intentionally. A TOCTOU race
+  // is possible (two concurrent "first attempts" could both pass), but this is
+  // an accepted trade-off — at worst a user in debt submits one extra time.
+  const priorAttemptCount = await prisma.exerciseAttempt.count({
+    where: { userId, exerciseId },
+  });
+  if (priorAttemptCount === 0) {
+    await checkTokenDebt(userId);
+  }
+
+  // 4. Load exercise content
   const missionContent = resolveMissionContent(exerciseId, locale);
   const exerciseContent = missionContent.exerciseContent;
 
-  // 4. Check for placeholder content
+  // 5. Check for placeholder content
   if ("placeholder" in exerciseContent && exerciseContent.placeholder === true) {
     throw new AppError(501, "EXERCISE_CONTENT_UNAVAILABLE", `Exercise content for ${exerciseId} is not yet available`);
   }
 
-  // 5. Validate type matches
+  // 6. Validate type matches
   if (body.type !== mission.exerciseType) {
     throw new AppError(400, "INVALID_INPUT", `Exercise ${exerciseId} is type ${mission.exerciseType}, not ${body.type}`, {
       type: `Expected ${mission.exerciseType}`,
     });
   }
 
-  // 6. Dispatch to type-specific validator
+  // 7. Dispatch to type-specific validator
   let result: { score: number; totalPoints: number; feedback: ExerciseFeedbackItem[] };
 
   switch (body.type) {
@@ -274,14 +287,23 @@ export async function submitExercise(
 
   const correct = result.score === result.totalPoints;
 
-  // 7. Record attempt in database
-  await prisma.exerciseAttempt.create({
-    data: {
-      userId,
-      exerciseId,
-      answer: body as unknown as Record<string, unknown>,
-      correct,
-    },
+  // 8. Record attempt + deduct gas fee in a single transaction
+  await prisma.$transaction(async (tx) => {
+    await tx.exerciseAttempt.create({
+      data: {
+        userId,
+        exerciseId,
+        answer: body as unknown as Record<string, unknown>,
+        correct,
+      },
+    });
+    await deductGasFeeWithClient(tx, userId, exerciseId);
+  });
+
+  // 9. Get updated balance for response
+  const updatedUser = await prisma.user.findUniqueOrThrow({
+    where: { id: userId },
+    select: { tokenBalance: true },
   });
 
   return {
@@ -289,6 +311,8 @@ export async function submitExercise(
     score: result.score,
     totalPoints: result.totalPoints,
     feedback: result.feedback,
+    gasFee: GAS_FEE_PER_SUBMISSION,
+    tokenBalance: updatedUser.tokenBalance,
   };
 }
 

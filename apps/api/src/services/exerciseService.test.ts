@@ -2,18 +2,37 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 
 // Mock database
 const mockPrisma = vi.hoisted(() => ({
+  $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) => {
+    return callback(mockPrisma);
+  }),
   exerciseAttempt: {
     create: vi.fn(),
     findMany: vi.fn(),
+    count: vi.fn(),
   },
   userProgress: {
     findUnique: vi.fn(),
     count: vi.fn(),
   },
+  user: {
+    findUniqueOrThrow: vi.fn(),
+  },
+  tokenTransaction: {
+    create: vi.fn(),
+  },
 }));
 
 vi.mock("../config/database.js", () => ({
   prisma: mockPrisma,
+}));
+
+// Mock tokenService — deductGasFeeWithClient + checkTokenDebt
+const mockDeductGasFeeWithClient = vi.hoisted(() => vi.fn());
+const mockCheckTokenDebt = vi.hoisted(() => vi.fn());
+vi.mock("./tokenService.js", () => ({
+  deductGasFeeWithClient: mockDeductGasFeeWithClient,
+  checkTokenDebt: mockCheckTokenDebt,
+  creditMissionTokensWithClient: vi.fn(),
 }));
 
 // Mock contentLoader
@@ -224,10 +243,14 @@ describe("exerciseService", () => {
     vi.clearAllMocks();
     mockPrisma.userProgress.findUnique.mockResolvedValue(null);
     mockPrisma.exerciseAttempt.create.mockResolvedValue({ id: "attempt-1" });
+    mockPrisma.exerciseAttempt.count.mockResolvedValue(0); // first attempt by default
+    mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 50 }); // positive balance
+    mockDeductGasFeeWithClient.mockResolvedValue(undefined);
+    mockCheckTokenDebt.mockResolvedValue(undefined);
   });
 
   describe("submitExercise — SI", () => {
-    it("returns correct result for right answer", async () => {
+    it("returns correct result for right answer with gas fee", async () => {
       setupContentMock(siContent);
 
       const result = await submitExercise("user-1", "1.1.1", {
@@ -241,12 +264,15 @@ describe("exerciseService", () => {
       expect(result.feedback).toHaveLength(1);
       expect(result.feedback[0].correct).toBe(true);
       expect(result.feedback[0].correctAnswer).toBeNull();
-      expect(mockPrisma.exerciseAttempt.create).toHaveBeenCalledWith({
-        data: expect.objectContaining({ userId: "user-1", exerciseId: "1.1.1", correct: true }),
-      });
+      expect(result.gasFee).toBe(2);
+      expect(result.tokenBalance).toBe(50);
+      expect(mockPrisma.$transaction).toHaveBeenCalledTimes(1);
+      expect(mockDeductGasFeeWithClient).toHaveBeenCalledWith(
+        mockPrisma, "user-1", "1.1.1",
+      );
     });
 
-    it("returns incorrect result for wrong answer", async () => {
+    it("returns incorrect result for wrong answer with same gas fee", async () => {
       setupContentMock(siContent);
 
       const result = await submitExercise("user-1", "1.1.1", {
@@ -258,9 +284,9 @@ describe("exerciseService", () => {
       expect(result.score).toBe(0);
       expect(result.feedback[0].correct).toBe(false);
       expect(result.feedback[0].correctAnswer).toBe("Ignore it");
-      expect(mockPrisma.exerciseAttempt.create).toHaveBeenCalledWith({
-        data: expect.objectContaining({ correct: false }),
-      });
+      // Gas fee is the same regardless of correctness
+      expect(result.gasFee).toBe(2);
+      expect(result.tokenBalance).toBe(50);
     });
 
     it("throws 400 for invalid option ID", async () => {
@@ -534,6 +560,55 @@ describe("exerciseService", () => {
       await expect(
         getMissionExerciseStatus("user-1", "99.99.99"),
       ).rejects.toThrow("not found");
+    });
+  });
+
+  describe("submitExercise — gas fee debt check", () => {
+    it("blocks first attempt on new mission when balance is negative", async () => {
+      setupContentMock(siContent);
+      mockPrisma.exerciseAttempt.count.mockResolvedValue(0); // first attempt
+      mockCheckTokenDebt.mockRejectedValue(
+        new Error("You must earn more tokens to start a new mission"),
+      );
+
+      await expect(
+        submitExercise("user-1", "1.1.1", {
+          type: "SI",
+          submission: { selectedOptionId: "b" },
+        }, "en"),
+      ).rejects.toThrow("You must earn more tokens");
+      expect(mockCheckTokenDebt).toHaveBeenCalledWith("user-1");
+    });
+
+    it("allows continued attempt on existing mission even with negative balance", async () => {
+      setupContentMock(siContent);
+      mockPrisma.exerciseAttempt.count.mockResolvedValue(1); // has prior attempts
+      mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: -4 });
+
+      const result = await submitExercise("user-1", "1.1.1", {
+        type: "SI",
+        submission: { selectedOptionId: "b" },
+      }, "en");
+
+      expect(result.correct).toBe(true);
+      expect(result.gasFee).toBe(2);
+      expect(result.tokenBalance).toBe(-4);
+      // checkTokenDebt should NOT be called for continued attempts
+      expect(mockCheckTokenDebt).not.toHaveBeenCalled();
+    });
+
+    it("allows first attempt on new mission with zero balance", async () => {
+      setupContentMock(siContent);
+      mockPrisma.exerciseAttempt.count.mockResolvedValue(0);
+      mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 0 });
+
+      const result = await submitExercise("user-1", "1.1.1", {
+        type: "SI",
+        submission: { selectedOptionId: "b" },
+      }, "en");
+
+      expect(result.correct).toBe(true);
+      expect(mockCheckTokenDebt).toHaveBeenCalledWith("user-1");
     });
   });
 });

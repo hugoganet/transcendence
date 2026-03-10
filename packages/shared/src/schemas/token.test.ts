@@ -6,6 +6,61 @@ import {
   paginationMetaSchema,
   tokenTransactionTypeSchema,
 } from "./token.js";
+import {
+  GAS_FEE_PER_SUBMISSION,
+  MISSION_COMPLETION_TOKEN_REWARD,
+} from "../constants/tokens.js";
+import { exerciseResultSchema } from "./exercise.js";
+
+describe("GAS_FEE_PER_SUBMISSION constant", () => {
+  it("is a positive integer", () => {
+    expect(GAS_FEE_PER_SUBMISSION).toBe(2);
+    expect(Number.isInteger(GAS_FEE_PER_SUBMISSION)).toBe(true);
+    expect(GAS_FEE_PER_SUBMISSION).toBeGreaterThan(0);
+  });
+
+  it("is less than MISSION_COMPLETION_TOKEN_REWARD", () => {
+    expect(GAS_FEE_PER_SUBMISSION).toBeLessThan(MISSION_COMPLETION_TOKEN_REWARD);
+  });
+});
+
+describe("exerciseResultSchema with gas fee fields", () => {
+  it("accepts result without gas fee fields (backward compatible)", () => {
+    const result = exerciseResultSchema.parse({
+      correct: true,
+      score: 1,
+      totalPoints: 1,
+      feedback: [{ itemId: "a", correct: true, explanation: "Good", correctAnswer: null }],
+    });
+    expect(result.gasFee).toBeUndefined();
+    expect(result.tokenBalance).toBeUndefined();
+  });
+
+  it("accepts result with gas fee fields", () => {
+    const result = exerciseResultSchema.parse({
+      correct: true,
+      score: 1,
+      totalPoints: 1,
+      feedback: [{ itemId: "a", correct: true, explanation: "Good", correctAnswer: null }],
+      gasFee: 2,
+      tokenBalance: 48,
+    });
+    expect(result.gasFee).toBe(2);
+    expect(result.tokenBalance).toBe(48);
+  });
+
+  it("accepts negative tokenBalance (debt)", () => {
+    const result = exerciseResultSchema.parse({
+      correct: false,
+      score: 0,
+      totalPoints: 1,
+      feedback: [{ itemId: "a", correct: false, explanation: "Wrong", correctAnswer: "B" }],
+      gasFee: 2,
+      tokenBalance: -4,
+    });
+    expect(result.tokenBalance).toBe(-4);
+  });
+});
 
 describe("tokenTransactionTypeSchema", () => {
   it("accepts EARN", () => {

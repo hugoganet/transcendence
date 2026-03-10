@@ -131,6 +131,8 @@ export const exerciseResultSchema = z.object({
   score: z.number().int().min(0),
   totalPoints: z.number().int().min(1),
   feedback: z.array(exerciseFeedbackItemSchema),
+  gasFee: z.number().int().optional(),
+  tokenBalance: z.number().int().optional(),
 });
 
 // --- Mission Status Schema (GET /missions/:missionId/status response) ---
