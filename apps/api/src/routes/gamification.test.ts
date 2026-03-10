@@ -5,31 +5,37 @@ import passport from "passport";
 import request from "supertest";
 import { errorHandler } from "../middleware/errorHandler.js";
 
-// Mock database
-const mockPrisma = vi.hoisted(() => ({
-  $transaction: vi.fn(async (arg: unknown) => {
-    if (typeof arg === "function") {
-      return (arg as (tx: unknown) => Promise<unknown>)(mockPrisma);
-    }
-    return Promise.all(arg as Promise<unknown>[]);
-  }),
-  user: {
-    findUniqueOrThrow: vi.fn(),
-  },
-  userProgress: {
-    count: vi.fn(),
-  },
-  chapterProgress: {
-    findMany: vi.fn(),
-  },
-  achievement: {
-    findMany: vi.fn(),
-  },
-  userAchievement: {
-    findMany: vi.fn(),
-    createMany: vi.fn(),
-  },
-}));
+// Mock database — supports both batch transactions (array) and interactive transactions (callback)
+const mockPrisma = vi.hoisted(() => {
+  const db = {
+    $transaction: vi.fn(async (arg: unknown) => {
+      if (typeof arg === "function") {
+        return (arg as (tx: typeof db) => Promise<unknown>)(db);
+      }
+      return Promise.all(arg as Promise<unknown>[]);
+    }),
+    user: {
+      findUniqueOrThrow: vi.fn(),
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+    },
+    userProgress: {
+      count: vi.fn(),
+      findMany: vi.fn(),
+    },
+    chapterProgress: {
+      findMany: vi.fn(),
+    },
+    achievement: {
+      findMany: vi.fn(),
+    },
+    userAchievement: {
+      findMany: vi.fn(),
+      createMany: vi.fn(),
+    },
+  };
+  return db;
+});
 
 vi.mock("../config/database.js", () => ({
   prisma: mockPrisma,
@@ -234,6 +240,88 @@ describe("Gamification Routes", () => {
       expect(achievement).toHaveProperty("type");
       expect(achievement).toHaveProperty("threshold");
       expect(achievement).toHaveProperty("earnedAt");
+    });
+  });
+
+  describe("GET /api/v1/gamification/leaderboard", () => {
+    function setupLeaderboardMocks() {
+      mockPrisma.userProgress.findMany.mockResolvedValue([
+        { userId: "user-1" },
+        { userId: "user-2" },
+      ]);
+      mockPrisma.user.findMany.mockResolvedValue([
+        {
+          id: "user-1", displayName: "Alice", avatarUrl: null,
+          _count: { userProgress: 10 },
+          userProgress: [{ completedAt: new Date("2026-03-10T10:00:00Z") }],
+        },
+        {
+          id: "user-2", displayName: "Bob", avatarUrl: null,
+          _count: { userProgress: 5 },
+          userProgress: [{ completedAt: new Date("2026-03-10T12:00:00Z") }],
+        },
+      ]);
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: "user-1", displayName: "Alice", avatarUrl: null,
+      });
+      mockPrisma.userProgress.count.mockResolvedValue(10);
+    }
+
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/gamification/leaderboard");
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+
+    it("returns leaderboard with data + currentUser + meta", async () => {
+      setupLeaderboardMocks();
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/gamification/leaderboard");
+
+      expect(res.status).toBe(200);
+
+      // Verify data array is sorted by missionsCompleted DESC
+      expect(Array.isArray(res.body.data)).toBe(true);
+      expect(res.body.data).toHaveLength(2);
+      expect(res.body.data[0].missionsCompleted).toBeGreaterThanOrEqual(res.body.data[1].missionsCompleted);
+      expect(res.body.data[0].rank).toBe(1);
+      expect(res.body.data[1].rank).toBe(2);
+
+      // Verify each entry has required fields with correct types
+      for (const entry of res.body.data) {
+        expect(typeof entry.rank).toBe("number");
+        expect(typeof entry.userId).toBe("string");
+        expect(typeof entry.missionsCompleted).toBe("number");
+      }
+
+      // Verify currentUser matches authenticated user
+      expect(res.body.currentUser.userId).toBe("user-1");
+      expect(typeof res.body.currentUser.rank).toBe("number");
+      expect(typeof res.body.currentUser.missionsCompleted).toBe("number");
+
+      // Verify meta with correct defaults
+      expect(res.body.meta).toEqual({ page: 1, pageSize: 20, total: 2 });
+    });
+
+    it("validates and passes page/pageSize params to service", async () => {
+      setupLeaderboardMocks();
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/gamification/leaderboard?page=1&pageSize=10");
+
+      expect(res.status).toBe(200);
+      expect(res.body.meta.page).toBe(1);
+      expect(res.body.meta.pageSize).toBe(10);
+    });
+
+    it("returns 400 for invalid pageSize (>100)", async () => {
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/gamification/leaderboard?pageSize=101");
+
+      expect(res.status).toBe(400);
     });
   });
 });

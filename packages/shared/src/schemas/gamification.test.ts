@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { streakSchema, achievementStatusSchema, achievementsResponseSchema } from "./gamification.js";
+import {
+  streakSchema,
+  achievementStatusSchema,
+  achievementsResponseSchema,
+  leaderboardEntrySchema,
+  leaderboardCurrentUserSchema,
+  leaderboardQuerySchema,
+} from "./gamification.js";
 
 describe("streakSchema", () => {
   it("accepts valid streak data", () => {
@@ -132,5 +139,103 @@ describe("achievementsResponseSchema", () => {
 
   it("accepts empty array", () => {
     expect(achievementsResponseSchema.parse([])).toEqual([]);
+  });
+});
+
+describe("leaderboardEntrySchema", () => {
+  const validEntry = {
+    rank: 1,
+    userId: "uuid-1",
+    displayName: "Alice",
+    avatarUrl: "/uploads/avatars/uuid-1.jpg",
+    missionsCompleted: 45,
+  };
+
+  it("accepts valid leaderboard entry", () => {
+    expect(leaderboardEntrySchema.parse(validEntry)).toEqual(validEntry);
+  });
+
+  it("accepts entry with null displayName and avatarUrl", () => {
+    const entry = { ...validEntry, displayName: null, avatarUrl: null };
+    expect(leaderboardEntrySchema.parse(entry)).toEqual(entry);
+  });
+
+  it("rejects rank less than 1", () => {
+    expect(() => leaderboardEntrySchema.parse({ ...validEntry, rank: 0 })).toThrow();
+  });
+
+  it("rejects negative missionsCompleted", () => {
+    expect(() => leaderboardEntrySchema.parse({ ...validEntry, missionsCompleted: -1 })).toThrow();
+  });
+
+  it("rejects non-integer rank", () => {
+    expect(() => leaderboardEntrySchema.parse({ ...validEntry, rank: 1.5 })).toThrow();
+  });
+
+  it("rejects missing fields", () => {
+    expect(() => leaderboardEntrySchema.parse({})).toThrow();
+    expect(() => leaderboardEntrySchema.parse({ rank: 1 })).toThrow();
+  });
+});
+
+describe("leaderboardCurrentUserSchema", () => {
+  const validCurrentUser = {
+    rank: 5,
+    userId: "uuid-current",
+    displayName: "CurrentUser",
+    avatarUrl: null,
+    missionsCompleted: 23,
+  };
+
+  it("accepts valid current user with rank", () => {
+    expect(leaderboardCurrentUserSchema.parse(validCurrentUser)).toEqual(validCurrentUser);
+  });
+
+  it("accepts current user with null rank (not active this week)", () => {
+    const user = { ...validCurrentUser, rank: null };
+    expect(leaderboardCurrentUserSchema.parse(user)).toEqual(user);
+  });
+
+  it("accepts current user with null displayName and avatarUrl", () => {
+    const user = { ...validCurrentUser, displayName: null, avatarUrl: null };
+    expect(leaderboardCurrentUserSchema.parse(user)).toEqual(user);
+  });
+
+  it("rejects rank less than 1 when not null", () => {
+    expect(() => leaderboardCurrentUserSchema.parse({ ...validCurrentUser, rank: 0 })).toThrow();
+  });
+
+  it("rejects missing fields", () => {
+    expect(() => leaderboardCurrentUserSchema.parse({})).toThrow();
+  });
+});
+
+describe("leaderboardQuerySchema", () => {
+  it("parses valid page and pageSize", () => {
+    const result = leaderboardQuerySchema.parse({ page: "2", pageSize: "10" });
+    expect(result).toEqual({ page: 2, pageSize: 10 });
+  });
+
+  it("applies defaults when no params provided", () => {
+    const result = leaderboardQuerySchema.parse({});
+    expect(result).toEqual({ page: 1, pageSize: 20 });
+  });
+
+  it("coerces string values to numbers", () => {
+    const result = leaderboardQuerySchema.parse({ page: "3", pageSize: "50" });
+    expect(result.page).toBe(3);
+    expect(result.pageSize).toBe(50);
+  });
+
+  it("rejects page less than 1", () => {
+    expect(() => leaderboardQuerySchema.parse({ page: "0" })).toThrow();
+  });
+
+  it("rejects pageSize greater than MAX_PAGE_SIZE (100)", () => {
+    expect(() => leaderboardQuerySchema.parse({ pageSize: "101" })).toThrow();
+  });
+
+  it("rejects pageSize less than 1", () => {
+    expect(() => leaderboardQuerySchema.parse({ pageSize: "0" })).toThrow();
   });
 });

@@ -91,8 +91,21 @@ export {
   ACHIEVEMENT_DEFINITIONS,
   type AchievementDefinition,
 } from "./constants/achievements.js";
-export { streakSchema, achievementStatusSchema, achievementsResponseSchema } from "./schemas/gamification.js";
-export type { StreakStatus, AchievementStatus } from "./types/gamification.js";
+export {
+  streakSchema,
+  achievementStatusSchema,
+  achievementsResponseSchema,
+  leaderboardEntrySchema,
+  leaderboardCurrentUserSchema,
+  leaderboardQuerySchema,
+} from "./schemas/gamification.js";
+export type {
+  StreakStatus,
+  AchievementStatus,
+  LeaderboardEntry,
+  LeaderboardCurrentUser,
+  LeaderboardQuery,
+} from "./types/gamification.js";
 export type {
   ExerciseType,
   ProgressiveReveal,
