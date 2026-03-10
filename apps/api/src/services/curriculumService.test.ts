@@ -45,10 +45,15 @@ vi.mock("./achievementService.js", () => ({
   checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]),
 }));
 
+vi.mock("./revealService.js", () => ({
+  triggerRevealWithClient: vi.fn().mockResolvedValue(false),
+}));
+
 const { getCurriculumWithProgress, getMissionDetail, getMissionAccessStatus, completeMission, getResumePoint, getLearningChain } =
   await import("./curriculumService.js");
 
 const { checkAndAwardAchievementsWithClient } = await import("./achievementService.js");
+const { triggerRevealWithClient } = await import("./revealService.js");
 
 import { createMockContent } from "../__fixtures__/curriculum.js";
 const setupContent = createMockContent(mockGetContent);
@@ -300,6 +305,7 @@ describe("completeMission", () => {
     expect(result.categoryCompleted).toBe(false);
     expect(result.nextMissionId).toBe("1.1.2");
     expect(result.progressiveReveal).toBeNull();
+    expect(result.revealTriggered).toBe(false);
     expect(result.newAchievements).toEqual([]);
     expect(mockPrisma.userProgress.upsert).toHaveBeenCalled();
     expect(checkAndAwardAchievementsWithClient).toHaveBeenCalledWith(
@@ -354,7 +360,7 @@ describe("completeMission", () => {
     );
   });
 
-  it("completes mission with progressive reveal trigger: returns reveal object", async () => {
+  it("completes mission with progressive reveal trigger: returns reveal object and calls triggerRevealWithClient", async () => {
     // 1.1.2 has progressiveReveal in our updated fixture
     mockPrisma.userProgress.findUnique
       .mockResolvedValueOnce(null)
@@ -364,6 +370,7 @@ describe("completeMission", () => {
     mockPrisma.chapterProgress.findMany.mockResolvedValue([
       { chapterId: "1.1", status: "COMPLETED" },
     ]);
+    (triggerRevealWithClient as ReturnType<typeof vi.fn>).mockResolvedValueOnce(true);
 
     const result = await completeMission("user-1", "1.1.2");
 
@@ -371,6 +378,35 @@ describe("completeMission", () => {
       mechanic: "tokensRevealed",
       description: "You've unlocked Knowledge Tokens!",
     });
+    expect(result.revealTriggered).toBe(true);
+    expect(triggerRevealWithClient).toHaveBeenCalledWith(
+      mockPrisma,
+      "user-1",
+      "tokensRevealed",
+    );
+  });
+
+  it("mission without progressiveReveal does NOT call reveal service", async () => {
+    // 1.1.1 has progressiveReveal: null
+    mockPrisma.userProgress.findUnique.mockResolvedValue(null);
+    mockPrisma.userProgress.count.mockResolvedValueOnce(1);
+    mockPrisma.userProgress.count.mockResolvedValueOnce(1);
+
+    const result = await completeMission("user-1", "1.1.1");
+
+    expect(triggerRevealWithClient).not.toHaveBeenCalled();
+    expect(result.revealTriggered).toBe(false);
+  });
+
+  it("revealTriggered is false for missions without reveal triggers", async () => {
+    // 1.1.1 has no progressive reveal
+    mockPrisma.userProgress.findUnique.mockResolvedValue(null);
+    mockPrisma.userProgress.count.mockResolvedValueOnce(1);
+    mockPrisma.userProgress.count.mockResolvedValueOnce(1);
+
+    const result = await completeMission("user-1", "1.1.1");
+
+    expect(result.revealTriggered).toBe(false);
   });
 
   it("throws 403 MISSION_LOCKED for locked mission", async () => {

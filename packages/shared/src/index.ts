@@ -95,6 +95,7 @@ export {
   streakSchema,
   achievementStatusSchema,
   achievementsResponseSchema,
+  revealStatusSchema,
   leaderboardEntrySchema,
   leaderboardCurrentUserSchema,
   leaderboardQuerySchema,
@@ -102,6 +103,7 @@ export {
 export type {
   StreakStatus,
   AchievementStatus,
+  RevealStatus,
   LeaderboardEntry,
   LeaderboardCurrentUser,
   LeaderboardQuery,

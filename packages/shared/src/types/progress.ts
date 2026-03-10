@@ -59,6 +59,7 @@ export interface CompleteMissionResponse {
   nextMissionId: string | null;
   completionPercentage: number;
   progressiveReveal: { mechanic: string; description: string } | null;
+  revealTriggered: boolean;
   newAchievements: Array<{ code: string; title: string; description: string }>;
 }
 

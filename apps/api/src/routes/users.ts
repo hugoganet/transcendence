@@ -9,6 +9,7 @@ import {
   updateProfile,
   uploadAvatar,
 } from "../services/userService.js";
+import { getReveals } from "../services/revealService.js";
 import { AppError } from "../utils/AppError.js";
 
 const AVATAR_UPLOAD_DIR =
@@ -60,6 +61,16 @@ usersRouter.patch(
       req.body,
     );
     res.json({ data: profile });
+  },
+);
+
+// GET /api/v1/users/me/reveals — return progressive reveal status
+usersRouter.get(
+  "/me/reveals",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const revealStatus = await getReveals((req.user as Express.User).id);
+    res.json({ data: revealStatus });
   },
 );
 

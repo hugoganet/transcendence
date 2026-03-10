@@ -3,6 +3,7 @@ import {
   streakSchema,
   achievementStatusSchema,
   achievementsResponseSchema,
+  revealStatusSchema,
   leaderboardEntrySchema,
   leaderboardCurrentUserSchema,
   leaderboardQuerySchema,
@@ -207,6 +208,67 @@ describe("leaderboardCurrentUserSchema", () => {
 
   it("rejects missing fields", () => {
     expect(() => leaderboardCurrentUserSchema.parse({})).toThrow();
+  });
+});
+
+describe("revealStatusSchema", () => {
+  it("accepts all false (new user)", () => {
+    const data = {
+      tokensRevealed: false,
+      walletRevealed: false,
+      gasRevealed: false,
+      dashboardRevealed: false,
+    };
+    expect(revealStatusSchema.parse(data)).toEqual(data);
+  });
+
+  it("accepts all true (fully revealed user)", () => {
+    const data = {
+      tokensRevealed: true,
+      walletRevealed: true,
+      gasRevealed: true,
+      dashboardRevealed: true,
+    };
+    expect(revealStatusSchema.parse(data)).toEqual(data);
+  });
+
+  it("accepts mixed true/false values", () => {
+    const data = {
+      tokensRevealed: true,
+      walletRevealed: false,
+      gasRevealed: true,
+      dashboardRevealed: false,
+    };
+    expect(revealStatusSchema.parse(data)).toEqual(data);
+  });
+
+  it("rejects missing fields", () => {
+    expect(() => revealStatusSchema.parse({})).toThrow();
+    expect(() => revealStatusSchema.parse({ tokensRevealed: false })).toThrow();
+  });
+
+  it("rejects non-boolean values", () => {
+    expect(() =>
+      revealStatusSchema.parse({
+        tokensRevealed: "true",
+        walletRevealed: false,
+        gasRevealed: false,
+        dashboardRevealed: false,
+      }),
+    ).toThrow();
+  });
+
+  it("rejects extra fields in strict mode", () => {
+    const data = {
+      tokensRevealed: false,
+      walletRevealed: false,
+      gasRevealed: false,
+      dashboardRevealed: false,
+      extraField: true,
+    };
+    // Zod strips extra fields by default, so parse succeeds
+    const result = revealStatusSchema.parse(data);
+    expect(result).not.toHaveProperty("extraField");
   });
 });
 

@@ -19,6 +19,7 @@ import type { Category, Chapter, Mission } from "@transcendence/shared";
 import { creditMissionTokensWithClient } from "./tokenService.js";
 import { updateStreakWithClient } from "./streakService.js";
 import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";
+import { triggerRevealWithClient } from "./revealService.js";
 
 export async function getCurriculumWithProgress(
   userId: string,
@@ -476,7 +477,13 @@ export async function completeMission(
       currentStreak: updatedUser.currentStreak,
     });
 
-    return { chapterJustCompleted, categoryCompleted, totalCompleted, newAchievements };
+    // i. Trigger progressive reveal if this mission has one (atomic with all above)
+    let revealTriggered = false;
+    if (mission.progressiveReveal) {
+      revealTriggered = await triggerRevealWithClient(tx, userId, mission.progressiveReveal.mechanic);
+    }
+
+    return { chapterJustCompleted, categoryCompleted, totalCompleted, newAchievements, revealTriggered };
   });
 
   // 6. Compute response fields (pure computation, no DB queries)
@@ -501,6 +508,7 @@ export async function completeMission(
     nextMissionId,
     completionPercentage,
     progressiveReveal: mission.progressiveReveal,
+    revealTriggered: txResult.revealTriggered,
     newAchievements: txResult.newAchievements,
   };
 }

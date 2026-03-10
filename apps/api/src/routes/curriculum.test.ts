@@ -93,6 +93,11 @@ vi.mock("../services/achievementService.js", () => ({
   checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]),
 }));
 
+// Mock revealService (used by curriculumService.completeMission)
+vi.mock("../services/revealService.js", () => ({
+  triggerRevealWithClient: vi.fn().mockResolvedValue(false),
+}));
+
 const { curriculumRouter } = await import("./curriculum.js");
 
 import { createMockContent } from "../__fixtures__/curriculum.js";

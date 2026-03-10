@@ -22,6 +22,13 @@ export const achievementStatusSchema = z.object({
 
 export const achievementsResponseSchema = z.array(achievementStatusSchema);
 
+export const revealStatusSchema = z.object({
+  tokensRevealed: z.boolean(),
+  walletRevealed: z.boolean(),
+  gasRevealed: z.boolean(),
+  dashboardRevealed: z.boolean(),
+});
+
 export const leaderboardEntrySchema = z.object({
   rank: z.number().int().min(1),
   userId: z.string(),

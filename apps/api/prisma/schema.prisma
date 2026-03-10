@@ -41,6 +41,10 @@ model User {
   longestStreak          Int       @default(0)
   lastMissionCompletedAt DateTime?
   userAchievements       UserAchievement[]
+  revealTokens           Boolean   @default(false)
+  revealWallet           Boolean   @default(false)
+  revealGas              Boolean   @default(false)
+  revealDashboard        Boolean   @default(false)
 
   @@index([createdAt])
 }

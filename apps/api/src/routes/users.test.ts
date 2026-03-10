@@ -54,6 +54,11 @@ vi.mock("node:fs/promises", () => ({
   },
 }));
 
+const mockGetReveals = vi.hoisted(() => vi.fn());
+vi.mock("../services/revealService.js", () => ({
+  getReveals: mockGetReveals,
+}));
+
 const { prisma } = await import("../config/database.js");
 const { usersRouter } = await import("./users.js");
 
@@ -213,6 +218,37 @@ describe("Users Routes", () => {
         .send({ displayName: "New" });
 
       expect(res.status).toBe(401);
+    });
+  });
+
+  describe("GET /api/v1/users/me/reveals", () => {
+    it("returns 200 with all four boolean flags in { data } format", async () => {
+      mockGetReveals.mockResolvedValue({
+        tokensRevealed: true,
+        walletRevealed: false,
+        gasRevealed: false,
+        dashboardRevealed: false,
+      });
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/users/me/reveals");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toEqual({
+        tokensRevealed: true,
+        walletRevealed: false,
+        gasRevealed: false,
+        dashboardRevealed: false,
+      });
+      expect(mockGetReveals).toHaveBeenCalledWith("user-1");
+    });
+
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/users/me/reveals");
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
     });
   });
 
