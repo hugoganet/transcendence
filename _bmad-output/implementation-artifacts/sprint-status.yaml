@@ -92,7 +92,7 @@ development_status:
   5-5-leaderboard-api: done
   5-6-progressive-mechanic-reveal-api: done
   5-7-wallet-profile-and-gamification-frontend: backlog
-  epic-5-retrospective: optional
+  epic-5-retrospective: done
 
   # Epic 6: Social & Community
   epic-6: backlog

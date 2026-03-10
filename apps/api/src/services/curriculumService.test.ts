@@ -1,26 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { setupCompleteMissionDefaults } from "../__fixtures__/completeMissionMocks.js";
 
 const mockPrisma = vi.hoisted(() => ({
   $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) => {
     return callback(mockPrisma);
   }),
-  userProgress: {
-    findMany: vi.fn(),
-    findUnique: vi.fn(),
-    findFirst: vi.fn(),
-    count: vi.fn(),
-    upsert: vi.fn(),
-  },
-  chapterProgress: {
-    findMany: vi.fn(),
-    upsert: vi.fn(),
-  },
-  selfAssessment: {
-    upsert: vi.fn(),
-  },
-  user: {
-    findUniqueOrThrow: vi.fn(),
-  },
+  userProgress: { findMany: vi.fn(), findUnique: vi.fn(), findFirst: vi.fn(), count: vi.fn(), upsert: vi.fn() },
+  chapterProgress: { findMany: vi.fn(), upsert: vi.fn() },
+  selfAssessment: { upsert: vi.fn() },
+  user: { findUniqueOrThrow: vi.fn() },
 }));
 
 vi.mock("../config/database.js", () => ({
@@ -33,18 +21,16 @@ vi.mock("../utils/contentLoader.js", () => ({
   getContent: mockGetContent,
 }));
 
+// completeMission() dependencies (see __fixtures__/completeMissionMocks.ts)
 vi.mock("./tokenService.js", () => ({
   creditMissionTokensWithClient: vi.fn().mockResolvedValue(undefined),
 }));
-
 vi.mock("./streakService.js", () => ({
   updateStreakWithClient: vi.fn().mockResolvedValue(undefined),
 }));
-
 vi.mock("./achievementService.js", () => ({
   checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]),
 }));
-
 vi.mock("./revealService.js", () => ({
   triggerRevealWithClient: vi.fn().mockResolvedValue(false),
 }));
@@ -61,9 +47,7 @@ const setupContent = createMockContent(mockGetContent);
 beforeEach(() => {
   vi.clearAllMocks();
   setupContent();
-  // Defaults for targeted access checks
-  mockPrisma.userProgress.findUnique.mockResolvedValue(null);
-  mockPrisma.userProgress.count.mockResolvedValue(0);
+  setupCompleteMissionDefaults(mockPrisma);
 });
 
 describe("getCurriculumWithProgress", () => {

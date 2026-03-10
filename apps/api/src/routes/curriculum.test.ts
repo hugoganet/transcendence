@@ -4,29 +4,17 @@ import session from "express-session";
 import passport from "passport";
 import request from "supertest";
 import { errorHandler } from "../middleware/errorHandler.js";
+import { setupCompleteMissionDefaults } from "../__fixtures__/completeMissionMocks.js";
 
-// Mock database
+// Mock database (vi.hoisted must be inline — can't import helpers before initialization)
 const mockPrisma = vi.hoisted(() => ({
   $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) => {
     return callback(mockPrisma);
   }),
-  userProgress: {
-    findMany: vi.fn(),
-    findUnique: vi.fn(),
-    findFirst: vi.fn(),
-    count: vi.fn(),
-    upsert: vi.fn(),
-  },
-  chapterProgress: {
-    findMany: vi.fn(),
-    upsert: vi.fn(),
-  },
-  selfAssessment: {
-    upsert: vi.fn(),
-  },
-  user: {
-    findUniqueOrThrow: vi.fn(),
-  },
+  userProgress: { findMany: vi.fn(), findUnique: vi.fn(), findFirst: vi.fn(), count: vi.fn(), upsert: vi.fn() },
+  chapterProgress: { findMany: vi.fn(), upsert: vi.fn() },
+  selfAssessment: { upsert: vi.fn() },
+  user: { findUniqueOrThrow: vi.fn() },
 }));
 
 vi.mock("../config/database.js", () => ({
@@ -78,22 +66,16 @@ vi.mock("../utils/contentLoader.js", () => ({
   getStaleContent: vi.fn(),
 }));
 
-// Mock tokenService (used by curriculumService.completeMission)
+// completeMission() dependencies (see __fixtures__/completeMissionMocks.ts)
 vi.mock("../services/tokenService.js", () => ({
   creditMissionTokensWithClient: vi.fn().mockResolvedValue(undefined),
 }));
-
-// Mock streakService (used by curriculumService.completeMission)
 vi.mock("../services/streakService.js", () => ({
   updateStreakWithClient: vi.fn().mockResolvedValue(undefined),
 }));
-
-// Mock achievementService (used by curriculumService.completeMission)
 vi.mock("../services/achievementService.js", () => ({
   checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]),
 }));
-
-// Mock revealService (used by curriculumService.completeMission)
 vi.mock("../services/revealService.js", () => ({
   triggerRevealWithClient: vi.fn().mockResolvedValue(false),
 }));
@@ -149,15 +131,10 @@ function createTestApp(authenticated = false, user = mockUser) {
 beforeEach(() => {
   vi.clearAllMocks();
   setupContent();
+  setupCompleteMissionDefaults(mockPrisma);
   mockPrisma.userProgress.findMany.mockResolvedValue([]);
   mockPrisma.chapterProgress.findMany.mockResolvedValue([]);
-  mockPrisma.userProgress.findUnique.mockResolvedValue(null);
   mockPrisma.userProgress.findFirst.mockResolvedValue(null);
-  mockPrisma.userProgress.count.mockResolvedValue(0);
-  mockPrisma.userProgress.upsert.mockResolvedValue({});
-  mockPrisma.chapterProgress.upsert.mockResolvedValue({});
-  mockPrisma.selfAssessment.upsert.mockResolvedValue({});
-  mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 5, currentStreak: 1 });
 });
 
 describe("Curriculum Routes", () => {
