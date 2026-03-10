@@ -59,6 +59,7 @@ export interface CompleteMissionResponse {
   nextMissionId: string | null;
   completionPercentage: number;
   progressiveReveal: { mechanic: string; description: string } | null;
+  newAchievements: Array<{ code: string; title: string; description: string }>;
 }
 
 export interface ResumeResponse {

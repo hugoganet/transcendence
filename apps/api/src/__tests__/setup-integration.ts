@@ -48,6 +48,15 @@ export async function setup() {
     env: { ...process.env, DATABASE_URL: testDbUrl },
     stdio: "pipe",
   });
+
+  // Seed reference data (achievements) using the same Prisma seed script.
+  // This reuses seed.ts logic, ensuring a single source of truth.
+  // The test user created by seed is truncated by resetDatabase() before each test.
+  execSync("npx prisma db seed", {
+    cwd: apiRoot,
+    env: { ...process.env, DATABASE_URL: testDbUrl },
+    stdio: "pipe",
+  });
 }
 
 export async function teardown() {

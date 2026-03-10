@@ -18,6 +18,7 @@ import type {
 import type { Category, Chapter, Mission } from "@transcendence/shared";
 import { creditMissionTokensWithClient } from "./tokenService.js";
 import { updateStreakWithClient } from "./streakService.js";
+import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";
 
 export async function getCurriculumWithProgress(
   userId: string,
@@ -462,7 +463,20 @@ export async function completeMission(
     // g. Update streak (inside transaction — atomic with progress + tokens)
     await updateStreakWithClient(tx, userId);
 
-    return { chapterJustCompleted, categoryCompleted, totalCompleted };
+    // h. Check and award achievements (inside transaction — atomic with all above)
+    const updatedUser = await tx.user.findUniqueOrThrow({
+      where: { id: userId },
+      select: { tokenBalance: true, currentStreak: true },
+    });
+
+    const categoryIndex = categoryCompleted ? catIdx + 1 : undefined;
+    const newAchievements = await checkAndAwardAchievementsWithClient(tx, userId, {
+      categoryCompleted: categoryIndex,
+      tokenBalance: updatedUser.tokenBalance,
+      currentStreak: updatedUser.currentStreak,
+    });
+
+    return { chapterJustCompleted, categoryCompleted, totalCompleted, newAchievements };
   });
 
   // 6. Compute response fields (pure computation, no DB queries)
@@ -487,6 +501,7 @@ export async function completeMission(
     nextMissionId,
     completionPercentage,
     progressiveReveal: mission.progressiveReveal,
+    newAchievements: txResult.newAchievements,
   };
 }
 

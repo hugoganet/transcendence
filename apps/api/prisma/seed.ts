@@ -3,6 +3,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "../generated/prisma/client.js";
+import { ACHIEVEMENT_DEFINITIONS } from "@transcendence/shared";
 
 const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -25,6 +26,22 @@ async function main() {
     },
   });
   console.log("Seeded test user:", testUser.id);
+
+  // Seed achievement definitions (idempotent via upsert on unique code)
+  for (const def of ACHIEVEMENT_DEFINITIONS) {
+    await prisma.achievement.upsert({
+      where: { code: def.code },
+      update: { title: def.title, description: def.description, type: def.type, threshold: def.threshold },
+      create: {
+        code: def.code,
+        title: def.title,
+        description: def.description,
+        type: def.type,
+        threshold: def.threshold,
+      },
+    });
+  }
+  console.log(`Seeded ${ACHIEVEMENT_DEFINITIONS.length} achievements`);
 
   // Optional: seed sample curriculum progress for test user
   if (process.env.SEED_PROGRESS === "true") {

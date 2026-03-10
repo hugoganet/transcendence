@@ -88,7 +88,7 @@ development_status:
   5-1-token-ledger-and-balance-api: done
   5-2-gas-fee-mechanic-api: done
   5-3-streak-tracking-api: done
-  5-4-achievements-api: backlog
+  5-4-achievements-api: done
   5-5-leaderboard-api: backlog
   5-6-progressive-mechanic-reveal-api: backlog
   5-7-wallet-profile-and-gamification-frontend: backlog

@@ -40,6 +40,7 @@ model User {
   currentStreak          Int       @default(0)
   longestStreak          Int       @default(0)
   lastMissionCompletedAt DateTime?
+  userAchievements       UserAchievement[]
 
   @@index([createdAt])
 }
@@ -153,4 +154,30 @@ model ExerciseAttempt {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, exerciseId])
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  title       String
+  description String
+  iconUrl     String   @default("")
+  type        String   // "MODULE_COMPLETION", "TOKEN_THRESHOLD", "STREAK_TARGET"
+  threshold   Int
+  createdAt   DateTime @default(now())
+
+  userAchievements UserAchievement[]
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String
+  achievementId String
+  earnedAt      DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
 }

@@ -24,6 +24,9 @@ const mockPrisma = vi.hoisted(() => ({
   selfAssessment: {
     upsert: vi.fn(),
   },
+  user: {
+    findUniqueOrThrow: vi.fn(),
+  },
 }));
 
 vi.mock("../config/database.js", () => ({
@@ -85,6 +88,11 @@ vi.mock("../services/streakService.js", () => ({
   updateStreakWithClient: vi.fn().mockResolvedValue(undefined),
 }));
 
+// Mock achievementService (used by curriculumService.completeMission)
+vi.mock("../services/achievementService.js", () => ({
+  checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]),
+}));
+
 const { curriculumRouter } = await import("./curriculum.js");
 
 import { createMockContent } from "../__fixtures__/curriculum.js";
@@ -144,6 +152,7 @@ beforeEach(() => {
   mockPrisma.userProgress.upsert.mockResolvedValue({});
   mockPrisma.chapterProgress.upsert.mockResolvedValue({});
   mockPrisma.selfAssessment.upsert.mockResolvedValue({});
+  mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 5, currentStreak: 1 });
 });
 
 describe("Curriculum Routes", () => {

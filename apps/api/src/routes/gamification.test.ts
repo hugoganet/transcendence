@@ -22,6 +22,13 @@ const mockPrisma = vi.hoisted(() => ({
   chapterProgress: {
     findMany: vi.fn(),
   },
+  achievement: {
+    findMany: vi.fn(),
+  },
+  userAchievement: {
+    findMany: vi.fn(),
+    createMany: vi.fn(),
+  },
 }));
 
 vi.mock("../config/database.js", () => ({
@@ -155,6 +162,78 @@ describe("Gamification Routes", () => {
 
       expect(res.status).toBe(401);
       expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+  });
+
+  describe("GET /api/v1/gamification/achievements", () => {
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/gamification/achievements");
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+
+    it("returns achievement list for authenticated user", async () => {
+      mockPrisma.achievement.findMany.mockResolvedValue([
+        {
+          id: "a1",
+          code: "BLOCKCHAIN_BEGINNER",
+          title: "Blockchain Beginner",
+          description: "Complete Category 1",
+          iconUrl: "",
+          type: "MODULE_COMPLETION",
+          threshold: 1,
+          userAchievements: [{ earnedAt: new Date("2026-03-10T14:30:00.000Z") }],
+        },
+        {
+          id: "a2",
+          code: "CRYPTO_CURIOUS",
+          title: "Crypto Curious",
+          description: "Complete Category 2",
+          iconUrl: "",
+          type: "MODULE_COMPLETION",
+          threshold: 2,
+          userAchievements: [],
+        },
+      ]);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/gamification/achievements");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toHaveLength(2);
+      expect(res.body.data[0].earnedAt).toBe("2026-03-10T14:30:00.000Z");
+      expect(res.body.data[1].earnedAt).toBeNull();
+    });
+
+    it("returns correct structure per achievementStatusSchema", async () => {
+      mockPrisma.achievement.findMany.mockResolvedValue([
+        {
+          id: "a1",
+          code: "FIRST_TOKENS",
+          title: "First Tokens",
+          description: "Earn 10 tokens",
+          iconUrl: "",
+          type: "TOKEN_THRESHOLD",
+          threshold: 10,
+          userAchievements: [],
+        },
+      ]);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/gamification/achievements");
+
+      expect(res.status).toBe(200);
+      const achievement = res.body.data[0];
+      expect(achievement).toHaveProperty("id");
+      expect(achievement).toHaveProperty("code");
+      expect(achievement).toHaveProperty("title");
+      expect(achievement).toHaveProperty("description");
+      expect(achievement).toHaveProperty("iconUrl");
+      expect(achievement).toHaveProperty("type");
+      expect(achievement).toHaveProperty("threshold");
+      expect(achievement).toHaveProperty("earnedAt");
     });
   });
 });

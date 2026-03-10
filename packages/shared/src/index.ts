@@ -86,8 +86,13 @@ export {
   DEFAULT_PAGE_SIZE,
   MAX_PAGE_SIZE,
 } from "./constants/tokens.js";
-export { streakSchema } from "./schemas/gamification.js";
-export type { StreakStatus } from "./types/gamification.js";
+export {
+  AchievementType,
+  ACHIEVEMENT_DEFINITIONS,
+  type AchievementDefinition,
+} from "./constants/achievements.js";
+export { streakSchema, achievementStatusSchema, achievementsResponseSchema } from "./schemas/gamification.js";
+export type { StreakStatus, AchievementStatus } from "./types/gamification.js";
 export type {
   ExerciseType,
   ProgressiveReveal,

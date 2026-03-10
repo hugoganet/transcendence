@@ -18,6 +18,9 @@ const mockPrisma = vi.hoisted(() => ({
   selfAssessment: {
     upsert: vi.fn(),
   },
+  user: {
+    findUniqueOrThrow: vi.fn(),
+  },
 }));
 
 vi.mock("../config/database.js", () => ({
@@ -38,8 +41,14 @@ vi.mock("./streakService.js", () => ({
   updateStreakWithClient: vi.fn().mockResolvedValue(undefined),
 }));
 
+vi.mock("./achievementService.js", () => ({
+  checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]),
+}));
+
 const { getCurriculumWithProgress, getMissionDetail, getMissionAccessStatus, completeMission, getResumePoint, getLearningChain } =
   await import("./curriculumService.js");
+
+const { checkAndAwardAchievementsWithClient } = await import("./achievementService.js");
 
 import { createMockContent } from "../__fixtures__/curriculum.js";
 const setupContent = createMockContent(mockGetContent);
@@ -272,6 +281,7 @@ describe("completeMission", () => {
     mockPrisma.userProgress.upsert.mockResolvedValue({});
     mockPrisma.chapterProgress.upsert.mockResolvedValue({});
     mockPrisma.selfAssessment.upsert.mockResolvedValue({});
+    mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 5, currentStreak: 1 });
   });
 
   it("completes first mission (1.1.1): creates UserProgress, returns next mission 1.1.2", async () => {
@@ -290,7 +300,13 @@ describe("completeMission", () => {
     expect(result.categoryCompleted).toBe(false);
     expect(result.nextMissionId).toBe("1.1.2");
     expect(result.progressiveReveal).toBeNull();
+    expect(result.newAchievements).toEqual([]);
     expect(mockPrisma.userProgress.upsert).toHaveBeenCalled();
+    expect(checkAndAwardAchievementsWithClient).toHaveBeenCalledWith(
+      mockPrisma,
+      "user-1",
+      { categoryCompleted: undefined, tokenBalance: 5, currentStreak: 1 },
+    );
   });
 
   it("completes last mission in chapter: marks chapter completed", async () => {
@@ -329,6 +345,13 @@ describe("completeMission", () => {
     const result = await completeMission("user-1", "1.1.2");
 
     expect(result.categoryCompleted).toBe(true);
+    expect(result.newAchievements).toEqual([]);
+    // categoryCompleted = true → categoryIndex should be catIdx + 1 = 1
+    expect(checkAndAwardAchievementsWithClient).toHaveBeenCalledWith(
+      mockPrisma,
+      "user-1",
+      { categoryCompleted: 1, tokenBalance: 5, currentStreak: 1 },
+    );
   });
 
   it("completes mission with progressive reveal trigger: returns reveal object", async () => {
