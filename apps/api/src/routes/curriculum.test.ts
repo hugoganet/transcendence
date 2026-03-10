@@ -75,6 +75,11 @@ vi.mock("../utils/contentLoader.js", () => ({
   getStaleContent: vi.fn(),
 }));
 
+// Mock tokenService (used by curriculumService.completeMission)
+vi.mock("../services/tokenService.js", () => ({
+  creditMissionTokensWithClient: vi.fn().mockResolvedValue(undefined),
+}));
+
 const { curriculumRouter } = await import("./curriculum.js");
 
 import { createMockContent } from "../__fixtures__/curriculum.js";

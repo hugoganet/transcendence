@@ -35,6 +35,8 @@ model User {
   chapterProgress    ChapterProgress[]
   selfAssessments    SelfAssessment[]
   exerciseAttempts   ExerciseAttempt[]
+  tokenBalance       Int                @default(0)
+  tokenTransactions  TokenTransaction[]
 
   @@index([createdAt])
 }
@@ -118,6 +120,23 @@ model SelfAssessment {
 
   @@unique([userId, categoryId])
   @@index([userId])
+}
+
+model TokenTransaction {
+  id          String   @id @default(cuid())
+  userId      String
+  amount      Int
+  type        String   // "EARN" or "GAS_SPEND"
+  missionId   String?
+  exerciseId  String?
+  description String
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, missionId, type])
+  @@index([userId, type])
+  @@index([userId, createdAt])
 }
 
 model ExerciseAttempt {

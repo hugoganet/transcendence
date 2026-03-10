@@ -16,6 +16,7 @@ import type {
   LearningChainResponse,
 } from "@transcendence/shared";
 import type { Category, Chapter, Mission } from "@transcendence/shared";
+import { creditMissionTokensWithClient } from "./tokenService.js";
 
 export async function getCurriculumWithProgress(
   userId: string,
@@ -397,8 +398,9 @@ export async function completeMission(
   const lastMission = lastChapter.missions[lastChapter.missions.length - 1];
   const isSelfAssessmentMission = mission.id === lastMission.id;
 
-  // 4. Transaction: upsert progress + check chapter/category completion atomically
+  // 4. Transaction: upsert progress + check chapter/category completion + credit tokens atomically
   const chapterMissionIds = chapter.missions.map((m) => m.id);
+  const missionTitle = content.missions.get("en")?.[missionId]?.title ?? missionId;
 
   const txResult = await prisma.$transaction(async (tx) => {
     // a. Upsert UserProgress
@@ -453,10 +455,13 @@ export async function completeMission(
       categoryCompleted = completedChapters.length === category.chapters.length;
     }
 
+    // f. Credit tokens for mission completion (inside transaction — atomic with progress update)
+    await creditMissionTokensWithClient(tx, userId, missionId, missionTitle);
+
     return { chapterJustCompleted, categoryCompleted, totalCompleted };
   });
 
-  // 5. Compute response fields (pure computation, no DB queries)
+  // 6. Compute response fields (pure computation, no DB queries)
   const nextMissionId = getNextMissionId(curriculum, missionId);
 
   const totalMissions = curriculum.reduce(

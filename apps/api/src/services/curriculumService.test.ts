@@ -30,6 +30,10 @@ vi.mock("../utils/contentLoader.js", () => ({
   getContent: mockGetContent,
 }));
 
+vi.mock("./tokenService.js", () => ({
+  creditMissionTokensWithClient: vi.fn().mockResolvedValue(undefined),
+}));
+
 const { getCurriculumWithProgress, getMissionDetail, getMissionAccessStatus, completeMission, getResumePoint, getLearningChain } =
   await import("./curriculumService.js");
 

@@ -66,6 +66,25 @@ export type {
   ChainBlock,
   LearningChainResponse,
 } from "./types/progress.js";
+export {
+  tokenBalanceSchema,
+  tokenTransactionSchema,
+  tokenTransactionTypeSchema,
+  tokenHistoryQuerySchema,
+  paginationMetaSchema,
+} from "./schemas/token.js";
+export type {
+  TokenBalance,
+  TokenTransaction,
+  TokenHistoryQuery,
+  PaginationMeta,
+  TokenTransactionType,
+} from "./types/token.js";
+export {
+  MISSION_COMPLETION_TOKEN_REWARD,
+  DEFAULT_PAGE_SIZE,
+  MAX_PAGE_SIZE,
+} from "./constants/tokens.js";
 export type {
   ExerciseType,
   ProgressiveReveal,
