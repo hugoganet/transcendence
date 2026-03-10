@@ -80,6 +80,11 @@ vi.mock("../services/tokenService.js", () => ({
   creditMissionTokensWithClient: vi.fn().mockResolvedValue(undefined),
 }));
 
+// Mock streakService (used by curriculumService.completeMission)
+vi.mock("../services/streakService.js", () => ({
+  updateStreakWithClient: vi.fn().mockResolvedValue(undefined),
+}));
+
 const { curriculumRouter } = await import("./curriculum.js");
 
 import { createMockContent } from "../__fixtures__/curriculum.js";

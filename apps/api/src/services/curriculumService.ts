@@ -17,6 +17,7 @@ import type {
 } from "@transcendence/shared";
 import type { Category, Chapter, Mission } from "@transcendence/shared";
 import { creditMissionTokensWithClient } from "./tokenService.js";
+import { updateStreakWithClient } from "./streakService.js";
 
 export async function getCurriculumWithProgress(
   userId: string,
@@ -457,6 +458,9 @@ export async function completeMission(
 
     // f. Credit tokens for mission completion (inside transaction — atomic with progress update)
     await creditMissionTokensWithClient(tx, userId, missionId, missionTitle);
+
+    // g. Update streak (inside transaction — atomic with progress + tokens)
+    await updateStreakWithClient(tx, userId);
 
     return { chapterJustCompleted, categoryCompleted, totalCompleted };
   });

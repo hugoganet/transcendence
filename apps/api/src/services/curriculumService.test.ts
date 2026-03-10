@@ -34,6 +34,10 @@ vi.mock("./tokenService.js", () => ({
   creditMissionTokensWithClient: vi.fn().mockResolvedValue(undefined),
 }));
 
+vi.mock("./streakService.js", () => ({
+  updateStreakWithClient: vi.fn().mockResolvedValue(undefined),
+}));
+
 const { getCurriculumWithProgress, getMissionDetail, getMissionAccessStatus, completeMission, getResumePoint, getLearningChain } =
   await import("./curriculumService.js");
 
