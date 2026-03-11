@@ -95,8 +95,8 @@ development_status:
   epic-5-retrospective: done
 
   # Epic 6: Social & Community
-  epic-6: backlog
-  6-1-friends-system-api: backlog
+  epic-6: in-progress
+  6-1-friends-system-api: done
   6-2-online-presence-via-socket-io: backlog
   6-3-public-profiles-api: backlog
   6-4-certificate-generation-and-sharing-api: backlog

@@ -8,6 +8,11 @@ datasource db {
   // URL configured in prisma.config.ts — NOT here
 }
 
+enum FriendshipStatus {
+  PENDING
+  ACCEPTED
+}
+
 enum AuthProvider {
   LOCAL
   GOOGLE
@@ -45,6 +50,8 @@ model User {
   revealWallet           Boolean   @default(false)
   revealGas              Boolean   @default(false)
   revealDashboard        Boolean   @default(false)
+  sentFriendRequests     Friendship[] @relation("FriendshipRequester")
+  receivedFriendRequests Friendship[] @relation("FriendshipAddressee")
 
   @@index([createdAt])
 }
@@ -184,4 +191,18 @@ model UserAchievement {
 
   @@unique([userId, achievementId])
   @@index([userId])
+}
+
+model Friendship {
+  id          String           @id @default(cuid())
+  requesterId String
+  addresseeId String
+  status      FriendshipStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  requester   User             @relation("FriendshipRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  addressee   User             @relation("FriendshipAddressee", fields: [addresseeId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, addresseeId])
+  @@index([addresseeId])
 }

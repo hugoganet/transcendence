@@ -108,6 +108,17 @@ export type {
   LeaderboardCurrentUser,
   LeaderboardQuery,
 } from "./types/gamification.js";
+export {
+  friendUserIdParamSchema,
+  friendListEntrySchema,
+  friendRequestEntrySchema,
+  friendshipResponseSchema,
+} from "./schemas/friend.js";
+export type {
+  FriendListEntry,
+  FriendRequestEntry,
+  FriendshipResponse,
+} from "./types/friend.js";
 export type {
   ExerciseType,
   ProgressiveReveal,

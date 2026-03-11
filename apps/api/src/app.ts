@@ -14,6 +14,7 @@ import { tooltipsRouter } from "./routes/tooltips.js";
 import { exercisesRouter } from "./routes/exercises.js";
 import { tokensRouter } from "./routes/tokens.js";
 import { gamificationRouter } from "./routes/gamification.js";
+import { friendsRouter } from "./routes/friends.js";
 
 const app: Express = express();
 
@@ -61,6 +62,7 @@ function registerRoutes(sessionMw?: RequestHandler) {
   app.use("/api/v1/exercises", exercisesRouter);
   app.use("/api/v1/tokens", tokensRouter);
   app.use("/api/v1/gamification", gamificationRouter);
+  app.use("/api/v1/friends", friendsRouter);
 
   // 7. 404 catch-all (Express 5 named wildcard)
   app.all("/{*splat}", (_req, _res, next) => {
