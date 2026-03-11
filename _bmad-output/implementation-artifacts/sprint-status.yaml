@@ -98,7 +98,7 @@ development_status:
   epic-6: in-progress
   6-1-friends-system-api: done
   6-2-online-presence-via-socket-io: done
-  6-3-public-profiles-api: backlog
+  6-3-public-profiles-api: done
   6-4-certificate-generation-and-sharing-api: backlog
   6-5-social-frontend-friends-profiles-and-certificates: backlog
   epic-6-retrospective: optional

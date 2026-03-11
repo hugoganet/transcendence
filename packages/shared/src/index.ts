@@ -119,6 +119,15 @@ export type {
   FriendRequestEntry,
   FriendshipResponse,
 } from "./types/friend.js";
+export {
+  publicProfileSchema,
+  earnedAchievementSchema,
+  userIdParamSchema,
+} from "./schemas/publicProfile.js";
+export type {
+  PublicProfile,
+  EarnedAchievement,
+} from "./types/publicProfile.js";
 export type {
   ExerciseType,
   ProgressiveReveal,

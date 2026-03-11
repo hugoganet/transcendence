@@ -3,13 +3,14 @@ import express from "express";
 import multer, { MulterError } from "multer";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
-import { updateProfileSchema } from "@transcendence/shared";
+import { updateProfileSchema, userIdParamSchema } from "@transcendence/shared";
 import {
   getProfile,
   updateProfile,
   uploadAvatar,
 } from "../services/userService.js";
 import { getReveals } from "../services/revealService.js";
+import { getPublicProfile } from "../services/publicProfileService.js";
 import { AppError } from "../utils/AppError.js";
 
 const AVATAR_UPLOAD_DIR =
@@ -109,6 +110,17 @@ usersRouter.post(
       (req.user as Express.User).id,
       req.file,
     );
+    res.json({ data: profile });
+  },
+);
+
+// GET /api/v1/users/:userId/profile — return public profile
+usersRouter.get(
+  "/:userId/profile",
+  requireAuth,
+  validate({ params: userIdParamSchema }),
+  async (req: Request, res: Response) => {
+    const profile = await getPublicProfile(req.params.userId);
     res.json({ data: profile });
   },
 );
