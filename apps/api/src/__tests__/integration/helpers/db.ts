@@ -14,6 +14,7 @@ export async function resetDatabase(): Promise<void> {
   await Promise.all([
     prisma.$executeRawUnsafe(`
       TRUNCATE TABLE
+        "Notification",
         "Certificate",
         "Friendship",
         "UserAchievement",

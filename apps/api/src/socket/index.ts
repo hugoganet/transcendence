@@ -4,6 +4,8 @@ import { Server } from "socket.io";
 import Redis from "ioredis";
 import { createAdapter } from "@socket.io/redis-adapter";
 import { handleUserConnect, handleUserDisconnect } from "./presence.js";
+import { handleNotificationConnect } from "./notifications.js";
+import type { NotificationPushPayload } from "@transcendence/shared";
 
 // Augment IncomingMessage to include session from express-session
 declare module "node:http" {
@@ -14,7 +16,7 @@ declare module "node:http" {
 
 // Socket.IO typed event interfaces
 export interface ServerToClientEvents {
-  "notification:push": (payload: unknown) => void;
+  "notification:push": (payload: NotificationPushPayload) => void;
   "presence:online": (userId: string) => void;
   "presence:offline": (userId: string) => void;
 }
@@ -67,6 +69,10 @@ export function createSocketServer(
 
     handleUserConnect(io, socket).catch(() => {
       // Presence is best-effort — don't crash on connect errors
+    });
+
+    handleNotificationConnect(io, socket).catch(() => {
+      // Notifications are best-effort — don't crash on connect errors
     });
 
     socket.on("disconnect", () => {

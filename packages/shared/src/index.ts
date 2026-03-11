@@ -139,6 +139,19 @@ export type {
   PublicCertificate,
   CertificateShareResponse,
 } from "./types/certificate.js";
+export {
+  notificationTypeSchema,
+  notificationSchema,
+  notificationQuerySchema,
+  notificationIdParamSchema,
+  notificationPushPayloadSchema,
+} from "./schemas/notification.js";
+export type {
+  NotificationType,
+  Notification,
+  NotificationQuery,
+  NotificationPushPayload,
+} from "./types/notification.js";
 export type {
   ExerciseType,
   ProgressiveReveal,
