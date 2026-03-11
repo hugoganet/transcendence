@@ -128,6 +128,17 @@ export type {
   PublicProfile,
   EarnedAchievement,
 } from "./types/publicProfile.js";
+export {
+  certificateSchema,
+  publicCertificateSchema,
+  shareTokenParamSchema,
+  certificateShareResponseSchema,
+} from "./schemas/certificate.js";
+export type {
+  Certificate,
+  PublicCertificate,
+  CertificateShareResponse,
+} from "./types/certificate.js";
 export type {
   ExerciseType,
   ProgressiveReveal,

@@ -3,8 +3,8 @@ import { vi } from "vitest";
 /**
  * Shared helpers for tests that import curriculumService (directly or via routes).
  *
- * completeMission() calls 4 WithClient services inside its transaction.
- * Any test importing curriculumService must mock all 4 to prevent real DB calls.
+ * completeMission() calls 5 WithClient services inside its transaction.
+ * Any test importing curriculumService must mock all 5 to prevent real DB calls.
  *
  * IMPORTANT: vi.mock() calls must use string literals and stay inline in each
  * test file (Vitest hoists them before imports). You cannot wrap vi.mock() in
@@ -19,6 +19,7 @@ import { vi } from "vitest";
  *   vi.mock("./streakService.js", () => ({ updateStreakWithClient: vi.fn().mockResolvedValue(undefined) }));
  *   vi.mock("./achievementService.js", () => ({ checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]) }));
  *   vi.mock("./revealService.js", () => ({ triggerRevealWithClient: vi.fn().mockResolvedValue(false) }));
+ *   vi.mock("./certificateService.js", () => ({ generateCertificateWithClient: vi.fn().mockResolvedValue({ id: "mock-cert-id", displayName: null, completionDate: new Date().toISOString(), curriculumTitle: "Blockchain Fundamentals", shareToken: "mock-token", totalMissions: 69, totalCategories: 6 }) }));
  *
  * === For route tests (path prefix "../services/") ===
  *
@@ -26,6 +27,7 @@ import { vi } from "vitest";
  *   vi.mock("../services/streakService.js", () => ({ updateStreakWithClient: vi.fn().mockResolvedValue(undefined) }));
  *   vi.mock("../services/achievementService.js", () => ({ checkAndAwardAchievementsWithClient: vi.fn().mockResolvedValue([]) }));
  *   vi.mock("../services/revealService.js", () => ({ triggerRevealWithClient: vi.fn().mockResolvedValue(false) }));
+ *   vi.mock("../services/certificateService.js", () => ({ generateCertificateWithClient: vi.fn().mockResolvedValue({ id: "mock-cert-id", displayName: null, completionDate: new Date().toISOString(), curriculumTitle: "Blockchain Fundamentals", shareToken: "mock-token", totalMissions: 69, totalCategories: 6 }) }));
  *
  * When a new WithClient service is added to completeMission(), update:
  *   1. This file (add to the lists above + setupCompleteMissionDefaults)
@@ -36,9 +38,9 @@ import { vi } from "vitest";
 
 interface MockPrisma {
   userProgress: { findUnique: ReturnType<typeof vi.fn>; count: ReturnType<typeof vi.fn>; upsert: ReturnType<typeof vi.fn> };
-  chapterProgress: { upsert: ReturnType<typeof vi.fn> };
+  chapterProgress: { upsert: ReturnType<typeof vi.fn>; findMany: ReturnType<typeof vi.fn> };
   selfAssessment: { upsert: ReturnType<typeof vi.fn> };
-  user: { findUniqueOrThrow: ReturnType<typeof vi.fn> };
+  user: { findUniqueOrThrow: ReturnType<typeof vi.fn>; findUnique: ReturnType<typeof vi.fn> };
 }
 
 /**
@@ -52,4 +54,5 @@ export function setupCompleteMissionDefaults(mockPrisma: MockPrisma) {
   mockPrisma.chapterProgress.upsert.mockResolvedValue({});
   mockPrisma.selfAssessment.upsert.mockResolvedValue({});
   mockPrisma.user.findUniqueOrThrow.mockResolvedValue({ tokenBalance: 5, currentStreak: 1 });
+  mockPrisma.user.findUnique.mockResolvedValue({ displayName: null });
 }

@@ -20,6 +20,7 @@ import { creditMissionTokensWithClient } from "./tokenService.js";
 import { updateStreakWithClient } from "./streakService.js";
 import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";
 import { triggerRevealWithClient } from "./revealService.js";
+import { generateCertificateWithClient } from "./certificateService.js";
 
 export async function getCurriculumWithProgress(
   userId: string,
@@ -483,7 +484,15 @@ export async function completeMission(
       revealTriggered = await triggerRevealWithClient(tx, userId, mission.progressiveReveal.mechanic);
     }
 
-    return { chapterJustCompleted, categoryCompleted, totalCompleted, newAchievements, revealTriggered };
+    // j. Generate certificate if graduation mission (6.3.4) is completed
+    let certificateGenerated = false;
+    if (missionId === "6.3.4") {
+      const user = await tx.user.findUnique({ where: { id: userId }, select: { displayName: true } });
+      await generateCertificateWithClient(tx, userId, user?.displayName ?? null);
+      certificateGenerated = true;
+    }
+
+    return { chapterJustCompleted, categoryCompleted, totalCompleted, newAchievements, revealTriggered, certificateGenerated };
   });
 
   // 6. Compute response fields (pure computation, no DB queries)
@@ -510,6 +519,7 @@ export async function completeMission(
     progressiveReveal: mission.progressiveReveal,
     revealTriggered: txResult.revealTriggered,
     newAchievements: txResult.newAchievements,
+    certificateGenerated: txResult.certificateGenerated,
   };
 }
 

@@ -52,6 +52,7 @@ model User {
   revealDashboard        Boolean   @default(false)
   sentFriendRequests     Friendship[] @relation("FriendshipRequester")
   receivedFriendRequests Friendship[] @relation("FriendshipAddressee")
+  certificate            Certificate?
 
   @@index([createdAt])
 }
@@ -205,4 +206,18 @@ model Friendship {
 
   @@unique([requesterId, addresseeId])
   @@index([addresseeId])
+}
+
+model Certificate {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  displayName     String?
+  completionDate  DateTime
+  curriculumTitle String   @default("Blockchain Fundamentals")
+  shareToken      String   @unique
+  totalMissions   Int
+  totalCategories Int
+  createdAt       DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

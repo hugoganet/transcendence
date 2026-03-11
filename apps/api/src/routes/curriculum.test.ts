@@ -14,7 +14,7 @@ const mockPrisma = vi.hoisted(() => ({
   userProgress: { findMany: vi.fn(), findUnique: vi.fn(), findFirst: vi.fn(), count: vi.fn(), upsert: vi.fn() },
   chapterProgress: { findMany: vi.fn(), upsert: vi.fn() },
   selfAssessment: { upsert: vi.fn() },
-  user: { findUniqueOrThrow: vi.fn() },
+  user: { findUniqueOrThrow: vi.fn(), findUnique: vi.fn() },
 }));
 
 vi.mock("../config/database.js", () => ({
@@ -78,6 +78,9 @@ vi.mock("../services/achievementService.js", () => ({
 }));
 vi.mock("../services/revealService.js", () => ({
   triggerRevealWithClient: vi.fn().mockResolvedValue(false),
+}));
+vi.mock("../services/certificateService.js", () => ({
+  generateCertificateWithClient: vi.fn().mockResolvedValue({ id: "mock-cert-id", displayName: null, completionDate: new Date().toISOString(), curriculumTitle: "Blockchain Fundamentals", shareToken: "mock-token", totalMissions: 69, totalCategories: 6 }),
 }));
 
 const { curriculumRouter } = await import("./curriculum.js");

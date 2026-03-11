@@ -61,6 +61,7 @@ export interface CompleteMissionResponse {
   progressiveReveal: { mechanic: string; description: string } | null;
   revealTriggered: boolean;
   newAchievements: Array<{ code: string; title: string; description: string }>;
+  certificateGenerated: boolean;
 }
 
 export interface ResumeResponse {

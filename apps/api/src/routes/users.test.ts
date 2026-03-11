@@ -59,6 +59,16 @@ vi.mock("../services/revealService.js", () => ({
   getReveals: mockGetReveals,
 }));
 
+const { mockGetCertificate, mockGetShareableUrl } = vi.hoisted(() => ({
+  mockGetCertificate: vi.fn(),
+  mockGetShareableUrl: vi.fn(),
+}));
+
+vi.mock("../services/certificateService.js", () => ({
+  getCertificate: mockGetCertificate,
+  getShareableUrl: mockGetShareableUrl,
+}));
+
 const { prisma } = await import("../config/database.js");
 const { usersRouter } = await import("./users.js");
 
@@ -246,6 +256,62 @@ describe("Users Routes", () => {
     it("returns 401 when unauthenticated", async () => {
       const app = createTestApp(false);
       const res = await request(app).get("/api/v1/users/me/reveals");
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+  });
+
+  describe("GET /api/v1/users/me/certificate", () => {
+    it("returns 200 with certificate data when authenticated", async () => {
+      mockGetCertificate.mockResolvedValue({
+        id: "cert-1",
+        displayName: "Test User",
+        completionDate: "2026-03-01T00:00:00.000Z",
+        curriculumTitle: "Blockchain Fundamentals",
+        shareToken: "abc-def-123",
+        totalMissions: 69,
+        totalCategories: 6,
+      });
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/users/me/certificate");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toMatchObject({
+        id: "cert-1",
+        curriculumTitle: "Blockchain Fundamentals",
+        totalMissions: 69,
+      });
+      expect(mockGetCertificate).toHaveBeenCalledWith("user-1");
+    });
+
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/users/me/certificate");
+
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+  });
+
+  describe("GET /api/v1/users/me/certificate/share", () => {
+    it("returns 200 with shareable URL when authenticated", async () => {
+      mockGetShareableUrl.mockResolvedValue({
+        shareUrl: "https://localhost/certificates/abc-def-123",
+      });
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/users/me/certificate/share");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.shareUrl).toBe("https://localhost/certificates/abc-def-123");
+      expect(mockGetShareableUrl).toHaveBeenCalledWith("user-1");
+    });
+
+    it("returns 401 when unauthenticated", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/users/me/certificate/share");
 
       expect(res.status).toBe(401);
       expect(res.body.error.code).toBe("UNAUTHORIZED");

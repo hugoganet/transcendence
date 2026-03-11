@@ -11,6 +11,7 @@ import {
 } from "../services/userService.js";
 import { getReveals } from "../services/revealService.js";
 import { getPublicProfile } from "../services/publicProfileService.js";
+import { getCertificate, getShareableUrl } from "../services/certificateService.js";
 import { AppError } from "../utils/AppError.js";
 
 const AVATAR_UPLOAD_DIR =
@@ -111,6 +112,26 @@ usersRouter.post(
       req.file,
     );
     res.json({ data: profile });
+  },
+);
+
+// GET /api/v1/users/me/certificate — return authenticated user's certificate
+usersRouter.get(
+  "/me/certificate",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const certificate = await getCertificate((req.user as Express.User).id);
+    res.json({ data: certificate });
+  },
+);
+
+// GET /api/v1/users/me/certificate/share — return shareable certificate URL
+usersRouter.get(
+  "/me/certificate/share",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const result = await getShareableUrl((req.user as Express.User).id);
+    res.json({ data: result });
   },
 );
 
