@@ -13,6 +13,12 @@ vi.mock("ioredis", () => {
   return { default: MockRedis };
 });
 
+// Mock presence handlers to isolate socket server unit tests from Redis/Prisma
+vi.mock("./presence.js", () => ({
+  handleUserConnect: vi.fn().mockResolvedValue(undefined),
+  handleUserDisconnect: vi.fn().mockResolvedValue(undefined),
+}));
+
 // Mock @socket.io/redis-adapter with a functional in-memory adapter
 // Must implement addAll/del/delAll/broadcast that Socket.IO calls internally
 vi.mock("@socket.io/redis-adapter", () => ({

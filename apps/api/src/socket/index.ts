@@ -3,6 +3,7 @@ import type { RequestHandler } from "express";
 import { Server } from "socket.io";
 import Redis from "ioredis";
 import { createAdapter } from "@socket.io/redis-adapter";
+import { handleUserConnect, handleUserDisconnect } from "./presence.js";
 
 // Augment IncomingMessage to include session from express-session
 declare module "node:http" {
@@ -45,13 +46,17 @@ export function createSocketServer(
   const subClient = pubClient.duplicate();
   io.adapter(createAdapter(pubClient, subClient));
 
-  // Share session middleware with Socket.IO engine (runs on HTTP upgrade handshake)
-  io.engine.use(sessionMw);
+  // Share session middleware with Socket.IO (runs on each connection handshake)
+  io.use((socket, next) => {
+    sessionMw(socket.request as Parameters<typeof sessionMw>[0], {} as Parameters<typeof sessionMw>[1], next as Parameters<typeof sessionMw>[2]);
+  });
 
   // Handle connections
   io.on("connection", (socket) => {
     const req = socket.request;
-    const userId = req.session?.userId;
+    // Passport stores serialized user ID in session.passport.user
+    const passport = (req.session as Record<string, unknown> | undefined)?.passport as { user?: string } | undefined;
+    const userId = passport?.user;
 
     if (!userId) {
       socket.disconnect();
@@ -59,10 +64,15 @@ export function createSocketServer(
     }
 
     socket.data.userId = userId;
-    console.log(`Socket connected: user ${userId}`);
+
+    handleUserConnect(io, socket).catch(() => {
+      // Presence is best-effort — don't crash on connect errors
+    });
 
     socket.on("disconnect", () => {
-      console.log(`Socket disconnected: user ${userId}`);
+      handleUserDisconnect(io, socket).catch(() => {
+        // Presence is best-effort — don't crash on disconnect errors
+      });
     });
   });
 
