@@ -67,6 +67,127 @@ function buildPasswordResetHtml(resetLink: string): string {
 </html>`;
 }
 
+export async function sendGdprExportEmail(
+  to: string,
+  downloadLink: string,
+): Promise<void> {
+  const client = getResendClient();
+  if (!client) {
+    console.warn(
+      "[emailService] RESEND_API_KEY not configured — skipping GDPR export email",
+    );
+    return;
+  }
+
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+
+  const { error } = await client.emails.send({
+    from: fromEmail,
+    to,
+    subject: "Your Data Export Is Ready",
+    html: buildGdprExportHtml(downloadLink),
+    text: buildGdprExportText(downloadLink),
+  });
+
+  if (error) {
+    console.error("[emailService] Failed to send GDPR export email:", error);
+  }
+}
+
+export async function sendGdprDeletionConfirmEmail(
+  to: string,
+  confirmLink: string,
+): Promise<void> {
+  const client = getResendClient();
+  if (!client) {
+    console.warn(
+      "[emailService] RESEND_API_KEY not configured — skipping GDPR deletion confirmation email",
+    );
+    return;
+  }
+
+  const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
+
+  const { error } = await client.emails.send({
+    from: fromEmail,
+    to,
+    subject: "Confirm Account Deletion",
+    html: buildGdprDeletionConfirmHtml(confirmLink),
+    text: buildGdprDeletionConfirmText(confirmLink),
+  });
+
+  if (error) {
+    console.error(
+      "[emailService] Failed to send GDPR deletion confirmation email:",
+      error,
+    );
+  }
+}
+
+function buildGdprExportHtml(downloadLink: string): string {
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: 'Source Sans 3', Arial, sans-serif; background: #FAF8F5; padding: 40px 0;">
+  <div style="max-width: 480px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+    <h1 style="color: #2B2522; font-size: 24px; margin: 0 0 16px;">Your Data Export Is Ready</h1>
+    <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
+      You requested an export of your personal data. Click the button below to download your data as a JSON file.
+    </p>
+    <a href="${escapeHtml(downloadLink)}" style="display: inline-block; background: #2B9E9E; color: #FFFFFF; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;">
+      Download Your Data
+    </a>
+    <p style="color: #8A817A; font-size: 14px; line-height: 1.5; margin: 24px 0 0;">
+      This link expires in 24 hours and can only be used once. If you didn't request this, you can safely ignore this email.
+    </p>
+  </div>
+</body>
+</html>`;
+}
+
+function buildGdprExportText(downloadLink: string): string {
+  return `Your Data Export Is Ready
+
+You requested an export of your personal data. Visit the link below to download your data:
+
+${downloadLink}
+
+This link expires in 24 hours and can only be used once. If you didn't request this, you can safely ignore this email.`;
+}
+
+function buildGdprDeletionConfirmHtml(confirmLink: string): string {
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: 'Source Sans 3', Arial, sans-serif; background: #FAF8F5; padding: 40px 0;">
+  <div style="max-width: 480px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
+    <h1 style="color: #2B2522; font-size: 24px; margin: 0 0 16px;">Confirm Account Deletion</h1>
+    <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
+      You requested to delete your account and all personal data. This action is permanent and cannot be undone.
+    </p>
+    <a href="${escapeHtml(confirmLink)}" style="display: inline-block; background: #D44D4D; color: #FFFFFF; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;">
+      Confirm Deletion
+    </a>
+    <p style="color: #8A817A; font-size: 14px; line-height: 1.5; margin: 24px 0 0;">
+      This link expires in 24 hours. If you didn't request this, you can safely ignore this email — your account will not be deleted.
+    </p>
+  </div>
+</body>
+</html>`;
+}
+
+function buildGdprDeletionConfirmText(confirmLink: string): string {
+  return `Confirm Account Deletion
+
+You requested to delete your account and all personal data. This action is permanent and cannot be undone.
+
+Visit the link below to confirm deletion:
+
+${confirmLink}
+
+This link expires in 24 hours. If you didn't request this, you can safely ignore this email — your account will not be deleted.`;
+}
+
 function buildPasswordResetText(resetLink: string): string {
   return `Reset Your Password
 

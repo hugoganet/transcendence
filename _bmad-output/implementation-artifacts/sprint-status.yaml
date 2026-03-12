@@ -112,9 +112,9 @@ development_status:
   epic-7-retrospective: optional
 
   # Epic 8: Accessibility, i18n & Compliance
-  epic-8: backlog
+  epic-8: in-progress
   8-1-i18n-infrastructure-and-language-switching: backlog
-  8-2-gdpr-data-export-and-deletion-api: backlog
+  8-2-gdpr-data-export-and-deletion-api: done
   8-3-email-service-integration: backlog
   8-4-design-system-component-library: backlog
   8-5-cross-browser-testing-and-keyboard-navigation: backlog

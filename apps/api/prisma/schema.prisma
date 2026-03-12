@@ -240,3 +240,40 @@ model Certificate {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model GdprExportToken {
+  id        String    @id @default(uuid())
+  token     String    @unique
+  userId    String
+  data      Json
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([token])
+  @@index([userId])
+}
+
+model GdprDeletionToken {
+  id        String    @id @default(uuid())
+  token     String    @unique
+  userId    String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  @@index([token])
+  @@index([userId])
+}
+
+model GdprAuditLog {
+  id        String   @id @default(uuid())
+  userId    String
+  action    String
+  ipAddress String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+}

@@ -16,6 +16,7 @@ import { tokensRouter } from "./routes/tokens.js";
 import { gamificationRouter } from "./routes/gamification.js";
 import { friendsRouter } from "./routes/friends.js";
 import { certificatesRouter } from "./routes/certificates.js";
+import { gdprRouter } from "./routes/gdpr.js";
 import { notificationsRouter } from "./routes/notifications.js";
 
 const app: Express = express();
@@ -65,6 +66,7 @@ function registerRoutes(sessionMw?: RequestHandler) {
   app.use("/api/v1/tokens", tokensRouter);
   app.use("/api/v1/gamification", gamificationRouter);
   app.use("/api/v1/friends", friendsRouter);
+  app.use("/api/v1/gdpr", gdprRouter);
   app.use("/api/v1/certificates", certificatesRouter);
   app.use("/api/v1/notifications", notificationsRouter);
 

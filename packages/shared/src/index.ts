@@ -157,6 +157,15 @@ export type {
   NotificationPushPayload,
   NotificationPreferences,
 } from "./types/notification.js";
+export {
+  gdprExportTokenParamSchema,
+  gdprDeletionTokenParamSchema,
+} from "./schemas/gdpr.js";
+export type {
+  GdprExportResponse,
+  GdprDeletionResponse,
+  GdprExportData,
+} from "./types/gdpr.js";
 export type {
   ExerciseType,
   ProgressiveReveal,
