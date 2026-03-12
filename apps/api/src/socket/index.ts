@@ -1,10 +1,11 @@
 import type { Server as HttpServer } from "node:http";
 import type { RequestHandler } from "express";
-import { Server } from "socket.io";
+import { Server, type Socket } from "socket.io";
 import Redis from "ioredis";
 import { createAdapter } from "@socket.io/redis-adapter";
 import { handleUserConnect, handleUserDisconnect } from "./presence.js";
 import { handleNotificationConnect } from "./notifications.js";
+import { handleEngagementConnect } from "./engagement.js";
 import type { NotificationPushPayload } from "@transcendence/shared";
 
 // Augment IncomingMessage to include session from express-session
@@ -29,10 +30,13 @@ export interface SocketData {
   userId: string;
 }
 
+export type IO = Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
+export type AppSocket = Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
+
 export function createSocketServer(
   httpServer: HttpServer,
   sessionMw: RequestHandler,
-): Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData> {
+): IO {
   const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>(
     httpServer,
     {
@@ -73,6 +77,10 @@ export function createSocketServer(
 
     handleNotificationConnect(io, socket).catch(() => {
       // Notifications are best-effort — don't crash on connect errors
+    });
+
+    handleEngagementConnect(io, socket).catch(() => {
+      // Engagement checks are best-effort — don't crash on connect errors
     });
 
     socket.on("disconnect", () => {

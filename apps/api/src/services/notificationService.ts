@@ -1,14 +1,6 @@
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";
-import type { Server } from "socket.io";
-import type {
-  ClientToServerEvents,
-  ServerToClientEvents,
-  InterServerEvents,
-  SocketData,
-} from "../socket/index.js";
-
-type IO = Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
+import type { IO } from "../socket/index.js";
 
 export async function createNotification(
   userId: string,

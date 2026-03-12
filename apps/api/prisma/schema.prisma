@@ -54,6 +54,7 @@ model User {
   receivedFriendRequests Friendship[] @relation("FriendshipAddressee")
   certificate            Certificate?
   notifications          Notification[]
+  notificationPreferences Json @default("{\"streakReminder\":true,\"reengagement\":true,\"moduleComplete\":true,\"tokenThreshold\":true,\"streakMilestone\":true}")
 
   @@index([createdAt])
 }

@@ -35,3 +35,13 @@ export const notificationPushPayloadSchema = z.object({
   body: z.string(),
   data: z.unknown().nullable(),
 });
+
+export const notificationPreferencesSchema = z.object({
+  streakReminder: z.boolean(),
+  reengagement: z.boolean(),
+  moduleComplete: z.boolean(),
+  tokenThreshold: z.boolean(),
+  streakMilestone: z.boolean(),
+});
+
+export const updateNotificationPreferencesSchema = notificationPreferencesSchema.partial();

@@ -16,6 +16,16 @@ const mockNotificationService = vi.hoisted(() => ({
 
 vi.mock("../services/notificationService.js", () => mockNotificationService);
 
+const mockEngagementService = vi.hoisted(() => ({
+  getUserNotificationPreferences: vi.fn(),
+  updateNotificationPreferences: vi.fn(),
+  checkReengagement: vi.fn(),
+  checkStreakReminders: vi.fn(),
+  shouldSendNotification: vi.fn(),
+}));
+
+vi.mock("../services/engagementService.js", () => mockEngagementService);
+
 vi.mock("../config/database.js", () => ({
   prisma: {},
 }));
@@ -106,6 +116,20 @@ describe("Notifications Routes", () => {
       expect(res.status).toBe(401);
       expect(res.body.error.code).toBe("UNAUTHORIZED");
     });
+
+    it("GET /preferences returns 401 without auth", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).get("/api/v1/notifications/preferences");
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+
+    it("PATCH /preferences returns 401 without auth", async () => {
+      const app = createTestApp(false);
+      const res = await request(app).patch("/api/v1/notifications/preferences");
+      expect(res.status).toBe(401);
+      expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
   });
 
   describe("GET / — list notifications", () => {
@@ -151,6 +175,62 @@ describe("Notifications Routes", () => {
     it("returns 400 for invalid page param", async () => {
       const app = createTestApp(true);
       const res = await request(app).get("/api/v1/notifications?page=0");
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe("GET /preferences — get notification preferences", () => {
+    it("returns user notification preferences", async () => {
+      const prefs = {
+        streakReminder: true,
+        reengagement: true,
+        moduleComplete: true,
+        tokenThreshold: true,
+        streakMilestone: false,
+      };
+      mockEngagementService.getUserNotificationPreferences.mockResolvedValue(prefs);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/notifications/preferences");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toEqual(prefs);
+      expect(mockEngagementService.getUserNotificationPreferences).toHaveBeenCalledWith(
+        TEST_USER_ID,
+      );
+    });
+  });
+
+  describe("PATCH /preferences — update notification preferences", () => {
+    it("updates and returns merged preferences", async () => {
+      const updated = {
+        streakReminder: false,
+        reengagement: true,
+        moduleComplete: true,
+        tokenThreshold: true,
+        streakMilestone: true,
+      };
+      mockEngagementService.updateNotificationPreferences.mockResolvedValue(updated);
+
+      const app = createTestApp(true);
+      const res = await request(app)
+        .patch("/api/v1/notifications/preferences")
+        .send({ streakReminder: false });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data).toEqual(updated);
+      expect(mockEngagementService.updateNotificationPreferences).toHaveBeenCalledWith(
+        TEST_USER_ID,
+        { streakReminder: false },
+      );
+    });
+
+    it("returns 400 for invalid preference key type", async () => {
+      const app = createTestApp(true);
+      const res = await request(app)
+        .patch("/api/v1/notifications/preferences")
+        .send({ streakReminder: "not-a-boolean" });
+
       expect(res.status).toBe(400);
     });
   });

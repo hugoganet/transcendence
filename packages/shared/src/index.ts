@@ -86,6 +86,7 @@ export {
   DEFAULT_PAGE_SIZE,
   MAX_PAGE_SIZE,
 } from "./constants/tokens.js";
+export { STREAK_REMINDER_INTERVAL_MS } from "./constants/scheduler.js";
 export {
   AchievementType,
   ACHIEVEMENT_DEFINITIONS,
@@ -145,12 +146,15 @@ export {
   notificationQuerySchema,
   notificationIdParamSchema,
   notificationPushPayloadSchema,
+  notificationPreferencesSchema,
+  updateNotificationPreferencesSchema,
 } from "./schemas/notification.js";
 export type {
   NotificationType,
   Notification,
   NotificationQuery,
   NotificationPushPayload,
+  NotificationPreferences,
 } from "./types/notification.js";
 export type {
   ExerciseType,

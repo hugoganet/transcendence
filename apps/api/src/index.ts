@@ -4,6 +4,7 @@ import { prisma, prismaPool } from "./config/database.js";
 import { disconnectRedis } from "./config/redis.js";
 import { sessionRedisClient, disconnectSessionRedis, sessionMiddleware } from "./config/session.js";
 import { createSocketServer } from "./socket/index.js";
+import { startStreakReminderScheduler, stopStreakReminderScheduler } from "./scheduler/streakReminder.js";
 import { initializeContent } from "./utils/contentLoader.js";
 
 // Load and validate curriculum content before anything else (synchronous, blocking)
@@ -34,6 +35,7 @@ export { io };
 // AFTER consumers and BEFORE databases.
 function gracefulShutdown(signal: string) {
   console.log(`Received ${signal}. Shutting down...`);
+  stopStreakReminderScheduler();
   httpServer.close(() => {
     io.close()
       .then(() => disconnectSessionRedis())
@@ -57,4 +59,5 @@ await sessionRedisClient.connect();
 
 httpServer.listen(Number(PORT), "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
+  startStreakReminderScheduler(io);
 });
