@@ -48,6 +48,7 @@ import { createMockContent } from "../__fixtures__/curriculum.js";
 const setupContent = createMockContent(mockGetContent);
 
 beforeEach(() => {
+  vi.restoreAllMocks();
   vi.clearAllMocks();
   setupContent();
   setupCompleteMissionDefaults(mockPrisma);
@@ -240,8 +241,8 @@ describe("getMissionDetail", () => {
   });
 
   it("falls back to 'en' locale when requested locale unavailable", async () => {
-    const result = await getMissionDetail("user-1", "1.1.1", "fr");
-    // Should fall back to English content
+    // 'de' is not in fixture → falls back to English
+    const result = await getMissionDetail("user-1", "1.1.1", "de");
     expect(result.title).toBe("Who Do You Trust?");
   });
 
@@ -485,7 +486,14 @@ describe("completeMission", () => {
 });
 
 describe("getResumePoint", () => {
-  it("new user (no progress): returns mission 1.1.1", async () => {
+  beforeEach(() => {
+    // Default: user has no lastMissionCompletedAt → no refresher
+    mockPrisma.user.findUnique.mockResolvedValue({
+      lastMissionCompletedAt: null,
+    });
+  });
+
+  it("new user (no progress): returns mission 1.1.1 with refresher null", async () => {
     mockPrisma.userProgress.findFirst.mockResolvedValue(null);
     mockPrisma.userProgress.count.mockResolvedValue(0);
 
@@ -496,6 +504,7 @@ describe("getResumePoint", () => {
     expect(result!.chapterId).toBe("1.1");
     expect(result!.categoryId).toBe("1");
     expect(result!.completionPercentage).toBe(0);
+    expect(result!.refresher).toBeNull();
   });
 
   it("user with some progress: returns next mission after last completed", async () => {
@@ -510,6 +519,7 @@ describe("getResumePoint", () => {
     expect(result).not.toBeNull();
     expect(result!.missionId).toBe("1.1.2");
     expect(result!.missionTitle).toBe("What Could Go Wrong?");
+    expect(result!.refresher).toBeNull();
   });
 
   it("user who completed everything: returns null", async () => {
@@ -528,11 +538,97 @@ describe("getResumePoint", () => {
     mockPrisma.userProgress.findFirst.mockResolvedValue(null);
     mockPrisma.userProgress.count.mockResolvedValue(0);
 
-    // Default fixture only has 'en', so 'fr' falls back to 'en'
     const result = await getResumePoint("user-1", "fr");
 
     expect(result).not.toBeNull();
-    expect(result!.missionTitle).toBe("Who Do You Trust?");
+    expect(result!.missionTitle).toBe("En qui avez-vous confiance ?");
+  });
+
+  it("returns refresher when user inactive 7+ days", async () => {
+    vi.spyOn(Math, "random").mockReturnValue(0);
+
+    // Resume: user has some progress
+    mockPrisma.userProgress.findFirst.mockResolvedValue({
+      missionId: "1.1.1",
+      completedAt: new Date("2026-02-25"),
+    });
+    mockPrisma.userProgress.count.mockResolvedValue(1);
+
+    // buildRefresher: user inactive 10 days
+    mockPrisma.user.findUnique.mockResolvedValue({
+      lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+    });
+
+    // buildRefresher: completed missions in chapter
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1" },
+    ]);
+
+    const result = await getResumePoint("user-1", "en");
+
+    expect(result).not.toBeNull();
+    expect(result!.refresher).not.toBeNull();
+    expect(result!.refresher!.missionId).toBe("1.1.1");
+    expect(result!.refresher!.missionTitle).toBe("Who Do You Trust?");
+    expect(result!.refresher!.chapterTitle).toBe("Chapter 1.1");
+    expect(result!.refresher!.exerciseType).toBe("SI");
+    expect(result!.refresher!.exerciseContent).toBeDefined();
+  });
+
+  it("returns refresher null when user active within 7 days", async () => {
+    mockPrisma.userProgress.findFirst.mockResolvedValue({
+      missionId: "1.1.1",
+      completedAt: new Date("2026-03-10"),
+    });
+    mockPrisma.userProgress.count.mockResolvedValue(1);
+
+    // User active 3 days ago
+    mockPrisma.user.findUnique.mockResolvedValue({
+      lastMissionCompletedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+    });
+
+    const result = await getResumePoint("user-1", "en");
+
+    expect(result).not.toBeNull();
+    expect(result!.refresher).toBeNull();
+  });
+
+  it("returns refresher with locale-aware content when locale is 'fr'", async () => {
+    vi.spyOn(Math, "random").mockReturnValue(0);
+
+    mockPrisma.userProgress.findFirst.mockResolvedValue({
+      missionId: "1.1.1",
+      completedAt: new Date("2026-02-25"),
+    });
+    mockPrisma.userProgress.count.mockResolvedValue(1);
+
+    mockPrisma.user.findUnique.mockResolvedValue({
+      lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+    });
+
+    mockPrisma.userProgress.findMany.mockResolvedValue([
+      { missionId: "1.1.1" },
+    ]);
+
+    const result = await getResumePoint("user-1", "fr");
+
+    expect(result).not.toBeNull();
+    expect(result!.refresher).not.toBeNull();
+    expect(result!.refresher!.missionTitle).toBe("En qui avez-vous confiance ?");
+    expect(result!.refresher!.chapterTitle).toBe("Chapitre 1.1");
+  });
+
+  it("returns refresher null for new user with no completed missions", async () => {
+    mockPrisma.userProgress.findFirst.mockResolvedValue(null);
+    mockPrisma.userProgress.count.mockResolvedValue(0);
+    mockPrisma.user.findUnique.mockResolvedValue({
+      lastMissionCompletedAt: null,
+    });
+
+    const result = await getResumePoint("user-1", "en");
+
+    expect(result).not.toBeNull();
+    expect(result!.refresher).toBeNull();
   });
 });
 
@@ -598,7 +694,8 @@ describe("getLearningChain", () => {
       { missionId: "1.1.1", completedAt: new Date("2026-03-01T10:00:00Z") },
     ]);
 
-    const result = await getLearningChain("user-1", "fr");
+    // 'de' is not in fixture → falls back to English
+    const result = await getLearningChain("user-1", "de");
 
     expect(result.blocks[0].missionTitle).toBe("Who Do You Trust?");
   });

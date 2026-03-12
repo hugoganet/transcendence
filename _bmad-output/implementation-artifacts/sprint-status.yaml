@@ -107,7 +107,7 @@ development_status:
   epic-7: in-progress
   7-1-notification-system-api-and-socket-io-push: done
   7-2-re-engagement-and-streak-reminder-logic: done
-  7-3-concept-refresher-api: backlog
+  7-3-concept-refresher-api: done
   7-4-engagement-frontend-notifications-welcomeback-and-refresher: backlog
   epic-7-retrospective: optional
 

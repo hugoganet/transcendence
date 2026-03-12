@@ -12,6 +12,7 @@ import type {
   MissionProgressOverlay,
   CompleteMissionResponse,
   ResumeResponse,
+  RefresherExercise,
   ChainBlock,
   LearningChainResponse,
 } from "@transcendence/shared";
@@ -578,6 +579,79 @@ export async function getLearningChain(
   };
 }
 
+const REFRESHER_THRESHOLD_DAYS = 7;
+
+/**
+ * Build a concept refresher exercise for users returning after 7+ days.
+ * Returns null if user was recently active or has no completed missions.
+ * Best-effort: never throws — returns null on any failure.
+ */
+async function buildRefresher(
+  userId: string,
+  locale: string,
+  lastCompleted: { missionId: string } | null,
+): Promise<RefresherExercise | null> {
+  if (!lastCompleted) return null;
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { lastMissionCompletedAt: true },
+  });
+
+  if (!user?.lastMissionCompletedAt) return null;
+
+  const daysSinceLastMission = Math.floor(
+    (Date.now() - user.lastMissionCompletedAt.getTime()) / (1000 * 60 * 60 * 24),
+  );
+
+  if (daysSinceLastMission < REFRESHER_THRESHOLD_DAYS) return null;
+
+  const content = getContent();
+  const curriculum = content.curriculum;
+  const found = findMissionInCurriculum(curriculum, lastCompleted.missionId);
+  if (!found) return null;
+
+  const { catIdx, chapIdx } = found;
+  const chapter = curriculum[catIdx].chapters[chapIdx];
+
+  const chapterMissionIds = chapter.missions.map((m) => m.id);
+  const completedInChapter = await prisma.userProgress.findMany({
+    where: {
+      userId,
+      missionId: { in: chapterMissionIds },
+      status: "COMPLETED",
+    },
+    select: { missionId: true },
+  });
+
+  if (completedInChapter.length === 0) return null;
+
+  const randomIndex = Math.floor(Math.random() * completedInChapter.length);
+  const refresherMissionId = completedInChapter[randomIndex].missionId;
+
+  let missionsContent = content.missions.get(locale);
+  if (!missionsContent) {
+    missionsContent = content.missions.get("en");
+  }
+
+  const missionContent = missionsContent?.[refresherMissionId];
+  if (!missionContent) return null;
+
+  const refresherMission = chapter.missions.find((m) => m.id === refresherMissionId);
+  if (!refresherMission) return null;
+
+  const uiStrings = content.uiStrings.get(locale) ?? content.uiStrings.get("en");
+  const chapterTitle = uiStrings?.chapters[chapter.name] ?? chapter.name;
+
+  return {
+    missionId: refresherMissionId,
+    missionTitle: missionContent.title,
+    chapterTitle,
+    exerciseType: refresherMission.exerciseType,
+    exerciseContent: missionContent.exerciseContent as Record<string, unknown>,
+  };
+}
+
 export async function getResumePoint(
   userId: string,
   locale: string,
@@ -638,6 +712,8 @@ export async function getResumePoint(
       ? Math.round((totalCompleted / totalMissions) * 1000) / 10
       : 0;
 
+  const refresher = await buildRefresher(userId, locale, lastCompleted);
+
   return {
     missionId: resumeMissionId,
     missionTitle,
@@ -645,5 +721,6 @@ export async function getResumePoint(
     chapterTitle,
     categoryId: category.id,
     completionPercentage,
+    refresher,
   };
 }

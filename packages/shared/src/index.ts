@@ -62,6 +62,7 @@ export type {
   MissionDetailResponse,
   CompleteMissionBody,
   CompleteMissionResponse,
+  RefresherExercise,
   ResumeResponse,
   ChainBlock,
   LearningChainResponse,

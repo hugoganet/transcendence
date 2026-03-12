@@ -5,6 +5,7 @@ import type {
   categoryStatusSchema,
   completeMissionBodySchema,
 } from "../schemas/progress.js";
+import type { ExerciseType } from "./curriculum.js";
 
 export type MissionStatusValue = z.infer<typeof missionStatusSchema>;
 export type ChapterStatusValue = z.infer<typeof chapterStatusSchema>;
@@ -64,6 +65,14 @@ export interface CompleteMissionResponse {
   certificateGenerated: boolean;
 }
 
+export interface RefresherExercise {
+  missionId: string;
+  missionTitle: string;
+  chapterTitle: string;
+  exerciseType: ExerciseType;
+  exerciseContent: Record<string, unknown>;
+}
+
 export interface ResumeResponse {
   missionId: string;
   missionTitle: string;
@@ -71,6 +80,7 @@ export interface ResumeResponse {
   chapterTitle: string;
   categoryId: string;
   completionPercentage: number;
+  refresher: RefresherExercise | null;
 }
 
 export interface ChainBlock {

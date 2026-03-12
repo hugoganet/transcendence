@@ -132,6 +132,7 @@ function createTestApp(authenticated = false, user = mockUser) {
 }
 
 beforeEach(() => {
+  vi.restoreAllMocks();
   vi.clearAllMocks();
   setupContent();
   setupCompleteMissionDefaults(mockPrisma);
@@ -394,7 +395,14 @@ describe("Curriculum Routes", () => {
   });
 
   describe("GET /api/v1/curriculum/resume", () => {
-    it("returns 200 with first mission for new user", async () => {
+    beforeEach(() => {
+      // Default: no lastMissionCompletedAt → no refresher
+      mockPrisma.user.findUnique.mockResolvedValue({
+        lastMissionCompletedAt: null,
+      });
+    });
+
+    it("returns 200 with first mission for new user with refresher null", async () => {
       const app = createTestApp(true);
       const res = await request(app).get("/api/v1/curriculum/resume");
 
@@ -402,6 +410,7 @@ describe("Curriculum Routes", () => {
       expect(res.body.data.missionId).toBe("1.1.1");
       expect(res.body.data.chapterId).toBe("1.1");
       expect(res.body.data.categoryId).toBe("1");
+      expect(res.body.data.refresher).toBeNull();
     });
 
     it("returns 200 with next mission for user with progress", async () => {
@@ -416,6 +425,7 @@ describe("Curriculum Routes", () => {
 
       expect(res.status).toBe(200);
       expect(res.body.data.missionId).toBe("1.1.2");
+      expect(res.body.data.refresher).toBeNull();
     });
 
     it("returns 200 with null data when curriculum complete", async () => {
@@ -438,6 +448,47 @@ describe("Curriculum Routes", () => {
 
       expect(res.status).toBe(401);
       expect(res.body.error.code).toBe("UNAUTHORIZED");
+    });
+
+    it("returns refresher when user inactive 7+ days", async () => {
+      vi.spyOn(Math, "random").mockReturnValue(0);
+
+      mockPrisma.userProgress.findFirst.mockResolvedValue({
+        missionId: "1.1.1",
+        completedAt: new Date("2026-02-25"),
+      });
+      mockPrisma.userProgress.count.mockResolvedValue(1);
+      mockPrisma.user.findUnique.mockResolvedValue({
+        lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+      });
+      mockPrisma.userProgress.findMany.mockResolvedValue([
+        { missionId: "1.1.1" },
+      ]);
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/curriculum/resume");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.refresher).not.toBeNull();
+      expect(res.body.data.refresher.missionId).toBe("1.1.1");
+      expect(res.body.data.refresher.exerciseType).toBe("SI");
+    });
+
+    it("returns refresher null when user active within 7 days", async () => {
+      mockPrisma.userProgress.findFirst.mockResolvedValue({
+        missionId: "1.1.1",
+        completedAt: new Date("2026-03-10"),
+      });
+      mockPrisma.userProgress.count.mockResolvedValue(1);
+      mockPrisma.user.findUnique.mockResolvedValue({
+        lastMissionCompletedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
+      });
+
+      const app = createTestApp(true);
+      const res = await request(app).get("/api/v1/curriculum/resume");
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.refresher).toBeNull();
     });
   });
 });

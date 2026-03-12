@@ -99,10 +99,32 @@ export const missionContentMap: Record<string, unknown> = {
   },
 };
 
+export const missionContentMapFr: Record<string, unknown> = {
+  "1.1.1": {
+    title: "En qui avez-vous confiance ?",
+    description: "Explorer la confiance dans les transactions",
+    learningObjective: "Comprendre les intermédiaires",
+    exerciseContent: { scenario: "test-fr", question: "test-fr?", options: [] },
+  },
+  "1.1.2": {
+    title: "Qu'est-ce qui pourrait mal tourner ?",
+    description: "Explorer les défaillances",
+    learningObjective: "Comprendre les points de défaillance uniques",
+    exerciseContent: { scenario: "test2-fr", question: "test2-fr?", options: [] },
+  },
+  "2.1.1": {
+    title: "Votre premier jeton",
+    description: "Apprendre les jetons numériques",
+    learningObjective: "Comprendre les bases des jetons",
+    exerciseContent: { items: [], zones: [] },
+  },
+};
+
 export function createMockContent(mockGetContent: ReturnType<typeof vi.fn>) {
   return function setupContent() {
     const missionsMap = new Map();
     missionsMap.set("en", missionContentMap);
+    missionsMap.set("fr", missionContentMapFr);
     const tooltipsMap = new Map();
     tooltipsMap.set("en", {
       blockchain: { term: "blockchain", definition: "A chain of blocks" },
@@ -110,7 +132,12 @@ export function createMockContent(mockGetContent: ReturnType<typeof vi.fn>) {
     const uiStringsMap = new Map();
     uiStringsMap.set("en", {
       categories: { cat1: "Category One", cat2: "Category Two" },
-      chapters: {},
+      chapters: { "ch1.1": "Chapter 1.1", "ch2.1": "Chapter 2.1" },
+      exerciseTypes: {},
+    });
+    uiStringsMap.set("fr", {
+      categories: { cat1: "Catégorie Un", cat2: "Catégorie Deux" },
+      chapters: { "ch1.1": "Chapitre 1.1", "ch2.1": "Chapitre 2.1" },
       exerciseTypes: {},
     });
 
