@@ -19,14 +19,18 @@ function escapeHtml(str: string): string {
     .replace(/>/g, "&gt;");
 }
 
-export async function sendPasswordResetEmail(
+// --- Shared helpers (private) ---
+
+async function sendEmail(
   to: string,
-  resetLink: string,
+  subject: string,
+  html: string,
+  text: string,
 ): Promise<void> {
   const client = getResendClient();
   if (!client) {
     console.warn(
-      "[emailService] RESEND_API_KEY not configured — skipping password reset email",
+      `[emailService] RESEND_API_KEY not configured — skipping ${subject}`,
     );
     return;
   }
@@ -36,148 +40,109 @@ export async function sendPasswordResetEmail(
   const { error } = await client.emails.send({
     from: fromEmail,
     to,
-    subject: "Reset Your Password",
-    html: buildPasswordResetHtml(resetLink),
-    text: buildPasswordResetText(resetLink),
+    subject,
+    html,
+    text,
   });
 
   if (error) {
-    console.error("[emailService] Failed to send password reset email:", error);
+    console.error(`[emailService] Failed to send "${subject}":`, error);
   }
 }
 
-function buildPasswordResetHtml(resetLink: string): string {
+function buildEmailWrapper(title: string, contentHtml: string): string {
   return `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
 <body style="font-family: 'Source Sans 3', Arial, sans-serif; background: #FAF8F5; padding: 40px 0;">
   <div style="max-width: 480px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-    <h1 style="color: #2B2522; font-size: 24px; margin: 0 0 16px;">Reset Your Password</h1>
-    <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
-      You requested a password reset. Click the button below to choose a new password.
-    </p>
-    <a href="${escapeHtml(resetLink)}" style="display: inline-block; background: #2B9E9E; color: #FFFFFF; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;">
-      Reset Password
-    </a>
-    <p style="color: #8A817A; font-size: 14px; line-height: 1.5; margin: 24px 0 0;">
-      This link expires in 1 hour. If you didn't request this, you can safely ignore this email.
-    </p>
+    <h1 style="color: #2B2522; font-size: 24px; margin: 0 0 16px;">${escapeHtml(title)}</h1>
+    ${contentHtml}
   </div>
 </body>
 </html>`;
+}
+
+function buildCtaButton(
+  href: string,
+  label: string,
+  color: string = "#2B9E9E",
+): string {
+  return `<a href="${escapeHtml(href)}" style="display: inline-block; background: ${escapeHtml(color)}; color: #FFFFFF; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;">
+      ${escapeHtml(label)}
+    </a>`;
+}
+
+// --- Public email functions ---
+
+export async function sendPasswordResetEmail(
+  to: string,
+  resetLink: string,
+): Promise<void> {
+  const subject = "Reset Your Password";
+
+  const contentHtml = `
+    <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
+      You requested a password reset. Click the button below to choose a new password.
+    </p>
+    ${buildCtaButton(resetLink, "Reset Password")}
+    <p style="color: #8A817A; font-size: 14px; line-height: 1.5; margin: 24px 0 0;">
+      This link expires in 1 hour. If you didn't request this, you can safely ignore this email.
+    </p>`;
+
+  const text = `Reset Your Password
+
+You requested a password reset. Visit the link below to choose a new password:
+
+${resetLink}
+
+This link expires in 1 hour. If you didn't request this, you can safely ignore this email.`;
+
+  await sendEmail(to, subject, buildEmailWrapper(subject, contentHtml), text);
 }
 
 export async function sendGdprExportEmail(
   to: string,
   downloadLink: string,
 ): Promise<void> {
-  const client = getResendClient();
-  if (!client) {
-    console.warn(
-      "[emailService] RESEND_API_KEY not configured — skipping GDPR export email",
-    );
-    return;
-  }
+  const subject = "Your Data Export Is Ready";
 
-  const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-
-  const { error } = await client.emails.send({
-    from: fromEmail,
-    to,
-    subject: "Your Data Export Is Ready",
-    html: buildGdprExportHtml(downloadLink),
-    text: buildGdprExportText(downloadLink),
-  });
-
-  if (error) {
-    console.error("[emailService] Failed to send GDPR export email:", error);
-  }
-}
-
-export async function sendGdprDeletionConfirmEmail(
-  to: string,
-  confirmLink: string,
-): Promise<void> {
-  const client = getResendClient();
-  if (!client) {
-    console.warn(
-      "[emailService] RESEND_API_KEY not configured — skipping GDPR deletion confirmation email",
-    );
-    return;
-  }
-
-  const fromEmail = process.env.RESEND_FROM_EMAIL || "onboarding@resend.dev";
-
-  const { error } = await client.emails.send({
-    from: fromEmail,
-    to,
-    subject: "Confirm Account Deletion",
-    html: buildGdprDeletionConfirmHtml(confirmLink),
-    text: buildGdprDeletionConfirmText(confirmLink),
-  });
-
-  if (error) {
-    console.error(
-      "[emailService] Failed to send GDPR deletion confirmation email:",
-      error,
-    );
-  }
-}
-
-function buildGdprExportHtml(downloadLink: string): string {
-  return `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="font-family: 'Source Sans 3', Arial, sans-serif; background: #FAF8F5; padding: 40px 0;">
-  <div style="max-width: 480px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-    <h1 style="color: #2B2522; font-size: 24px; margin: 0 0 16px;">Your Data Export Is Ready</h1>
+  const contentHtml = `
     <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
       You requested an export of your personal data. Click the button below to download your data as a JSON file.
     </p>
-    <a href="${escapeHtml(downloadLink)}" style="display: inline-block; background: #2B9E9E; color: #FFFFFF; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;">
-      Download Your Data
-    </a>
+    ${buildCtaButton(downloadLink, "Download Your Data")}
     <p style="color: #8A817A; font-size: 14px; line-height: 1.5; margin: 24px 0 0;">
       This link expires in 24 hours and can only be used once. If you didn't request this, you can safely ignore this email.
-    </p>
-  </div>
-</body>
-</html>`;
-}
+    </p>`;
 
-function buildGdprExportText(downloadLink: string): string {
-  return `Your Data Export Is Ready
+  const text = `Your Data Export Is Ready
 
 You requested an export of your personal data. Visit the link below to download your data:
 
 ${downloadLink}
 
 This link expires in 24 hours and can only be used once. If you didn't request this, you can safely ignore this email.`;
+
+  await sendEmail(to, subject, buildEmailWrapper(subject, contentHtml), text);
 }
 
-function buildGdprDeletionConfirmHtml(confirmLink: string): string {
-  return `<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="font-family: 'Source Sans 3', Arial, sans-serif; background: #FAF8F5; padding: 40px 0;">
-  <div style="max-width: 480px; margin: 0 auto; background: #FFFFFF; border-radius: 12px; padding: 40px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);">
-    <h1 style="color: #2B2522; font-size: 24px; margin: 0 0 16px;">Confirm Account Deletion</h1>
+export async function sendGdprDeletionConfirmEmail(
+  to: string,
+  confirmLink: string,
+): Promise<void> {
+  const subject = "Confirm Account Deletion";
+
+  const contentHtml = `
     <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
       You requested to delete your account and all personal data. This action is permanent and cannot be undone.
     </p>
-    <a href="${escapeHtml(confirmLink)}" style="display: inline-block; background: #D44D4D; color: #FFFFFF; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px; font-weight: 600;">
-      Confirm Deletion
-    </a>
+    ${buildCtaButton(confirmLink, "Confirm Deletion", "#D44D4D")}
     <p style="color: #8A817A; font-size: 14px; line-height: 1.5; margin: 24px 0 0;">
       This link expires in 24 hours. If you didn't request this, you can safely ignore this email — your account will not be deleted.
-    </p>
-  </div>
-</body>
-</html>`;
-}
+    </p>`;
 
-function buildGdprDeletionConfirmText(confirmLink: string): string {
-  return `Confirm Account Deletion
+  const text = `Confirm Account Deletion
 
 You requested to delete your account and all personal data. This action is permanent and cannot be undone.
 
@@ -186,14 +151,41 @@ Visit the link below to confirm deletion:
 ${confirmLink}
 
 This link expires in 24 hours. If you didn't request this, you can safely ignore this email — your account will not be deleted.`;
+
+  await sendEmail(to, subject, buildEmailWrapper(subject, contentHtml), text);
 }
 
-function buildPasswordResetText(resetLink: string): string {
-  return `Reset Your Password
+export async function sendReEngagementEmail(
+  to: string,
+  displayName: string | null,
+  stats: {
+    totalMissions: number;
+    totalChapters: number;
+    daysSinceLastMission: number;
+  },
+  resumeLink: string,
+): Promise<void> {
+  const greeting = displayName
+    ? `Welcome back, ${displayName}!`
+    : "Welcome back!";
+  const subject = "Your learning journey awaits";
 
-You requested a password reset. Visit the link below to choose a new password:
+  const contentHtml = `
+    <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
+      ${escapeHtml(greeting)} You've completed ${stats.totalMissions} mission${stats.totalMissions !== 1 ? "s" : ""} and mastered ${stats.totalChapters} chapter${stats.totalChapters !== 1 ? "s" : ""}. Your progress is still here — pick up where you left off!
+    </p>
+    ${buildCtaButton(resumeLink, "Continue Learning")}
+    <p style="color: #8A817A; font-size: 14px; line-height: 1.5; margin: 24px 0 0;">
+      Not interested? You can manage your notification preferences in settings.
+    </p>`;
 
-${resetLink}
+  const text = `${greeting}
 
-This link expires in 1 hour. If you didn't request this, you can safely ignore this email.`;
+You've completed ${stats.totalMissions} mission${stats.totalMissions !== 1 ? "s" : ""} and mastered ${stats.totalChapters} chapter${stats.totalChapters !== 1 ? "s" : ""}. Your progress is still here — pick up where you left off!
+
+${resumeLink}
+
+Not interested? Manage your notification preferences in settings.`;
+
+  await sendEmail(to, subject, buildEmailWrapper(subject, contentHtml), text);
 }

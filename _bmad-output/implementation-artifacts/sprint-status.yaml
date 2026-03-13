@@ -115,7 +115,7 @@ development_status:
   epic-8: in-progress
   8-1-i18n-infrastructure-and-language-switching: backlog
   8-2-gdpr-data-export-and-deletion-api: done
-  8-3-email-service-integration: backlog
+  8-3-email-service-integration: done
   8-4-design-system-component-library: backlog
   8-5-cross-browser-testing-and-keyboard-navigation: backlog
   8-6-gdpr-and-settings-frontend: backlog

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, beforeEach, afterEach, afterAll } from "vitest";
+import { describe, it, expect, vi, beforeAll, beforeEach, afterEach, afterAll } from "vitest";
 import { createServer, type Server as HttpServer } from "node:http";
 import type { AddressInfo } from "node:net";
 import { io as ioc, type Socket as ClientSocket } from "socket.io-client";
@@ -9,6 +9,7 @@ import { resetDatabase } from "./helpers/db.js";
 import { sessionMiddleware } from "../../config/session.js";
 import { createSocketServer } from "../../socket/index.js";
 import { clearAllDisconnectTimers } from "../../socket/presence.js";
+import * as emailService from "../../services/emailService.js";
 
 let httpServer: HttpServer;
 let ioServer: ReturnType<typeof createSocketServer>;
@@ -251,6 +252,76 @@ describe("Engagement Integration", () => {
       expect(notifs).toHaveLength(1);
       expect(notifs[0].title).toBe("Keep your streak alive!");
       expect(notifs[0].body).toContain("5-day streak");
+    });
+  });
+
+  describe("Re-engagement email for disconnected users (AC #2 email)", () => {
+    it("sends re-engagement email when user is inactive 7+ days and not connected", async () => {
+      const sendEmailSpy = vi.spyOn(emailService, "sendReEngagementEmail").mockResolvedValue();
+
+      const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { lastMissionCompletedAt: tenDaysAgo },
+      });
+      await prisma.userProgress.create({
+        data: { userId: user.id, missionId: "1.1.1", status: "COMPLETED", completedAt: tenDaysAgo },
+      });
+
+      // Call checkReengagement directly WITHOUT the user being connected via Socket.IO
+      const { checkReengagement } = await import("../../services/engagementService.js");
+      await checkReengagement(ioServer, user.id);
+
+      // User is not connected, so email should be sent
+      expect(sendEmailSpy).toHaveBeenCalledWith(
+        "engage-user@example.com",
+        expect.any(String),
+        expect.objectContaining({
+          totalMissions: 1,
+          totalChapters: 0,
+        }),
+        expect.stringContaining("/curriculum"),
+      );
+
+      // In-app notification should also be created
+      const notifs = await prisma.notification.findMany({
+        where: { userId: user.id, type: "REENGAGEMENT" },
+      });
+      expect(notifs).toHaveLength(1);
+
+      sendEmailSpy.mockRestore();
+    });
+
+    it("does NOT send re-engagement email when user is connected via Socket.IO", async () => {
+      const sendEmailSpy = vi.spyOn(emailService, "sendReEngagementEmail").mockResolvedValue();
+
+      const tenDaysAgo = new Date(Date.now() - 10 * 24 * 60 * 60 * 1000);
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { lastMissionCompletedAt: tenDaysAgo },
+      });
+      await prisma.userProgress.create({
+        data: { userId: user.id, missionId: "1.1.1", status: "COMPLETED", completedAt: tenDaysAgo },
+      });
+
+      // Connect user via Socket.IO first
+      const client = createSocketClient(user.cookie);
+      clients.push(client);
+      await waitForEvent(client, "connect");
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      // Clear the notification and dedup record created on initial connect
+      await prisma.notification.deleteMany({ where: { userId: user.id, type: "REENGAGEMENT" } });
+      sendEmailSpy.mockClear();
+
+      // Actually call checkReengagement while user IS connected
+      const { checkReengagement } = await import("../../services/engagementService.js");
+      await checkReengagement(ioServer, user.id);
+
+      // User is connected via Socket.IO, so email should NOT be sent
+      expect(sendEmailSpy).not.toHaveBeenCalled();
+
+      sendEmailSpy.mockRestore();
     });
   });
 

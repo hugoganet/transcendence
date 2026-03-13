@@ -5,6 +5,7 @@ import { disconnectRedis } from "./config/redis.js";
 import { sessionRedisClient, disconnectSessionRedis, sessionMiddleware } from "./config/session.js";
 import { createSocketServer } from "./socket/index.js";
 import { startStreakReminderScheduler, stopStreakReminderScheduler } from "./scheduler/streakReminder.js";
+import { startReengagementScheduler, stopReengagementScheduler } from "./scheduler/reengagement.js";
 import { initializeContent } from "./utils/contentLoader.js";
 
 // Load and validate curriculum content before anything else (synchronous, blocking)
@@ -36,6 +37,7 @@ export { io };
 function gracefulShutdown(signal: string) {
   console.log(`Received ${signal}. Shutting down...`);
   stopStreakReminderScheduler();
+  stopReengagementScheduler();
   httpServer.close(() => {
     io.close()
       .then(() => disconnectSessionRedis())
@@ -60,4 +62,5 @@ await sessionRedisClient.connect();
 httpServer.listen(Number(PORT), "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
   startStreakReminderScheduler(io);
+  startReengagementScheduler(io);
 });

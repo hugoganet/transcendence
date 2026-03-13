@@ -1,5 +1,6 @@
 import { prisma } from "../config/database.js";
 import { createAndPushNotification } from "./notificationService.js";
+import { sendReEngagementEmail } from "./emailService.js";
 import { notificationPreferencesSchema } from "@transcendence/shared";
 import type { IO } from "../socket/index.js";
 import type { NotificationPreferences } from "@transcendence/shared";
@@ -23,6 +24,7 @@ export async function checkReengagement(io: IO, userId: string): Promise<void> {
     select: {
       lastMissionCompletedAt: true,
       displayName: true,
+      email: true,
     },
   });
 
@@ -59,6 +61,45 @@ export async function checkReengagement(io: IO, userId: string): Promise<void> {
     totalMissionsCompleted: totalMissions,
     totalChaptersCompleted: completedChapters,
   });
+
+  // Send re-engagement email to disconnected users (connected users already get in-app notification).
+  // When called from Socket.IO connect handler, user IS connected → email skipped.
+  // When called from the daily reengagement scheduler, offline users get the email.
+  const sockets = await io.in(`user:${userId}`).fetchSockets();
+  if (sockets.length === 0 && user.email) {
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+    const resumeLink = `${frontendUrl}/curriculum`;
+    await sendReEngagementEmail(user.email, user.displayName, {
+      totalMissions,
+      totalChapters: completedChapters,
+      daysSinceLastMission,
+    }, resumeLink);
+  }
+}
+
+export async function checkAllReengagements(io: IO): Promise<number> {
+  const thresholdDate = new Date(
+    Date.now() - REENGAGEMENT_THRESHOLD_DAYS * 24 * 60 * 60 * 1000,
+  );
+
+  const inactiveUsers = await prisma.user.findMany({
+    where: {
+      lastMissionCompletedAt: {
+        lt: thresholdDate,
+        not: null,
+      },
+    },
+    select: { id: true },
+  });
+
+  let checkedCount = 0;
+
+  for (const user of inactiveUsers) {
+    await checkReengagement(io, user.id);
+    checkedCount++;
+  }
+
+  return checkedCount;
 }
 
 export async function checkStreakReminders(io: IO): Promise<number> {

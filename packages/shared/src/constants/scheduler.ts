@@ -1,1 +1,2 @@
 export const STREAK_REMINDER_INTERVAL_MS = 3_600_000; // 1 hour
+export const REENGAGEMENT_CHECK_INTERVAL_MS = 86_400_000; // 24 hours

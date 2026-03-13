@@ -30,8 +30,15 @@ const mockNotificationService = vi.hoisted(() => ({
 
 vi.mock("./notificationService.js", () => mockNotificationService);
 
+const mockEmailService = vi.hoisted(() => ({
+  sendReEngagementEmail: vi.fn(),
+}));
+
+vi.mock("./emailService.js", () => mockEmailService);
+
 const {
   checkReengagement,
+  checkAllReengagements,
   checkStreakReminders,
   getUserNotificationPreferences,
   updateNotificationPreferences,
@@ -63,12 +70,14 @@ describe("engagementService", () => {
         .mockResolvedValueOnce({
           lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
           displayName: "TestUser",
+          email: "testuser@example.com",
         });
 
       mockPrisma.notification.findFirst.mockResolvedValue(null);
       mockPrisma.userProgress.count.mockResolvedValue(5);
       mockPrisma.chapterProgress.count.mockResolvedValue(2);
       mockNotificationService.createAndPushNotification.mockResolvedValue({});
+      mockFetchSockets.mockResolvedValue([{ id: "socket-1" }]); // user is connected
 
       await checkReengagement(mockIo, TEST_USER_ID);
 
@@ -100,6 +109,7 @@ describe("engagementService", () => {
         .mockResolvedValueOnce({
           lastMissionCompletedAt: null,
           displayName: "TestUser",
+          email: "testuser@example.com",
         });
 
       await checkReengagement(mockIo, TEST_USER_ID);
@@ -115,6 +125,7 @@ describe("engagementService", () => {
         .mockResolvedValueOnce({
           lastMissionCompletedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
           displayName: "TestUser",
+          email: "testuser@example.com",
         });
 
       await checkReengagement(mockIo, TEST_USER_ID);
@@ -130,6 +141,7 @@ describe("engagementService", () => {
         .mockResolvedValueOnce({
           lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
           displayName: "TestUser",
+          email: "testuser@example.com",
         });
 
       mockPrisma.notification.findFirst.mockResolvedValue({ id: "existing-notif" });
@@ -137,6 +149,145 @@ describe("engagementService", () => {
       await checkReengagement(mockIo, TEST_USER_ID);
 
       expect(mockNotificationService.createAndPushNotification).not.toHaveBeenCalled();
+    });
+
+    it("sends re-engagement email to disconnected users", async () => {
+      mockPrisma.user.findUniqueOrThrow
+        .mockResolvedValueOnce({
+          notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
+        })
+        .mockResolvedValueOnce({
+          lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+          displayName: "OfflineUser",
+          email: "offline@example.com",
+        });
+
+      mockPrisma.notification.findFirst.mockResolvedValue(null);
+      mockPrisma.userProgress.count.mockResolvedValue(3);
+      mockPrisma.chapterProgress.count.mockResolvedValue(1);
+      mockNotificationService.createAndPushNotification.mockResolvedValue({});
+      mockFetchSockets.mockResolvedValue([]); // user is NOT connected
+
+      await checkReengagement(mockIo, TEST_USER_ID);
+
+      expect(mockEmailService.sendReEngagementEmail).toHaveBeenCalledWith(
+        "offline@example.com",
+        "OfflineUser",
+        expect.objectContaining({
+          totalMissions: 3,
+          totalChapters: 1,
+        }),
+        expect.stringContaining("/curriculum"),
+      );
+    });
+
+    it("does NOT send re-engagement email to connected users", async () => {
+      mockPrisma.user.findUniqueOrThrow
+        .mockResolvedValueOnce({
+          notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
+        })
+        .mockResolvedValueOnce({
+          lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+          displayName: "OnlineUser",
+          email: "online@example.com",
+        });
+
+      mockPrisma.notification.findFirst.mockResolvedValue(null);
+      mockPrisma.userProgress.count.mockResolvedValue(5);
+      mockPrisma.chapterProgress.count.mockResolvedValue(2);
+      mockNotificationService.createAndPushNotification.mockResolvedValue({});
+      mockFetchSockets.mockResolvedValue([{ id: "socket-1" }]); // user IS connected
+
+      await checkReengagement(mockIo, TEST_USER_ID);
+
+      expect(mockEmailService.sendReEngagementEmail).not.toHaveBeenCalled();
+    });
+
+    it("does NOT send re-engagement email when user has no email", async () => {
+      mockPrisma.user.findUniqueOrThrow
+        .mockResolvedValueOnce({
+          notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
+        })
+        .mockResolvedValueOnce({
+          lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+          displayName: "NoEmailUser",
+          email: null,
+        });
+
+      mockPrisma.notification.findFirst.mockResolvedValue(null);
+      mockPrisma.userProgress.count.mockResolvedValue(3);
+      mockPrisma.chapterProgress.count.mockResolvedValue(1);
+      mockNotificationService.createAndPushNotification.mockResolvedValue({});
+      mockFetchSockets.mockResolvedValue([]); // user is NOT connected
+
+      await checkReengagement(mockIo, TEST_USER_ID);
+
+      // In-app notification should still be created
+      expect(mockNotificationService.createAndPushNotification).toHaveBeenCalled();
+      // But email should NOT be sent (no email address)
+      expect(mockEmailService.sendReEngagementEmail).not.toHaveBeenCalled();
+    });
+
+    it("respects reengagement preference for email too", async () => {
+      mockPrisma.user.findUniqueOrThrow.mockResolvedValue({
+        notificationPreferences: { streakReminder: true, reengagement: false, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
+      });
+
+      await checkReengagement(mockIo, TEST_USER_ID);
+
+      expect(mockEmailService.sendReEngagementEmail).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("checkAllReengagements", () => {
+    it("queries inactive users and calls checkReengagement for each", async () => {
+      mockPrisma.user.findMany.mockResolvedValue([
+        { id: "user-a" },
+        { id: "user-b" },
+      ]);
+
+      // Mock the full checkReengagement flow for each user (preference check + user fetch + dedup)
+      mockPrisma.user.findUniqueOrThrow
+        // user-a: preference check
+        .mockResolvedValueOnce({
+          notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
+        })
+        // user-a: user data
+        .mockResolvedValueOnce({
+          lastMissionCompletedAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+          displayName: "UserA",
+          email: "a@example.com",
+        })
+        // user-b: preference check
+        .mockResolvedValueOnce({
+          notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
+        })
+        // user-b: user data
+        .mockResolvedValueOnce({
+          lastMissionCompletedAt: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          displayName: "UserB",
+          email: "b@example.com",
+        });
+
+      mockPrisma.notification.findFirst.mockResolvedValue(null); // no dedup
+      mockPrisma.userProgress.count.mockResolvedValue(3);
+      mockPrisma.chapterProgress.count.mockResolvedValue(1);
+      mockNotificationService.createAndPushNotification.mockResolvedValue({});
+      mockFetchSockets.mockResolvedValue([]); // both users offline → email sent
+
+      const count = await checkAllReengagements(mockIo);
+
+      expect(count).toBe(2);
+      expect(mockEmailService.sendReEngagementEmail).toHaveBeenCalledTimes(2);
+    });
+
+    it("returns 0 when no inactive users found", async () => {
+      mockPrisma.user.findMany.mockResolvedValue([]);
+
+      const count = await checkAllReengagements(mockIo);
+
+      expect(count).toBe(0);
+      expect(mockEmailService.sendReEngagementEmail).not.toHaveBeenCalled();
     });
   });
 
