@@ -117,9 +117,9 @@ transcendence/
 
 ### Prerequisites
 
-- **Node.js 22** (use `nvm` or `fnm`)
+- **Node.js 22** — install directly from [nodejs.org](https://nodejs.org), or use a version manager like `nvm` or `fnm` if you work on multiple projects with different Node versions
 - **pnpm 10.22+** (`corepack enable && corepack prepare pnpm@10.22.0 --activate`)
-- **Docker & Docker Compose** (for PostgreSQL and Redis in dev)
+- **Docker & Docker Compose** — used to run PostgreSQL and Redis locally (you do **not** need to install Postgres or Redis on your machine)
 - **mkcert** (optional, for local HTTPS)
 
 ### Setup steps
