@@ -442,7 +442,7 @@
           "id": "d",
           "text": "L'or était la seule réserve de valeur fiable, donc la monnaie devrait à nouveau être adossée à l'or",
           "isCorrect": false,
-          "explanation": "Revenir à l'étalon-or était une autre réponse discutée en 2008. Bitcoin est parfois appelé « or numérique » parce qu'il a une offre fixe — mais il n'est pas adossé à de l'or physique. L'invention de Satoshi était quelque chose de genuinement nouveau : la rareté appliquée par du code et des mathématiques, et non par une matière première physique ou la promesse d'un gouvernement."
+          "explanation": "Revenir à l'étalon-or était une autre réponse discutée en 2008. Bitcoin est parfois appelé « or numérique » parce qu'il a une offre fixe — mais il n'est pas adossé à de l'or physique. L'invention de Satoshi était quelque chose de véritablement nouveau : la rareté appliquée par du code et des mathématiques, et non par une matière première physique ou la promesse d'un gouvernement."
         }
       ]
     }
@@ -542,7 +542,7 @@
           "id": "a",
           "text": "La crypto a de la valeur parce qu'elle peut être échangée à des fins de profit, donc Amara pourrait investir ses gains et potentiellement gagner plus",
           "isCorrect": false,
-          "explanation": "La spéculation sur les prix est une chose que les gens font avec la crypto, mais ce n'est pas ce qui résout les vrais problèmes d'Amara. Ses problèmes sont les frais élevés, les transferts lents et le gel de son compte. Investir ses gains dans un actif volatile introduirait des risques entièrement nouveaux, pas ne règlerait pas les problèmes d'infrastructure de paiement auxquels elle fait face."
+          "explanation": "La spéculation sur les prix est une chose que les gens font avec la crypto, mais ce n'est pas ce qui résout les vrais problèmes d'Amara. Ses problèmes sont les frais élevés, les transferts lents et le gel de son compte. Investir ses gains dans un actif volatile introduirait des risques entièrement nouveaux, et ne règlerait pas les problèmes d'infrastructure de paiement auxquels elle fait face."
         },
         {
           "id": "b",
@@ -740,7 +740,7 @@
           "id": "3",
           "term": "Effets de réseau",
           "definition": "Plus les gens utilisent et acceptent une cryptomonnaie, plus elle devient utile et précieuse — la valeur s'amplifie avec l'adoption",
-          "analogy": "Le téléphone était inutile quand une seule personne en avait un. Bitcoin avait presque aucune valeur en 2009 quand presque personne ne l'utilisait. Au fur et à mesure que davantage de commerçants et d'institutions l'ont adopté, la valeur collective du réseau a grandi — non pas parce que quelqu'un l'a déclaré précieux, mais parce que de plus en plus de personnes agissaient comme si c'était le cas."
+          "analogy": "Le téléphone était inutile quand une seule personne en avait un. Bitcoin n'avait presque aucune valeur en 2009 quand presque personne ne l'utilisait. Au fur et à mesure que davantage de commerçants et d'institutions l'ont adopté, la valeur collective du réseau a grandi — non pas parce que quelqu'un l'a déclaré précieux, mais parce que de plus en plus de personnes agissaient comme si c'était le cas."
         },
         {
           "id": "4",
@@ -844,7 +844,7 @@
     "description": "Comprenez que l'éducation n'est pas un conseil financier.",
     "learningObjective": "L'éducation n'est pas un conseil financier.",
     "exerciseContent": {
-      "scenario": "Vous venez de terminer le chapitre Crypto et Jetons. Vous comprenez comment Bitcoin est né, comment Ethereum fonctionne, pourquoi les prix bougent et comment les jetons représentent un nouveau type d'actif numérique genuinement inédit. Un ami vous demande : « Alors, est-ce que je devrais acheter de la crypto ? » Vous marquez une pause.",
+      "scenario": "Vous venez de terminer le chapitre Crypto et Jetons. Vous comprenez comment Bitcoin est né, comment Ethereum fonctionne, pourquoi les prix bougent et comment les jetons représentent un nouveau type d'actif numérique véritablement inédit. Un ami vous demande : « Alors, est-ce que je devrais acheter de la crypto ? » Vous marquez une pause.",
       "question": "Quelle réponse reflète le mieux la distinction entre éducation financière et conseil financier ?",
       "options": [
         {
@@ -863,7 +863,7 @@
           "id": "c",
           "text": "Expliquer ce que vous avez appris sur le fonctionnement de la crypto et ce qui en détermine la valeur — puis préciser clairement que savoir si elle convient à leur situation financière spécifique est une question pour un conseiller financier agréé qui connaît leur situation complète",
           "isCorrect": true,
-          "explanation": "C'est le bon équilibre. Vous avez genuinement appris quelque chose de précieux et cela vaut la peine d'être partagé. Mais les décisions d'investissement dépendent de choses que seul votre ami — idéalement avec un conseiller qualifié — peut évaluer : ses revenus, ses dettes, sa tolérance au risque, son horizon temporel, sa situation fiscale et ses objectifs. Transcendence vous apprend à comprendre la crypto intelligemment. Elle ne vous dit pas — et ne peut pas vous dire — quoi faire avec votre argent. Cette distinction n'est pas une clause de non-responsabilité juridique. C'est une distinction intellectuelle genuinement importante."
+          "explanation": "C'est le bon équilibre. Vous avez véritablement appris quelque chose de précieux et cela vaut la peine d'être partagé. Mais les décisions d'investissement dépendent de choses que seul votre ami — idéalement avec un conseiller qualifié — peut évaluer : ses revenus, ses dettes, sa tolérance au risque, son horizon temporel, sa situation fiscale et ses objectifs. Transcendence vous apprend à comprendre la crypto intelligemment. Elle ne vous dit pas — et ne peut pas vous dire — quoi faire avec votre argent. Cette distinction n'est pas une clause de non-responsabilité juridique. C'est une distinction intellectuelle véritablement importante."
         },
         {
           "id": "d",
@@ -2380,28 +2380,28 @@
         },
         {
           "id": "3",
-          "prompt": "Vous êtes prêt à créer le NFT. La plateforme vous informe que la création coûte des « frais de gaz » d'environ 8 €. Que sont ces frais ?",
+          "prompt": "Vous êtes prêt à créer le NFT. La plateforme vous informe que la création coûte des « frais de gas » d'environ 8 €. Que sont ces frais ?",
           "options": [
             {
               "id": "a",
               "text": "Des frais d'abonnement facturés par la plateforme NFT pour l'utilisation de leurs services",
               "isCorrect": false,
-              "explanation": "Les frais de gaz vont aux validateurs de la blockchain qui traitent et confirment les transactions — pas à la plateforme. La plateforme peut facturer ses propres frais séparément, mais le gaz est un coût réseau."
+              "explanation": "Les frais de gas vont aux validateurs de la blockchain qui traitent et confirment les transactions — pas à la plateforme. La plateforme peut facturer ses propres frais séparément, mais le gas est un coût réseau."
             },
             {
               "id": "b",
               "text": "Des frais payés aux validateurs de la blockchain pour traiter la transaction qui inscrit votre NFT sur la chaîne",
               "isCorrect": true,
-              "explanation": "Chaque action sur une blockchain nécessite un travail de calcul. Les frais de gaz rémunèrent les participants du réseau qui effectuent ce travail. Quand le réseau est chargé, les frais de gaz augmentent. Certaines plateformes proposent le « lazy minting » pour différer ce coût jusqu'à la vente."
+              "explanation": "Chaque action sur une blockchain nécessite un travail de calcul. Les frais de gas rémunèrent les participants du réseau qui effectuent ce travail. Quand le réseau est chargé, les frais de gas augmentent. Certaines plateformes proposent le « lazy minting » pour différer ce coût jusqu'à la vente."
             },
             {
               "id": "c",
               "text": "Des frais d'assurance qui protègent votre NFT s'il est perdu ou volé",
               "isCorrect": false,
-              "explanation": "Les frais de gaz n'offrent aucune assurance. La sécurité de votre NFT provient du contrôle de votre clé privée — pas du paiement de frais. Si quelqu'un vole la clé privée de votre portefeuille, les frais de gaz ne vous protègent pas."
+              "explanation": "Les frais de gas n'offrent aucune assurance. La sécurité de votre NFT provient du contrôle de votre clé privée — pas du paiement de frais. Si quelqu'un vole la clé privée de votre portefeuille, les frais de gas ne vous protègent pas."
             }
           ],
-          "microExplanation": "Les frais de gaz sont le coût pour écrire quoi que ce soit de façon permanente sur une blockchain. Ils varient selon la demande sur le réseau."
+          "microExplanation": "Les frais de gas sont le coût pour écrire quoi que ce soit de façon permanente sur une blockchain. Ils varient selon la demande sur le réseau."
         },
         {
           "id": "4",
@@ -2830,7 +2830,7 @@
           "id": "a",
           "text": "Les DEX sont toujours meilleurs — plus rapides, moins chers et plus privés que toute plateforme centralisée",
           "isCorrect": false,
-          "explanation": "Les DEX présentent de réels avantages mais aussi de réels inconvénients. Les frais de gaz peuvent rendre les petits échanges sur DEX coûteux. La rapidité dépend de la congestion du réseau. La liquidité des jetons moins courants peut être insuffisante. L'assistance client n'existe pas. Le bon choix dépend de votre situation."
+          "explanation": "Les DEX présentent de réels avantages mais aussi de réels inconvénients. Les frais de gas peuvent rendre les petits échanges sur DEX coûteux. La rapidité dépend de la congestion du réseau. La liquidité des jetons moins courants peut être insuffisante. L'assistance client n'existe pas. Le bon choix dépend de votre situation."
         },
         {
           "id": "b",

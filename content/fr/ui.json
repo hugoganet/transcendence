@@ -79,6 +79,445 @@
     "minutes": "min",
     "learningObjective": "Objectif pédagogique",
     "missionComplete": "Mission Accomplie !",
-    "xpEarned": "XP Gagnés"
+    "xpEarned": "XP Gagnés",
+    "tokensEarned": "Jetons gagnés",
+    "gasPaid": "Gas déduit",
+    "skip": "Passer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "back": "Retour",
+    "close": "Fermer",
+    "home": "Accueil",
+    "curriculum": "Programme",
+    "leaderboard": "Classement",
+    "profile": "Profil",
+    "friends": "Amis",
+    "notifications": "Notifications",
+    "settings": "Paramètres",
+    "logout": "Se déconnecter"
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Reprenez là où vous vous êtes arrêté.",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "votre@email.com",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "Votre mot de passe",
+      "submitButton": "Se connecter",
+      "forgotPassword": "Mot de passe oublié ?",
+      "noAccount": "Pas encore de compte ?",
+      "signupLink": "S'inscrire",
+      "orContinueWith": "Ou continuer avec",
+      "googleButton": "Continuer avec Google",
+      "facebookButton": "Continuer avec Facebook"
+    },
+    "signup": {
+      "title": "Inscription",
+      "subtitle": "Commencez votre parcours blockchain dès aujourd'hui.",
+      "usernameLabel": "Nom d'utilisateur",
+      "usernamePlaceholder": "Choisissez un pseudonyme",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "votre@email.com",
+      "passwordLabel": "Mot de passe",
+      "passwordPlaceholder": "Minimum 8 caractères",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Répétez votre mot de passe",
+      "submitButton": "Créer mon compte",
+      "alreadyHaveAccount": "Vous avez déjà un compte ?",
+      "loginLink": "Se connecter",
+      "termsNotice": "En vous inscrivant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.",
+      "orContinueWith": "Ou continuer avec",
+      "googleButton": "Continuer avec Google"
+    },
+    "forgotPassword": {
+      "title": "Mot de passe oublié",
+      "subtitle": "Saisissez votre e-mail et nous vous enverrons un lien de réinitialisation.",
+      "emailLabel": "Adresse e-mail",
+      "emailPlaceholder": "votre@email.com",
+      "submitButton": "Envoyer le lien",
+      "backToLogin": "Retour à la connexion",
+      "successMessage": "Un e-mail de réinitialisation vous a été envoyé. Vérifiez votre boîte de réception."
+    },
+    "resetPassword": {
+      "title": "Nouveau mot de passe",
+      "subtitle": "Choisissez un nouveau mot de passe sécurisé.",
+      "passwordLabel": "Nouveau mot de passe",
+      "passwordPlaceholder": "Minimum 8 caractères",
+      "confirmPasswordLabel": "Confirmer le mot de passe",
+      "confirmPasswordPlaceholder": "Répétez votre nouveau mot de passe",
+      "submitButton": "Réinitialiser le mot de passe",
+      "successMessage": "Votre mot de passe a été mis à jour. Vous pouvez vous connecter."
+    },
+    "twoFactor": {
+      "title": "Vérification en deux étapes",
+      "subtitle": "Saisissez le code envoyé à votre appareil.",
+      "codeLabel": "Code de vérification",
+      "codePlaceholder": "000000",
+      "submitButton": "Vérifier",
+      "resendCode": "Renvoyer le code",
+      "resendCountdown": "Renvoi possible dans {{seconds}}s"
+    }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Bienvenue sur Transcendence",
+      "subtitle": "La blockchain expliquée à travers des missions courtes. Pas de jargon inutile, pas de capital requis.",
+      "ctaLabel": "C'est parti"
+    },
+    "howItWorks": {
+      "title": "Comment ça marche",
+      "step1Title": "Des missions courtes",
+      "step1Body": "Chaque mission dure 3 à 5 minutes. Avancez à votre rythme.",
+      "step2Title": "Gagnez des Jetons de Connaissance",
+      "step2Body": "Chaque mission réussie vous rapporte des KT. Votre solde reflète votre progression.",
+      "step3Title": "Montez dans le classement",
+      "step3Body": "Comparez votre progression avec d'autres apprenants. La régularité prime sur la vitesse.",
+      "ctaLabel": "Suivant"
+    },
+    "chooseGoal": {
+      "title": "Quel est votre objectif ?",
+      "subtitle": "Cela ne change pas le contenu — juste le contexte.",
+      "option1": "Comprendre ce dont tout le monde parle",
+      "option2": "Évaluer un investissement potentiel",
+      "option3": "Comprendre la technologie en profondeur",
+      "option4": "Juste curieux",
+      "ctaLabel": "Continuer"
+    },
+    "disclaimerIntro": {
+      "title": "Une précision importante",
+      "body": "Transcendence est une plateforme éducative. Rien ici ne constitue un conseil financier. Nous traitons des sujets liés à la finance numérique — avec honnêteté, sans promesse de rendement.",
+      "ctaLabel": "Compris, on commence"
+    },
+    "allSet": {
+      "title": "Tout est prêt.",
+      "body": "Votre premier chapitre vous attend. Chaque concept que vous maîtrisez s'ajoute à votre base — et les bases, ça compte.",
+      "ctaLabel": "Commencer ma première mission"
+    }
+  },
+  "exercise": {
+    "instructions": {
+      "SI": "Lisez le scénario, puis répondez à la question.",
+      "CM": "Associez chaque concept à sa définition.",
+      "IP": "Placez les éléments dans le bon ordre ou au bon endroit.",
+      "ST": "Suivez les étapes pour compléter la simulation."
+    },
+    "feedback": {
+      "correct": [
+        "Excellent !",
+        "Bravo !",
+        "C'est ça !",
+        "Parfait.",
+        "Exactement."
+      ],
+      "incorrect": [
+        "Pas tout à fait...",
+        "Presque.",
+        "Pas cette fois.",
+        "Ce n'est pas la bonne réponse.",
+        "Réessayez."
+      ],
+      "correctExplanationLabel": "Pourquoi c'est juste :",
+      "incorrectExplanationLabel": "La bonne réponse :"
+    },
+    "gasFeeNotice": {
+      "firstTime": "Chaque tentative coûte 2 KT. C'est le gas — le même mécanisme que vous venez d'étudier. Votre solde a été mis à jour.",
+      "standard": "−2 KT gas",
+      "lowBalance": "−2 KT gas · Votre solde est faible. Terminez une mission pour le recharger.",
+      "zeroBalance": "−2 KT gas · Votre solde est à 0. Vous pouvez terminer cette mission, mais vous devrez le faire avant d'en commencer une nouvelle.",
+      "negativeBalance": "−2 KT gas · Votre solde est négatif. Terminez cette mission pour gagner des jetons et effacer votre dette avant de continuer."
+    },
+    "progress": {
+      "questionOf": "Question {{current}} sur {{total}}",
+      "missionProgress": "Mission {{current}} sur {{total}}"
+    }
+  },
+  "gamification": {
+    "achievements": {
+      "BLOCKCHAIN_BEGINNER": {
+        "title": "Fondations Blockchain",
+        "description": "Terminez la Catégorie 1 : Les Fondamentaux de la Blockchain",
+        "toastTitle": "Catégorie 1 terminée.",
+        "toastBody": "Vous comprenez le problème que la blockchain résout."
+      },
+      "CRYPTO_CURIOUS": {
+        "title": "Curieux de la Crypto",
+        "description": "Terminez la Catégorie 2 : Crypto et Jetons",
+        "toastTitle": "Catégorie 2 terminée.",
+        "toastBody": "Pièces, jetons, volatilité — vous avez le vocabulaire."
+      },
+      "WALLET_WIZARD": {
+        "title": "Maître des Portefeuilles",
+        "description": "Terminez la Catégorie 3 : Portefeuilles et Gas",
+        "toastTitle": "Catégorie 3 terminée.",
+        "toastBody": "Portefeuilles, transactions, gas. Vous savez comment ça marche vraiment."
+      },
+      "SMART_COOKIE": {
+        "title": "Cerveau Connecté",
+        "description": "Terminez la Catégorie 4 : Contrats Intelligents",
+        "toastTitle": "Catégorie 4 terminée.",
+        "toastBody": "La blockchain comme ordinateur. Vous voyez ce qui est possible maintenant."
+      },
+      "NFT_NATIVE": {
+        "title": "Natif des NFTs",
+        "description": "Terminez la Catégorie 5 : NFTs et Propriété Numérique",
+        "toastTitle": "Catégorie 5 terminée.",
+        "toastBody": "Vous pouvez voir au-delà du battage médiatique maintenant."
+      },
+      "DEFI_EXPLORER": {
+        "title": "Explorateur DeFi",
+        "description": "Terminez la Catégorie 6 : DeFi et Au-delà",
+        "toastTitle": "Parcours terminé.",
+        "toastBody": "Six catégories. Chaque concept. Vous l'avez mérité."
+      },
+      "FIRST_TOKENS": {
+        "title": "Premiers Jetons",
+        "description": "Gagnez 10 Jetons de Connaissance",
+        "toastTitle": "Premiers jetons gagnés.",
+        "toastBody": "Votre solde KT démarre. Chaque mission le fait croître."
+      },
+      "TOKEN_COLLECTOR": {
+        "title": "Collectionneur de Jetons",
+        "description": "Gagnez 50 Jetons de Connaissance",
+        "toastTitle": "50 Jetons de Connaissance.",
+        "toastBody": "La progression s'accumule. Continuez sur cette lancée."
+      },
+      "TOKEN_RICH": {
+        "title": "Riche en Savoirs",
+        "description": "Gagnez 100 Jetons de Connaissance",
+        "toastTitle": "100 Jetons de Connaissance.",
+        "toastBody": "Triple chiffre. Voici à quoi ressemble l'effort soutenu."
+      },
+      "GETTING_STARTED": {
+        "title": "On Démarre",
+        "description": "Atteignez une série de 3 jours d'apprentissage",
+        "toastTitle": "3 jours d'affilée.",
+        "toastBody": "La régularité est une compétence. Vous la construisez."
+      },
+      "WEEK_WARRIOR": {
+        "title": "Guerrier de la Semaine",
+        "description": "Atteignez une série de 7 jours d'apprentissage",
+        "toastTitle": "Série de 7 jours.",
+        "toastBody": "Une semaine complète sans manquer un jour."
+      },
+      "DEDICATED_LEARNER": {
+        "title": "Apprenant Assidu",
+        "description": "Atteignez une série de 14 jours d'apprentissage",
+        "toastTitle": "Série de 14 jours.",
+        "toastBody": "Deux semaines sans interruption. C'est une habitude maintenant."
+      },
+      "MONTHLY_MASTER": {
+        "title": "Maître du Mois",
+        "description": "Atteignez une série de 30 jours d'apprentissage",
+        "toastTitle": "30 jours d'affilée.",
+        "toastBody": "Un mois d'apprentissage quotidien. C'est remarquable."
+      }
+    },
+    "streak": {
+      "streakLabel": "Série en cours",
+      "streakDays": "{{count}} jour",
+      "streakDays_plural": "{{count}} jours",
+      "streakContinued": "Aujourd'hui compte. Revenez demain.",
+      "streakBroken": "Vous avez manqué un jour. Ça arrive. Votre progression est exactement là où vous l'avez laissée — recommencez dès aujourd'hui.",
+      "streakRecovered": "De retour. Un jour ne définit pas une série. Aujourd'hui, si.",
+      "streakRecord": "Nouveau record : {{days}} jours !",
+      "day3": "Trois jours consécutifs. Vous avez passé la partie la plus difficile.",
+      "day7": "Sept jours. Une semaine de présence. Voilà à quoi ressemble l'apprentissage.",
+      "day14": "Deux semaines d'affilée. À ce stade, l'habitude fait la majorité du travail.",
+      "day30": "Trente jours. Un mois. La régularité que vous avez montrée ici se transfère à tout."
+    },
+    "tokens": {
+      "tokenEarned": "+{{amount}} KT gagnés",
+      "tokenSpent": "−{{amount}} KT dépensés",
+      "tokenBalance": "Solde : {{balance}} KT",
+      "knowledgeTokens": "Jetons de Connaissance",
+      "ktAbbreviation": "KT",
+      "lowBalanceWarning": "Votre solde est faible. Terminez une mission pour le recharger.",
+      "zeroBalanceWarning": "Votre solde est à 0. Terminez cette mission avant d'en commencer une nouvelle.",
+      "negativeBalanceWarning": "Solde négatif. Terminez cette mission pour effacer votre dette."
+    },
+    "leaderboard": {
+      "title": "Classement",
+      "yourRank": "Votre rang : #{{rank}}",
+      "topLearners": "Meilleurs apprenants",
+      "weeklyBoard": "Cette semaine",
+      "allTimeBoard": "Classement général",
+      "noRankYet": "Terminez votre première mission pour apparaître dans le classement.",
+      "rankChange_up": "+{{count}} place",
+      "rankChange_down": "−{{count}} place",
+      "rankChange_same": "Rang stable"
+    },
+    "postMission": {
+      "completionMessages": [
+        "Correct. Une pièce supplémentaire dans le tableau.",
+        "Bien joué. Ce concept est maintenant le vôtre.",
+        "Réussi. On passe à la suite.",
+        "C'est ça. Vous venez d'ajouter quelque chose qui se capitalise."
+      ],
+      "chapterCompleteMessages": [
+        "Chapitre terminé. Vous avez couvert l'intégralité de ce sujet. Le chapitre suivant s'appuie sur ce que vous venez de finir.",
+        "Voilà pour ce chapitre. Chaque concept qu'il contient fait maintenant partie de votre base.",
+        "Chapitre terminé. Prenez un moment — c'est une vraie progression."
+      ],
+      "categoryCompleteMessages": [
+        "Catégorie terminée. Vous avez tout fini dans cette section. La catégorie suivante va plus loin avec ce que vous avez appris.",
+        "Vous avez terminé cette catégorie. Six sections au total — en voilà une de faite. Continuez."
+      ]
+    },
+    "welcomeBack": {
+      "variant1": "Ravi de vous retrouver. Votre progression est exactement là où vous l'avez laissée.",
+      "variant2": "Ça fait une semaine. Pas de souci — votre savoir n'expire pas. Reprenez là où vous vous êtes arrêté.",
+      "variant3": "Vous avez été absent un moment. Tout est encore là. Quand vous êtes prêt, la prochaine mission vous attend.",
+      "variant4": "Bienvenue. Ça fait un moment, mais ce que vous avez appris n'est pas parti. Pas de pression — juste la prochaine mission quand vous êtes prêt.",
+      "variant5": "De retour. Votre progression est intacte. Continuez."
+    },
+    "conceptRefresher": {
+      "variant1": "Avant de commencer, voici un rappel rapide de ce sur quoi cette mission s'appuie.",
+      "variant2": "Ça fait un moment que vous n'avez pas abordé ce sujet. Un récapitulatif rapide avant de plonger.",
+      "variant3": "Cette mission fait référence à quelque chose vu plus tôt. Voici l'idée clé — trente secondes, et vous êtes prêt."
+    }
+  },
+  "reveals": {
+    "tokensRevealed": {
+      "headline": "Vous venez de gagner vos premiers Jetons de Connaissance.",
+      "body": "Les KT sont votre monnaie d'apprentissage sur Transcendence. Chaque mission réussie vous en rapporte. Votre solde croît avec votre savoir.",
+      "ctaLabel": "Voir mon solde"
+    },
+    "walletRevealed": {
+      "headline": "Votre portefeuille numérique est débloqué.",
+      "body": "Comme un portefeuille crypto, votre espace KT stocke ce que vous avez gagné. Pas de clé privée à gérer — mais le principe est le même.",
+      "ctaLabel": "Découvrir mon portefeuille"
+    },
+    "gasRevealed": {
+      "headline": "Vous payez maintenant du gas.",
+      "body": "Chaque tentative d'exercice coûte 2 KT. C'est le même mécanisme que les frais de gas sur Ethereum — vous venez de l'étudier, maintenant vous le vivez. Répondez juste et votre solde progresse.",
+      "ctaLabel": "Compris, on continue"
+    },
+    "dashboardRevealed": {
+      "headline": "Votre tableau de bord est complet.",
+      "body": "Progression, solde KT, classement, série de jours — tout est maintenant visible. Vous avez les outils pour suivre où vous en êtes et ce qui vous attend.",
+      "ctaLabel": "Explorer mon tableau de bord"
+    }
+  },
+  "disclaimer": {
+    "gateTitle": "Une précision avant de continuer",
+    "gateBody": "Le contenu de ce chapitre aborde des sujets financiers, notamment les prix des cryptomonnaies, les concepts d'investissement et les instruments financiers. Ce contenu est fourni à des fins éducatives uniquement. Rien dans ce chapitre ne constitue un conseil financier, et rien de ce que vous apprenez ici ne doit être interprété comme une recommandation d'acheter, de vendre ou de conserver un actif. Les décisions financières comportent des risques réels. Si vous envisagez un investissement, consultez un conseiller financier qualifié.",
+    "acceptButton": "Je comprends — continuer",
+    "declineButton": "Retour",
+    "learnMoreLink": "En savoir plus sur notre approche éditoriale"
+  },
+  "certificate": {
+    "title": "Certificat d'accomplissement",
+    "subtitle": "Délivré à",
+    "completionStatement": "a complété avec succès l'intégralité du programme Transcendence — 6 catégories, {{chapterCount}} chapitres, {{missionCount}} missions.",
+    "dateLabel": "Date d'obtention",
+    "shareButton": "Partager mon certificat",
+    "downloadButton": "Télécharger en PDF",
+    "linkedinButton": "Ajouter à LinkedIn",
+    "toastTitle": "Certificat obtenu.",
+    "toastBody": "Votre preuve de complétion est prête à être partagée.",
+    "programName": "Transcendence — Littératie Blockchain",
+    "verificationLabel": "Vérification"
+  },
+  "social": {
+    "friends": {
+      "title": "Amis",
+      "addFriend": "Ajouter un ami",
+      "searchPlaceholder": "Rechercher par nom d'utilisateur",
+      "pendingRequests": "Demandes en attente",
+      "friendsSince": "Amis depuis {{date}}",
+      "removeFriend": "Retirer de mes amis",
+      "blockUser": "Bloquer",
+      "acceptRequest": "Accepter",
+      "declineRequest": "Refuser",
+      "requestSent": "Demande envoyée",
+      "noFriendsYet": "Vous n'avez pas encore d'amis sur Transcendence. Invitez quelqu'un et apprenez ensemble.",
+      "friendCount": "{{count}} ami",
+      "friendCount_plural": "{{count}} amis"
+    },
+    "profile": {
+      "editProfile": "Modifier le profil",
+      "publicProfile": "Profil public",
+      "joinedDate": "Membre depuis {{date}}",
+      "missionsCompleted": "Missions complétées",
+      "currentStreak": "Série en cours",
+      "longestStreak": "Meilleure série",
+      "tokenBalance": "Solde KT",
+      "achievementsUnlocked": "Succès débloqués",
+      "rank": "Rang",
+      "shareProfile": "Partager mon profil",
+      "statsTitle": "Mes statistiques",
+      "bioPlaceholder": "Dites quelque chose sur vous..."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "noNotifications": "Aucune notification pour le moment. Continuez à apprendre !",
+    "types": {
+      "achievement_unlocked": "Succès débloqué",
+      "streak_milestone": "Étape de série atteinte",
+      "friend_request": "Nouvelle demande d'ami",
+      "friend_accepted": "Demande d'ami acceptée",
+      "mission_reminder": "Rappel de mission",
+      "level_up": "Niveau supérieur atteint",
+      "token_earned": "Jetons gagnés",
+      "gas_deducted": "Gas déduit",
+      "system_message": "Message système"
+    },
+    "messages": {
+      "achievement_unlocked": "Vous venez de débloquer le succès « {{achievementTitle}} ».",
+      "streak_milestone": "Félicitations ! Vous avez atteint {{days}} jours de série.",
+      "friend_request": "{{username}} vous a envoyé une demande d'ami.",
+      "friend_accepted": "{{username}} a accepté votre demande d'ami.",
+      "mission_reminder": "Votre prochaine mission vous attend. Ne brisez pas votre série !",
+      "level_up": "Vous êtes passé au niveau {{level}}. Continuez.",
+      "token_earned": "Vous avez gagné {{amount}} KT pour avoir terminé cette mission.",
+      "gas_deducted": "−{{amount}} KT de gas ont été déduits pour cette tentative.",
+      "system_message": "{{message}}"
+    }
+  },
+  "errors": {
+    "networkError": "Problème de connexion. Vérifiez votre réseau et réessayez.",
+    "serverError": "Une erreur est survenue côté serveur. Nos équipes en sont informées. Réessayez dans un moment.",
+    "notFound": "Cette page n'existe pas ou a été déplacée.",
+    "unauthorized": "Vous devez être connecté pour accéder à cette page.",
+    "sessionExpired": "Votre session a expiré. Reconnectez-vous pour continuer.",
+    "formValidation": "Veuillez vérifier les champs du formulaire avant de continuer.",
+    "emailAlreadyUsed": "Cette adresse e-mail est déjà associée à un compte. Connectez-vous ou utilisez une autre adresse.",
+    "usernameAlreadyUsed": "Ce nom d'utilisateur est déjà pris. Choisissez-en un autre.",
+    "invalidCredentials": "E-mail ou mot de passe incorrect. Vérifiez vos informations et réessayez.",
+    "tooManyRequests": "Trop de tentatives en peu de temps. Attendez quelques instants avant de réessayer.",
+    "passwordTooShort": "Votre mot de passe doit contenir au moins 8 caractères.",
+    "passwordMismatch": "Les deux mots de passe ne correspondent pas.",
+    "emailInvalid": "Veuillez saisir une adresse e-mail valide.",
+    "requiredField": "Ce champ est obligatoire."
+  },
+  "emptyStates": {
+    "noFriends": {
+      "title": "Aucun ami pour l'instant",
+      "body": "Apprenez aux côtés d'autres. Recherchez un nom d'utilisateur pour envoyer votre première demande.",
+      "ctaLabel": "Trouver des amis"
+    },
+    "noNotifications": {
+      "title": "Aucune notification",
+      "body": "Tout est calme ici. Continuez à avancer dans le programme pour voir vos succès et mises à jour apparaître.",
+      "ctaLabel": "Reprendre le programme"
+    },
+    "noAchievements": {
+      "title": "Aucun succès encore",
+      "body": "Les succès se débloquent en progressant dans le programme. Votre premier vous attend après la première mission.",
+      "ctaLabel": "Commencer à apprendre"
+    },
+    "noMissionsAvailable": {
+      "title": "Aucune mission disponible",
+      "body": "Vous avez terminé toutes les missions disponibles pour l'instant. Revenez bientôt pour la suite.",
+      "ctaLabel": "Retour à l'accueil"
+    },
+    "leaderboardLoading": {
+      "title": "Classement en cours de chargement",
+      "body": "Les données arrivent. Encore quelques secondes.",
+      "ctaLabel": null
+    }
   }
 }
