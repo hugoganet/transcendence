@@ -98,3 +98,98 @@ The following conventions are applied consistently across the file and should be
 | NFT | NFT | Technical acronym — keep as-is |
 
 **Watch for in future content:** The word "genuinement" must never be used — it is not French. Use "véritablement", "authentiquement", or "sincèrement" depending on context.
+
+---
+
+## Second Review — Remaining 49 Missions
+**Date:** 2026-03-16
+
+### Issues Found and Fixed
+
+#### [3.1.1] — Anglicism: "supportent" (false cognate)
+**Location:** Pair 4 definition
+**Before:** `"De nombreux portefeuilles modernes supportent plusieurs blockchains à partir d'un seul jeu de clés, servant d'interface unique pour de nombreux réseaux."`
+**After:** `"De nombreux portefeuilles modernes prennent en charge plusieurs blockchains à partir d'un seul jeu de clés, servant d'interface unique pour de nombreux réseaux."`
+**Why:** "Supporter" in French means "to endure/bear (something unpleasant)" — it is a false cognate of the English "to support". The correct phrase is "prendre en charge" (to handle/manage) or "être compatible avec". This is the same class of anglicism as "genuinement" — a word that exists in French but does not carry the English meaning.
+
+---
+
+### Observation (out of scope — mission 3.1.4, already reviewed in pass 1)
+**Location:** Step 3, option a explanation (line 1067)
+**Issue found but not fixed (outside scope of this pass):** `"c'est votre dernière chance de réaliser que vous n'avez pas correctement sauvegardé votre phrase"` — "réaliser que" is an anglicism. Should be "se rendre compte que". The first review did not flag this. Recommended fix for a future pass.
+
+---
+
+### Clean Missions (no issues)
+
+The following 48 missions were reviewed and found clean — correct register throughout, terminology consistent, isCorrect integrity intact, no anglicisms, no grammatical errors, all fields present:
+
+**Chapter 1 — Blockchain Foundations**
+- **1.1.2** — Single failure point scenario; one correct answer, clear prose
+- **1.1.3** — MT (matching) type; no isCorrect; analogies natural and precise
+- **1.2.1** — SO (sorting) type; drag-and-drop block construction; clean
+- **1.2.2** — SO type; tamper chain sequence; correct order logic
+- **1.2.3** — MT type; distributed ledger analogies; all four pairs accurate
+- **1.2.5** — MT type; blockchain vs database comparison; technically precise
+- **1.3.1** — MT type; decentralization in the real world; analogies excellent
+- **1.3.2** — SI type; real-world blockchain adoption; one correct answer
+
+**Chapter 2 — Crypto and Tokens**
+- **2.1.2** — MT type; digital money vs bank account; technically accurate
+- **2.1.3** — SO type; where does crypto live; correct categorization logic
+- **2.1.4** — SI type; Amara scenario; previously-fixed double-negation confirmed clean; one correct answer
+- **2.2.1** — MT type; coins vs tokens; technically correct
+- **2.2.3** — SO type; token universe; three zones clearly defined
+- **2.2.4** — MT type; Knowledge Tokens mechanics; well-explained
+- **2.3.1** — MT type; previously-fixed "Bitcoin n'avait presque aucune valeur" confirmed correct
+- **2.3.2** — SO type; reading a price chart; categorization logic sound
+
+**Chapter 3 — Wallets, Transactions, Gas, Security**
+- **3.1.1** — MT type; one fix applied (see above); otherwise clean
+- **3.1.2** — SO type; public/private key sorting; correct
+- **3.1.3** — MT type; hot vs cold wallets; analogies accurate
+- **3.2.1** — SO type; transaction anatomy; five components correct
+- **3.2.3** — SI type; mempool pending scenario; one correct answer, technically accurate
+- **3.2.4** — ST type (3 steps); each step has exactly one correct answer; blockchain explorer explanation precise
+- **3.3.1** — MT type; gas concepts; four analogies accurate
+- **3.3.2** — SI type; gas price spike during NFT mint; one correct answer; market mechanics accurate
+- **3.3.4** — SI type; failed transaction gas cost; one correct answer; technically accurate
+- **3.4.1** — ST type (4 steps); one correct per step; seed phrase security content accurate
+- **3.4.3** — MT type; security best practices; four pairs technically sound
+- **3.4.4** — SO type; security checklist; three zones; categorizations correct
+
+**Chapter 4 — Smart Contracts**
+- **4.1.2** — SO type; what smart contracts can automate; correct categorizations
+- **4.1.3** — MT type; smart contract properties; technically precise
+- **4.2.1** — SI type; parametric insurance scenario; one correct answer; oracle concept introduced correctly
+- **4.2.3** — SI type; Marc lunch explanation; one correct answer; explanation accurate
+
+**Chapter 5 — NFTs**
+- **5.1.1** — MT type; fungible vs non-fungible; clear analogies
+- **5.1.3** — SO type; how NFTs work (5-step ordering); correct sequence
+- **5.1.4** — ST type (4 steps); one correct per step; minting simulation accurate; "frais de gas" consistently used
+- **5.2.1** — MT type; NFT use cases; four accurate pairings
+- **5.2.3** — SI type; NFT ownership scenario; one correct answer; honest about storage limitations
+- **5.3.1** — SI type; NFT boom/bust; one correct answer; market cycle analysis balanced
+- **5.3.3** — MT type; NFT evaluation framework; four criteria well-explained
+- **5.3.4** — SI type; honest NFT assessment; one correct answer; balanced conclusion
+
+**Chapter 6 — DeFi, Web3, Synthesis**
+- **6.1.1** — MT type; DeFi services vs banking; four accurate pairings; risk warning present
+- **6.1.3** — SI type; CEX vs DEX; one correct answer; FTX mention accurate; risk warning present
+- **6.1.4** — SI type; DeFi risks; one correct answer; risk warning present; TAP acronym used correctly
+- **6.2.2** — MT type; Web1/2/3 concepts; four pairings accurate
+- **6.2.3** — SI type; blockchain in daily life; one correct answer; MNBC mention current
+- **6.2.4** — SI type; skeptic questions; one correct answer; energy/scalability claims accurate (Ethereum's ~99% reduction post-merge)
+- **6.3.1** — SO type; ecosystem layers; three zones; categorizations correct
+- **6.3.2** — SI type; explain to parent; one correct answer; "tu" in direct speech quotation is intentional (informal register within a quotation, not a breach of platform voice)
+- **6.3.3** — ST type (4 steps); one correct per step; synthesis questions accurate
+
+---
+
+### Final Status
+Total missions reviewed (both passes): 69/69
+Total issues found: 6 (first review: 5 + second review: 1)
+Total issues fixed directly in file: 6 (all fixes applied)
+
+**Additional observation for future pass:** mission 3.1.4 step 3 contains "réaliser que" (anglicism, should be "se rendre compte que") — was outside scope of this review but flagged above.

@@ -902,7 +902,7 @@
         {
           "id": "4",
           "term": "Il faut un portefeuille différent par blockchain",
-          "definition": "De nombreux portefeuilles modernes supportent plusieurs blockchains à partir d'un seul jeu de clés, servant d'interface unique pour de nombreux réseaux.",
+          "definition": "De nombreux portefeuilles modernes prennent en charge plusieurs blockchains à partir d'un seul jeu de clés, servant d'interface unique pour de nombreux réseaux.",
           "analogy": "Comme une télécommande universelle qui contrôle plusieurs appareils — un seul outil, de nombreux réseaux."
         }
       ]
