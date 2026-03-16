@@ -1,6 +1,6 @@
 # Transcendence — Developer Guide
 
-> Last updated: 2026-03-13
+> Last updated: 2026-03-16
 
 This document is your onboarding reference for the Transcendence project. It covers everything built so far — architecture, API, database, testing, deployment — so you can contribute from day one.
 
@@ -17,10 +17,11 @@ This document is your onboarding reference for the Transcendence project. It cov
 7. [API Reference](#7-api-reference)
 8. [Real-Time (Socket.IO)](#8-real-time-socketio)
 9. [Shared Package](#9-shared-package-packagesshared)
-10. [Business Logic Deep Dives](#10-business-logic-deep-dives)
-11. [Testing](#11-testing)
-12. [Docker & Deployment](#12-docker--deployment)
-13. [Known Tech Debt & Gotchas](#13-known-tech-debt--gotchas)
+10. [Content System](#10-content-system)
+11. [Business Logic Deep Dives](#11-business-logic-deep-dives)
+12. [Testing](#12-testing)
+13. [Docker & Deployment](#13-docker--deployment)
+14. [Known Tech Debt & Gotchas](#14-known-tech-debt--gotchas)
 
 ---
 
@@ -561,7 +562,132 @@ ACHIEVEMENT_DEFINITIONS                     // 13 achievement definitions
 
 ---
 
-## 10. Business Logic Deep Dives
+## 10. Content System
+
+### Overview
+
+All curriculum and platform copy is stored as **static JSON files** under `content/`. There is no CMS. At server startup, `initializeContent()` in `apps/api/src/utils/contentLoader.ts` reads every file, validates it against Zod schemas from `@transcendence/shared`, and caches the result in memory. If any file fails validation the server refuses to start.
+
+The database stores only **user state** (progress, tokens, streaks). Curriculum updates are code deployments, not database migrations.
+
+Two locales are currently loaded: `en` and `fr`. Both must be kept in sync — every key present in `en` must also exist in `fr` and vice versa.
+
+### File Reference
+
+| File | Description | Shape |
+|------|-------------|-------|
+| `content/structure.json` | Curriculum tree: 6 categories → 18 chapters → 69 missions, with `exerciseType` per mission | Array of category objects |
+| `content/en/missions.json` | EN exercise content for all 69 missions | Object keyed by mission ID (e.g. `"1.1.1"`) |
+| `content/fr/missions.json` | FR exercise content for all 69 missions | Same shape as EN |
+| `content/en/tooltips.json` | EN glossary — 40 terms | Object keyed by slug (e.g. `"blockchain"`) |
+| `content/fr/tooltips.json` | FR glossary — 40 terms | Same shape as EN |
+| `content/en/tooltip-triggers.json` | Which tooltip slugs appear per mission (max 3 per mission) | Object keyed by mission ID |
+| `content/fr/tooltip-triggers.json` | Same — slugs are language-agnostic so this mirrors `en/` | Same shape |
+| `content/en/ui.json` | All EN platform copy (15 sections: categories, chapters, labels, auth, exercise, gamification, reveals, etc.) | Nested object |
+| `content/fr/ui.json` | All FR platform copy | Same shape as EN |
+
+### Exercise Type Schemas
+
+Each mission has one `exerciseType` field in `structure.json`. The exercise content in `missions.json` must match the corresponding shape.
+
+#### SI — Scenario Interpretation
+
+```json
+{
+  "scenario": "string",
+  "question": "string",
+  "options": [
+    { "id": "string", "text": "string", "isCorrect": boolean, "explanation": "string" }
+  ]
+}
+```
+
+One option must have `isCorrect: true`. All options must have an `explanation` (shown after the user answers).
+
+#### CM — Concept Matching
+
+```json
+{
+  "instruction": "string",
+  "pairs": [
+    { "id": "string", "term": "string", "definition": "string", "analogy": "string" }
+  ]
+}
+```
+
+The user matches each `term` to its `definition`. `analogy` is shown as additional context.
+
+#### IP — Interactive Placement
+
+```json
+{
+  "instruction": "string",
+  "items": [
+    { "id": "string", "label": "string", "correctPosition": number }
+  ],
+  "zones": [
+    { "id": "string", "label": "string" }
+  ]
+}
+```
+
+The user drags `items` into `zones`. `correctPosition` references the zone index (0-based).
+
+#### ST — Step-by-Step
+
+```json
+{
+  "instruction": "string",
+  "steps": [
+    {
+      "id": "string",
+      "prompt": "string",
+      "options": [
+        { "id": "string", "text": "string", "isCorrect": boolean, "explanation": "string" }
+      ],
+      "microExplanation": "string"
+    }
+  ]
+}
+```
+
+Each step is a sub-question. `microExplanation` is shown after the step is answered.
+
+### How to Add a New Mission
+
+1. **`content/structure.json`** — Add the mission object to the correct chapter array. Required fields: `id` (format `"X.Y.Z"`), `title`, `description`, `exerciseType` (one of `SI`, `CM`, `IP`, `ST`).
+
+2. **`content/en/missions.json`** and **`content/fr/missions.json`** — Add an entry keyed by the new mission ID. The value must match the schema for the chosen `exerciseType` (see above).
+
+3. **`content/en/tooltip-triggers.json`** and **`content/fr/tooltip-triggers.json`** — Add an entry keyed by the new mission ID with an array of up to 3 tooltip slugs relevant to the mission (e.g. `["blockchain", "hash"]`). Slugs must already exist in `tooltips.json`.
+
+4. **Restart the server** (or run `pnpm dev`). `contentLoader.ts` validates all content at startup — if the shapes are wrong you will see a clear Zod error.
+
+5. **Run the test suite** to confirm nothing regressed: `pnpm test && pnpm test:integration`.
+
+### How to Add a New Tooltip Term
+
+1. **`content/en/tooltips.json`** — Add a new key (the slug, lowercase, hyphenated) with at minimum `term` and `definition` fields.
+
+2. **`content/fr/tooltips.json`** — Add the exact same key with the French translation. Both locales must have the same set of keys.
+
+3. **`content/en/tooltip-triggers.json`** / **`content/fr/tooltip-triggers.json`** — Reference the new slug in any mission entries where the term is relevant (max 3 slugs per mission).
+
+4. Restart the server to re-validate.
+
+### Spec Documents Index
+
+Design decisions and detailed specifications are in `docs/`:
+
+| File | Covers |
+|------|--------|
+| `docs/DEVELOPER_GUIDE.md` | This document — full onboarding reference |
+
+For product-level decisions (UI flows, game mechanics, exercise design) refer to the spec documents maintained alongside the project. Ask the project owner for the current spec file location if you are onboarding.
+
+---
+
+## 11. Business Logic Deep Dives
 
 ### Mission completion flow
 
@@ -623,7 +749,7 @@ Achievement definitions live in `@transcendence/shared` (`ACHIEVEMENT_DEFINITION
 
 ---
 
-## 11. Testing
+## 12. Testing
 
 ### Unit tests
 
@@ -717,7 +843,7 @@ describe("My feature", () => {
 
 ---
 
-## 12. Docker & Deployment
+## 13. Docker & Deployment
 
 ### Services
 
@@ -798,7 +924,7 @@ curl -k https://localhost/api/v1/health
 
 ---
 
-## 13. Known Tech Debt & Gotchas
+## 14. Known Tech Debt & Gotchas
 
 ### `tsx` in Docker production
 
