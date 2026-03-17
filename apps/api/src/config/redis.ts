@@ -15,7 +15,22 @@ const globalForRedis = globalThis as typeof globalThis & {
 if (!globalForRedis.redisClient) {
   globalForRedis.redisClient = new Redis(
     process.env.REDIS_URL ?? "redis://localhost:6379",
+    {
+      maxRetriesPerRequest: null, // Allow retrying indefinitely for dev; don't throw MaxRetriesPerRequestError
+    }
   );
+
+  globalForRedis.redisClient.on("error", (err) => {
+    console.error("Redis Client Error:", err);
+  });
+
+  globalForRedis.redisClient.on("connect", () => {
+    console.log("Redis connected.");
+  });
+
+  globalForRedis.redisClient.on("ready", () => {
+    console.log("Redis ready.");
+  });
 }
 
 export const redisClient: Redis = globalForRedis.redisClient;
