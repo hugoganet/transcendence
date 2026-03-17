@@ -57,7 +57,11 @@ process.on("SIGINT", () => gracefulShutdown("SIGINT"));
 const PORT = process.env.PORT ?? 3000;
 
 // Connect session Redis client before starting server
-await sessionRedisClient.connect();
+// We don't await it here to allow the server to start even if Redis is down for dev.
+// The client will keep retrying in the background.
+sessionRedisClient.connect().catch((err) => {
+  console.error("Failed to connect to Redis for sessions. Sessions will not work until Redis is up.", err);
+});
 
 httpServer.listen(Number(PORT), "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
