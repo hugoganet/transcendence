@@ -382,6 +382,59 @@ ${resumeLink}`;
   await sendEmail(to, subject, buildEmailWrapper(subject, contentHtml), text);
 }
 
+export async function sendCompletionEmail(
+  to: string,
+  locale: string = "en",
+  displayName: string | null,
+  certificateLink: string,
+): Promise<void> {
+  const isFr = locale === "fr";
+  const safeName = displayName ? escapeHtml(displayName) : null;
+
+  const subject = isFr
+    ? "Vous avez terminé Transcendence"
+    : "You completed Transcendence";
+
+  const greetingLine = isFr
+    ? safeName
+      ? `Félicitations, ${safeName}.`
+      : "Félicitations."
+    : safeName
+      ? `Congratulations, ${safeName}.`
+      : "Congratulations.";
+
+  const bodyText = isFr
+    ? "Vous avez terminé les 69 missions et maîtrisé chaque concept. Votre certificat est prêt — partagez-le avec le monde."
+    : "You've completed all 69 missions and mastered every concept. Your certificate is ready — share it with the world.";
+
+  const ctaLabel = isFr ? "Voir mon certificat" : "View My Certificate";
+
+  const contentHtml = `
+    <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 8px;">
+      ${greetingLine}
+    </p>
+    <p style="color: #5C534D; font-size: 16px; line-height: 1.5; margin: 0 0 24px;">
+      ${escapeHtml(bodyText)}
+    </p>
+    ${buildCtaButton(certificateLink, ctaLabel)}`;
+
+  const plainGreeting = isFr
+    ? displayName
+      ? `Félicitations, ${displayName}.`
+      : "Félicitations."
+    : displayName
+      ? `Congratulations, ${displayName}.`
+      : "Congratulations.";
+
+  const text = `${plainGreeting}
+
+${bodyText}
+
+${certificateLink}`;
+
+  await sendEmail(to, subject, buildEmailWrapper(subject, contentHtml), text);
+}
+
 export async function sendWelcomeEmail(
   to: string,
   locale: string = "en",

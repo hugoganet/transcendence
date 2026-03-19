@@ -782,4 +782,68 @@ describe("emailService", () => {
       expect(call.text).toContain("https://app.test/start");
     });
   });
+
+  describe("sendCompletionEmail", () => {
+    it("sends EN completion email with display name", async () => {
+      const { sendCompletionEmail } = await import("./emailService.js");
+      await sendCompletionEmail(
+        "grad@example.com",
+        "en",
+        "Alice",
+        "https://app.test/certificate",
+      );
+
+      expect(mockSend).toHaveBeenCalledOnce();
+      const call = mockSend.mock.calls[0][0];
+      expect(call.to).toBe("grad@example.com");
+      expect(call.subject).toBe("You completed Transcendence");
+      expect(call.html).toContain("Congratulations, Alice.");
+      expect(call.html).toContain("all 69 missions");
+      expect(call.html).toContain("https://app.test/certificate");
+    });
+
+    it("sends FR completion email with display name", async () => {
+      const { sendCompletionEmail } = await import("./emailService.js");
+      await sendCompletionEmail(
+        "grad@example.com",
+        "fr",
+        "Alice",
+        "https://app.test/certificate",
+      );
+
+      const call = mockSend.mock.calls[0][0];
+      expect(call.subject).toBe("Vous avez terminé Transcendence");
+      expect(call.html).toContain("Félicitations, Alice.");
+      expect(call.html).toContain("69 missions");
+      expect(call.html).toContain("Voir mon certificat");
+    });
+
+    it("sends EN completion email without display name", async () => {
+      const { sendCompletionEmail } = await import("./emailService.js");
+      await sendCompletionEmail(
+        "grad@example.com",
+        "en",
+        null,
+        "https://app.test/certificate",
+      );
+
+      const call = mockSend.mock.calls[0][0];
+      expect(call.html).toContain("Congratulations.");
+      expect(call.html).not.toContain("Congratulations, .");
+    });
+
+    it("contains the certificate link in html and text", async () => {
+      const { sendCompletionEmail } = await import("./emailService.js");
+      await sendCompletionEmail(
+        "grad@example.com",
+        "en",
+        null,
+        "https://app.test/certificate",
+      );
+
+      const call = mockSend.mock.calls[0][0];
+      expect(call.html).toContain("https://app.test/certificate");
+      expect(call.text).toContain("https://app.test/certificate");
+    });
+  });
 });
