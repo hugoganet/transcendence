@@ -19,6 +19,7 @@ import { certificatesRouter } from "./routes/certificates.js";
 import { gdprRouter } from "./routes/gdpr.js";
 import { notificationsRouter } from "./routes/notifications.js";
 import { uiCopyRouter } from "./routes/uiCopy.js";
+import swaggerRouter from "./docs/swagger.js";
 
 const app: Express = express();
 
@@ -71,6 +72,9 @@ function registerRoutes(sessionMw?: RequestHandler) {
   app.use("/api/v1/certificates", certificatesRouter);
   app.use("/api/v1/notifications", notificationsRouter);
   app.use("/api/v1/ui-copy", uiCopyRouter);
+
+  // API documentation (Swagger UI)
+  app.use("/api/docs", swaggerRouter);
 
   // 7. 404 catch-all (Express 5 named wildcard)
   app.all("/{*splat}", (_req, _res, next) => {
