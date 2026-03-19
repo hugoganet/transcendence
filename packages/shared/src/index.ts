@@ -44,6 +44,7 @@ export {
   missionExerciseStatusSchema,
 } from "./schemas/exercise.js";
 export { tooltipSchema, tooltipCollectionSchema, termParamSchema } from "./schemas/tooltip.js";
+export { localeParamSchema, type LocaleParam } from "./schemas/locale.js";
 export {
   missionIdParamSchema,
   missionStatusSchema,
