@@ -1,8 +1,64 @@
 @import "tailwindcss";
 
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap");
+
 @theme {
-  --color-primary: #2b9e9e;
-  --color-secondary: #d4a843;
-  --font-heading: "Plus Jakarta Sans", sans-serif;
-  --font-body: "Source Sans 3", sans-serif;
+  /* Colors — Teal (Primary) */
+  --color-teal-50: #E6F5F5;
+  --color-teal-100: #B3E0E0;
+  --color-teal-200: #80CCCC;
+  --color-teal-300: #4DB8B8;
+  --color-teal-400: #2B9E9E;
+  --color-teal-500: #2B9E9E;
+  --color-teal-600: #248585;
+  --color-teal-700: #1D6B6B;
+  --color-teal-800: #165252;
+  --color-teal-900: #0F3838;
+
+  /* Colors — Amber (Secondary) */
+  --color-amber-50: #FDF6E3;
+  --color-amber-100: #F9E6B8;
+  --color-amber-200: #F0D08A;
+  --color-amber-300: #E5B85C;
+  --color-amber-400: #D4A843;
+  --color-amber-500: #D4A843;
+  --color-amber-600: #B8922A;
+  --color-amber-700: #9A7A1E;
+  --color-amber-800: #7C6218;
+  --color-amber-900: #5E4A12;
+
+  /* Colors — Warm Neutrals */
+  --color-warm-50: #FAF8F5;
+  --color-warm-100: #F0EDE8;
+  --color-warm-200: #E2DDD6;
+  --color-warm-300: #C9C2B8;
+  --color-warm-400: #A89E92;
+  --color-warm-500: #8A817A;
+  --color-warm-600: #6E6660;
+  --color-warm-700: #5C534D;
+  --color-warm-800: #3D3633;
+  --color-warm-900: #2B2522;
+
+  /* Semantic Aliases */
+  --color-primary: var(--color-teal-400);
+  --color-secondary: var(--color-amber-400);
+  --color-background: var(--color-warm-50);
+  --color-surface: #FFFFFF;
+  --color-text: var(--color-warm-900);
+  --color-text-muted: var(--color-warm-500);
+  --color-border: var(--color-warm-200);
+  --color-error: #D44D4D;
+  --color-success: #4CAF50;
+
+  /* Typography */
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
 }
