@@ -22,7 +22,7 @@ import { updateStreakWithClient } from "./streakService.js";
 import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";
 import { triggerRevealWithClient } from "./revealService.js";
 import { generateCertificateWithClient } from "./certificateService.js";
-import { sendAchievementEmail } from "./emailService.js";
+import { sendAchievementEmail, sendCompletionEmail } from "./emailService.js";
 
 export async function getCurriculumWithProgress(
   userId: string,
@@ -511,6 +511,16 @@ export async function completeMission(
           sendAchievementEmail(user.email, "en", user.displayName, award.title, award.description, achievementLink).catch(() => {});
         }
       }
+    }
+  }
+
+  // Send course completion email when certificate is generated (fire-and-forget)
+  if (txResult.certificateGenerated) {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, displayName: true } });
+    if (user?.email) {
+      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+      const certLink = `${frontendUrl}/certificate`;
+      sendCompletionEmail(user.email, "en", user.displayName, certLink).catch(() => {});
     }
   }
 
