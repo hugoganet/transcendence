@@ -5,7 +5,7 @@ import QRCode from "qrcode";
 import type { AuthProvider } from "../../generated/prisma/client.js";
 import { prisma } from "../config/database.js";
 import { sessionRedisClient } from "../config/session.js";
-import { sendPasswordResetEmail } from "./emailService.js";
+import { sendPasswordResetEmail, sendWelcomeEmail } from "./emailService.js";
 import { AppError } from "../utils/AppError.js";
 import { encryptTotpSecret, decryptTotpSecret } from "../utils/totpCrypto.js";
 import { encryptOAuthToken } from "../utils/oauthCrypto.js";
@@ -58,6 +58,12 @@ export async function register(
         ageConfirmed: true,
       },
     });
+
+    // Fire-and-forget — don't block registration on email delivery
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+    const startLink = `${frontendUrl}/curriculum`;
+    sendWelcomeEmail(user.email, "en", null, startLink).catch(() => {});
+
     return user;
   } catch (err: unknown) {
     if (
