@@ -1,6 +1,6 @@
 import { prisma } from "../config/database.js";
 import { createAndPushNotification } from "./notificationService.js";
-import { sendReEngagementEmail } from "./emailService.js";
+import { sendReEngagementEmail, sendStreakReminderEmail } from "./emailService.js";
 import { notificationPreferencesSchema } from "@transcendence/shared";
 import type { IO } from "../socket/index.js";
 import type { NotificationPreferences } from "@transcendence/shared";
@@ -122,6 +122,7 @@ export async function checkStreakReminders(io: IO): Promise<number> {
       id: true,
       currentStreak: true,
       displayName: true,
+      email: true,
       notificationPreferences: true,
     },
   });
@@ -150,16 +151,21 @@ export async function checkStreakReminders(io: IO): Promise<number> {
   for (const user of eligibleUsers) {
     if (alreadySentUserIds.has(user.id)) continue;
 
-    // AC #5: only send to connected users (Socket.IO)
     const sockets = await io.in(`user:${user.id}`).fetchSockets();
-    if (sockets.length === 0) continue;
 
-    const title = "Keep your streak alive!";
-    const body = `You're on a ${user.currentStreak}-day streak. Complete a mission today to keep it going!`;
-
-    await createAndPushNotification(io, user.id, "STREAK_REMINDER", title, body, {
-      currentStreak: user.currentStreak,
-    });
+    if (sockets.length > 0) {
+      // Connected user — in-app notification (existing behavior)
+      const title = "Keep your streak alive!";
+      const body = `You're on a ${user.currentStreak}-day streak. Complete a mission today to keep it going!`;
+      await createAndPushNotification(io, user.id, "STREAK_REMINDER", title, body, {
+        currentStreak: user.currentStreak,
+      });
+    } else if (user.email) {
+      // Offline user — send email reminder
+      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+      const resumeLink = `${frontendUrl}/curriculum`;
+      sendStreakReminderEmail(user.email, "en", user.displayName, user.currentStreak, resumeLink).catch(() => {});
+    }
 
     sentCount++;
   }
