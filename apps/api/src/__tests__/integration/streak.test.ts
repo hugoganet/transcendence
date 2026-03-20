@@ -81,6 +81,7 @@ describe("Streak System Integration", () => {
       // Get user ID from DB
       const user = await prisma.user.findFirst();
       await prisma.user.update({
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         where: { id: user!.id },
         data: { lastMissionCompletedAt: yesterday },
       });
@@ -110,6 +111,7 @@ describe("Streak System Integration", () => {
 
       const user = await prisma.user.findFirst();
       await prisma.user.update({
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         where: { id: user!.id },
         data: {
           lastMissionCompletedAt: threeDaysAgo,
@@ -170,8 +172,11 @@ describe("Streak System Integration", () => {
       // call completeMission 11 times for all missions in category 1
       await prisma.chapterProgress.createMany({
         data: [
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           { userId: user!.id, chapterId: "1.1", status: "COMPLETED", completedAt: new Date() },
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           { userId: user!.id, chapterId: "1.2", status: "COMPLETED", completedAt: new Date() },
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           { userId: user!.id, chapterId: "1.3", status: "COMPLETED", completedAt: new Date() },
         ],
       });

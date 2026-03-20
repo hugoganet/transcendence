@@ -500,10 +500,15 @@ describe("getResumePoint", () => {
     const result = await getResumePoint("user-1", "en");
 
     expect(result).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.missionId).toBe("1.1.1");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.chapterId).toBe("1.1");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.categoryId).toBe("1");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.completionPercentage).toBe(0);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher).toBeNull();
   });
 
@@ -517,8 +522,11 @@ describe("getResumePoint", () => {
     const result = await getResumePoint("user-1", "en");
 
     expect(result).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.missionId).toBe("1.1.2");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.missionTitle).toBe("What Could Go Wrong?");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher).toBeNull();
   });
 
@@ -541,6 +549,7 @@ describe("getResumePoint", () => {
     const result = await getResumePoint("user-1", "fr");
 
     expect(result).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.missionTitle).toBe("En qui avez-vous confiance ?");
   });
 
@@ -567,11 +576,17 @@ describe("getResumePoint", () => {
     const result = await getResumePoint("user-1", "en");
 
     expect(result).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher!.missionId).toBe("1.1.1");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher!.missionTitle).toBe("Who Do You Trust?");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher!.chapterTitle).toBe("Chapter 1.1");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher!.exerciseType).toBe("SI");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher!.exerciseContent).toBeDefined();
   });
 
@@ -590,6 +605,7 @@ describe("getResumePoint", () => {
     const result = await getResumePoint("user-1", "en");
 
     expect(result).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher).toBeNull();
   });
 
@@ -613,8 +629,11 @@ describe("getResumePoint", () => {
     const result = await getResumePoint("user-1", "fr");
 
     expect(result).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher!.missionTitle).toBe("En qui avez-vous confiance ?");
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher!.chapterTitle).toBe("Chapitre 1.1");
   });
 
@@ -628,6 +647,7 @@ describe("getResumePoint", () => {
     const result = await getResumePoint("user-1", "en");
 
     expect(result).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(result!.refresher).toBeNull();
   });
 });

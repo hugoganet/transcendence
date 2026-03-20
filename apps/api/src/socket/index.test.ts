@@ -35,9 +35,11 @@ vi.mock("@socket.io/redis-adapter", () => ({
       addAll(id: string, rooms: Set<string>) {
         for (const room of rooms) {
           if (!this.rooms.has(room)) this.rooms.set(room, new Set());
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           this.rooms.get(room)!.add(id);
         }
         if (!this.sids.has(id)) this.sids.set(id, new Set());
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         for (const room of rooms) this.sids.get(id)!.add(room);
       }
       del(id: string, room: string) {
