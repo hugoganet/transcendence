@@ -141,7 +141,7 @@ usersRouter.get(
   requireAuth,
   validate({ params: userIdParamSchema }),
   async (req: Request, res: Response) => {
-    const profile = await getPublicProfile(req.params.userId);
+    const profile = await getPublicProfile(String(req.params.userId));
     res.json({ data: profile });
   },
 );

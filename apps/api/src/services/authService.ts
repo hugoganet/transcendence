@@ -62,7 +62,8 @@ export async function register(
     // Fire-and-forget — don't block registration on email delivery
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
     const startLink = `${frontendUrl}/curriculum`;
-    sendWelcomeEmail(user.email, "en", null, startLink).catch(() => {});
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    sendWelcomeEmail(user.email!, "en", null, startLink).catch(() => {});
 
     return user;
   } catch (err: unknown) {
@@ -218,13 +219,15 @@ export async function invalidateUserSessions(
   userId: string,
 ): Promise<void> {
   const prefix = "sess:";
-  let cursor = 0;
+  let cursor = "0";
   do {
-    const result = await sessionRedisClient.scan(cursor, {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const result = await sessionRedisClient.scan(cursor as any, {
       MATCH: `${prefix}*`,
-      COUNT: 100,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      COUNT: 100 as any,
     });
-    cursor = result.cursor;
+    cursor = String(result.cursor);
     for (const key of result.keys) {
       const sessionData = await sessionRedisClient.get(key);
       if (sessionData) {
@@ -238,7 +241,7 @@ export async function invalidateUserSessions(
         }
       }
     }
-  } while (cursor !== 0);
+  } while (cursor !== "0");
 }
 
 export async function setup2FA(userId: string) {

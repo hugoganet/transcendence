@@ -10,7 +10,7 @@ certificatesRouter.get(
   "/:shareToken",
   validate({ params: shareTokenParamSchema }),
   async (req: Request, res: Response) => {
-    const certificate = await getCertificateByShareToken(req.params.shareToken);
+    const certificate = await getCertificateByShareToken(String(req.params.shareToken));
     res.json({ data: certificate });
   },
 );

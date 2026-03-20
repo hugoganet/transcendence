@@ -40,7 +40,7 @@ export async function triggerRevealWithClient(
     select: { [field]: true },
   });
 
-  if ((user as Record<string, boolean>)[field]) {
+  if ((user as unknown as Record<string, boolean>)[field]) {
     return false;
   }
 
