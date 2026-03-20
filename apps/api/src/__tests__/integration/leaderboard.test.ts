@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach } from "vitest";
-import { app, prisma } from "./helpers/app.js";
+import { app } from "./helpers/app.js";
 import { setupApp } from "./helpers/app.js";
 import { createAndLoginUser, type TestAgent } from "./helpers/auth.js";
 import { resetDatabase } from "./helpers/db.js";

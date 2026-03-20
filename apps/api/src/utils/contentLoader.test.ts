@@ -107,7 +107,7 @@ describe("contentLoader", () => {
 
     it("identifies stale content when date is in the past", () => {
       // Mock Date to be 7 months in the future so all content (dated 2026-03-09) is stale
-      const realDate = globalThis.Date;
+      const _realDate = globalThis.Date;
       const futureDate = new Date("2026-10-15");
       vi.useFakeTimers({ now: futureDate });
 

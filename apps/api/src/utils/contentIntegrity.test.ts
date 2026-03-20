@@ -102,7 +102,7 @@ describe("content integrity", () => {
 
   it("all tooltip relatedTerms reference existing tooltip keys", () => {
     const keys = Object.keys(enTooltips);
-    for (const [slug, tooltip] of Object.entries(enTooltips)) {
+    for (const [_slug, tooltip] of Object.entries(enTooltips)) {
       for (const related of tooltip.relatedTerms) {
         expect(keys).toContain(related);
       }

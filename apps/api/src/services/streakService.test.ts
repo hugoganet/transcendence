@@ -34,6 +34,7 @@ vi.mock("../utils/contentLoader.js", () => ({
 const { updateStreakWithClient, updateStreak, getStreak } =
   await import("./streakService.js");
 
+import { createMockContent } from "../__fixtures__/curriculum.js";
 import type { DbClient } from "./streakService.js";
 const mockClient = mockPrisma as unknown as DbClient;
 

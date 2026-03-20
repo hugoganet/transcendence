@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, beforeEach } from "vitest";
 import { app, prisma } from "./helpers/app.js";
-import { setupApp, teardownApp } from "./helpers/app.js";
+import { setupApp } from "./helpers/app.js";
 import { createAndLoginUser, type TestAgent } from "./helpers/auth.js";
 import { resetDatabase } from "./helpers/db.js";
 import supertest from "supertest";
@@ -84,6 +84,7 @@ describe("Achievements Integration", () => {
       }
 
       // Last mission should trigger BLOCKCHAIN_BEGINNER
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(lastRes!.body.data.newAchievements).toEqual(
         expect.arrayContaining([
           expect.objectContaining({ code: "BLOCKCHAIN_BEGINNER" }),
@@ -108,6 +109,7 @@ describe("Achievements Integration", () => {
       twoDaysAgo.setUTCDate(twoDaysAgo.getUTCDate() - 1);
       // Set to yesterday so next completion extends streak
       await prisma.user.update({
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         where: { id: user!.id },
         data: { lastMissionCompletedAt: twoDaysAgo, currentStreak: 2, longestStreak: 2 },
       });

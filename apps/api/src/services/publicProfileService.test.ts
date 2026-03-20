@@ -30,7 +30,7 @@ vi.mock("../utils/contentLoader.js", () => ({
 
 const { getPublicProfile } = await import("./publicProfileService.js");
 
-import { minimalCurriculum, createMockContent } from "../__fixtures__/curriculum.js";
+import { createMockContent } from "../__fixtures__/curriculum.js";
 const setupContent = createMockContent(mockGetContent);
 
 beforeEach(() => {
