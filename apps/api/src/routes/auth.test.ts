@@ -55,6 +55,7 @@ vi.mock("../config/session.js", () => ({
 // Mock email service
 vi.mock("../services/emailService.js", () => ({
   sendPasswordResetEmail: vi.fn().mockResolvedValue(undefined),
+  sendWelcomeEmail: vi.fn().mockResolvedValue(undefined),
 }));
 
 // Mock totpCrypto

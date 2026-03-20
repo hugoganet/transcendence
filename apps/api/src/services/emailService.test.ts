@@ -450,7 +450,7 @@ describe("emailService", () => {
 
       const call = mockSend.mock.calls[0][0];
       expect(call.subject).toBe("Your 7-day streak is on the line");
-      expect(call.html).toContain("Alice, you&#39;re on a 7-day streak");
+      expect(call.html).toContain("Alice, you're on a 7-day streak");
       expect(call.html).toContain("Keep My Streak Alive");
       expect(call.html).toContain("turn off these reminders");
     });
@@ -482,7 +482,7 @@ describe("emailService", () => {
       );
 
       const call = mockSend.mock.calls[0][0];
-      expect(call.html).toContain("You&#39;re on a 5-day streak");
+      expect(call.html).toContain("You're on a 5-day streak");
       expect(call.html).not.toContain("null");
     });
 
