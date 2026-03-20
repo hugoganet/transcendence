@@ -16,7 +16,7 @@ import type {
   ChainBlock,
   LearningChainResponse,
 } from "@transcendence/shared";
-import type { Category, Chapter, Mission } from "@transcendence/shared";
+import type { Category, Mission } from "@transcendence/shared";
 import { creditMissionTokensWithClient } from "./tokenService.js";
 import { updateStreakWithClient } from "./streakService.js";
 import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";

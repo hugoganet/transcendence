@@ -13,12 +13,12 @@ uiCopyRouter.get(
   (req: Request, res: Response) => {
     const { locale } = req.params;
 
-    if (!VALID_LOCALES.has(locale)) {
+    if (!VALID_LOCALES.has(String(locale))) {
       throw new AppError(400, "INVALID_LOCALE", "Locale must be en or fr");
     }
 
     const content = getContent();
-    const uiStrings: UIStrings | undefined = content.uiStrings.get(locale);
+    const uiStrings: UIStrings | undefined = content.uiStrings.get(String(locale));
 
     if (!uiStrings) {
       throw new AppError(500, "CONTENT_UNAVAILABLE", "UI copy not available for this locale");

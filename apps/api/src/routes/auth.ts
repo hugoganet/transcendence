@@ -66,7 +66,7 @@ authRouter.post(
             req.session.pending2FA = true;
             return res.json({ data: { requires2FA: true } });
           }
-          res.json({ data: sanitizeUser(user) });
+          res.json({ data: sanitizeUser(user as Express.User) });
         });
       },
     )(req, res, next);

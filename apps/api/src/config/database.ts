@@ -25,7 +25,7 @@ if (!globalForPrisma.prisma) {
 }
 
 export const prisma: PrismaClient = globalForPrisma.prisma;
-export const prismaPool: pg.Pool = globalForPrisma.prismaPool!;
+export const prismaPool: pg.Pool = globalForPrisma.prismaPool as pg.Pool;
 
 export function registerShutdownHandlers(): void {
   function gracefulShutdown(signal: string) {

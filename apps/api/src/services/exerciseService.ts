@@ -93,7 +93,7 @@ function validateCM(
   submission: { matches: Array<{ termId: string; definitionId: string }> },
   content: CMExerciseContent,
 ): { score: number; totalPoints: number; feedback: ExerciseFeedbackItem[] } {
-  const pairMap = new Map(content.pairs.map((p) => [p.id, p]));
+  const _pairMap = new Map(content.pairs.map((p) => [p.id, p]));
   const submittedMatchMap = new Map(submission.matches.map((m) => [m.termId, m.definitionId]));
 
   let score = 0;
@@ -138,7 +138,7 @@ function validateIP(
     });
   }
 
-  const itemMap = new Map(content.items.map((i) => [i.id, i]));
+  const _itemMap = new Map(content.items.map((i) => [i.id, i]));
   const submittedPositionMap = new Map(submission.positions.map((p) => [p.itemId, p.position]));
 
   let score = 0;

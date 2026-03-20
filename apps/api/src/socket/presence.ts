@@ -37,7 +37,7 @@ export async function handleUserConnect(io: IO, socket: AppSocket): Promise<void
 
   // Clear any pending disconnect debounce timer
   if (disconnectTimers.has(userId)) {
-    clearTimeout(disconnectTimers.get(userId)!);
+    clearTimeout(disconnectTimers.get(userId));
     disconnectTimers.delete(userId);
   }
 
@@ -61,7 +61,7 @@ export async function handleUserDisconnect(io: IO, socket: AppSocket): Promise<v
 
   // Clear any existing timer for this user to prevent orphaned timers (e.g., two tabs closing in succession)
   if (disconnectTimers.has(userId)) {
-    clearTimeout(disconnectTimers.get(userId)!);
+    clearTimeout(disconnectTimers.get(userId));
   }
 
   const timer = setTimeout(async () => {
