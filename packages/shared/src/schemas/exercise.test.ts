@@ -34,12 +34,12 @@ describe("siExerciseContentSchema", () => {
   });
 
   it("rejects missing scenario", () => {
-    const { scenario, ...noScenario } = valid;
+    const { scenario: _scenario, ...noScenario } = valid;
     expect(() => siExerciseContentSchema.parse(noScenario)).toThrow();
   });
 
   it("rejects missing question", () => {
-    const { question, ...noQuestion } = valid;
+    const { question: _question, ...noQuestion } = valid;
     expect(() => siExerciseContentSchema.parse(noQuestion)).toThrow();
   });
 
@@ -92,7 +92,7 @@ describe("cmExerciseContentSchema", () => {
   });
 
   it("rejects missing instruction", () => {
-    const { instruction, ...noInstruction } = valid;
+    const { instruction: _instruction, ...noInstruction } = valid;
     expect(() => cmExerciseContentSchema.parse(noInstruction)).toThrow();
   });
 });
@@ -117,7 +117,7 @@ describe("ipExerciseContentSchema", () => {
   });
 
   it("allows optional zones", () => {
-    const { zones, ...noZones } = valid;
+    const { zones: _zones, ...noZones } = valid;
     const result = ipExerciseContentSchema.parse(noZones);
     expect(result.zones).toBeUndefined();
   });
@@ -182,7 +182,7 @@ describe("stExerciseContentSchema", () => {
   });
 
   it("rejects missing microExplanation", () => {
-    const { microExplanation, ...noMicro } = valid.steps[0];
+    const { microExplanation: _microExplanation, ...noMicro } = valid.steps[0];
     expect(() =>
       stExerciseContentSchema.parse({ ...valid, steps: [noMicro] }),
     ).toThrow();

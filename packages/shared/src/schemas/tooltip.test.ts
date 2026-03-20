@@ -21,17 +21,17 @@ describe("tooltipSchema", () => {
   });
 
   it("rejects missing term", () => {
-    const { term, ...noTerm } = valid;
+    const { term: _term, ...noTerm } = valid;
     expect(() => tooltipSchema.parse(noTerm)).toThrow();
   });
 
   it("rejects missing definition", () => {
-    const { definition, ...noDef } = valid;
+    const { definition: _definition, ...noDef } = valid;
     expect(() => tooltipSchema.parse(noDef)).toThrow();
   });
 
   it("rejects missing analogy", () => {
-    const { analogy, ...noAnalogy } = valid;
+    const { analogy: _analogy, ...noAnalogy } = valid;
     expect(() => tooltipSchema.parse(noAnalogy)).toThrow();
   });
 
