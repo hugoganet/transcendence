@@ -36,7 +36,7 @@ disclaimersRouter.get(
   requireAuth,
   validate({ params: moduleIdParamSchema }),
   async (req: Request, res: Response) => {
-    const disclaimer = getModuleDisclaimerResponse(req.params.moduleId);
+    const disclaimer = getModuleDisclaimerResponse(String(req.params.moduleId));
     res.json({ data: disclaimer });
   },
 );

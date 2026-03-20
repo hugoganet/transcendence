@@ -108,7 +108,7 @@ export async function getAchievements(userId: string): Promise<AchievementStatus
     title: a.title,
     description: a.description,
     iconUrl: a.iconUrl,
-    type: a.type,
+    type: a.type as "MODULE_COMPLETION" | "TOKEN_THRESHOLD" | "STREAK_TARGET",
     threshold: a.threshold,
     earnedAt: a.userAchievements[0]?.earnedAt.toISOString() ?? null,
   }));

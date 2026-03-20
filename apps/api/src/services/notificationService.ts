@@ -10,7 +10,8 @@ export async function createNotification(
   data?: unknown,
 ) {
   return prisma.notification.create({
-    data: { userId, type, title, body, data: data ?? null },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data: { userId, type, title, body, data: (data ?? null) as any },
   });
 }
 

@@ -26,7 +26,9 @@ describe("Auth flow (real DB + real Redis sessions)", () => {
       where: { email: credentials.email },
     });
     expect(dbUser).not.toBeNull();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(dbUser!.email).toBe(credentials.email);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     expect(dbUser!.ageConfirmed).toBe(true);
   });
 

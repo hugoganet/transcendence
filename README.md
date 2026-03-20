@@ -6,9 +6,11 @@ Most people are confused by blockchain, crypto, NFTs, and all that world. Existi
 
 ## Current State
 
-**Backend: complete.** All 8 epics (48 stories) are implemented, tested, and deployed. This includes authentication (local + OAuth + 2FA), curriculum engine, exercise system, token economy, gamification, social features, notifications, and GDPR compliance.
+**Backend: ✅ complete.** All 8 epics (50+ endpoints, 17 integration test files) are implemented and tested. This includes authentication (local + OAuth + 2FA), curriculum engine, exercise system, token economy, gamification, social features, notifications, and GDPR compliance.
 
-**Frontend: not started.** The `apps/web` directory contains only scaffolding (landing page, Privacy Policy, Terms of Service). The real frontend development begins now.
+**Content: ✅ complete.** All 69 missions in EN and FR, 40 tooltips (EN + FR), tooltip trigger maps, full UI copy (15 sections, EN + FR), and 9 QA/spec docs. Branch `feat/arthur-content-curriculum` is 6 commits ahead of main.
+
+**Frontend: 🚧 not started.** The `apps/web` directory contains only scaffolding (landing page, Privacy Policy, Terms of Service). The real frontend development begins now.
 
 ### What's ready for the frontend team
 
@@ -17,8 +19,16 @@ Most people are confused by blockchain, crypto, NFTs, and all that world. Existi
 - Shared Zod schemas and TypeScript types in `@transcendence/shared` — use them for form validation and API response typing
 - Full integration test suite (17 test files) as living documentation of API behavior
 - Docker Compose deployment with Nginx reverse proxy
+- Complete content layer: all mission text, exercise content, tooltips, and UI copy in EN + FR
 
 **Read the [Developer Guide](docs/DEVELOPER_GUIDE.md) to get started.** It covers everything: setup, architecture, full API reference, database schema, testing, and known gotchas.
+
+### Branch state
+
+| Branch | Status |
+|--------|--------|
+| `main` | Backend complete, original README/dev guide |
+| `feat/arthur-content-curriculum` | +6 commits — all content, specs, and QA docs |
 
 ## Quick Start
 
@@ -45,6 +55,22 @@ pnpm dev
 
 For the full setup (test database, environment variables, Docker deployment), see the [Developer Guide](docs/DEVELOPER_GUIDE.md#4-getting-started).
 
+## Content Files
+
+All platform content lives in `content/`. The backend loads and validates it at startup via Zod. The frontend reads it through API responses — never directly from disk.
+
+| File | What it contains |
+|------|-----------------|
+| `content/structure.json` | Full curriculum tree: 6 categories → 18 chapters → 69 missions (IDs, exercise types, progressive reveal flags) |
+| `content/en/missions.json` | All EN mission text — title, learning intro, exercise content (question, options/pairs/blanks, correct answer, explanation) |
+| `content/fr/missions.json` | Same, in French |
+| `content/en/tooltips.json` | 40 blockchain term definitions in EN (term, short definition, full explanation) |
+| `content/fr/tooltips.json` | Same, in French |
+| `content/en/tooltip-triggers.json` | Map of which tooltips appear contextually in each mission (EN) |
+| `content/fr/tooltip-triggers.json` | Same, in French |
+| `content/en/ui.json` | All platform UI copy in EN — 15 sections: navigation, auth, curriculum, exercises, tokens, gamification, wallet, dashboard, notifications, settings, onboarding, errors, tooltips, achievements, certificate |
+| `content/fr/ui.json` | Same, in French |
+
 ## Project Structure
 
 ```
@@ -54,10 +80,22 @@ transcendence/
 │   └── web/             # React 19 + Vite 7 frontend (to build)
 ├── packages/
 │   └── shared/          # Zod schemas, TypeScript types, constants
-├── content/             # Curriculum JSON (6 categories, 18 chapters, 69 missions)
+├── content/
+│   ├── structure.json   # Curriculum tree (6 categories, 18 chapters, 69 missions)
+│   ├── en/              # missions.json, tooltips.json, tooltip-triggers.json, ui.json
+│   └── fr/              # Same files, French translations
 ├── docker/              # Dockerfiles + Nginx config
 └── docs/
-    └── DEVELOPER_GUIDE.md  # ← Start here
+    ├── DEVELOPER_GUIDE.md          # ← Backend/setup start here
+    ├── TEAM_STATUS.md              # ← Team overview and handoff doc
+    ├── onboarding-flow-spec.md     # ← Frontend: read before building onboarding
+    ├── progressive-reveal-spec.md  # ← Frontend: read before building reveal mechanics
+    ├── accessibility-copy-spec.md  # ← Frontend: read before building exercises
+    ├── certificate-spec.md         # ← Frontend: read before building certificate page
+    ├── email-copy-spec.md          # Backend/FR: 3 new emails to implement
+    ├── curriculum-syllabus.md      # Full chapter-by-chapter breakdown
+    ├── copy-bank-system-messages.md # All gamification copy
+    └── qa/                         # Test scenarios (core flow, reveals, gamification, FR)
 ```
 
 ## Tech Stack
@@ -90,6 +128,15 @@ transcendence/
 | Document | Description |
 |----------|-------------|
 | **[Developer Guide](docs/DEVELOPER_GUIDE.md)** | Full onboarding guide — setup, architecture, API reference, testing, deployment |
+| **[Team Status](docs/TEAM_STATUS.md)** | Who built what, branch state, content file reference, what's left |
+| [Onboarding Flow Spec](docs/onboarding-flow-spec.md) | Screen-by-screen onboarding flow for frontend |
+| [Progressive Reveal Spec](docs/progressive-reveal-spec.md) | 4 reveal mechanics with copy, trigger conditions, and implementation notes |
+| [Curriculum Syllabus](docs/curriculum-syllabus.md) | Chapter-by-chapter breakdown with pedagogical notes and reveal triggers |
+| [Copy Bank — System Messages](docs/copy-bank-system-messages.md) | All gamification copy: achievements, streaks, welcome-back, gas, disclaimers |
+| [Accessibility Copy Spec](docs/accessibility-copy-spec.md) | Copy and ARIA patterns for interactive exercises |
+| [Certificate Spec](docs/certificate-spec.md) | Certificate page design and share flow |
+| [Email Copy Spec](docs/email-copy-spec.md) | All email copy EN+FR (emails 5–7 are new, unimplemented) |
+| [QA Scenarios](docs/qa/) | Functional test scenarios for core flow, reveals, gamification, FR content |
 | [Architecture](_bmad-output/planning-artifacts/architecture.md) | Technical architecture decisions |
 | [Epics & Stories](_bmad-output/planning-artifacts/epics.md) | 8 epics, 48 stories with acceptance criteria |
 | [PRD](_bmad-output/planning-artifacts/prd.md) | Product requirements |
@@ -125,4 +172,6 @@ Features mapped to Transcendence subject modules (22 points total):
 
 | Name | Role |
 |------|------|
-| Hugo Ganet | Developer |
+| Hugo Ganet | Backend |
+| Arthur | Content & Product |
+| JB | Frontend |

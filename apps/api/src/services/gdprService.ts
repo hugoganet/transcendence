@@ -232,9 +232,9 @@ export async function downloadExport(
     where: { token },
   });
 
-  await logGdprAction(record!.userId, "EXPORT_DOWNLOADED", ipAddress);
+  await logGdprAction(record?.userId ?? "", "EXPORT_DOWNLOADED", ipAddress);
 
-  return record!.data;
+  return record?.data ?? null;
 }
 
 export async function requestAccountDeletion(
@@ -302,7 +302,7 @@ export async function confirmAccountDeletion(
   const record = await prisma.gdprDeletionToken.findUnique({
     where: { token },
   });
-  const userId = record!.userId;
+  const userId = record?.userId ?? "";
 
   // Atomic: delete user + create audit log in a single transaction
   await prisma.$transaction([

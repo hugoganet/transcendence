@@ -22,8 +22,10 @@ export interface ServerToClientEvents {
   "presence:offline": (userId: string) => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ClientToServerEvents {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface InterServerEvents {}
 
 export interface SocketData {

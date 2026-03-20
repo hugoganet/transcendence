@@ -34,7 +34,7 @@ vi.mock("../utils/contentLoader.js", () => ({
 const { updateStreakWithClient, updateStreak, getStreak } =
   await import("./streakService.js");
 
-import { minimalCurriculum, createMockContent } from "../__fixtures__/curriculum.js";
+import { createMockContent } from "../__fixtures__/curriculum.js";
 const setupContent = createMockContent(mockGetContent);
 
 beforeEach(() => {

@@ -121,8 +121,11 @@ describe("Engagement Integration", () => {
 
       const reengagement = received.find((n) => n.type === "REENGAGEMENT");
       expect(reengagement).toBeDefined();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(reengagement!.title).toBe("Welcome back!");
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(reengagement!.body).toContain("1 mission");
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(reengagement!.body).toContain("Pick up where you left off!");
     });
 
@@ -214,8 +217,11 @@ describe("Engagement Integration", () => {
 
       const reengagement = received.find((n) => n.type === "REENGAGEMENT");
       expect(reengagement).toBeDefined();
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(reengagement!.body).toContain("3 missions");
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       expect(reengagement!.body).toContain("1 chapter");
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const data = reengagement!.data as { totalMissionsCompleted: number; totalChaptersCompleted: number };
       expect(data.totalMissionsCompleted).toBe(3);
       expect(data.totalChaptersCompleted).toBe(1);

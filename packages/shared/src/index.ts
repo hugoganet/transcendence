@@ -44,6 +44,7 @@ export {
   missionExerciseStatusSchema,
 } from "./schemas/exercise.js";
 export { tooltipSchema, tooltipCollectionSchema, termParamSchema } from "./schemas/tooltip.js";
+export { localeParamSchema, type LocaleParam } from "./schemas/locale.js";
 export {
   missionIdParamSchema,
   missionStatusSchema,
@@ -87,7 +88,7 @@ export {
   DEFAULT_PAGE_SIZE,
   MAX_PAGE_SIZE,
 } from "./constants/tokens.js";
-export { STREAK_REMINDER_INTERVAL_MS } from "./constants/scheduler.js";
+export { STREAK_REMINDER_INTERVAL_MS, REENGAGEMENT_CHECK_INTERVAL_MS } from "./constants/scheduler.js";
 export {
   AchievementType,
   ACHIEVEMENT_DEFINITIONS,

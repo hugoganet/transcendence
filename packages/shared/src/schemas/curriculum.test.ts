@@ -92,7 +92,7 @@ describe("missionSchema", () => {
   });
 
   it("rejects missing required fields", () => {
-    const { name, ...noName } = validMission;
+    const { name: _name, ...noName } = validMission;
     expect(() => missionSchema.parse(noName)).toThrow();
   });
 

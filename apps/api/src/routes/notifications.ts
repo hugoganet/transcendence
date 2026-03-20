@@ -57,7 +57,7 @@ notificationsRouter.patch(
   validate({ params: notificationIdParamSchema }),
   async (req: Request, res: Response) => {
     const user = req.user as Express.User;
-    await markAsRead(user.id, req.params.id);
+    await markAsRead(user.id, String(req.params.id));
     res.status(204).send();
   },
 );

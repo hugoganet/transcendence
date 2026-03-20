@@ -79,7 +79,8 @@ export function loadCurriculum(): CurriculumStructure {
 export function loadMissions(locale: string): MissionContentCollection {
   const file = `${locale}/missions.json`;
   const data = readJsonFile(file);
-  return validateWithContext<MissionContentCollection>(missionContentCollectionSchema, data, file);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return validateWithContext<MissionContentCollection>(missionContentCollectionSchema as any, data, file);
 }
 
 export function loadTooltips(locale: string): TooltipCollection {

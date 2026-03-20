@@ -22,6 +22,7 @@ declare global {
       ageConfirmed: boolean;
       twoFactorEnabled: boolean;
       twoFactorSecret: string | null;
+      disclaimerAcceptedAt: Date | null;
       createdAt: Date;
       updatedAt: Date;
     }

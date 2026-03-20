@@ -41,7 +41,7 @@ friendsRouter.post(
   validate({ params: friendUserIdParamSchema }),
   async (req: Request, res: Response) => {
     const user = req.user as Express.User;
-    const data = await sendFriendRequest(user.id, req.params.userId);
+    const data = await sendFriendRequest(user.id, String(req.params.userId));
     res.status(201).json({ data });
   },
 );
@@ -53,7 +53,7 @@ friendsRouter.post(
   validate({ params: friendUserIdParamSchema }),
   async (req: Request, res: Response) => {
     const user = req.user as Express.User;
-    const data = await acceptFriendRequest(user.id, req.params.userId);
+    const data = await acceptFriendRequest(user.id, String(req.params.userId));
     res.json({ data });
   },
 );
@@ -65,7 +65,7 @@ friendsRouter.delete(
   validate({ params: friendUserIdParamSchema }),
   async (req: Request, res: Response) => {
     const user = req.user as Express.User;
-    await removeFriend(user.id, req.params.userId);
+    await removeFriend(user.id, String(req.params.userId));
     res.status(204).send();
   },
 );
