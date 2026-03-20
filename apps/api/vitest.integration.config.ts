@@ -13,7 +13,7 @@ export default defineConfig({
     env: {
       DATABASE_URL:
         process.env.DATABASE_URL_TEST ??
-        "postgresql://postgres:postgres@127.0.0.1:54322/transcendence_test",
+        "postgresql://transcendence:transcendence@127.0.0.1:54322/transcendence_test",
       NODE_ENV: "test",
       SESSION_SECRET: "integration-test-secret",
       SESSION_TTL_SECONDS: "1800",

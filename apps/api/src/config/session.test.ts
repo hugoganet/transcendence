@@ -23,6 +23,9 @@ vi.mock("express-session", () => ({
   default: mockSession,
 }));
 
+// Mock env.ts to prevent dotenv from re-loading SESSION_SECRET on re-import
+vi.mock("./env.js", () => ({}));
+
 // Set required env vars before import
 process.env.SESSION_SECRET = "test-secret-for-tests";
 process.env.SESSION_TTL_SECONDS = "3600";

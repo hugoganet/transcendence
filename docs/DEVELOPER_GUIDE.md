@@ -1,6 +1,6 @@
 # Transcendence — Developer Guide
 
-> Last updated: 2026-03-13
+> Last updated: 2026-03-20
 
 This document is your onboarding reference for the Transcendence project. It covers everything built so far — architecture, API, database, testing, deployment — so you can contribute from day one.
 
@@ -130,40 +130,59 @@ git clone <repo-url> && cd transcendence
 pnpm install
 
 # 2. Start PostgreSQL and Redis (dev containers)
-# You need two databases: one for dev (port 54322), one for tests (same server).
-# If you use docker-compose for dev infra, make sure ports don't collide
-# with the production docker-compose.yml.
-#
-# Quick start with standalone containers:
+# Port 54322 avoids conflicts with any local Postgres on the default 5432.
+# The test database is auto-created by the integration test setup.
 docker run -d --name transcendence-db \
-  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres \
+  -e POSTGRES_USER=transcendence -e POSTGRES_PASSWORD=transcendence -e POSTGRES_DB=transcendence \
   -p 54322:5432 postgres:17
 
 docker run -d --name transcendence-redis -p 6379:6379 redis:7-alpine
 
 # 3. Configure environment
-cp apps/api/.env.example apps/api/.env   # If .env.example exists
-# Otherwise create apps/api/.env with at minimum:
-#   DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres
-#   DATABASE_POOL_SIZE=10
+# The project uses a SINGLE .env file at the repo root.
+# This file is shared by both local dev (dotenv) and Docker Compose.
+cat > .env << 'EOF'
+# Server
+PORT=3000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+
+# Database (local dev)
+DATABASE_URL=postgresql://transcendence:transcendence@localhost:54322/transcendence?schema=public
+DATABASE_POOL_SIZE=10
+
+# Database (Docker — used by docker-compose)
+POSTGRES_USER=transcendence
+POSTGRES_PASSWORD=transcendence
+POSTGRES_DB=transcendence
+
+# Redis
+REDIS_URL=redis://localhost:6379
+
+# Rate Limiting
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX=100
+
+# Session
+SESSION_SECRET=docker-dev-secret-not-for-production
+SESSION_TTL_SECONDS=1800
+
+# Frontend (Vite — baked at build time)
+VITE_API_URL=https://localhost
+EOF
 
 # 4. Generate Prisma client + run migrations + seed
 pnpm --filter api db:generate
 pnpm --filter api db:migrate
 pnpm --filter api db:seed
 
-# 5. Create the test database (for integration tests)
-docker exec transcendence-db psql -U postgres -c "CREATE DATABASE transcendence_test;"
-DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:54322/transcendence_test" \
-  pnpm --filter api db:migrate:deploy
-DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:54322/transcendence_test" \
-  pnpm --filter api db:seed
-
-# 6. Start dev servers
+# 5. Start dev servers
 pnpm dev
 # API: http://localhost:3000
 # Web: http://localhost:5173
 ```
+
+> **Note:** The test database (`transcendence_test`) is automatically created by the integration test global setup — no manual creation needed. Just run `pnpm test:integration`.
 
 ### Verify it works
 
@@ -666,7 +685,7 @@ pnpm test:integration
 
 ### Integration test infrastructure
 
-**Test database:** `postgresql://postgres:postgres@127.0.0.1:54322/transcendence_test` (override with `DATABASE_URL_TEST`)
+**Test database:** `postgresql://transcendence:transcendence@127.0.0.1:54322/transcendence_test` (override with `DATABASE_URL_TEST`)
 
 **Test Redis:** `redis://localhost:6379/1` (database 1, separate from dev on database 0)
 
@@ -749,12 +768,14 @@ docker-compose.yml defines 4 services:
 mkdir -p docker/nginx/certs
 mkcert -cert-file docker/nginx/certs/cert.pem -key-file docker/nginx/certs/key.pem localhost
 
-# Create a .env at the repo root for docker-compose:
+# The root .env is shared between local dev and Docker Compose.
+# For production, update the secrets:
 cat > .env << 'EOF'
 POSTGRES_USER=transcendence
 POSTGRES_PASSWORD=change-me-in-production
 POSTGRES_DB=transcendence
 SESSION_SECRET=change-me-in-production
+DATABASE_URL=postgresql://transcendence:change-me-in-production@db:5432/transcendence?schema=public
 EOF
 
 # Build and start
@@ -774,6 +795,8 @@ curl -k https://localhost/api/v1/health
 - **Security headers:** HSTS, X-Content-Type-Options, X-Frame-Options (SAMEORIGIN)
 
 ### Environment variables reference
+
+All environment variables are configured in a **single `.env` file at the repo root**. This file is used by both `dotenv` (local dev via `pnpm dev`) and Docker Compose (production via `docker compose up`). The API's `dotenv` config (`apps/api/src/config/env.ts`) resolves the path to the monorepo root automatically.
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|

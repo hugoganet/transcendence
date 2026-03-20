@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./env.js";
 import { createClient } from "redis";
 import session from "express-session";
 import { RedisStore } from "connect-redis";

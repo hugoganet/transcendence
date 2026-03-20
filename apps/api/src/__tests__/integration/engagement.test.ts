@@ -239,6 +239,12 @@ describe("Engagement Integration", () => {
         },
       });
 
+      // User must be connected via Socket.IO (AC #5: only send to connected users)
+      const client = createSocketClient(user.cookie);
+      clients.push(client);
+      await waitForEvent(client, "connect");
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       // Call checkStreakReminders directly
       const { checkStreakReminders } = await import("../../services/engagementService.js");
       const count = await checkStreakReminders(ioServer);
@@ -275,7 +281,7 @@ describe("Engagement Integration", () => {
       // User is not connected, so email should be sent
       expect(sendEmailSpy).toHaveBeenCalledWith(
         "engage-user@example.com",
-        expect.any(String),
+        null, // User registered without a displayName
         expect.objectContaining({
           totalMissions: 1,
           totalChapters: 0,

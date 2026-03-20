@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./env.js";
 import Redis from "ioredis";
 
 // Two Redis Client Libraries (Epic 1, Stories 1.3-1.4)
