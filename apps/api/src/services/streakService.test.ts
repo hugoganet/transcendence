@@ -34,6 +34,9 @@ vi.mock("../utils/contentLoader.js", () => ({
 const { updateStreakWithClient, updateStreak, getStreak } =
   await import("./streakService.js");
 
+import type { DbClient } from "./streakService.js";
+const mockClient = mockPrisma as unknown as DbClient;
+
 import { minimalCurriculum, createMockContent } from "../__fixtures__/curriculum.js";
 const setupContent = createMockContent(mockGetContent);
 
@@ -51,7 +54,7 @@ describe("updateStreakWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    await updateStreakWithClient(mockPrisma, "user-1");
+    await updateStreakWithClient(mockClient, "user-1");
 
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
       where: { id: "user-1" },
@@ -72,7 +75,7 @@ describe("updateStreakWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    await updateStreakWithClient(mockPrisma, "user-1");
+    await updateStreakWithClient(mockClient, "user-1");
 
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
       where: { id: "user-1" },
@@ -92,7 +95,7 @@ describe("updateStreakWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    await updateStreakWithClient(mockPrisma, "user-1");
+    await updateStreakWithClient(mockClient, "user-1");
 
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
       where: { id: "user-1" },
@@ -114,7 +117,7 @@ describe("updateStreakWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    await updateStreakWithClient(mockPrisma, "user-1");
+    await updateStreakWithClient(mockClient, "user-1");
 
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
       where: { id: "user-1" },
@@ -136,7 +139,7 @@ describe("updateStreakWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    await updateStreakWithClient(mockPrisma, "user-1");
+    await updateStreakWithClient(mockClient, "user-1");
 
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
       where: { id: "user-1" },
@@ -158,7 +161,7 @@ describe("updateStreakWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    await updateStreakWithClient(mockPrisma, "user-1");
+    await updateStreakWithClient(mockClient, "user-1");
 
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
       where: { id: "user-1" },

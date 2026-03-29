@@ -33,7 +33,7 @@ async function createUserWithCookie(email: string): Promise<TestUser> {
     password: "Test123!@#",
   });
 
-  const setCookies: string[] = loginRes.headers["set-cookie"] ?? [];
+  const setCookies: string[] = ([] as string[]).concat(loginRes.headers["set-cookie"] ?? []);
   const sidCookie = setCookies
     .map((c: string) => c.split(";")[0])
     .find((c: string) => c.startsWith("connect.sid="));

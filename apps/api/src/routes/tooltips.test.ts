@@ -87,6 +87,15 @@ const mockUser = {
   authProvider: "LOCAL" as const,
   twoFactorSecret: null,
   updatedAt: new Date("2026-01-01T00:00:00Z"),
+  tokenBalance: 0,
+  currentStreak: 0,
+  longestStreak: 0,
+  lastMissionCompletedAt: null,
+  revealTokens: false,
+  revealWallet: false,
+  revealGas: false,
+  revealDashboard: false,
+  notificationPreferences: JSON.parse('{"streakReminder":true,"reengagement":true,"moduleComplete":true,"tokenThreshold":true,"streakMilestone":true}'),
 };
 
 function createTestApp(authenticated = false, user = mockUser) {
@@ -105,7 +114,7 @@ function createTestApp(authenticated = false, user = mockUser) {
   if (authenticated) {
     app.use((req, _res, next) => {
       req.user = user as Express.User;
-      req.isAuthenticated = () => true;
+      req.isAuthenticated = (() => true) as any;
       next();
     });
   }

@@ -47,7 +47,7 @@ describe("Auth flow (real DB + real Redis sessions)", () => {
     // Session cookie should be set
     const cookies = res.headers["set-cookie"];
     expect(cookies).toBeDefined();
-    expect(cookies.some((c: string) => c.includes("connect.sid"))).toBe(true);
+    expect(([] as string[]).concat(cookies).some((c: string) => c.includes("connect.sid"))).toBe(true);
   });
 
   it("GET /api/v1/auth/me with session → returns user profile from real DB", async () => {

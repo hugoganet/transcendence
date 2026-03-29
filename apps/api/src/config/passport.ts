@@ -15,6 +15,8 @@ declare global {
     interface User {
       id: string;
       email: string | null;
+      passwordHash: string | null;
+      authProvider: string;
       displayName: string | null;
       bio: string | null;
       avatarUrl: string | null;
@@ -22,6 +24,16 @@ declare global {
       ageConfirmed: boolean;
       twoFactorEnabled: boolean;
       twoFactorSecret: string | null;
+      disclaimerAcceptedAt: Date | null;
+      tokenBalance: number;
+      currentStreak: number;
+      longestStreak: number;
+      lastMissionCompletedAt: Date | null;
+      revealTokens: boolean;
+      revealWallet: boolean;
+      revealGas: boolean;
+      revealDashboard: boolean;
+      notificationPreferences: unknown;
       createdAt: Date;
       updatedAt: Date;
     }

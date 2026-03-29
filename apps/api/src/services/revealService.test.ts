@@ -20,6 +20,9 @@ vi.mock("../config/database.js", () => ({
 const { triggerRevealWithClient, getReveals } =
   await import("./revealService.js");
 
+import type { DbClient } from "./revealService.js";
+const mockClient = mockPrisma as unknown as DbClient;
+
 beforeEach(() => {
   vi.clearAllMocks();
 });
@@ -96,7 +99,7 @@ describe("triggerRevealWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    const result = await triggerRevealWithClient(mockPrisma, "user-1", "tokensRevealed");
+    const result = await triggerRevealWithClient(mockClient, "user-1", "tokensRevealed");
 
     expect(result).toBe(true);
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
@@ -110,7 +113,7 @@ describe("triggerRevealWithClient", () => {
       revealTokens: true,
     });
 
-    const result = await triggerRevealWithClient(mockPrisma, "user-1", "tokensRevealed");
+    const result = await triggerRevealWithClient(mockClient, "user-1", "tokensRevealed");
 
     expect(result).toBe(false);
     expect(mockPrisma.user.update).not.toHaveBeenCalled();
@@ -119,7 +122,7 @@ describe("triggerRevealWithClient", () => {
   it("with unknown mechanic returns false (no error)", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-    const result = await triggerRevealWithClient(mockPrisma, "user-1", "unknownMechanic");
+    const result = await triggerRevealWithClient(mockClient, "user-1", "unknownMechanic");
 
     expect(result).toBe(false);
     expect(mockPrisma.user.findUniqueOrThrow).not.toHaveBeenCalled();
@@ -137,7 +140,7 @@ describe("triggerRevealWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    const result = await triggerRevealWithClient(mockPrisma, "user-1", "walletRevealed");
+    const result = await triggerRevealWithClient(mockClient, "user-1", "walletRevealed");
 
     expect(result).toBe(true);
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
@@ -152,7 +155,7 @@ describe("triggerRevealWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    const result = await triggerRevealWithClient(mockPrisma, "user-1", "gasRevealed");
+    const result = await triggerRevealWithClient(mockClient, "user-1", "gasRevealed");
 
     expect(result).toBe(true);
     expect(mockPrisma.user.update).toHaveBeenCalledWith({
@@ -167,7 +170,7 @@ describe("triggerRevealWithClient", () => {
     });
     mockPrisma.user.update.mockResolvedValue({});
 
-    const result = await triggerRevealWithClient(mockPrisma, "user-1", "dashboardRevealed");
+    const result = await triggerRevealWithClient(mockClient, "user-1", "dashboardRevealed");
 
     expect(result).toBe(true);
     expect(mockPrisma.user.update).toHaveBeenCalledWith({

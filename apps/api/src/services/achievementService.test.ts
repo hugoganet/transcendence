@@ -26,6 +26,9 @@ const {
   getAchievements,
 } = await import("./achievementService.js");
 
+import type { DbClient } from "./achievementService.js";
+const mockClient = mockPrisma as unknown as DbClient;
+
 const MOCK_ACHIEVEMENTS = [
   { id: "a1", code: "BLOCKCHAIN_BEGINNER", title: "Blockchain Beginner", description: "Complete Category 1", iconUrl: "", type: "MODULE_COMPLETION", threshold: 1, createdAt: new Date() },
   { id: "a2", code: "CRYPTO_CURIOUS", title: "Crypto Curious", description: "Complete Category 2", iconUrl: "", type: "MODULE_COMPLETION", threshold: 2, createdAt: new Date() },
@@ -45,7 +48,7 @@ beforeEach(() => {
 describe("checkAndAwardAchievementsWithClient", () => {
   it("awards MODULE_COMPLETION when category is completed", async () => {
     const result = await checkAndAwardAchievementsWithClient(
-      mockPrisma,
+      mockClient,
       "user-1",
       { categoryCompleted: 1, tokenBalance: 5, currentStreak: 1 },
     );
@@ -61,7 +64,7 @@ describe("checkAndAwardAchievementsWithClient", () => {
 
   it("awards all qualifying TOKEN_THRESHOLD achievements", async () => {
     const result = await checkAndAwardAchievementsWithClient(
-      mockPrisma,
+      mockClient,
       "user-1",
       { tokenBalance: 55, currentStreak: 1 },
     );
@@ -81,7 +84,7 @@ describe("checkAndAwardAchievementsWithClient", () => {
 
   it("awards STREAK_TARGET when streak reaches threshold", async () => {
     const result = await checkAndAwardAchievementsWithClient(
-      mockPrisma,
+      mockClient,
       "user-1",
       { tokenBalance: 5, currentStreak: 3 },
     );
@@ -93,7 +96,7 @@ describe("checkAndAwardAchievementsWithClient", () => {
 
   it("awards nothing when no criteria met", async () => {
     const result = await checkAndAwardAchievementsWithClient(
-      mockPrisma,
+      mockClient,
       "user-1",
       { tokenBalance: 5, currentStreak: 1 },
     );
@@ -108,7 +111,7 @@ describe("checkAndAwardAchievementsWithClient", () => {
     ]);
 
     const result = await checkAndAwardAchievementsWithClient(
-      mockPrisma,
+      mockClient,
       "user-1",
       { tokenBalance: 55, currentStreak: 1 },
     );
@@ -125,7 +128,7 @@ describe("checkAndAwardAchievementsWithClient", () => {
 
   it("awards multiple criteria at once", async () => {
     const result = await checkAndAwardAchievementsWithClient(
-      mockPrisma,
+      mockClient,
       "user-1",
       { categoryCompleted: 1, tokenBalance: 55, currentStreak: 7 },
     );

@@ -79,7 +79,7 @@ export function loadCurriculum(): CurriculumStructure {
 export function loadMissions(locale: string): MissionContentCollection {
   const file = `${locale}/missions.json`;
   const data = readJsonFile(file);
-  return validateWithContext<MissionContentCollection>(missionContentCollectionSchema, data, file);
+  return validateWithContext(missionContentCollectionSchema, data, file) as MissionContentCollection;
 }
 
 export function loadTooltips(locale: string): TooltipCollection {

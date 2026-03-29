@@ -80,7 +80,7 @@ authRouter.post(
   (req: Request, res: Response, next: NextFunction) => {
     req.logout((err) => {
       if (err) return next(err);
-      req.session.destroy((destroyErr) => {
+      req.session!.destroy((destroyErr) => {
         if (destroyErr) return next(destroyErr);
         // Options must match session cookie config in config/session.ts
         res.clearCookie(SESSION_COOKIE_NAME, {
@@ -231,7 +231,7 @@ authRouter.post(
   validate({ body: totpCodeSchema }),
   async (req: Request, res: Response) => {
     await verify2FALogin((req.user as Express.User).id, req.body.code);
-    delete req.session.pending2FA;
+    delete req.session!.pending2FA;
     res.json({ data: sanitizeUser(req.user as Express.User) });
   },
 );
@@ -263,7 +263,7 @@ authRouter.get(
     if (!isStrategyConfigured("google")) {
       return next(new AppError(503, "OAUTH_PROVIDER_UNAVAILABLE", "Google OAuth is not configured"));
     }
-    passport.authenticate("google", { scope: ["profile", "email"], state: true })(req, res, next);
+    (passport.authenticate as any)("google", { scope: ["profile", "email"], state: true })(req, res, next);
   },
 );
 
@@ -274,7 +274,7 @@ authRouter.get(
     if (!isStrategyConfigured("google")) {
       return res.redirect(`${FRONTEND_URL}/auth/callback?error=oauth_failed`);
     }
-    passport.authenticate(
+    (passport.authenticate as any)(
       "google",
       (err: Error | null, user: Express.User | false) => {
         if (err || !user) {
@@ -298,7 +298,7 @@ authRouter.get(
     if (!isStrategyConfigured("facebook")) {
       return next(new AppError(503, "OAUTH_PROVIDER_UNAVAILABLE", "Facebook OAuth is not configured"));
     }
-    passport.authenticate("facebook", { scope: ["public_profile", "email"], state: true })(req, res, next);
+    (passport.authenticate as any)("facebook", { scope: ["public_profile", "email"], state: true })(req, res, next);
   },
 );
 
@@ -309,7 +309,7 @@ authRouter.get(
     if (!isStrategyConfigured("facebook")) {
       return res.redirect(`${FRONTEND_URL}/auth/callback?error=oauth_failed`);
     }
-    passport.authenticate(
+    (passport.authenticate as any)(
       "facebook",
       (err: Error | null, user: Express.User | false) => {
         if (err || !user) {

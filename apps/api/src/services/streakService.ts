@@ -3,7 +3,7 @@ import { getContent } from "../utils/contentLoader.js";
 import type { StreakStatus } from "@transcendence/shared";
 
 /** Minimal interface for a Prisma-like client (real or transaction). */
-type DbClient = Pick<typeof prisma, "user">;
+export type DbClient = Pick<typeof prisma, "user">;
 
 function getUtcDateString(date: Date): string {
   return date.toISOString().slice(0, 10);

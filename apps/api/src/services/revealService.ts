@@ -2,7 +2,7 @@ import { prisma } from "../config/database.js";
 import type { RevealStatus } from "@transcendence/shared";
 
 /** Minimal interface for a Prisma-like client (real or transaction). */
-type DbClient = Pick<typeof prisma, "user">;
+export type DbClient = Pick<typeof prisma, "user">;
 
 /** Maps API mechanic names to DB column names on the User model. */
 const MECHANIC_TO_FIELD: Record<
@@ -40,7 +40,7 @@ export async function triggerRevealWithClient(
     select: { [field]: true },
   });
 
-  if ((user as Record<string, boolean>)[field]) {
+  if ((user as unknown as Record<string, boolean>)[field]) {
     return false;
   }
 

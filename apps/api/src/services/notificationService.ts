@@ -1,3 +1,4 @@
+import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";
 import type { IO } from "../socket/index.js";
@@ -10,7 +11,7 @@ export async function createNotification(
   data?: unknown,
 ) {
   return prisma.notification.create({
-    data: { userId, type, title, body, data: data ?? null },
+    data: { userId, type, title, body, data: (data ?? null) as unknown as Prisma.InputJsonValue },
   });
 }
 

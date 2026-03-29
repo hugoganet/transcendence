@@ -40,6 +40,8 @@ const {
   getShareableUrl,
 } = await import("./certificateService.js");
 
+import type { DbClient } from "./certificateService.js";
+
 beforeEach(() => {
   vi.clearAllMocks();
 });
@@ -65,7 +67,7 @@ describe("generateCertificateWithClient", () => {
 
     client.certificate.create.mockResolvedValue(mockCertRecord);
 
-    const result = await generateCertificateWithClient(client, "user-1", "Alice");
+    const result = await generateCertificateWithClient(client as unknown as DbClient, "user-1", "Alice");
 
     expect(client.certificate.create).toHaveBeenCalledWith({
       data: expect.objectContaining({
@@ -88,7 +90,7 @@ describe("generateCertificateWithClient", () => {
       userProgress: { count: vi.fn() },
     };
 
-    const result = await generateCertificateWithClient(client, "user-1", "Alice");
+    const result = await generateCertificateWithClient(client as unknown as DbClient, "user-1", "Alice");
 
     expect(client.certificate.create).not.toHaveBeenCalled();
     expect(result.id).toBe("cert-123");
@@ -102,7 +104,7 @@ describe("generateCertificateWithClient", () => {
     };
 
     await expect(
-      generateCertificateWithClient(client, "user-1", "Alice"),
+      generateCertificateWithClient(client as unknown as DbClient, "user-1", "Alice"),
     ).rejects.toMatchObject({
       statusCode: 500,
       code: "CERTIFICATE_GENERATION_FAILED",
@@ -120,7 +122,7 @@ describe("generateCertificateWithClient", () => {
       displayName: null,
     });
 
-    const result = await generateCertificateWithClient(client, "user-1", null);
+    const result = await generateCertificateWithClient(client as unknown as DbClient, "user-1", null);
 
     expect(result.displayName).toBeNull();
     expect(result.totalMissions).toBe(3);
@@ -137,7 +139,7 @@ describe("generateCertificateWithClient", () => {
       Promise.resolve({ ...mockCertRecord, shareToken: data.shareToken }),
     );
 
-    const result = await generateCertificateWithClient(client, "user-1", "Alice");
+    const result = await generateCertificateWithClient(client as unknown as DbClient, "user-1", "Alice");
 
     // UUID v4 format
     expect(result.shareToken).toMatch(

@@ -148,9 +148,18 @@ const mockUser = {
   ageConfirmed: true,
   twoFactorSecret: null,
   twoFactorEnabled: false,
-  disclaimerAcceptedAt: null,
+  disclaimerAcceptedAt: null as Date | null,
   createdAt: new Date("2026-01-01T00:00:00Z"),
   updatedAt: new Date("2026-01-01T00:00:00Z"),
+  tokenBalance: 0,
+  currentStreak: 0,
+  longestStreak: 0,
+  lastMissionCompletedAt: null as Date | null,
+  revealTokens: false,
+  revealWallet: false,
+  revealGas: false,
+  revealDashboard: false,
+  notificationPreferences: JSON.parse('{"streakReminder":true,"reengagement":true,"moduleComplete":true,"tokenThreshold":true,"streakMilestone":true}'),
 };
 
 function createTestApp(sessionOpts?: Partial<session.SessionOptions>) {

@@ -1,3 +1,4 @@
+import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";
@@ -293,7 +294,7 @@ export async function submitExercise(
       data: {
         userId,
         exerciseId,
-        answer: body as unknown as Record<string, unknown>,
+        answer: body as unknown as Prisma.InputJsonValue,
         correct,
       },
     });

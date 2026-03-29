@@ -2,7 +2,7 @@ import { prisma } from "../config/database.js";
 import type { AchievementStatus } from "@transcendence/shared";
 
 /** Minimal interface for a Prisma-like client (real or transaction). */
-type DbClient = Pick<typeof prisma, "achievement" | "userAchievement">;
+export type DbClient = Pick<typeof prisma, "achievement" | "userAchievement">;
 
 export interface AchievementContext {
   categoryCompleted?: number;
@@ -108,7 +108,7 @@ export async function getAchievements(userId: string): Promise<AchievementStatus
     title: a.title,
     description: a.description,
     iconUrl: a.iconUrl,
-    type: a.type,
+    type: a.type as AchievementStatus["type"],
     threshold: a.threshold,
     earnedAt: a.userAchievements[0]?.earnedAt.toISOString() ?? null,
   }));

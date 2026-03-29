@@ -73,6 +73,15 @@ const mockUser = {
   authProvider: "LOCAL" as const,
   twoFactorSecret: null,
   updatedAt: new Date("2026-01-01T00:00:00Z"),
+  tokenBalance: 0,
+  currentStreak: 0,
+  longestStreak: 0,
+  lastMissionCompletedAt: null,
+  revealTokens: false,
+  revealWallet: false,
+  revealGas: false,
+  revealDashboard: false,
+  notificationPreferences: {},
 };
 
 describe("userService", () => {

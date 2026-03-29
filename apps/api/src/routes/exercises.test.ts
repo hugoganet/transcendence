@@ -153,7 +153,7 @@ function createTestApp(authenticated: boolean) {
   if (authenticated) {
     app.use((req, _res, next) => {
       req.user = { id: "user-1", locale: "en" } as Express.User;
-      req.isAuthenticated = () => true;
+      req.isAuthenticated = (() => true) as any;
       next();
     });
   }

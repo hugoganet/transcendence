@@ -4,7 +4,7 @@ import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";
 import type { Certificate, PublicCertificate } from "@transcendence/shared";
 
-type DbClient = Pick<typeof prisma, "certificate" | "userProgress">;
+export type DbClient = Pick<typeof prisma, "certificate" | "userProgress">;
 
 export async function generateCertificateWithClient(
   client: DbClient,

@@ -37,7 +37,7 @@ async function createUserWithCookie(email: string): Promise<TestUser> {
   });
 
   // Extract connect.sid from Set-Cookie header
-  const setCookies: string[] = loginRes.headers["set-cookie"] ?? [];
+  const setCookies: string[] = ([] as string[]).concat(loginRes.headers["set-cookie"] ?? []);
   const sidCookie = setCookies
     .map((c: string) => c.split(";")[0])
     .find((c: string) => c.startsWith("connect.sid="));

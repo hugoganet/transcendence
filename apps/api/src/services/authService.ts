@@ -212,7 +212,7 @@ export async function invalidateUserSessions(
   userId: string,
 ): Promise<void> {
   const prefix = "sess:";
-  let cursor = 0;
+  let cursor = "0";
   do {
     const result = await sessionRedisClient.scan(cursor, {
       MATCH: `${prefix}*`,
@@ -232,7 +232,7 @@ export async function invalidateUserSessions(
         }
       }
     }
-  } while (cursor !== 0);
+  } while (cursor !== "0");
 }
 
 export async function setup2FA(userId: string) {
