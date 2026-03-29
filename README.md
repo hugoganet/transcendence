@@ -99,7 +99,7 @@ transcendence/
 
 ## Module Mapping
 
-Features mapped to Transcendence subject modules (22 points total):
+Features mapped to Transcendence subject modules (17 points total):
 
 | # | Subject Module | Pts | Features |
 |---|---------------|-----|----------|
@@ -112,14 +112,11 @@ Features mapped to Transcendence subject modules (22 points total):
 | 7 | User Mgmt: Standard user management (Major) | 2 | Profile, avatar, friends, online status, wallet-profile |
 | 8 | User Mgmt: OAuth 2.0 (Minor) | 1 | Google + Facebook + Instagram |
 | 9 | User Mgmt: 2FA (Minor) | 1 | Two-factor authentication |
-| 10 | AI: LLM system interface (Major) | 2 | AI Coach — adaptive, Feynman evaluation, market news interpretation |
-| 11 | AI: RAG system (Major) | 2 | AI Coach memory — user history, learning gaps, personalized coaching |
-| 12 | AI: Sentiment analysis (Minor) | 1 | Analyze user responses for confidence/confusion |
-| 13 | Gaming: Gamification (Minor) | 1 | Knowledge Tokens, daily streaks, achievements, leaderboards |
-| 14 | Accessibility: Multiple languages (Minor) | 1 | French + English + 1 more |
-| 15 | Accessibility: Additional browsers (Minor) | 1 | Chrome + Firefox + Safari |
-| 16 | Data: GDPR compliance (Minor) | 1 | Data export, deletion, confirmation emails |
-| | **TOTAL** | **22** | |
+| 10 | Gaming: Gamification (Minor) | 1 | Knowledge Tokens, daily streaks, achievements, leaderboards |
+| 11 | Accessibility: Multiple languages (Minor) | 1 | French + English + 1 more |
+| 12 | Accessibility: Additional browsers (Minor) | 1 | Chrome + Firefox + Safari |
+| 13 | Data: GDPR compliance (Minor) | 1 | Data export, deletion, confirmation emails |
+| | **TOTAL** | **17** | |
 
 ## Team
 
