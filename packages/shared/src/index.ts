@@ -89,10 +89,6 @@ export {
 } from "./constants/tokens.js";
 export { STREAK_REMINDER_INTERVAL_MS, REENGAGEMENT_CHECK_INTERVAL_MS } from "./constants/scheduler.js";
 export {
-  STREAK_REMINDER_INTERVAL_MS,
-  REENGAGEMENT_CHECK_INTERVAL_MS,
-} from "./constants/scheduler.js";
-export {
   AchievementType,
   ACHIEVEMENT_DEFINITIONS,
   type AchievementDefinition,
