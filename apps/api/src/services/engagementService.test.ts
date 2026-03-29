@@ -32,6 +32,7 @@ vi.mock("./notificationService.js", () => mockNotificationService);
 
 const mockEmailService = vi.hoisted(() => ({
   sendReEngagementEmail: vi.fn(),
+  sendStreakReminderEmail: vi.fn().mockResolvedValue(undefined),
 }));
 
 vi.mock("./emailService.js", () => mockEmailService);
@@ -298,6 +299,7 @@ describe("engagementService", () => {
           id: "user-1",
           currentStreak: 5,
           displayName: "Streak User",
+          email: "streak@example.com",
           notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
         },
       ]);
@@ -319,12 +321,13 @@ describe("engagementService", () => {
       );
     });
 
-    it("skips users who are not connected via Socket.IO", async () => {
+    it("sends email to offline users instead of in-app notification", async () => {
       mockPrisma.user.findMany.mockResolvedValue([
         {
           id: "user-1",
           currentStreak: 5,
           displayName: "Offline User",
+          email: "offline@example.com",
           notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
         },
       ]);
@@ -334,8 +337,15 @@ describe("engagementService", () => {
 
       const count = await checkStreakReminders(mockIo);
 
-      expect(count).toBe(0);
+      expect(count).toBe(1);
       expect(mockNotificationService.createAndPushNotification).not.toHaveBeenCalled();
+      expect(mockEmailService.sendStreakReminderEmail).toHaveBeenCalledWith(
+        "offline@example.com",
+        "en",
+        "Offline User",
+        5,
+        expect.stringContaining("/curriculum"),
+      );
     });
 
     it("skips users who opted out of streak reminders", async () => {
@@ -344,6 +354,7 @@ describe("engagementService", () => {
           id: "user-1",
           currentStreak: 3,
           displayName: "Opted Out",
+          email: "optout@example.com",
           notificationPreferences: { streakReminder: false, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
         },
       ]);
@@ -360,6 +371,7 @@ describe("engagementService", () => {
           id: "user-1",
           currentStreak: 5,
           displayName: "Already Notified",
+          email: "notified@example.com",
           notificationPreferences: { streakReminder: true, reengagement: true, moduleComplete: true, tokenThreshold: true, streakMilestone: true },
         },
       ]);

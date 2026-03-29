@@ -8,5 +8,6 @@
     "declaration": false,
     "declarationMap": false
   },
-  "include": ["src", "generated"]
+  "include": ["src", "generated"],
+  "exclude": ["src/**/*.test.ts", "src/**/*.spec.ts", "src/__tests__/**"]
 }

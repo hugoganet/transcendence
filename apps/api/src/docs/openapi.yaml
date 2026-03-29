@@ -1,0 +1,2328 @@
+openapi: 3.1.0
+info:
+  title: Transcendence API
+  version: 1.0.0
+  description: |
+    Educational platform API for the Transcendence project.
+    Most endpoints require session-based authentication via a `connect.sid` cookie.
+
+    **Standard response format:**
+    - Success: `{ data: T }` or `{ data: T[], meta: { page, pageSize, total } }`
+    - Error: `{ error: { code: string, message: string, details?: any } }`
+  contact:
+    name: Transcendence Team
+
+servers:
+  - url: /api/v1
+    description: API v1
+
+tags:
+  - name: Health
+    description: Health check
+  - name: Auth
+    description: Authentication, registration, password reset, 2FA, OAuth
+  - name: Users
+    description: User profile management, avatar upload, reveals, certificates
+  - name: Disclaimers
+    description: Legal disclaimers and onboarding acceptance
+  - name: Curriculum
+    description: Curriculum structure, mission details, progress, learning chain
+  - name: Tooltips
+    description: Glossary and tooltip lookups
+  - name: Exercises
+    description: Exercise submission and mission exercise status
+  - name: Tokens
+    description: Token balance and transaction history
+  - name: Gamification
+    description: Streaks, achievements, and leaderboard
+  - name: Social
+    description: Friends list, friend requests
+  - name: Certificates
+    description: Public certificate sharing
+  - name: GDPR
+    description: Data export and account deletion (GDPR compliance)
+  - name: Notifications
+    description: In-app notifications and preferences
+  - name: UI Copy
+    description: Localized UI strings
+
+components:
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: connect.sid
+      description: Express session cookie
+
+  schemas:
+    # ---------- Error ----------
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              example: VALIDATION_ERROR
+            message:
+              type: string
+              example: Invalid input
+            details:
+              description: Optional validation details
+
+    # ---------- Pagination meta ----------
+    PaginationMeta:
+      type: object
+      required: [page, pageSize, total]
+      properties:
+        page:
+          type: integer
+          minimum: 1
+        pageSize:
+          type: integer
+          minimum: 1
+        total:
+          type: integer
+          minimum: 0
+
+    # ---------- Auth ----------
+    RegisterInput:
+      type: object
+      required: [email, password, ageConfirmed]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          description: "Must contain uppercase, lowercase, and a digit"
+        ageConfirmed:
+          type: boolean
+
+    LoginInput:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 1
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+          nullable: true
+        displayName:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        locale:
+          type: string
+        ageConfirmed:
+          type: boolean
+        twoFactorEnabled:
+          type: boolean
+        disclaimerAcceptedAt:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+
+    LoginResponse2FA:
+      type: object
+      properties:
+        requires2FA:
+          type: boolean
+          example: true
+
+    PasswordResetRequest:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+
+    PasswordReset:
+      type: object
+      required: [token, password]
+      properties:
+        token:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 8
+
+    TotpCode:
+      type: object
+      required: [code]
+      properties:
+        code:
+          type: string
+          pattern: '^\d{6}$'
+          description: 6-digit TOTP code
+
+    TwoFactorSetupResponse:
+      type: object
+      properties:
+        secret:
+          type: string
+        qrCodeDataUrl:
+          type: string
+          description: Base64 data URL of the QR code
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    # ---------- Users ----------
+    UpdateProfileInput:
+      type: object
+      properties:
+        displayName:
+          type: string
+          minLength: 1
+          maxLength: 50
+        bio:
+          type: string
+          maxLength: 300
+      description: At least one field must be provided
+
+    RevealStatus:
+      type: object
+      properties:
+        tokensRevealed:
+          type: boolean
+        walletRevealed:
+          type: boolean
+        gasRevealed:
+          type: boolean
+        dashboardRevealed:
+          type: boolean
+
+    PublicProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        xp:
+          type: integer
+          minimum: 0
+        currentStreak:
+          type: integer
+          minimum: 0
+        achievements:
+          type: array
+          items:
+            $ref: "#/components/schemas/EarnedAchievement"
+        completionPercentage:
+          type: integer
+          minimum: 0
+          maximum: 100
+
+    EarnedAchievement:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        iconUrl:
+          type: string
+        earnedAt:
+          type: string
+          format: date-time
+
+    # ---------- Disclaimers ----------
+    Disclaimer:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        version:
+          type: string
+
+    # ---------- Curriculum ----------
+    CurriculumWithProgress:
+      type: object
+      description: Full curriculum tree with per-user progress overlay
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: "#/components/schemas/CategoryWithProgress"
+
+    CategoryWithProgress:
+      type: object
+      properties:
+        id:
+          type: string
+        order:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        platformMechanic:
+          type: string
+        status:
+          type: string
+          enum: [locked, available, inProgress, completed]
+        chapters:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChapterWithProgress"
+
+    ChapterWithProgress:
+      type: object
+      properties:
+        id:
+          type: string
+        order:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        disclaimerRequired:
+          type: boolean
+        status:
+          type: string
+          enum: [locked, available, inProgress, completed]
+        missions:
+          type: array
+          items:
+            $ref: "#/components/schemas/MissionWithProgress"
+
+    MissionWithProgress:
+      type: object
+      properties:
+        id:
+          type: string
+        order:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        exerciseType:
+          type: string
+          enum: [IP, CM, ST, SI]
+        estimatedMinutes:
+          type: integer
+          minimum: 2
+          maximum: 5
+        status:
+          type: string
+          enum: [locked, available, inProgress, completed]
+        progressiveReveal:
+          nullable: true
+          type: object
+          properties:
+            mechanic:
+              type: string
+              enum: [tokensRevealed, walletRevealed, gasRevealed, dashboardRevealed]
+            description:
+              type: string
+
+    MissionDetail:
+      type: object
+      description: Single mission with localized content and exercise data
+
+    CompleteMissionBody:
+      type: object
+      properties:
+        confidenceRating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Optional confidence self-rating
+
+    CompleteMissionResponse:
+      type: object
+      description: Result of completing a mission (tokens earned, unlocks, etc.)
+
+    ResumePoint:
+      type: object
+      description: The next mission the user should work on
+
+    LearningChain:
+      type: object
+      description: Visualization data for the learning chain
+
+    # ---------- Tooltips ----------
+    Tooltip:
+      type: object
+      properties:
+        term:
+          type: string
+        definition:
+          type: string
+        analogy:
+          type: string
+        relatedTerms:
+          type: array
+          items:
+            type: string
+
+    Glossary:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/Tooltip"
+
+    # ---------- Exercises ----------
+    ExerciseSubmission:
+      type: object
+      required: [type, submission]
+      description: Discriminated union on `type` field (SI | CM | IP | ST)
+      properties:
+        type:
+          type: string
+          enum: [SI, CM, IP, ST]
+        submission:
+          type: object
+          description: Shape depends on type
+
+    SISubmission:
+      type: object
+      required: [type, submission]
+      properties:
+        type:
+          type: string
+          enum: [SI]
+        submission:
+          type: object
+          required: [selectedOptionId]
+          properties:
+            selectedOptionId:
+              type: string
+
+    CMSubmission:
+      type: object
+      required: [type, submission]
+      properties:
+        type:
+          type: string
+          enum: [CM]
+        submission:
+          type: object
+          required: [matches]
+          properties:
+            matches:
+              type: array
+              items:
+                type: object
+                required: [termId, definitionId]
+                properties:
+                  termId:
+                    type: string
+                  definitionId:
+                    type: string
+
+    IPSubmission:
+      type: object
+      required: [type, submission]
+      properties:
+        type:
+          type: string
+          enum: [IP]
+        submission:
+          type: object
+          required: [positions]
+          properties:
+            positions:
+              type: array
+              items:
+                type: object
+                required: [itemId, position]
+                properties:
+                  itemId:
+                    type: string
+                  position:
+                    type: integer
+                    minimum: 0
+
+    STSubmission:
+      type: object
+      required: [type, submission]
+      properties:
+        type:
+          type: string
+          enum: [ST]
+        submission:
+          type: object
+          required: [stepAnswers]
+          properties:
+            stepAnswers:
+              type: array
+              items:
+                type: object
+                required: [stepId, selectedOptionId]
+                properties:
+                  stepId:
+                    type: string
+                  selectedOptionId:
+                    type: string
+
+    ExerciseResult:
+      type: object
+      properties:
+        correct:
+          type: boolean
+        score:
+          type: integer
+          minimum: 0
+        totalPoints:
+          type: integer
+          minimum: 1
+        feedback:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExerciseFeedbackItem"
+        gasFee:
+          type: integer
+        tokenBalance:
+          type: integer
+
+    ExerciseFeedbackItem:
+      type: object
+      properties:
+        itemId:
+          type: string
+        correct:
+          type: boolean
+        explanation:
+          type: string
+        correctAnswer:
+          type: string
+          nullable: true
+
+    MissionExerciseStatus:
+      type: object
+      properties:
+        missionId:
+          type: string
+        completable:
+          type: boolean
+        attempts:
+          type: integer
+          minimum: 0
+        lastAttemptCorrect:
+          type: boolean
+          nullable: true
+
+    # ---------- Tokens ----------
+    TokenBalance:
+      type: object
+      properties:
+        tokenBalance:
+          type: integer
+        totalEarned:
+          type: integer
+          minimum: 0
+        totalSpent:
+          type: integer
+          minimum: 0
+        lastEarned:
+          type: string
+          nullable: true
+
+    TokenTransaction:
+      type: object
+      properties:
+        id:
+          type: string
+        amount:
+          type: integer
+        type:
+          type: string
+          enum: [EARN, GAS_SPEND]
+        missionId:
+          type: string
+          nullable: true
+        exerciseId:
+          type: string
+          nullable: true
+        description:
+          type: string
+        createdAt:
+          type: string
+
+    # ---------- Gamification ----------
+    Streak:
+      type: object
+      properties:
+        currentStreak:
+          type: integer
+          minimum: 0
+        longestStreak:
+          type: integer
+          minimum: 0
+        lastMissionCompletedAt:
+          type: string
+          format: date-time
+          nullable: true
+        totalMissionsCompleted:
+          type: integer
+          minimum: 0
+        totalModulesMastered:
+          type: integer
+          minimum: 0
+
+    AchievementStatus:
+      type: object
+      properties:
+        id:
+          type: string
+        code:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        iconUrl:
+          type: string
+        type:
+          type: string
+          enum: [MODULE_COMPLETION, TOKEN_THRESHOLD, STREAK_TARGET]
+        threshold:
+          type: integer
+        earnedAt:
+          type: string
+          format: date-time
+          nullable: true
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+          minimum: 1
+        userId:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        missionsCompleted:
+          type: integer
+          minimum: 0
+
+    LeaderboardCurrentUser:
+      type: object
+      properties:
+        rank:
+          type: integer
+          minimum: 1
+          nullable: true
+        userId:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        missionsCompleted:
+          type: integer
+          minimum: 0
+
+    # ---------- Friends ----------
+    FriendListEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        online:
+          type: boolean
+
+    FriendRequestEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        avatarUrl:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+
+    FriendshipResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        requesterId:
+          type: string
+        addresseeId:
+          type: string
+        status:
+          type: string
+          enum: [PENDING, ACCEPTED]
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    # ---------- Certificates ----------
+    Certificate:
+      type: object
+      properties:
+        id:
+          type: string
+        displayName:
+          type: string
+          nullable: true
+        completionDate:
+          type: string
+          format: date-time
+        curriculumTitle:
+          type: string
+        shareToken:
+          type: string
+        totalMissions:
+          type: integer
+        totalCategories:
+          type: integer
+
+    PublicCertificate:
+      type: object
+      properties:
+        displayName:
+          type: string
+          nullable: true
+        completionDate:
+          type: string
+          format: date-time
+        curriculumTitle:
+          type: string
+        shareToken:
+          type: string
+        totalMissions:
+          type: integer
+        totalCategories:
+          type: integer
+
+    CertificateShareResponse:
+      type: object
+      properties:
+        shareUrl:
+          type: string
+          format: uri
+
+    # ---------- Notifications ----------
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          enum: [STREAK_REMINDER, MODULE_COMPLETE, TOKEN_THRESHOLD, STREAK_MILESTONE, REENGAGEMENT]
+        title:
+          type: string
+        body:
+          type: string
+        read:
+          type: boolean
+        data:
+          nullable: true
+        createdAt:
+          type: string
+
+    NotificationPreferences:
+      type: object
+      properties:
+        streakReminder:
+          type: boolean
+        reengagement:
+          type: boolean
+        moduleComplete:
+          type: boolean
+        tokenThreshold:
+          type: boolean
+        streakMilestone:
+          type: boolean
+
+    UpdateNotificationPreferences:
+      type: object
+      description: All fields optional (partial update)
+      properties:
+        streakReminder:
+          type: boolean
+        reengagement:
+          type: boolean
+        moduleComplete:
+          type: boolean
+        tokenThreshold:
+          type: boolean
+        streakMilestone:
+          type: boolean
+
+    # ---------- UI Copy ----------
+    UIStrings:
+      type: object
+      description: Localized UI string map (keys vary by locale content)
+      additionalProperties:
+        type: string
+
+  responses:
+    Unauthorized:
+      description: Authentication required
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error:
+              code: UNAUTHORIZED
+              message: Authentication required
+
+    Forbidden:
+      description: Insufficient permissions
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error:
+              code: NOT_FOUND
+              message: Resource not found
+
+    ValidationError:
+      description: Request validation failed
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error:
+              code: VALIDATION_ERROR
+              message: Invalid input
+              details: []
+
+    RateLimited:
+      description: Too many requests
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            error:
+              code: RATE_LIMIT_EXCEEDED
+              message: Too many requests, please try again later
+
+    Conflict:
+      description: Resource conflict
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+
+# ────────────────────────── PATHS ──────────────────────────
+
+paths:
+  # ==================== Health ====================
+  /health:
+    get:
+      tags: [Health]
+      summary: Health check
+      description: Returns API health status. No authentication required.
+      responses:
+        "200":
+          description: API is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: ok
+
+  # ==================== Auth ====================
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new user
+      description: Creates a new account and logs the user in (sets session cookie).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterInput"
+      responses:
+        "201":
+          description: User registered and logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UserProfile"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "409":
+          $ref: "#/components/responses/Conflict"
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Log in with email and password
+      description: |
+        Authenticates with local credentials. If 2FA is enabled, returns
+        `{ data: { requires2FA: true } }` and the client must call `/auth/2fa/verify`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Login successful (or 2FA required)
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/UserProfile"
+                  - type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/LoginResponse2FA"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: INVALID_CREDENTIALS
+                  message: Invalid email or password
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Log out
+      description: Destroys the session and clears the session cookie.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Get current user
+      description: Returns the authenticated user's sanitized profile.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Current user profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UserProfile"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /auth/forgot-password:
+    post:
+      tags: [Auth]
+      summary: Request password reset
+      description: |
+        Sends a password-reset email if the account exists. Always returns 200
+        to prevent email enumeration. Rate-limited to 5 requests per 15 minutes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordResetRequest"
+      responses:
+        "200":
+          description: Reset email sent (if account exists)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  /auth/reset-password:
+    post:
+      tags: [Auth]
+      summary: Reset password with token
+      description: Resets the password using a token received via email. Rate-limited to 5 per 15 minutes.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PasswordReset"
+      responses:
+        "200":
+          description: Password reset successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  /auth/2fa/setup:
+    post:
+      tags: [Auth]
+      summary: Set up 2FA
+      description: Generates a TOTP secret and QR code for the authenticated user.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: TOTP secret and QR code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/TwoFactorSetupResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /auth/2fa/verify-setup:
+    post:
+      tags: [Auth]
+      summary: Verify and enable 2FA
+      description: |
+        Verifies the TOTP code after setup and enables 2FA on the account.
+        Rate-limited to 3 per 15 minutes.
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TotpCode"
+      responses:
+        "200":
+          description: 2FA enabled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  /auth/2fa/verify:
+    post:
+      tags: [Auth]
+      summary: Verify 2FA during login
+      description: |
+        Completes the login flow when 2FA is required. The session must be in
+        `pending2FA` state. Rate-limited to 3 per 15 minutes.
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TotpCode"
+      responses:
+        "200":
+          description: 2FA verified, login complete
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UserProfile"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  /auth/2fa/disable:
+    post:
+      tags: [Auth]
+      summary: Disable 2FA
+      description: Disables 2FA after verifying a TOTP code. Rate-limited to 3 per 15 minutes.
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TotpCode"
+      responses:
+        "200":
+          description: 2FA disabled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "429":
+          $ref: "#/components/responses/RateLimited"
+
+  /auth/google:
+    get:
+      tags: [Auth]
+      summary: Initiate Google OAuth flow
+      description: Redirects the user to Google for OAuth authentication.
+      responses:
+        "302":
+          description: Redirect to Google OAuth consent screen
+        "503":
+          description: Google OAuth not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /auth/google/callback:
+    get:
+      tags: [Auth]
+      summary: Google OAuth callback
+      description: |
+        Handles the redirect from Google. On success, redirects to
+        `{FRONTEND_URL}/auth/callback?success=true`. On failure, redirects with `?error=oauth_failed`.
+      parameters:
+        - name: code
+          in: query
+          schema:
+            type: string
+        - name: state
+          in: query
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirect to frontend callback URL
+
+  /auth/facebook:
+    get:
+      tags: [Auth]
+      summary: Initiate Facebook OAuth flow
+      description: Redirects the user to Facebook for OAuth authentication.
+      responses:
+        "302":
+          description: Redirect to Facebook OAuth consent screen
+        "503":
+          description: Facebook OAuth not configured
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /auth/facebook/callback:
+    get:
+      tags: [Auth]
+      summary: Facebook OAuth callback
+      description: |
+        Handles the redirect from Facebook. On success, redirects to
+        `{FRONTEND_URL}/auth/callback?success=true`. On failure, redirects with `?error=oauth_failed`.
+      parameters:
+        - name: code
+          in: query
+          schema:
+            type: string
+        - name: state
+          in: query
+          schema:
+            type: string
+      responses:
+        "302":
+          description: Redirect to frontend callback URL
+
+  # ==================== Users ====================
+  /users/me:
+    get:
+      tags: [Users]
+      summary: Get own profile
+      description: Returns the authenticated user's full profile.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UserProfile"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+    patch:
+      tags: [Users]
+      summary: Update own profile
+      description: Updates displayName and/or bio. At least one field must be provided.
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileInput"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UserProfile"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /users/me/reveals:
+    get:
+      tags: [Users]
+      summary: Get progressive reveal status
+      description: Returns which UI mechanics have been unlocked for the user.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Reveal status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/RevealStatus"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /users/me/avatar:
+    post:
+      tags: [Users]
+      summary: Upload avatar
+      description: |
+        Uploads a new avatar image (JPEG, PNG, or WebP, max 2 MB).
+        Uses multipart/form-data with field name `avatar`.
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [avatar]
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Updated profile with new avatar URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UserProfile"
+        "400":
+          description: Invalid file type, file too large, or no file provided
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /users/me/certificate:
+    get:
+      tags: [Users]
+      summary: Get own certificate
+      description: Returns the authenticated user's completion certificate (if earned).
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Certificate data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Certificate"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /users/me/certificate/share:
+    get:
+      tags: [Users]
+      summary: Get shareable certificate URL
+      description: Returns a shareable public URL for the user's certificate.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Shareable URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/CertificateShareResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /users/{userId}/profile:
+    get:
+      tags: [Users]
+      summary: Get public profile
+      description: Returns the public profile of another user.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Public profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/PublicProfile"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ==================== Disclaimers ====================
+  /disclaimers:
+    get:
+      tags: [Disclaimers]
+      summary: Get general disclaimer
+      description: Returns the general platform disclaimer. No authentication required.
+      responses:
+        "200":
+          description: General disclaimer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Disclaimer"
+
+  /disclaimers/onboarding:
+    get:
+      tags: [Disclaimers]
+      summary: Get onboarding disclaimer
+      description: Returns the onboarding-specific disclaimer.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Onboarding disclaimer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Disclaimer"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /disclaimers/module/{moduleId}:
+    get:
+      tags: [Disclaimers]
+      summary: Get module disclaimer
+      description: Returns a module-specific disclaimer (e.g., for DeFi content).
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d+\.\d+$'
+          description: "Module ID in X.Y format"
+      responses:
+        "200":
+          description: Module disclaimer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Disclaimer"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /disclaimers/accept:
+    post:
+      tags: [Disclaimers]
+      summary: Accept disclaimer
+      description: Records that the authenticated user has accepted the disclaimer.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Updated user (with disclaimerAcceptedAt set)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UserProfile"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ==================== Curriculum ====================
+  /curriculum:
+    get:
+      tags: [Curriculum]
+      summary: Get full curriculum with progress
+      description: Returns the entire curriculum tree with per-user progress overlay.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Curriculum with progress
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/CurriculumWithProgress"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /curriculum/chain:
+    get:
+      tags: [Curriculum]
+      summary: Get learning chain
+      description: Returns localized learning chain visualization data.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Learning chain data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/LearningChain"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /curriculum/missions/{missionId}:
+    get:
+      tags: [Curriculum]
+      summary: Get mission detail
+      description: Returns the detail of a specific mission with localized content and exercises.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: missionId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d+\.\d+\.\d+$'
+          description: "Mission ID in X.Y.Z format"
+      responses:
+        "200":
+          description: Mission detail
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MissionDetail"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /curriculum/missions/{missionId}/complete:
+    post:
+      tags: [Curriculum]
+      summary: Complete a mission
+      description: Marks a mission as completed with an optional confidence rating.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: missionId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d+\.\d+\.\d+$'
+          description: "Mission ID in X.Y.Z format"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompleteMissionBody"
+      responses:
+        "200":
+          description: Mission completion result (tokens, unlocks, etc.)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/CompleteMissionResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /curriculum/resume:
+    get:
+      tags: [Curriculum]
+      summary: Get resume point
+      description: Returns the next mission the user should work on (continue where they left off).
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Resume point
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ResumePoint"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ==================== Tooltips ====================
+  /tooltips:
+    get:
+      tags: [Tooltips]
+      summary: Get full glossary
+      description: Returns all tooltip entries sorted alphabetically, in the user's locale.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Full glossary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Glossary"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /tooltips/{term}:
+    get:
+      tags: [Tooltips]
+      summary: Get single tooltip
+      description: Returns a single tooltip by kebab-case term key.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: term
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-z0-9]+(-[a-z0-9]+)*$'
+            maxLength: 100
+          description: "Kebab-case term key (e.g., smart-contract)"
+      responses:
+        "200":
+          description: Tooltip
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Tooltip"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ==================== Exercises ====================
+  /exercises/{exerciseId}/submit:
+    post:
+      tags: [Exercises]
+      summary: Submit exercise answer
+      description: |
+        Submits an answer for an exercise. The request body is a discriminated union
+        based on the `type` field: SI (single-input), CM (connect-matches),
+        IP (item-positioning), ST (step-through).
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/SISubmission"
+                - $ref: "#/components/schemas/CMSubmission"
+                - $ref: "#/components/schemas/IPSubmission"
+                - $ref: "#/components/schemas/STSubmission"
+              discriminator:
+                propertyName: type
+                mapping:
+                  SI: "#/components/schemas/SISubmission"
+                  CM: "#/components/schemas/CMSubmission"
+                  IP: "#/components/schemas/IPSubmission"
+                  ST: "#/components/schemas/STSubmission"
+      responses:
+        "200":
+          description: Exercise result with feedback
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/ExerciseResult"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /exercises/missions/{missionId}/status:
+    get:
+      tags: [Exercises]
+      summary: Get mission exercise status
+      description: Returns exercise completion status for a mission (attempts, completability).
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: missionId
+          in: path
+          required: true
+          schema:
+            type: string
+            pattern: '^\d+\.\d+\.\d+$'
+          description: "Mission ID in X.Y.Z format"
+      responses:
+        "200":
+          description: Mission exercise status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MissionExerciseStatus"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ==================== Tokens ====================
+  /tokens/balance:
+    get:
+      tags: [Tokens]
+      summary: Get token balance
+      description: Returns the user's token balance summary (total earned, spent, current balance).
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Token balance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/TokenBalance"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /tokens/history:
+    get:
+      tags: [Tokens]
+      summary: Get token transaction history
+      description: Returns a paginated list of token transactions.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Paginated transaction list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TokenTransaction"
+                  meta:
+                    $ref: "#/components/schemas/PaginationMeta"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ==================== Gamification ====================
+  /gamification/streak:
+    get:
+      tags: [Gamification]
+      summary: Get streak and cumulative progress
+      description: Returns the user's current streak, longest streak, and cumulative progress stats.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Streak data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Streak"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /gamification/achievements:
+    get:
+      tags: [Gamification]
+      summary: Get all achievements
+      description: Returns all platform achievements with the user's earned status.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Achievements list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/AchievementStatus"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /gamification/leaderboard:
+    get:
+      tags: [Gamification]
+      summary: Get weekly leaderboard
+      description: Returns a paginated weekly leaderboard plus the current user's rank.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Leaderboard entries with current user position
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/LeaderboardEntry"
+                  currentUser:
+                    $ref: "#/components/schemas/LeaderboardCurrentUser"
+                  meta:
+                    $ref: "#/components/schemas/PaginationMeta"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  # ==================== Friends (Social) ====================
+  /friends:
+    get:
+      tags: [Social]
+      summary: List accepted friends
+      description: Returns the authenticated user's accepted friends list.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Friends list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FriendListEntry"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /friends/requests:
+    get:
+      tags: [Social]
+      summary: List pending friend requests
+      description: Returns pending incoming friend requests.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Pending requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/FriendRequestEntry"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /friends/{userId}:
+    post:
+      tags: [Social]
+      summary: Send friend request
+      description: Sends a friend request to the specified user.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: Friend request created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/FriendshipResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "409":
+          $ref: "#/components/responses/Conflict"
+
+    delete:
+      tags: [Social]
+      summary: Remove friend
+      description: Removes a friend or cancels a pending friend request.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "204":
+          description: Friend removed (no content)
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /friends/{userId}/accept:
+    post:
+      tags: [Social]
+      summary: Accept friend request
+      description: Accepts a pending friend request from the specified user.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Friend request accepted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/FriendshipResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ==================== Certificates ====================
+  /certificates/{shareToken}:
+    get:
+      tags: [Certificates]
+      summary: View public certificate
+      description: Returns a public certificate by its share token. No authentication required.
+      parameters:
+        - name: shareToken
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        "200":
+          description: Public certificate
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/PublicCertificate"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ==================== GDPR ====================
+  /gdpr/export:
+    post:
+      tags: [GDPR]
+      summary: Request data export
+      description: Initiates a GDPR data export. A download link is sent via email.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Export initiated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /gdpr/export/{token}:
+    get:
+      tags: [GDPR]
+      summary: Download data export
+      description: Downloads a previously requested data export using a token from the email link. No authentication required.
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        "200":
+          description: Exported user data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    description: Full user data export
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /gdpr/delete:
+    post:
+      tags: [GDPR]
+      summary: Request account deletion
+      description: Initiates account deletion. A confirmation link is sent via email.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Deletion requested
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /gdpr/delete/confirm/{token}:
+    post:
+      tags: [GDPR]
+      summary: Confirm account deletion
+      description: Permanently deletes the account and all personal data using the confirmation token from the email. No authentication required.
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        "200":
+          description: Account deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/MessageResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ==================== Notifications ====================
+  /notifications:
+    get:
+      tags: [Notifications]
+      summary: List notifications
+      description: Returns a paginated list of the user's notifications.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+      responses:
+        "200":
+          description: Paginated notifications
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Notification"
+                  meta:
+                    $ref: "#/components/schemas/PaginationMeta"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /notifications/preferences:
+    get:
+      tags: [Notifications]
+      summary: Get notification preferences
+      description: Returns the user's notification preference settings.
+      security:
+        - sessionAuth: []
+      responses:
+        "200":
+          description: Notification preferences
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/NotificationPreferences"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+    patch:
+      tags: [Notifications]
+      summary: Update notification preferences
+      description: Partially updates notification preference settings. All fields are optional.
+      security:
+        - sessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateNotificationPreferences"
+      responses:
+        "200":
+          description: Updated preferences
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/NotificationPreferences"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+
+  /notifications/{id}/read:
+    patch:
+      tags: [Notifications]
+      summary: Mark notification as read
+      description: Marks a single notification as read.
+      security:
+        - sessionAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Notification marked as read (no content)
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  # ==================== UI Copy ====================
+  /ui-copy/{locale}:
+    get:
+      tags: [UI Copy]
+      summary: Get localized UI strings
+      description: Returns all UI copy strings for the given locale. No authentication required. Cached for 1 hour.
+      parameters:
+        - name: locale
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [en, fr]
+      responses:
+        "200":
+          description: UI strings map
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: "public, max-age=3600"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/UIStrings"
+        "400":
+          description: Invalid locale
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                error:
+                  code: INVALID_LOCALE
+                  message: Locale must be en or fr

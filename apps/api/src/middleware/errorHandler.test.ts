@@ -63,6 +63,7 @@ describe("errorHandler", () => {
     }
 
     const res = createMockRes();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     errorHandler(zodError!, mockReq, res, mockNext);
 
     expect(res.status).toHaveBeenCalledWith(400);

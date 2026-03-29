@@ -16,12 +16,13 @@ import type {
   ChainBlock,
   LearningChainResponse,
 } from "@transcendence/shared";
-import type { Category, Chapter, Mission } from "@transcendence/shared";
+import type { Category, Mission } from "@transcendence/shared";
 import { creditMissionTokensWithClient } from "./tokenService.js";
 import { updateStreakWithClient } from "./streakService.js";
 import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";
 import { triggerRevealWithClient } from "./revealService.js";
 import { generateCertificateWithClient } from "./certificateService.js";
+import { sendAchievementEmail, sendCompletionEmail } from "./emailService.js";
 
 export async function getCurriculumWithProgress(
   userId: string,
@@ -495,6 +496,33 @@ export async function completeMission(
 
     return { chapterJustCompleted, categoryCompleted, totalCompleted, newAchievements, revealTriggered, certificateGenerated };
   });
+
+  // Send achievement emails for high-value milestones (fire-and-forget)
+  if (txResult.newAchievements.length > 0) {
+    const HIGH_VALUE_ACHIEVEMENTS = ["CERTIFIED", "DEFI_GRADUATE", "MONTH_STREAK"];
+    const highValueAwards = txResult.newAchievements.filter((a: AwardedAchievement) => HIGH_VALUE_ACHIEVEMENTS.includes(a.code));
+
+    if (highValueAwards.length > 0) {
+      const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, displayName: true } });
+      if (user?.email) {
+        const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+        const achievementLink = `${frontendUrl}/achievements`;
+        for (const award of highValueAwards) {
+          sendAchievementEmail(user.email, "en", user.displayName, award.title, award.description, achievementLink).catch(() => {});
+        }
+      }
+    }
+  }
+
+  // Send course completion email when certificate is generated (fire-and-forget)
+  if (txResult.certificateGenerated) {
+    const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, displayName: true } });
+    if (user?.email) {
+      const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+      const certLink = `${frontendUrl}/certificate`;
+      sendCompletionEmail(user.email, "en", user.displayName, certLink).catch(() => {});
+    }
+  }
 
   // 6. Compute response fields (pure computation, no DB queries)
   const nextMissionId = getNextMissionId(curriculum, missionId);

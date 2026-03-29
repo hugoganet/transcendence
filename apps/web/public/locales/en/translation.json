@@ -1,0 +1,403 @@
+{
+  "categories": {
+    "blockchainFoundations": "Blockchain Foundations",
+    "blockchainFoundationsDesc": "What is this technology and why does it exist?",
+    "cryptoAndTokens": "Crypto & Tokens",
+    "cryptoAndTokensDesc": "What are digital currencies and tokens?",
+    "walletsAndGas": "Wallets & Gas",
+    "walletsAndGasDesc": "How do you store and move digital assets?",
+    "smartContracts": "Smart Contracts",
+    "smartContractsDesc": "What if code could enforce agreements?",
+    "nftsAndDigitalOwnership": "NFTs & Digital Ownership",
+    "nftsAndDigitalOwnershipDesc": "Can you truly own something digital?",
+    "defiAndBeyond": "DeFi & Beyond",
+    "defiAndBeyondDesc": "How is this reshaping finance and daily life?"
+  },
+  "chapters": {
+    "theTrustProblem": "The Trust Problem",
+    "theTrustProblemDesc": "Why do we need middlemen and what if we didn't?",
+    "blocksChainsAndConsensus": "Blocks, Chains & Consensus",
+    "blocksChainsAndConsensusDesc": "How blockchain technology actually works",
+    "whyDecentralizationMatters": "Why Decentralization Matters",
+    "whyDecentralizationMattersDesc": "The real-world impact of distributed systems",
+    "digitalMoney": "Digital Money: A New Kind of Currency",
+    "digitalMoneyDesc": "Understanding cryptocurrency from the ground up",
+    "coinsTokensAndTheCryptoZoo": "Coins, Tokens & the Crypto Zoo",
+    "coinsTokensAndTheCryptoZooDesc": "Navigating the world of digital assets",
+    "valuePriceAndVolatility": "Value, Price & Volatility",
+    "valuePriceAndVolatilityDesc": "Understanding what drives crypto prices",
+    "yourDigitalWallet": "Your Digital Wallet",
+    "yourDigitalWalletDesc": "How to store and manage your crypto safely",
+    "makingATransaction": "Making a Transaction",
+    "makingATransactionDesc": "Sending and receiving cryptocurrency step by step",
+    "gasFees": "Gas Fees: The Cost of Doing Anything",
+    "gasFeesDesc": "Understanding the price of blockchain operations",
+    "stayingSafe": "Staying Safe",
+    "stayingSafeDesc": "Protecting yourself in the crypto world",
+    "whatAreSmartContracts": "What Are Smart Contracts?",
+    "whatAreSmartContractsDesc": "Self-executing code on the blockchain",
+    "smartContractsEverywhere": "Smart Contracts Everywhere",
+    "smartContractsEverywhereDesc": "Real-world applications of smart contracts",
+    "whatIsAnNft": "What is an NFT?",
+    "whatIsAnNftDesc": "Understanding digital ownership and uniqueness",
+    "nftsBeyondArt": "NFTs Beyond Art",
+    "nftsBeyondArtDesc": "NFT use cases in gaming, music, and identity",
+    "hypeScamsAndReality": "Hype, Scams & Reality",
+    "hypeScamsAndRealityDesc": "A balanced look at the NFT landscape",
+    "defiBankingWithoutBanks": "DeFi: Banking Without Banks",
+    "defiBankingWithoutBanksDesc": "Decentralized financial services explained",
+    "theBiggerPicture": "The Bigger Picture",
+    "theBiggerPictureDesc": "DAOs, Web3, and the future of blockchain",
+    "everythingConnected": "Everything Connected",
+    "everythingConnectedDesc": "Bringing it all together"
+  },
+  "exerciseTypes": {
+    "SI": "Scenario-Based Interpretation",
+    "CM": "Concept Matching",
+    "IP": "Interactive Placement",
+    "ST": "Step-by-Step Simulation"
+  },
+  "labels": {
+    "missions": "Missions",
+    "mission": "Mission",
+    "completed": "Completed",
+    "locked": "Locked",
+    "available": "Available",
+    "inProgress": "In Progress",
+    "skipped": "Skipped",
+    "category": "Category",
+    "chapter": "Chapter",
+    "progress": "Progress",
+    "of": "of",
+    "allMissions": "All Missions",
+    "completedMissions": "Completed Missions",
+    "continue": "Continue",
+    "start": "Start",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "tryAgain": "Try Again",
+    "skip": "Skip",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "close": "Close",
+    "correct": "Correct!",
+    "incorrect": "Not quite...",
+    "estimatedTime": "Estimated time",
+    "minutes": "min",
+    "hours": "hr",
+    "learningObjective": "Learning Objective",
+    "missionComplete": "Mission Complete!",
+    "xpEarned": "XP Earned",
+    "tokensEarned": "Tokens Earned",
+    "gasPaid": "Gas Paid",
+    "home": "Home",
+    "curriculum": "Curriculum",
+    "leaderboard": "Leaderboard",
+    "profile": "Profile",
+    "friends": "Friends",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "logout": "Log Out"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Pick up exactly where you left off.",
+      "emailLabel": "Email address",
+      "passwordLabel": "Password",
+      "submitButton": "Log in",
+      "forgotPassword": "Forgot your password?",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "orContinueWith": "or continue with",
+      "googleButton": "Continue with Google",
+      "facebookButton": "Continue with Facebook"
+    },
+    "signup": {
+      "title": "Start learning",
+      "subtitle": "Create your account and begin your blockchain education today.",
+      "usernameLabel": "Username",
+      "emailLabel": "Email address",
+      "passwordLabel": "Password",
+      "submitButton": "Create account",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "termsAccept": "By creating an account, you agree to our Terms of Service and Privacy Policy."
+    },
+    "forgotPassword": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email and we'll send you a reset link.",
+      "emailLabel": "Email address",
+      "submitButton": "Send reset link",
+      "backToLogin": "Back to log in",
+      "emailSent": "Check your inbox",
+      "emailSentSubtitle": "We've sent a reset link to your email. It expires in 30 minutes."
+    },
+    "resetPassword": {
+      "title": "Set a new password",
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm new password",
+      "submitButton": "Update password",
+      "success": "Password updated. You can now log in."
+    },
+    "twoFactor": {
+      "title": "Two-factor verification",
+      "subtitle": "Enter the 6-digit code from your authenticator app.",
+      "codeLabel": "Verification code",
+      "submitButton": "Verify",
+      "resend": "Didn't receive a code? Resend"
+    }
+  },
+  "onboarding": {
+    "welcomeTitle": "Blockchain, finally explained.",
+    "welcomeSubtitle": "Six categories. 69 missions. Zero jargon.",
+    "step1Title": "Learn by doing",
+    "step1Body": "Every concept is a hands-on mission — scenarios, simulations, and real decisions. No passive reading.",
+    "step2Title": "Earn Knowledge Tokens",
+    "step2Body": "Complete missions to earn KT. You'll even pay gas fees — just like the real thing.",
+    "step3Title": "Track your progress",
+    "step3Body": "See your streak, your token balance, and exactly where you stand in the curriculum.",
+    "ctaStart": "Start learning",
+    "firstMissionPrompt": "Your first mission is ready. It takes about 5 minutes."
+  },
+  "exercise": {
+    "SI": {
+      "instructionPrefix": "Read the scenario, then choose the best answer.",
+      "submitAnswer": "Submit answer",
+      "seeExplanation": "See explanation",
+      "nextMission": "Next mission"
+    },
+    "CM": {
+      "instructionPrefix": "Match each concept to its correct description.",
+      "matchAll": "Match all pairs to continue.",
+      "checkMatches": "Check matches",
+      "allMatched": "All matched!"
+    },
+    "IP": {
+      "instructionPrefix": "Drag each item to the correct position.",
+      "dragItems": "Drag items into place.",
+      "checkPlacement": "Check placement",
+      "allPlaced": "All placed!"
+    },
+    "ST": {
+      "instructionPrefix": "Work through each step of this simulation.",
+      "step": "Step {{current}} of {{total}}",
+      "chooseAnswer": "Choose an answer to continue.",
+      "nextStep": "Next step",
+      "lastStep": "Finish simulation"
+    },
+    "feedback": {
+      "correctHeadline1": "Correct.",
+      "correctHeadline2": "Well done.",
+      "correctHeadline3": "Nailed it.",
+      "incorrectHeadline1": "Not quite.",
+      "incorrectHeadline2": "Almost — here's why.",
+      "incorrectHeadline3": "Not this time.",
+      "explanationLabel": "Explanation",
+      "keepGoing": "Keep going — you've got this.",
+      "almostThere": "Almost there.",
+      "niceWork": "Nice work."
+    },
+    "gasFeeNotice": "This action costs {{amount}} Knowledge Tokens",
+    "gasFeeFirstTime": "Each exercise attempt costs 2 KT. This is gas — the same mechanism you just studied. Your balance has been updated.",
+    "gasFeeStandard": "\u22122 KT gas",
+    "gasFeeLowBalance": "\u22122 KT gas \u00b7 Your balance is running low. Complete a mission to top up.",
+    "gasFeeZeroBalance": "\u22122 KT gas \u00b7 Your balance is at 0. You can still continue this mission, but you'll need to complete it before starting a new one.",
+    "gasFeeNegativeBalance": "\u22122 KT gas \u00b7 Your balance is below 0. Complete this mission to earn tokens and clear your debt before starting anything new."
+  },
+  "gamification": {
+    "achievements": {
+      "BLOCKCHAIN_BEGINNER": {
+        "toastTitle": "Category 1 complete.",
+        "toastBody": "You understand the problem blockchain solves."
+      },
+      "CRYPTO_CURIOUS": {
+        "toastTitle": "Category 2 complete.",
+        "toastBody": "Coins, tokens, volatility — you've got the vocabulary."
+      },
+      "WALLET_WIZARD": {
+        "toastTitle": "Category 3 complete.",
+        "toastBody": "Wallets, transactions, gas. You know how it actually works."
+      },
+      "SMART_COOKIE": {
+        "toastTitle": "Category 4 complete.",
+        "toastBody": "Blockchain as a computer. You now see what's possible."
+      },
+      "NFT_NATIVE": {
+        "toastTitle": "Category 5 complete.",
+        "toastBody": "You can see through the hype now."
+      },
+      "DEFI_EXPLORER": {
+        "toastTitle": "Course complete.",
+        "toastBody": "All six categories. Every concept. You earned this."
+      },
+      "FIRST_TOKENS": {
+        "toastTitle": "First tokens earned.",
+        "toastBody": "Your first Knowledge Tokens are in. The balance only goes up from here."
+      },
+      "TOKEN_COLLECTOR": {
+        "toastTitle": "50 Knowledge Tokens.",
+        "toastBody": "Halfway to a hundred. Consistent effort compounds."
+      },
+      "TOKEN_RICH": {
+        "toastTitle": "100 Knowledge Tokens.",
+        "toastBody": "Your balance just hit triple digits."
+      },
+      "GETTING_STARTED": {
+        "toastTitle": "3 days in a row.",
+        "toastBody": "Consistency is a skill. You're building it."
+      },
+      "WEEK_WARRIOR": {
+        "toastTitle": "7-day streak.",
+        "toastBody": "A full week without missing a day."
+      },
+      "DEDICATED_LEARNER": {
+        "toastTitle": "14-day streak.",
+        "toastBody": "Two weeks straight. This is a habit now."
+      },
+      "MONTHLY_MASTER": {
+        "toastTitle": "30 days straight.",
+        "toastBody": "A month of daily learning. That's remarkable."
+      }
+    },
+    "streak": {
+      "streakContinued": "Day {{n}} — keep it going!",
+      "streakBroken": "Your streak ended at {{n}} days. Start a new one today.",
+      "streakRecord": "New personal best: {{n}} days!",
+      "day1": "Today counts. Keep going tomorrow.",
+      "day3": "Three days running. You're past the hardest part.",
+      "day7": "Seven days. A week of showing up. This is what learning looks like.",
+      "day14": "Two weeks straight. At this point, the habit is doing most of the work.",
+      "day30": "Thirty days. A month. The consistency you've shown here transfers to everything.",
+      "streakLost": "You missed a day. It happens. Your progress is exactly where you left it — start again from today.",
+      "streakRecovered": "Back. One day doesn't define a streak. Today does."
+    },
+    "tokens": {
+      "tokenEarned": "+{{amount}} Knowledge Tokens",
+      "tokenSpent": "-{{amount}} Knowledge Tokens (gas)",
+      "tokenBalance": "Knowledge Tokens"
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "yourRank": "Your rank",
+      "topLearners": "Top Learners",
+      "weeklyBoard": "This week",
+      "allTimeBoard": "All time",
+      "noRankYet": "Complete a mission to appear on the leaderboard."
+    },
+    "welcomeBack": {
+      "shortAbsence": "Good to have you back. Your progress is right where you left it.",
+      "oneWeekAbsence": "It's been a week. No worries — your knowledge doesn't expire. Pick up where you stopped.",
+      "twoWeekAbsence": "You've been away a while. Everything is still here. Whenever you're ready, the next mission is waiting.",
+      "longAbsence": "Welcome back. It's been a while, but what you learned hasn't gone anywhere. There's no pressure — just the next mission when you're ready.",
+      "generic": "Back again. Your progress is intact. Carry on."
+    },
+    "refresher": {
+      "variant1": "Before you start, here's a quick reminder of what this mission builds on.",
+      "variant2": "It's been a while since you covered this topic. A quick recap before you dive in.",
+      "variant3": "This mission references something from earlier. Here's the key idea — thirty seconds, then you're ready."
+    },
+    "postMission": {
+      "correct1": "Correct. Another piece of the picture in place.",
+      "correct2": "Well done. That concept is yours now.",
+      "correct3": "Nailed it. On to the next one.",
+      "correct4": "That's right. You just added to something that compounds.",
+      "chapterComplete1": "Chapter complete. You've covered the full scope of this topic. The next chapter builds on what you just finished.",
+      "chapterComplete2": "That's the whole chapter. Every concept in there is part of your foundation now.",
+      "chapterComplete3": "Chapter done. Take a moment — this is real progress.",
+      "categoryComplete1": "Category complete. You've finished everything in this section. The next category takes what you've learned here and goes further.",
+      "categoryComplete2": "You've completed this category. Six sections total — this is one of them done. Keep going."
+    }
+  },
+  "reveals": {
+    "tokensRevealed": {
+      "headline": "You just earned your first Knowledge Tokens.",
+      "body": "Every mission you complete adds to your balance. These tokens aren't just a score — they represent something real. Keep learning to find out what.",
+      "ctaLabel": "Got it"
+    },
+    "walletRevealed": {
+      "headline": "Your wallet is now active.",
+      "body": "This is where your Knowledge Tokens live. In the real world, a wallet like this holds digital assets only you control — no bank, no middleman.",
+      "ctaLabel": "See my wallet"
+    },
+    "gasRevealed": {
+      "headline": "Gas fees: now it's personal.",
+      "body": "From this point on, every exercise attempt costs 2 KT. That's gas — the same mechanism that powers every real blockchain transaction. Complete missions to keep your balance topped up.",
+      "ctaLabel": "I understand"
+    },
+    "dashboardRevealed": {
+      "headline": "Your dashboard is ready.",
+      "body": "Track your streak, your token balance, your rank on the leaderboard, and every achievement you've unlocked — all in one place.",
+      "ctaLabel": "Explore dashboard"
+    }
+  },
+  "disclaimer": {
+    "gateTitle": "A quick note before you continue",
+    "gateBody": "The content in this chapter discusses financial topics, including cryptocurrency prices, investment concepts, and financial instruments. This content is for educational purposes only. Nothing in this chapter is financial advice, and nothing you learn here should be treated as a recommendation to buy, sell, or hold any asset. Financial decisions involve real risk. If you're considering any investment, speak with a qualified financial adviser.",
+    "acceptButton": "I understand — continue",
+    "declineButton": "Go back",
+    "learnMoreLink": "Learn more about our approach"
+  },
+  "certificate": {
+    "headline": "You've completed Transcendence.",
+    "subheadline": "Six categories. 69 missions. All of it done.",
+    "completedOn": "Completed on",
+    "shareTitle": "Share your achievement",
+    "shareBody": "I just completed Transcendence — a full blockchain literacy course. 69 missions, zero shortcuts.",
+    "downloadButton": "Download certificate",
+    "shareButton": "Share",
+    "linkedInButton": "Add to LinkedIn"
+  },
+  "social": {
+    "friendsList": {
+      "title": "Friends",
+      "addFriend": "Add a friend",
+      "searchPlaceholder": "Search by username",
+      "noFriendsYet": "No friends added yet. Find someone to learn alongside.",
+      "pendingRequests": "Pending requests",
+      "acceptButton": "Accept",
+      "declineButton": "Decline",
+      "removeButton": "Remove"
+    },
+    "publicProfile": {
+      "missions": "Missions completed",
+      "tokens": "Knowledge Tokens",
+      "streak": "Current streak",
+      "achievements": "Achievements",
+      "joinedDate": "Joined",
+      "friendSince": "Friends since"
+    }
+  },
+  "notifications": {
+    "achievement_unlocked": "Achievement unlocked",
+    "streak_milestone": "Streak milestone",
+    "friend_request": "Friend request",
+    "friend_accepted": "Friend request accepted",
+    "mission_reminder": "Ready to continue?",
+    "level_up": "Level up",
+    "token_earned": "Tokens earned",
+    "gas_deducted": "Gas deducted",
+    "system_message": "Update from Transcendence"
+  },
+  "errors": {
+    "networkError": "Can't reach the server right now. Check your connection and try again.",
+    "serverError": "Something went wrong on our end. Try again in a moment.",
+    "notFound": "This page doesn't exist.",
+    "unauthorized": "You don't have permission to view this.",
+    "sessionExpired": "Your session has expired. Log in again to continue.",
+    "formValidation": "Please check the fields above and try again.",
+    "emailAlreadyUsed": "An account with this email already exists. Try logging in instead.",
+    "usernameAlreadyUsed": "That username is taken. Try a different one.",
+    "invalidCredentials": "Email or password is incorrect.",
+    "tooManyRequests": "Too many attempts. Wait a moment, then try again."
+  },
+  "emptyStates": {
+    "noFriends": "You haven't added any friends yet. Search by username to find someone to learn alongside.",
+    "noNotifications": "No notifications right now. Come back after your next mission.",
+    "noAchievements": "No achievements yet. Complete your first mission to get started.",
+    "noMissionsAvailable": "No missions available right now. Finish the current chapter to unlock more.",
+    "leaderboardLoading": "Loading the leaderboard... Complete a mission to claim your spot."
+  }
+}

@@ -118,5 +118,125 @@
     "definition": "A network where participants interact directly with each other without going through a central server.",
     "analogy": "Like passing a note directly to someone instead of sending it through a teacher.",
     "relatedTerms": ["decentralization", "distributed-ledger", "blockchain"]
+  },
+  "seed-phrase": {
+    "term": "Seed Phrase",
+    "definition": "A sequence of 12 to 24 words that acts as a master backup to recover your entire wallet and all its funds.",
+    "analogy": "Like a master key hidden under the mat — whoever has it can access everything in the house.",
+    "relatedTerms": ["wallet", "private-key", "cold-storage"]
+  },
+  "public-address": {
+    "term": "Public Address",
+    "definition": "A shareable string derived from your public key that others use to send cryptocurrency to you.",
+    "analogy": "Like your home address — you can hand it out freely so people know where to send mail.",
+    "relatedTerms": ["public-key", "wallet", "transaction"]
+  },
+  "cold-storage": {
+    "term": "Cold Storage",
+    "definition": "A method of keeping private keys completely offline so they are never exposed to the internet.",
+    "analogy": "Like storing cash in a safe buried in your backyard — secure but not connected to anything.",
+    "relatedTerms": ["private-key", "wallet", "seed-phrase"]
+  },
+  "transaction": {
+    "term": "Transaction",
+    "definition": "A signed instruction recorded on a blockchain to transfer value or trigger an action.",
+    "analogy": "Like writing and signing a cheque — it's a formal instruction that gets recorded permanently.",
+    "relatedTerms": ["block", "gas-fee", "confirmation", "public-address"]
+  },
+  "confirmation": {
+    "term": "Confirmation",
+    "definition": "Each time a new block is added on top of the block containing your transaction, increasing its security.",
+    "analogy": "Like getting stamps on a document — more stamps mean it's more officially approved and harder to reverse.",
+    "relatedTerms": ["transaction", "block", "mining", "consensus"]
+  },
+  "exchange": {
+    "term": "Exchange",
+    "definition": "A platform where you can buy, sell, or trade cryptocurrencies, either with other users or the platform itself.",
+    "analogy": "Like a currency exchange booth at the airport, but open 24/7 and available online.",
+    "relatedTerms": ["cryptocurrency", "dex", "liquidity", "market-cap"]
+  },
+  "liquidity": {
+    "term": "Liquidity",
+    "definition": "How easily an asset can be bought or sold at a stable price without causing large price swings.",
+    "analogy": "Like water in a pool — a full pool lets you dive in easily, while a near-empty one means every move causes big waves.",
+    "relatedTerms": ["liquidity-pool", "dex", "exchange", "defi"]
+  },
+  "yield-farming": {
+    "term": "Yield Farming",
+    "definition": "A strategy of earning rewards by providing liquidity or staking assets in DeFi protocols.",
+    "analogy": "Like renting out your land to a farmer — your idle assets go to work and generate income for you.",
+    "relatedTerms": ["defi", "liquidity-pool", "staking", "governance-token"]
+  },
+  "liquidity-pool": {
+    "term": "Liquidity Pool",
+    "definition": "A smart contract that holds two tokens contributed by users, enabling decentralized trading between them.",
+    "analogy": "Like a communal pot of two currencies that anyone can swap from, with contributors sharing the trading fees.",
+    "relatedTerms": ["smart-contract", "dex", "liquidity", "yield-farming"]
+  },
+  "dao": {
+    "term": "DAO",
+    "definition": "A Decentralized Autonomous Organization where rules are encoded in smart contracts and decisions are made by token holders voting.",
+    "analogy": "Like a company run entirely by shareholder votes, with no CEO — the code enforces whatever the majority decides.",
+    "relatedTerms": ["governance-token", "smart-contract", "decentralization", "defi"]
+  },
+  "governance-token": {
+    "term": "Governance Token",
+    "definition": "A token that grants holders the right to vote on changes to a protocol's rules or treasury.",
+    "analogy": "Like a shareholder's voting stock — the more you hold, the more say you have in company decisions.",
+    "relatedTerms": ["dao", "token", "defi", "staking"]
+  },
+  "layer-2": {
+    "term": "Layer 2",
+    "definition": "A secondary network built on top of a base blockchain to process transactions faster and at lower cost.",
+    "analogy": "Like an express lane on a highway — it handles most of the traffic so the main road stays clear.",
+    "relatedTerms": ["blockchain", "ethereum", "gas-fee", "transaction"]
+  },
+  "oracle": {
+    "term": "Oracle",
+    "definition": "A service that fetches real-world data — prices, weather, sports results — and delivers it to smart contracts on a blockchain.",
+    "analogy": "Like a trusted news feed plugged into a vending machine so it can charge the right price automatically.",
+    "relatedTerms": ["smart-contract", "defi", "blockchain"]
+  },
+  "dex": {
+    "term": "DEX",
+    "definition": "A Decentralized Exchange where users trade cryptocurrencies directly with each other via smart contracts, with no company in the middle.",
+    "analogy": "Like a peer-to-peer marketplace for tokens — no middleman takes a cut or holds your funds.",
+    "relatedTerms": ["exchange", "liquidity-pool", "smart-contract", "defi"]
+  },
+  "whitepaper": {
+    "term": "Whitepaper",
+    "definition": "A technical document that outlines a blockchain project's purpose, design, and tokenomics.",
+    "analogy": "Like a detailed business plan and blueprint combined — it explains what the project does and how it works.",
+    "relatedTerms": ["blockchain", "token", "cryptocurrency"]
+  },
+  "market-cap": {
+    "term": "Market Cap",
+    "definition": "The total market value of a cryptocurrency, calculated by multiplying its price by the circulating supply.",
+    "analogy": "Like a company's market valuation — it tells you the overall size of the asset relative to others.",
+    "relatedTerms": ["cryptocurrency", "token", "exchange", "volatility"]
+  },
+  "volatility": {
+    "term": "Volatility",
+    "definition": "The degree to which an asset's price rises and falls sharply over a short period.",
+    "analogy": "Like a roller coaster — high volatility means big, fast swings in either direction.",
+    "relatedTerms": ["cryptocurrency", "market-cap", "exchange", "defi"]
+  },
+  "proof-of-work": {
+    "term": "Proof of Work",
+    "definition": "A consensus mechanism where computers compete to solve a computationally hard puzzle in order to validate a new block.",
+    "analogy": "Like a contest where you must show your work to win — the effort proves you played by the rules.",
+    "relatedTerms": ["mining", "consensus", "block", "bitcoin"]
+  },
+  "proof-of-stake": {
+    "term": "Proof of Stake",
+    "definition": "A consensus mechanism where validators are randomly selected to confirm blocks based on how much crypto they have locked up as collateral.",
+    "analogy": "Like a lottery where more tickets (staked coins) increase your chances of being chosen to run the next round.",
+    "relatedTerms": ["staking", "consensus", "ethereum"]
+  },
+  "airdrop": {
+    "term": "Airdrop",
+    "definition": "A free distribution of tokens to wallet addresses, often used to reward early users or grow a community.",
+    "analogy": "Like a store handing out free samples to attract new customers and reward loyal ones.",
+    "relatedTerms": ["token", "wallet", "cryptocurrency", "governance-token"]
   }
 }
