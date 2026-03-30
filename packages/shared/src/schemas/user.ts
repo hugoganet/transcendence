@@ -13,9 +13,16 @@ export const updateProfileSchema = z
       .max(300, "Bio must be under 300 characters")
       .trim()
       .optional(),
+    locale: z.enum(["en", "fr", "es"]).optional(),
   })
-  .refine((data) => data.displayName !== undefined || data.bio !== undefined, {
-    message: "At least one field must be provided",
-  });
+  .refine(
+    (data) =>
+      data.displayName !== undefined ||
+      data.bio !== undefined ||
+      data.locale !== undefined,
+    {
+      message: "At least one field must be provided",
+    },
+  );
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;

@@ -393,6 +393,17 @@
     "invalidCredentials": "E-mail ou mot de passe incorrect.",
     "tooManyRequests": "Trop de tentatives. Attendez quelques instants avant de r\u00e9essayer."
   },
+  "languageSwitcher": {
+    "label": "Langue",
+    "en": "English",
+    "fr": "Français",
+    "es": "Español"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": "Langue",
+    "languageDescription": "Choisissez votre langue préférée"
+  },
   "emptyStates": {
     "noFriends": "Vous n'avez pas encore d'amis. Recherchez un nom d'utilisateur pour envoyer votre premi\u00e8re demande.",
     "noNotifications": "Aucune notification pour le moment. Continuez \u00e0 apprendre !",

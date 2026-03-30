@@ -5,7 +5,7 @@ import type { UIStrings } from "@transcendence/shared";
 
 export const uiCopyRouter = Router();
 
-const VALID_LOCALES = new Set(["en", "fr"]);
+const VALID_LOCALES = new Set(["en", "fr", "es"]);
 
 // GET /api/v1/ui-copy/:locale — public, returns UI strings for given locale
 uiCopyRouter.get(
@@ -14,7 +14,7 @@ uiCopyRouter.get(
     const { locale } = req.params;
 
     if (!VALID_LOCALES.has(String(locale))) {
-      throw new AppError(400, "INVALID_LOCALE", "Locale must be en or fr");
+      throw new AppError(400, "INVALID_LOCALE", "Locale must be en, fr, or es");
     }
 
     const content = getContent();

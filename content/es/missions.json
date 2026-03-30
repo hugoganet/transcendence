@@ -1,0 +1,1067 @@
+{
+  "1.1.1": {
+    "title": "¿En Quién Confías?",
+    "description": "Cada vez que compras un café con tarjeta, envías dinero a un amigo o firmas un contrato, alguien en el medio lo hace posible. Pero, ¿quiénes son estos intermediarios y por qué confiamos en ellos?",
+    "learningObjective": "Entender que la mayoría de las transacciones diarias dependen de intermediarios (bancos, PayPal, notarios)",
+    "exerciseContent": {
+      "scenario": "Acabas de comprar una guitarra vintage en línea por 800 euros. El vendedor es alguien que nunca conociste, que vive en otro país. Pagaste usando la transferencia en línea de tu banco. Piensa en todo lo que tuvo que pasar tras bambalinas para que esta transacción funcionara.",
+      "question": "¿Cuál de las siguientes opciones describe mejor el papel que jugó tu banco en esta transacción?",
+      "options": [
+        {
+          "id": "a",
+          "text": "El banco movió físicamente efectivo de tu bóveda a la bóveda del vendedor",
+          "isCorrect": false,
+          "explanation": "Los bancos no mueven efectivo físicamente en transferencias en línea. Actualizan registros digitales en sus bases de datos para reflejar los nuevos saldos. Ningún dinero físico cambia de manos."
+        },
+        {
+          "id": "b",
+          "text": "El banco actuó como intermediario de confianza, verificando tu identidad, comprobando tu saldo y actualizando ambas cuentas",
+          "isCorrect": true,
+          "explanation": "Exactamente. Tu banco verificó que eres quien dices ser, confirmó que tenías fondos suficientes, dedujo el monto de tu cuenta y coordinó con el banco del vendedor para acreditar su cuenta. Sin este intermediario de confianza, dos desconocidos no tendrían forma de intercambiar valor de manera segura."
+        },
+        {
+          "id": "c",
+          "text": "El banco simplemente reenvió tu dinero como un correo electrónico, sin ninguna verificación",
+          "isCorrect": false,
+          "explanation": "Los bancos no pasan dinero a ciegas. Realizan verificaciones de identidad, detección de fraude, verificación de saldo y cumplimiento regulatorio antes de procesar cualquier transferencia. Precisamente por eso existen como intermediarios de confianza."
+        },
+        {
+          "id": "d",
+          "text": "El banco no estuvo involucrado en absoluto ya que las transferencias en línea son directas entre comprador y vendedor",
+          "isCorrect": false,
+          "explanation": "Las transferencias en línea tradicionales siempre pasan por bancos o procesadores de pago. El dinero no viaja directamente de ti al vendedor. Pasa por múltiples intermediarios que verifican y procesan la transacción."
+        }
+      ]
+    }
+  },
+  "1.1.2": {
+    "title": "¿Qué Podría Salir Mal?",
+    "description": "Intermediarios como bancos y procesadores de pago hacen posibles las transacciones, pero también crean vulnerabilidades. Cuando el intermediario falla, todos los que dependen de él se ven afectados.",
+    "learningObjective": "Entender los puntos únicos de falla — qué pasa cuando el intermediario falla",
+    "exerciseContent": {
+      "scenario": "Es viernes por la noche. Estás tratando de pagar la cena en un restaurante, pero tu tarjeta sigue siendo rechazada. Revisas tu teléfono y ves una notificación: 'Nuestros sistemas están experimentando una interrupción. Disculpe las molestias.' Toda la infraestructura digital de tu banco está caída. Tienes dinero en tu cuenta, pero no puedes acceder a él.",
+      "question": "¿Qué revela esta situación sobre depender de un solo intermediario para tu dinero?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Demuestra que los pagos digitales no son confiables y deberíamos volver a usar solo efectivo",
+          "isCorrect": false,
+          "explanation": "El efectivo tiene sus propias limitaciones — se puede perder, robar o falsificar, y no funciona para compras en línea. El problema no son los pagos digitales en sí, sino depender de un solo punto de control."
+        },
+        {
+          "id": "b",
+          "text": "Demuestra que cuando un sistema centralizado se cae, todos los que dependen de él pierden acceso, incluso si su dinero sigue existiendo",
+          "isCorrect": true,
+          "explanation": "Este es el problema central de un 'punto único de falla'. Tu dinero es real y sigue en tu cuenta, pero como una organización controla el punto de acceso, su problema se convierte en tu problema. Millones de clientes pueden quedar bloqueados simultáneamente por un fallo del servidor, un ciberataque o una decisión de política."
+        },
+        {
+          "id": "c",
+          "text": "Demuestra que los bancos están impidiendo intencionalmente que la gente gaste dinero",
+          "isCorrect": false,
+          "explanation": "Las interrupciones bancarias generalmente son fallas técnicas, no bloqueos intencionales. Sin embargo, el escenario sí resalta que una entidad centralizada tiene el poder de — intencional o no — impedir que accedas a tu propio dinero."
+        },
+        {
+          "id": "d",
+          "text": "Es solo un inconveniente menor que rara vez sucede, así que no es una preocupación real",
+          "isCorrect": false,
+          "explanation": "Las interrupciones bancarias suceden más seguido de lo que piensas. Los bancos grandes experimentan múltiples interrupciones al año. Y no son solo interrupciones — los gobiernos pueden congelar cuentas, las empresas pueden quebrar y las políticas pueden cambiar. El problema subyacente es que alguien más controla el acceso a tu dinero."
+        }
+      ]
+    }
+  },
+  "1.1.3": {
+    "title": "Un Mundo Sin Intermediarios",
+    "description": "¿Y si dos personas pudieran hacer transacciones directamente, sin necesitar un banco, un notario o cualquier otra autoridad que responda por ellos? Esa es la promesa central de la tecnología blockchain.",
+    "learningObjective": "Entender la propuesta de valor central de blockchain: confianza peer-to-peer",
+    "exerciseContent": {
+      "instruction": "Empareja cada concepto tradicional con su equivalente en blockchain. Piensa en cómo blockchain reemplaza la necesidad de intermediarios de confianza.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "El banco verificando tu saldo",
+          "definition": "Toda la red verifica cada transacción colectivamente",
+          "analogy": "En vez de que un cajero del banco revise tu cuenta, imagina miles de testigos independientes confirmando tu saldo al mismo tiempo"
+        },
+        {
+          "id": "2",
+          "term": "Un notario certificando un documento",
+          "definition": "Un registro permanente e inalterable en la blockchain",
+          "analogy": "En vez de pagar a alguien para que selle tu contrato, el documento se registra en un libro de contabilidad del que millones de personas tienen copias y nadie puede alterar"
+        },
+        {
+          "id": "3",
+          "term": "PayPal procesando tu pago",
+          "definition": "Una transferencia peer-to-peer que se liquida sin ninguna empresa de por medio",
+          "analogy": "En vez de que una empresa mueva dinero entre cuentas en sus servidores, le entregas valor directamente a la otra persona como darle efectivo — pero digitalmente y a cualquier distancia"
+        },
+        {
+          "id": "4",
+          "term": "Un servidor central almacenando todos los registros",
+          "definition": "Un libro de contabilidad distribuido copiado en miles de computadoras en todo el mundo",
+          "analogy": "En vez de un archivero en una oficina, imagina el mismo archivero duplicado en miles de oficinas alrededor del mundo, todos sincronizándose automáticamente"
+        }
+      ]
+    }
+  },
+  "1.2.1": {
+    "title": "¿Qué es un Bloque?",
+    "description": "Un bloque es la unidad fundamental de construcción de una blockchain. Exploremos qué contiene.",
+    "learningObjective": "Entender que un bloque es un contenedor de datos (transacciones) con una marca de tiempo e ID",
+    "exerciseContent": {
+      "instruction": "Un bloque es como un sobre sellado que contiene datos. Arrastra cada elemento a la posición correcta para construir un bloque completo.",
+      "items": [
+        {
+          "id": "i1",
+          "label": "Lista de transacciones (quién envió qué a quién)",
+          "correctPosition": 0
+        },
+        {
+          "id": "i2",
+          "label": "Marca de tiempo (la fecha y hora exacta en que se creó este bloque)",
+          "correctPosition": 1
+        },
+        {
+          "id": "i3",
+          "label": "Número de bloque (su posición en la cadena)",
+          "correctPosition": 2
+        },
+        {
+          "id": "i4",
+          "label": "Hash (una huella digital única del contenido de este bloque)",
+          "correctPosition": 3
+        }
+      ],
+      "zones": [
+        {
+          "id": "z1",
+          "label": "Datos — la carga útil"
+        },
+        {
+          "id": "z2",
+          "label": "Cuándo — la marca de tiempo"
+        },
+        {
+          "id": "z3",
+          "label": "Dónde — su dirección en la cadena"
+        },
+        {
+          "id": "z4",
+          "label": "Identidad — su huella digital única"
+        }
+      ]
+    }
+  },
+  "1.2.2": {
+    "title": "Encadenando Bloques",
+    "description": "Los bloques no existen de forma aislada. Cada uno está vinculado al anterior, formando una cadena irrompible.",
+    "learningObjective": "Entender cómo los bloques se enlazan mediante hashes y por qué cambiar uno rompe la cadena",
+    "exerciseContent": {
+      "instruction": "Cada bloque contiene una referencia al bloque anterior. Pon estos eventos en el orden correcto para ver qué pasa cuando alguien intenta manipular un bloque en medio de la cadena.",
+      "items": [
+        {
+          "id": "i1",
+          "label": "Un hacker cambia una transacción en el Bloque 3",
+          "correctPosition": 0
+        },
+        {
+          "id": "i2",
+          "label": "El hash del Bloque 3 cambia completamente porque su contenido cambió",
+          "correctPosition": 1
+        },
+        {
+          "id": "i3",
+          "label": "El Bloque 4 ya no coincide con el hash del Bloque 3 — el enlace se rompe",
+          "correctPosition": 2
+        },
+        {
+          "id": "i4",
+          "label": "Cada bloque después del Bloque 3 es ahora inválido — toda la cadena rechaza el cambio",
+          "correctPosition": 3
+        }
+      ],
+      "zones": [
+        {
+          "id": "z1",
+          "label": "Paso 1 — El ataque"
+        },
+        {
+          "id": "z2",
+          "label": "Paso 2 — La huella digital cambia"
+        },
+        {
+          "id": "z3",
+          "label": "Paso 3 — El enlace se rompe"
+        },
+        {
+          "id": "z4",
+          "label": "Paso 4 — La cadena lo rechaza"
+        }
+      ]
+    }
+  },
+  "1.2.3": {
+    "title": "Copias en Todas Partes",
+    "description": "A diferencia de una base de datos tradicional propiedad de una empresa, los datos de blockchain se copian en miles de computadoras.",
+    "learningObjective": "Entender el libro de contabilidad distribuido — miles de copias idénticas, sin un solo propietario",
+    "exerciseContent": {
+      "instruction": "Empareja cada concepto centralizado tradicional con su equivalente distribuido en blockchain.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "La base de datos privada de un banco con todos los saldos de cuentas",
+          "definition": "Un libro de contabilidad público de todas las transacciones, copiado idénticamente en miles de computadoras en todo el mundo",
+          "analogy": "En vez de que un banco guarde la única copia de tu historial de cuenta en su bóveda, imagina el mismo libro fotocopiado y entregado a diez mil personas independientes alrededor del mundo — todos actualizándose automáticamente al mismo tiempo"
+        },
+        {
+          "id": "2",
+          "term": "El servidor maestro único de una empresa que se cae",
+          "definition": "Sin punto único de falla — si un nodo se cae, miles de otros mantienen la red funcionando",
+          "analogy": "Es como una fogata versus el sol. Una fogata se puede apagar. No puedes apagar el sol soplándole."
+        },
+        {
+          "id": "3",
+          "term": "Una organización decidiendo alterar registros históricos",
+          "definition": "Historia inmutable — alterar cualquier registro requeriría sobrescribir miles de copias idénticas simultáneamente",
+          "analogy": "Si una mentira aparece en un periódico, puedes emitir una corrección. Pero si ese mismo periódico se imprimió en diez mil ciudades el mismo día, cambiar la historia se vuelve casi imposible."
+        },
+        {
+          "id": "4",
+          "term": "Un CEO decidiendo unilateralmente congelar todas las cuentas",
+          "definition": "Sin propietario único — los cambios en la red requieren el acuerdo de la mayoría de los participantes",
+          "analogy": "En vez de que una persona tenga la llave maestra, imagina que el edificio tiene diez mil cerraduras y cada dueño de cerradura debe estar de acuerdo antes de que cualquier puerta se abra"
+        }
+      ]
+    }
+  },
+  "1.2.4": {
+    "title": "Cómo la Red Llega a un Acuerdo",
+    "description": "Con miles de copias, ¿cómo se ponen todos de acuerdo sobre qué transacciones son válidas?",
+    "learningObjective": "Entender los fundamentos del consenso — los nodos votan sobre transacciones válidas (PoW/PoS como analogías)",
+    "exerciseContent": {
+      "scenario": "Imagina que estás en una sala con 1,000 desconocidos. Nadie se conoce ni confía en los demás. Alguien anuncia: 'Alice acaba de pagar a Bob 50 euros.' No hay árbitro, ni juez, ni gerente de banco. Sin embargo, de alguna manera, el grupo necesita ponerse de acuerdo sobre si esta transacción realmente ocurrió y si Alice realmente tenía el dinero para gastar. ¿Cómo maneja una red blockchain exactamente este problema?",
+      "question": "¿Cuál de las siguientes opciones describe mejor cómo una red blockchain llega a un acuerdo sobre transacciones válidas?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Un comité central de expertos de confianza revisa cada transacción y la aprueba",
+          "isCorrect": false,
+          "explanation": "Esto describe cómo funcionan los sistemas tradicionales como los bancos — una autoridad de confianza toma la decisión. Blockchain fue diseñada específicamente para eliminar esa autoridad central. Si un comité controlara la validación, quien controlara el comité controlaría toda la red."
+        },
+        {
+          "id": "b",
+          "text": "La mayoría de las computadoras en la red verifican independientemente la transacción y acuerdan que es válida antes de que se agregue a la cadena",
+          "isCorrect": true,
+          "explanation": "Esto es el consenso en acción. Cada computadora (llamada nodo) verifica independientemente: ¿Alice tiene saldo suficiente? ¿La transacción está correctamente firmada? ¿Es un duplicado? Solo cuando la mayoría de los nodos están de acuerdo se agrega la transacción. Ningún nodo tiene autoridad — la verdad es lo que la mayoría de la red confirma independientemente."
+        },
+        {
+          "id": "c",
+          "text": "La persona que envía la transacción simplemente la anuncia y todos la aceptan de buena fe",
+          "isCorrect": false,
+          "explanation": "La confianza ciega es exactamente lo que blockchain elimina. Cualquiera puede afirmar cualquier cosa. Los mecanismos de consenso existen precisamente porque la red asume que existen actores maliciosos. Cada afirmación es verificada por nodos independientes antes de ser aceptada — la buena fe sola no es suficiente."
+        },
+        {
+          "id": "d",
+          "text": "Las transacciones solo se agregan una vez por semana, dando tiempo a los humanos para revisarlas manualmente",
+          "isCorrect": false,
+          "explanation": "Las transacciones en blockchain se verifican y confirman en segundos o minutos, automáticamente, por software ejecutándose en miles de máquinas simultáneamente. No se necesita revisión humana — las reglas están codificadas en el software mismo."
+        }
+      ]
+    }
+  },
+  "1.2.5": {
+    "title": "Blockchain vs. Base de Datos",
+    "description": "Blockchain y las bases de datos tradicionales almacenan datos, pero funcionan de manera muy diferente.",
+    "learningObjective": "Consolidar la comprensión — qué hace a blockchain diferente de una base de datos regular",
+    "exerciseContent": {
+      "instruction": "Blockchain y las bases de datos tradicionales almacenan datos — pero operan bajo principios completamente diferentes. Empareja cada característica con si describe una base de datos tradicional, una blockchain, o ambas.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "Puede almacenar y recuperar información",
+          "definition": "Tanto las bases de datos tradicionales como blockchain hacen esto — almacenar datos es su propósito compartido",
+          "analogy": "Tanto un diario privado como un tablón de anuncios público almacenan información. La diferencia no es qué almacenan — es quién los controla y quién puede cambiarlos."
+        },
+        {
+          "id": "2",
+          "term": "Una empresa o administrador puede editar o eliminar cualquier registro",
+          "definition": "Base de datos tradicional — un solo propietario controla los datos y puede cambiarlos a voluntad",
+          "analogy": "Piensa en una pizarra en una oficina privada. La persona que es dueña de la oficina puede borrar y reescribir cualquier cosa cuando quiera."
+        },
+        {
+          "id": "3",
+          "term": "Una vez escritos, los registros son permanentes y no pueden ser alterados silenciosamente",
+          "definition": "Blockchain — cada entrada está criptográficamente asegurada, y la historia no puede reescribirse sin que toda la red lo note",
+          "analogy": "Piensa en escribir en concreto fresco. Una vez que se endurece, no puedes cambiarlo silenciosamente. Cualquier intento de alterarlo deja marcas obvias."
+        },
+        {
+          "id": "4",
+          "term": "Miles de copias idénticas existen simultáneamente sin un solo propietario",
+          "definition": "Blockchain — el libro de contabilidad está distribuido en miles de nodos independientes en todo el mundo",
+          "analogy": "Una base de datos tradicional es un archivero en una habitación. Una blockchain es ese mismo archivero duplicado en diez mil habitaciones en cada continente, todos permaneciendo automáticamente idénticos."
+        },
+        {
+          "id": "5",
+          "term": "Rápido, eficiente y barato de actualizar y consultar",
+          "definition": "Base de datos tradicional — optimizada para velocidad y flexibilidad, haciéndola más adecuada para la mayoría de las aplicaciones cotidianas",
+          "analogy": "Una hoja de cálculo en tu laptop es más rápida que convocar una reunión de pueblo cada vez que quieres actualizar un número. La fortaleza de blockchain es la confianza, no la velocidad."
+        }
+      ]
+    }
+  },
+  "1.3.1": {
+    "title": "La Descentralización en la Vida Real",
+    "description": "La descentralización no es una idea nueva. Muchos sistemas familiares ya funcionan sin una autoridad única.",
+    "learningObjective": "Conectar la descentralización con sistemas familiares (Wikipedia, torrents, mercados de agricultores)",
+    "exerciseContent": {
+      "instruction": "La descentralización ya existe a tu alrededor — la mayoría de la gente simplemente no la nota. Empareja cada sistema del mundo real con el principio de descentralización que demuestra.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "Wikipedia",
+          "definition": "Miles de contribuyentes independientes mantienen el contenido — ninguna empresa o editor controla qué es verdad",
+          "analogy": "Nadie es dueño de Wikipedia como un editor es dueño de una enciclopedia. Si un contribuyente desaparece, los demás siguen escribiendo. El conocimiento sobrevive porque se comparte."
+        },
+        {
+          "id": "2",
+          "term": "Un mercado de agricultores",
+          "definition": "Compradores y vendedores realizan transacciones directamente entre ellos — sin cadena de supermercados cobrando comisión o fijando precios",
+          "analogy": "En un supermercado, una empresa decide qué está disponible, a qué precio, de qué proveedores. En un mercado de agricultores, cientos de productores independientes establecen sus propios términos y negocian cara a cara con los clientes. No se necesita una oficina central."
+        },
+        {
+          "id": "3",
+          "term": "Intercambio de archivos BitTorrent",
+          "definition": "Los archivos se comparten entre millones de pares simultáneamente — no hay un servidor central que cerrar",
+          "analogy": "Cuando descargas una película a través de un servicio de streaming, viene de los servidores de una empresa. Si cierran, la película desaparece. Con torrents, el archivo vive en millones de computadoras a la vez — eliminarlo significaría apagar cada una de ellas."
+        },
+        {
+          "id": "4",
+          "term": "El idioma español",
+          "definition": "Ninguna autoridad lo posee o controla — evoluciona a través del uso colectivo y el consenso entre miles de millones de hablantes",
+          "analogy": "No hay una 'Corporación del Idioma Español' que decida nuevas palabras. Las palabras entran al idioma cuando suficiente gente las usa. Las redes blockchain evolucionan de manera similar a través del consenso — no a través de las decisiones de un solo propietario."
+        }
+      ]
+    }
+  },
+  "1.3.2": {
+    "title": "¿Quién Usa Blockchain Hoy?",
+    "description": "Blockchain no es solo teoría. Organizaciones reales la están usando para resolver problemas reales ahora mismo.",
+    "learningObjective": "Entender la adopción real — cadena de suministro, registros médicos, pilotos de votación",
+    "exerciseContent": {
+      "scenario": "Estás leyendo un artículo sobre la adopción de blockchain. Menciona: Walmart ahora rastrea la lechuga desde la granja hasta el estante en una blockchain, reduciendo el tiempo para rastrear un brote de contaminación de 7 días a 2.2 segundos. Una red de hospitales en Estonia almacena registros de pacientes en una blockchain para que los pacientes sean dueños de sus propios datos y cualquier acceso quede registrado permanentemente. Un pequeño país realizó un piloto de votación basado en blockchain en una elección local, con resultados que cualquier ciudadano podía verificar independientemente. Te preguntas: ¿qué problema están resolviendo realmente todos estos casos de uso?",
+      "question": "¿Cuál es el hilo conductor que conecta estas tres aplicaciones reales de blockchain?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Todas usan blockchain para hacer las cosas más rápidas que los sistemas informáticos tradicionales",
+          "isCorrect": false,
+          "explanation": "La velocidad rara vez es la principal ventaja de blockchain — las bases de datos tradicionales suelen ser más rápidas. La verdadera ganancia fue tener un registro a prueba de manipulaciones en el que todos los participantes de la cadena de suministro confiaban por igual, no la velocidad de procesamiento."
+        },
+        {
+          "id": "b",
+          "text": "Todas usan blockchain para crear registros que son transparentes, a prueba de manipulaciones y no controlados por ninguna parte única",
+          "isCorrect": true,
+          "explanation": "En cada caso, el problema central era la confianza entre partes que no confían completamente entre sí. Blockchain proporciona una fuente compartida de verdad que ninguna parte controla — eso es lo que la hace valiosa en los tres contextos."
+        },
+        {
+          "id": "c",
+          "text": "Todas usan blockchain para eliminar la necesidad de computadoras y bases de datos por completo",
+          "isCorrect": false,
+          "explanation": "Blockchain es en sí misma un tipo de base de datos — no elimina la tecnología digital, cambia cómo se establece la confianza dentro de ella."
+        },
+        {
+          "id": "d",
+          "text": "Todas usan blockchain porque es más barata que las soluciones existentes",
+          "isCorrect": false,
+          "explanation": "En muchos casos, blockchain es en realidad más costosa de operar que una base de datos tradicional. Las organizaciones la adoptan a pesar del costo porque obtienen un registro que todos los interesados pueden verificar independientemente y confiar por igual."
+        }
+      ]
+    }
+  },
+  "1.3.3": {
+    "title": "¿Es Blockchain Siempre la Respuesta?",
+    "description": "Blockchain es poderosa, pero no es la herramienta correcta para cada problema. El pensamiento crítico importa.",
+    "learningObjective": "Desarrollar pensamiento crítico — blockchain no es magia, tiene compromisos",
+    "exerciseContent": {
+      "scenario": "Una amiga que trabaja en una panadería local se emociona después de leer sobre blockchain. Dice: 'Quiero poner nuestro libro de recetas en la blockchain para que esté seguro y nadie pueda cambiarlo. También quiero usarla para rastrear qué empleado trabajó en qué turno, y para procesar nuestras transacciones de ventas diarias más rápido.' Acabas de pasar tiempo aprendiendo sobre blockchain. Te das cuenta de que ella podría estar resolviendo algunos problemas para los que blockchain es perfecta — y algunos problemas que empeoraría.",
+      "question": "¿Cuál de los tres casos de uso de tu amiga es realmente adecuado para blockchain?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los tres — blockchain es mejor que los sistemas tradicionales para todo tipo de almacenamiento de datos",
+          "isCorrect": false,
+          "explanation": "Blockchain agrega valor real cuando necesitas registros a prueba de manipulaciones que múltiples partes que no confían entre sí deben verificar juntas. Para problemas donde una persona de confianza gestiona sus propios datos, una base de datos regular es más simple, más barata y más rápida."
+        },
+        {
+          "id": "b",
+          "text": "Ninguno — blockchain solo es útil para criptomonedas, no para problemas reales de negocios",
+          "isCorrect": false,
+          "explanation": "Blockchain ha demostrado ser útil más allá de las criptomonedas — cadenas de suministro, registros médicos, contratos y pilotos de votación son ejemplos reales. La pregunta es si es la opción correcta para un problema específico."
+        },
+        {
+          "id": "c",
+          "text": "Almacenar el libro de recetas, porque es un documento que debería ser permanente y verificable — aunque una blockchain privada o servicio de notarización podría ser más simple",
+          "isCorrect": true,
+          "explanation": "Un libro de recetas es un documento cuya integridad importa — prueba de que no ha sido alterado y un registro con marca de tiempo de cuándo fue creado. Ese es un caso de uso razonable para blockchain. Rastrear turnos del personal y procesar ventas diarias, sin embargo, son mejor manejados por un sistema de RRHH regular y una base de datos de punto de venta — son registros internos con un propietario de confianza, y blockchain solo agregaría costo y complejidad sin agregar confianza."
+        },
+        {
+          "id": "d",
+          "text": "Procesar transacciones de ventas diarias, porque blockchain hace los pagos más rápidos",
+          "isCorrect": false,
+          "explanation": "Las ventas diarias en una panadería involucran a una parte de confianza procesando transacciones rápidamente con clientes conocidos. Un sistema de punto de venta maneja esto mucho más rápido y barato que una blockchain. Blockchain brilla cuando múltiples partes que no confían entre sí necesitan compartir un registro."
+        }
+      ]
+    }
+  },
+  "2.1.1": {
+    "title": "La Historia de Satoshi",
+    "description": "En 2008, durante la peor crisis financiera en décadas, una figura misteriosa propuso una nueva forma radical de dinero.",
+    "learningObjective": "Entender el origen de Bitcoin — crisis de 2008, el whitepaper, creador seudónimo",
+    "exerciseContent": {
+      "scenario": "El año es 2008. Lehman Brothers, uno de los bancos de inversión más antiguos y grandes del mundo, acaba de colapsar de la noche a la mañana. Millones de personas en todo el mundo ven cómo sus ahorros se reducen, sus fondos de pensión se evaporan y sus pagos de hipoteca se disparan — todo por decisiones tomadas por banqueros que nunca conocieron, regulados por gobiernos que no actuaron. Entonces, en octubre de ese mismo año, una persona o grupo anónimo usando el nombre 'Satoshi Nakamoto' publica un documento de 9 páginas en línea titulado 'Bitcoin: Un Sistema de Efectivo Electrónico Peer-to-Peer.' Propone un nuevo tipo de dinero — uno que no requiere ningún banco, ningún gobierno o ninguna institución de confianza para funcionar.",
+      "question": "¿Cuál fue la idea central de Satoshi Nakamoto en respuesta a la crisis financiera de 2008?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los bancos deberían estar regulados más estrictamente para que nunca puedan tomar riesgos con el dinero de la gente",
+          "isCorrect": false,
+          "explanation": "Una regulación más estricta fue una respuesta que muchos pidieron — y sucedió. Pero la idea de Satoshi fue más radical: en vez de tratar de arreglar al intermediario, eliminar la necesidad del intermediario por completo. Bitcoin no fue una propuesta de reforma; fue un sistema alternativo."
+        },
+        {
+          "id": "b",
+          "text": "Los pagos digitales necesitaban ser más rápidos y baratos para los consumidores",
+          "isCorrect": false,
+          "explanation": "La velocidad y el costo son características de Bitcoin, pero no fueron la idea impulsora. La crisis de 2008 no se trató de pagos lentos — se trató de lo que pasa cuando las instituciones que controlan el dinero fallan. Satoshi estaba resolviendo un problema de confianza, no de velocidad."
+        },
+        {
+          "id": "c",
+          "text": "Era posible crear un sistema donde las personas pudieran intercambiar valor directamente, sin necesitar confiar en ningún banco o institución como intermediario",
+          "isCorrect": true,
+          "explanation": "Este es el avance central. La crisis de 2008 mostró lo que pasa cuando las instituciones en las que confiamos con nuestro dinero nos fallan. El whitepaper de Satoshi propuso que la transferencia confiable de dinero era posible sin confiar en ninguna institución — en su lugar, la confianza vendría de las matemáticas y una red distribuida de computadoras. Hasta hoy, la identidad de Satoshi sigue siendo uno de los grandes misterios de la era de internet."
+        },
+        {
+          "id": "d",
+          "text": "El oro era la única reserva confiable de valor, así que el dinero debería estar respaldado por oro nuevamente",
+          "isCorrect": false,
+          "explanation": "Volver al patrón oro fue otra respuesta que la gente discutió en 2008. Bitcoin a veces se llama 'oro digital' porque tiene un suministro fijo — pero no está respaldado por oro físico. La invención de Satoshi fue algo genuinamente nuevo: escasez impuesta por código y matemáticas, no por un bien físico o la promesa de un gobierno."
+        }
+      ]
+    }
+  },
+  "2.1.2": {
+    "title": "Dinero Digital vs. Tu Cuenta Bancaria",
+    "description": "Los euros en tu app bancaria y Bitcoin son ambos digitales, pero funcionan de maneras fundamentalmente diferentes.",
+    "learningObjective": "Entender cómo las criptomonedas difieren de los euros digitales en tu app bancaria",
+    "exerciseContent": {
+      "instruction": "Tanto los euros en tu app bancaria como Bitcoin son números digitales en una pantalla — pero su naturaleza subyacente es completamente diferente. Empareja cada característica con el tipo de dinero digital que describe.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "El banco puede congelar tu cuenta, revertir una transacción o ir a la quiebra",
+          "definition": "Euros digitales en tu cuenta bancaria (un pasivo del banco, no dinero que posees directamente)",
+          "analogy": "El número en tu app bancaria es como un pagaré de tu banco — te deben ese dinero. Si el banco desaparece, también podría desaparecer tu pagaré. Bitcoin es más como una moneda física en tu propio bolsillo: la moneda existe sin importar lo que le pase a cualquier empresa."
+        },
+        {
+          "id": "2",
+          "term": "Ninguna empresa o gobierno lo controla; las transacciones no pueden ser revertidas por nadie",
+          "definition": "Bitcoin (un activo descentralizado que posees directamente en la blockchain)",
+          "analogy": "Enviar Bitcoin es como entregarle a alguien una moneda de oro en la calle — una vez que está en su mano, es suya. Nadie puede revertir esa transacción. Enviar euros a través de un banco es como pedirle a un amigo que transmita un mensaje — el amigo puede decidir no entregarlo."
+        },
+        {
+          "id": "3",
+          "term": "Su suministro total está algorítmicamente limitado a 21 millones de unidades, garantizado por código",
+          "definition": "Bitcoin (escasez predecible y fija incorporada en el protocolo)",
+          "analogy": "Imagina una máquina expendedora que, por su propio diseño mecánico, solo puede dispensar 21 millones de artículos — y nadie, ni siquiera su creador, puede anular eso. Los bancos centrales pueden imprimir más euros cuando lo decidan."
+        },
+        {
+          "id": "4",
+          "term": "Respaldado por el sistema legal y la plena confianza de un gobierno",
+          "definition": "Euros digitales en tu cuenta bancaria (moneda fiat)",
+          "analogy": "Los euros funcionan porque una institución muy poderosa — el Banco Central Europeo y el sistema legal de la UE — promete que funcionan, y miles de millones de personas actúan en consecuencia. Bitcoin funciona porque las matemáticas funcionan y la gente está de acuerdo. Ambos dependen de la confianza, solo que en cosas muy diferentes."
+        }
+      ]
+    }
+  },
+  "2.1.3": {
+    "title": "¿Dónde Viven las Criptomonedas?",
+    "description": "Las criptomonedas no viven en un servidor o en un archivo en tu computadora. Su existencia es bastante diferente de lo que podrías esperar.",
+    "learningObjective": "Entender que las criptomonedas existen en blockchains, no en servidores o archivos",
+    "exerciseContent": {
+      "instruction": "La gente a menudo imagina que las criptomonedas se almacenan en algún lugar — en un archivo, en un servidor, en una wallet digital en su teléfono. La realidad es más interesante. Coloca cada elemento en la categoría correcta.",
+      "items": [
+        {
+          "id": "1",
+          "label": "El registro de que posees 0.5 BTC",
+          "correctPosition": 0
+        },
+        {
+          "id": "2",
+          "label": "Tu clave privada (la contraseña que prueba la propiedad)",
+          "correctPosition": 1
+        },
+        {
+          "id": "3",
+          "label": "Tu app de wallet crypto",
+          "correctPosition": 1
+        },
+        {
+          "id": "4",
+          "label": "El historial de cada transacción de Bitcoin jamás realizada",
+          "correctPosition": 0
+        },
+        {
+          "id": "5",
+          "label": "El saldo mostrado en un exchange como Coinbase",
+          "correctPosition": 2
+        }
+      ],
+      "zones": [
+        {
+          "id": "z1",
+          "label": "Vive en la blockchain (distribuida en miles de computadoras en todo el mundo)"
+        },
+        {
+          "id": "z2",
+          "label": "Vive contigo (tu dispositivo o tu memoria — prueba tu derecho a gastar)"
+        },
+        {
+          "id": "z3",
+          "label": "Vive en los servidores de una empresa (ellos guardan las criptomonedas en tu nombre)"
+        }
+      ]
+    }
+  },
+  "2.1.4": {
+    "title": "¿Por Qué Alguien Usaría Esto?",
+    "description": "Las criptomonedas pueden parecer abstractas. Pero resuelven problemas reales para personas reales en todo el mundo.",
+    "learningObjective": "Entender la propuesta de valor — sin fronteras, sin permisos, 24/7, programable",
+    "exerciseContent": {
+      "scenario": "Amara es una diseñadora gráfica freelance en Lagos, Nigeria. Sus clientes internacionales le pagan vía PayPal, pero PayPal cobra 4.5% en comisiones, tarda 3–5 días hábiles en transferir, y recientemente congeló su cuenta por 3 semanas debido a una 'revisión de cumplimiento' — sin explicación alguna. No pudo pagar sus cuentas durante ese tiempo. Su primo en EE.UU. quiere enviarle dinero rápidamente, pero las transferencias internacionales cobran $35 fijos y tardan hasta una semana. Amara comienza a explorar Bitcoin y stablecoins como alternativa.",
+      "question": "¿Qué aspectos del diseño de las criptomonedas abordan directamente los problemas que experimenta Amara?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Las criptomonedas son valiosas porque se pueden intercambiar por ganancias, así que Amara podría invertir sus ingresos y potencialmente ganar más dinero",
+          "isCorrect": false,
+          "explanation": "La especulación de precios es algo que la gente hace con las criptomonedas, pero no es lo que resuelve los problemas reales de Amara. Sus problemas son las altas comisiones, las transferencias lentas y tener su cuenta congelada. Invertir sus ingresos en un activo volátil introduciría riesgos completamente nuevos, no arreglaría los problemas de infraestructura de pago que enfrenta."
+        },
+        {
+          "id": "b",
+          "text": "Las transacciones crypto son sin fronteras, disponibles 24/7, no requieren permiso de ninguna empresa y pueden liquidarse en minutos con bajas comisiones",
+          "isCorrect": true,
+          "explanation": "Esta es la propuesta de valor que importa para Amara. 'Sin fronteras' significa que no hay barrera de país o moneda entre Lagos y Nueva York. 'Sin permisos' significa que ninguna empresa puede congelar su cuenta a capricho. '24/7' significa que las transferencias no esperan horarios bancarios. 'Bajas comisiones' significa que conserva más de sus ingresos. Para los aproximadamente 1,400 millones de adultos no bancarizados o sub-bancarizados en el mundo, estas propiedades representan acceso financiero real."
+        },
+        {
+          "id": "c",
+          "text": "Las criptomonedas son anónimas, así que Amara puede evitar pagar impuestos sobre sus ingresos freelance",
+          "isCorrect": false,
+          "explanation": "Este es un concepto erróneo común. La mayoría de las criptomonedas son seudónimas, no anónimas — las transacciones son permanentemente visibles en una blockchain pública, y las autoridades se han vuelto cada vez más sofisticadas en rastrearlas. El problema de Amara es el acceso y las comisiones, no los impuestos."
+        },
+        {
+          "id": "d",
+          "text": "PayPal eventualmente arreglará estos problemas, así que las criptomonedas no son necesarias para Amara",
+          "isCorrect": false,
+          "explanation": "Quizás PayPal mejorará — pero 'quizás eventualmente' no ayuda a Amara hoy. Más fundamentalmente, mejore o no PayPal, sigue siendo una empresa centralizada con el poder de congelar cuentas y fijar comisiones. Las criptomonedas ofrecen una arquitectura alternativa, no solo una mejor versión de lo mismo."
+        }
+      ]
+    }
+  },
+  "2.2.1": {
+    "title": "Coins vs. Tokens",
+    "description": "No todas las criptomonedas son iguales. Algunas tienen su propia blockchain, otras viven en la de alguien más.",
+    "learningObjective": "Entender la diferencia — los coins tienen su propia blockchain, los tokens viven en otra",
+    "exerciseContent": {
+      "instruction": "En el mundo crypto, 'coins' y 'tokens' se usan frecuentemente de forma intercambiable — pero significan cosas diferentes. Empareja cada ejemplo con la categoría correcta y entiende por qué la distinción importa.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "Bitcoin (BTC)",
+          "definition": "Un coin — tiene su propia blockchain dedicada (la red Bitcoin) que existe únicamente para soportarlo",
+          "analogy": "Bitcoin es como un país que imprime su propia moneda. El país (la blockchain de Bitcoin) existe específicamente para hacer funcionar esa moneda. Las reglas del territorio están construidas alrededor de ella."
+        },
+        {
+          "id": "2",
+          "term": "Ether (ETH)",
+          "definition": "Un coin — es la moneda nativa de la blockchain Ethereum, la cual alimenta y de la cual depende",
+          "analogy": "Ether es como el combustible con el que funciona la economía de un país. La blockchain Ethereum es una plataforma, y ETH es lo que pagas por usarla — como pagar por electricidad o estampillas postales."
+        },
+        {
+          "id": "3",
+          "term": "USDC (un stablecoin vinculado al dólar que funciona en Ethereum)",
+          "definition": "Un token — no tiene su propia blockchain. Es un smart contract viviendo en la red Ethereum",
+          "analogy": "USDC es como un vale emitido por una empresa que opera dentro de un país. El vale depende de la infraestructura del país para ser válido y transferible, pero el país no creó el vale — una empresa privada lo hizo, usando los sistemas del país."
+        },
+        {
+          "id": "4",
+          "term": "Los puntos de recompensa de una plataforma de juegos que funcionan en una blockchain",
+          "definition": "Un token — construido por un desarrollador sobre una blockchain existente, no una moneda con su propia cadena",
+          "analogy": "Piensa en una tarjeta de fidelidad de una cafetería. La cafetería no construyó la ciudad — simplemente opera un negocio dentro de ella. Sus puntos de fidelidad funcionan dentro de las reglas de esa ciudad pero no son la moneda de la ciudad."
+        }
+      ]
+    }
+  },
+  "2.2.2": {
+    "title": "Ethereum: La Computadora Mundial",
+    "description": "Ethereum llevó la idea de Bitcoin más allá. No es solo dinero — es una plataforma para construir cosas.",
+    "learningObjective": "Entender el rol de Ethereum — no solo dinero sino una plataforma para construir cosas",
+    "exerciseContent": {
+      "scenario": "Tu amigo Marco acaba de escuchar sobre Ethereum y está confundido. 'Pensé que las criptomonedas eran sobre dinero,' dice. 'Pero la gente sigue diciendo que Ethereum es una plataforma. ¿Una computadora mundial? ¿Qué significa eso? ¿Por qué necesitarías una computadora en una blockchain?' Tratas de explicárselo mientras toman un café.",
+      "question": "¿Qué explicación captura mejor lo que hace a Ethereum fundamentalmente diferente de Bitcoin?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Ethereum es simplemente una versión más rápida y barata de Bitcoin — hace lo mismo pero con mejor tecnología",
+          "isCorrect": false,
+          "explanation": "Este es un malentendido común. Ambas son descentralizadas y ambas tienen monedas nativas — pero fueron diseñadas con objetivos diferentes. Bitcoin fue diseñado para ser dinero digital, optimizado para seguridad y simplicidad. Ethereum fue diseñado para ser una plataforma programable. La diferencia no es velocidad o costo — es el propósito."
+        },
+        {
+          "id": "b",
+          "text": "Ethereum permite a los desarrolladores escribir programas llamados smart contracts que se ejecutan en la blockchain automáticamente, permitiendo que aplicaciones enteras — no solo pagos — funcionen sin una empresa central",
+          "isCorrect": true,
+          "explanation": "Esta es la idea clave. Un smart contract es como una máquina expendedora: introduces la entrada correcta y la salida sucede automáticamente — sin empleado necesario. En Ethereum, estos programas pueden gobernar préstamos, votaciones, propiedad digital, seguros y más. La frase 'computadora mundial' significa que en vez de ejecutar estos programas en los servidores de Amazon o Google, se ejecutan en una red compartida que nadie controla."
+        },
+        {
+          "id": "c",
+          "text": "Ethereum está controlado por una empresa llamada la Fundación Ethereum, lo que lo hace más confiable que Bitcoin",
+          "isCorrect": false,
+          "explanation": "La Fundación Ethereum existe y financia el desarrollo — pero no controla Ethereum. La blockchain misma funciona en una red descentralizada de computadoras en todo el mundo. La Fundación puede proponer cambios, pero esos cambios solo suceden si la comunidad más amplia los acepta."
+        },
+        {
+          "id": "d",
+          "text": "Ethereum fue diseñado para reemplazar el mercado de valores tradicional y el sistema bancario en cinco años",
+          "isCorrect": false,
+          "explanation": "La tecnología de Ethereum puede usarse para construir herramientas financieras que compitan con bancos y mercados de valores — y algunas personas están haciendo exactamente eso. Pero 'reemplazar el sistema financiero en cinco años' es una afirmación, no un hecho. Ethereum es una plataforma; lo que se construya sobre ella, y si desplaza a los sistemas existentes, depende de la adopción, regulación y ejecución."
+        }
+      ]
+    }
+  },
+  "2.2.3": {
+    "title": "El Universo de los Tokens",
+    "description": "Los tokens vienen en muchos tipos — cada uno diseñado para un propósito diferente.",
+    "learningObjective": "Entender los tipos de tokens — utilidad, gobernanza, stablecoins (simplificado)",
+    "exerciseContent": {
+      "instruction": "La palabra 'token' se usa para cosas muy diferentes en crypto. Coloca cada tipo de token en la categoría que mejor describe su propósito principal.",
+      "items": [
+        {
+          "id": "1",
+          "label": "USDC — siempre vale $1, usado para pagos y ahorros sin fluctuaciones de precio",
+          "correctPosition": 0
+        },
+        {
+          "id": "2",
+          "label": "Un token de plataforma que permite a los poseedores votar sobre qué funciones se construyen después",
+          "correctPosition": 1
+        },
+        {
+          "id": "3",
+          "label": "Un token que ganas al usar una app, canjeable por funciones premium o comisiones reducidas",
+          "correctPosition": 2
+        },
+        {
+          "id": "4",
+          "label": "DAI — un stablecoin vinculado al dólar, mantenido por código en vez de una empresa",
+          "correctPosition": 0
+        },
+        {
+          "id": "5",
+          "label": "Tokens de votación que permiten a los miembros de la comunidad decidir cómo se gasta la tesorería de un protocolo",
+          "correctPosition": 1
+        }
+      ],
+      "zones": [
+        {
+          "id": "z1",
+          "label": "Stablecoin — diseñado para mantener un valor estable (generalmente vinculado a una moneda fiat)"
+        },
+        {
+          "id": "z2",
+          "label": "Token de gobernanza — da a los poseedores voz en las decisiones sobre un protocolo o plataforma"
+        },
+        {
+          "id": "z3",
+          "label": "Token de utilidad — otorga acceso a un servicio, función o recompensa dentro de una plataforma específica"
+        }
+      ]
+    }
+  },
+  "2.2.4": {
+    "title": "Tus Knowledge Tokens",
+    "description": "Los Knowledge Tokens que ganas en esta plataforma funcionan igual que los tokens reales. Conectemos los puntos.",
+    "learningObjective": "Entender que los Knowledge Tokens de Transcendence reflejan mecánicas de tokens reales",
+    "exerciseContent": {
+      "instruction": "Algo que vale la pena notar: mientras trabajabas en estas misiones, has estado ganando Knowledge Tokens. Eso no fue solo una mecánica de juego — fue una demostración en vivo de cómo funcionan los tokens reales. Empareja cada mecánica de tokens que has experimentado en Transcendence con su equivalente en blockchain del mundo real.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "Ganaste Knowledge Tokens completando misiones, no comprándolos",
+          "definition": "Distribución de tokens a través de la participación — recompensando comportamientos que el protocolo quiere incentivar",
+          "analogy": "Muchos protocolos reales distribuyen tokens a usuarios que contribuyen valor: proveedores de liquidez, adoptadores tempranos, votantes activos. La idea es que quienes construyen el valor de la red deberían poseer una parte. Aprendiste, contribuiste, ganaste."
+        },
+        {
+          "id": "2",
+          "term": "Tu saldo de Knowledge Tokens está vinculado a tu cuenta y rastrea tu progreso",
+          "definition": "Saldo on-chain — un registro permanente de lo que has ganado, asociado a tu identidad",
+          "analogy": "En una blockchain real, tu saldo de tokens no se almacena 'en una app' — es un número en un libro de contabilidad público asociado a tu dirección. Tu progreso aquí funciona de la misma manera: es tuyo, está registrado, persiste."
+        },
+        {
+          "id": "3",
+          "term": "Los Knowledge Tokens desbloquean acceso a contenido avanzado y funciones en la plataforma",
+          "definition": "Utilidad — tokens que otorgan acceso a algo valioso dentro de un ecosistema específico",
+          "analogy": "Este es el modelo clásico de token de utilidad. El token no es valioso porque alguien declaró que lo era — es valioso porque hace algo útil dentro del sistema. Cuanto más aprendes, más acceso ganas."
+        },
+        {
+          "id": "4",
+          "term": "Las reglas de cómo se ganan tokens están establecidas de antemano y no cambian arbitrariamente",
+          "definition": "Distribución transparente basada en reglas — la lógica del protocolo es visible y consistente para todos los participantes",
+          "analogy": "En una blockchain, las reglas de un smart contract son públicas y no pueden ser cambiadas secretamente por una parte. Conocías las reglas cuando empezaste. La justicia es impuesta por el sistema mismo — no prometida por una empresa."
+        }
+      ]
+    }
+  },
+  "2.3.1": {
+    "title": "¿Por Qué las Criptomonedas Tienen Valor?",
+    "description": "¿Por qué algo puramente digital valdría dinero real? La respuesta es más familiar de lo que piensas.",
+    "learningObjective": "Entender los impulsores de valor — escasez, utilidad, efectos de red, creencia",
+    "exerciseContent": {
+      "instruction": "¿Por qué algo puramente digital vale dinero real? Las mismas fuerzas que dan valor a muchas cosas familiares también aplican a las criptomonedas. Empareja cada impulsor de valor con la explicación y ejemplo que mejor lo ilustra.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "Escasez",
+          "definition": "Un límite estricto en la oferta significa que cada unidad se vuelve más valiosa a medida que crece la demanda — el tope de 21 millones de Bitcoin está impuesto por código que nadie puede anular",
+          "analogy": "Ediciones de libros de primera edición, zapatillas de tiraje limitado, vino vintage — la escasez sola no crea valor, pero significa que el valor no puede ser inflado simplemente haciendo más. El calendario de suministro de Bitcoin está matemáticamente fijado."
+        },
+        {
+          "id": "2",
+          "term": "Utilidad",
+          "definition": "Las criptomonedas tienen usos prácticos — pagar por transacciones, ejecutar smart contracts, transferir valor a través de fronteras sin un banco",
+          "analogy": "Un boleto de autobús tiene valor porque hace algo — te sube al autobús. ETH tiene valor en parte porque lo necesitas para pagar por cualquier cosa en la red Ethereum. Cuanto más se usa la red, más ETH se necesita."
+        },
+        {
+          "id": "3",
+          "term": "Efectos de red",
+          "definition": "Cuantas más personas usan y aceptan una criptomoneda, más útil y valiosa se vuelve — el valor se acumula con la adopción",
+          "analogy": "El teléfono era inútil cuando solo una persona lo tenía. Bitcoin tenía casi ningún valor en 2009 cuando casi nadie lo usaba. A medida que más comerciantes e instituciones lo adoptaron, el valor colectivo de la red creció — no porque alguien lo declaró valioso, sino porque más personas actuaron como si lo fuera."
+        },
+        {
+          "id": "4",
+          "term": "Creencia y consenso social",
+          "definition": "En última instancia, todo el dinero — dólares, oro, criptomonedas — tiene valor porque suficientes personas colectivamente acuerdan que lo tiene y actúan en consecuencia",
+          "analogy": "Un pedazo de papel con la cara de un presidente vale algo porque millones de personas se comportan como si así fuera. Elimina esa creencia compartida y es solo papel. Las criptomonedas son más nuevas y ese consenso aún se está formando — lo que explica tanto su potencial como su volatilidad."
+        }
+      ]
+    }
+  },
+  "2.3.2": {
+    "title": "Leyendo un Gráfico de Precios",
+    "description": "No necesitas ser un trader, pero poder leer un gráfico básico de precios es parte de la alfabetización crypto.",
+    "learningObjective": "Entender los elementos básicos de un gráfico de precios — no para tradear, sino para leerlos",
+    "exerciseContent": {
+      "instruction": "No necesitas convertirte en trader para tener alfabetización crypto. Pero poder leer un gráfico básico de precios — sin dejarte engañar por él — es una habilidad útil. Coloca cada elemento del gráfico en la categoría correcta según lo que te dice.",
+      "items": [
+        {
+          "id": "1",
+          "label": "El eje vertical (Y) mostrando el precio en dólares",
+          "correctPosition": 0
+        },
+        {
+          "id": "2",
+          "label": "El eje horizontal (X) mostrando el tiempo (días, meses, años)",
+          "correctPosition": 1
+        },
+        {
+          "id": "3",
+          "label": "Una línea pronunciada subiendo casi verticalmente durante dos semanas",
+          "correctPosition": 2
+        },
+        {
+          "id": "4",
+          "label": "Una vela roja — el precio cerró más bajo de lo que abrió durante ese período",
+          "correctPosition": 3
+        },
+        {
+          "id": "5",
+          "label": "La dirección general de la línea durante 12 meses (arriba, abajo o lateral)",
+          "correctPosition": 2
+        }
+      ],
+      "zones": [
+        {
+          "id": "z1",
+          "label": "Eje de precio — te dice cuánto costaba una unidad en un momento dado"
+        },
+        {
+          "id": "z2",
+          "label": "Eje de tiempo — te dice cuándo el precio estaba en ese nivel"
+        },
+        {
+          "id": "z3",
+          "label": "Tendencia — la dirección general en que se ha movido el precio durante un período"
+        },
+        {
+          "id": "z4",
+          "label": "Movimiento de un período — lo que le pasó al precio durante una ventana específica (día, hora, semana)"
+        }
+      ]
+    }
+  },
+  "2.3.3": {
+    "title": "Por Qué los Precios Oscilan Tanto",
+    "description": "Los precios de las criptomonedas pueden moverse 20% en un solo día. Entender por qué te ayuda a mantener la calma.",
+    "learningObjective": "Entender la volatilidad — baja liquidez, especulación, impacto de noticias, ciclos de mercado",
+    "exerciseContent": {
+      "scenario": "Es un martes por la mañana. Revisas las noticias y ves: 'Bitcoin cae 18% después de que senador estadounidense anuncia planes para presentar proyecto de ley de regulación crypto.' También notas que la caída comenzó la noche anterior, cuando un exchange grande de crypto anunció que estaba teniendo problemas de liquidez. Para el jueves, el precio se ha recuperado 12%. Tu colega Priya está en pánico: '¿Ves? Sabía que las criptomonedas eran todas falsas. Se desplomó sin razón.' Tu otro colega David dice: 'Esto es totalmente normal, lo he visto caer 80% antes y recuperarse.'",
+      "question": "¿Cuál explicación captura mejor por qué los precios de las criptomonedas son significativamente más volátiles que, digamos, el precio de las acciones de Apple?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Los precios de las criptomonedas son manipulados por un pequeño grupo de personas poderosas que mueven mercados para beneficio personal",
+          "isCorrect": false,
+          "explanation": "La manipulación del mercado sí ocurre en crypto, y los reguladores la están abordando cada vez más. Pero culpar toda la volatilidad a la manipulación ignora las razones estructurales. Incluso sin actores malintencionados, las criptomonedas serían altamente volátiles debido a su tamaño, liquidez y la naturaleza de sus participantes."
+        },
+        {
+          "id": "b",
+          "text": "Las criptomonedas son un mercado relativamente pequeño y joven donde las noticias y el sentimiento mueven los precios rápido, la especulación es un motor principal, y no hay interruptores de circuito o pausas de negociación para frenar el pánico",
+          "isCorrect": true,
+          "explanation": "Los cuatro factores se multiplican entre sí. Todo el mercado crypto es más pequeño que muchas empresas individuales — así que las grandes operaciones mueven los precios dramáticamente. El mercado funciona 24/7 sin períodos de 'enfriamiento'. Una gran porción de participantes está especulando sobre el precio futuro — así que el miedo y la emoción amplifican los movimientos. Y porque es nuevo, cada noticia se interpreta como una señal importante. Priya no se equivoca en que los movimientos parecen extremos. David no se equivoca en que las recuperaciones suceden. La volatilidad no significa 'falso' o 'seguro'. Significa impredecible."
+        },
+        {
+          "id": "c",
+          "text": "La volatilidad prueba que las criptomonedas no tienen valor real — los activos reales con valor genuino no oscilan así",
+          "isCorrect": false,
+          "explanation": "Volatilidad y valor son cosas separadas. Las acciones individuales de tecnología han oscilado 50-90% en un año. La volatilidad refleja incertidumbre sobre el valor futuro, liquidez y estructura del mercado — no la ausencia de valor. Las acciones tempranas de Amazon eran extremadamente volátiles y la empresa resultó ser muy valiosa."
+        },
+        {
+          "id": "d",
+          "text": "La caída fue causada enteramente por las noticias de regulación, así que una vez que esa legislación se resuelva, las criptomonedas se volverán estables",
+          "isCorrect": false,
+          "explanation": "Las noticias son un detonante, no la causa subyacente. Nota que la caída comenzó antes de las noticias de regulación — los problemas de liquidez del exchange la iniciaron. Incluso si esta regulación se resolviera mañana, las razones estructurales de la volatilidad — tamaño del mercado, negociación 24/7, participación especulativa, liquidez global fragmentada — permanecerían."
+        }
+      ]
+    }
+  },
+  "2.3.4": {
+    "title": "El Aviso de Inversión",
+    "description": "Aprender sobre criptomonedas no es lo mismo que recibir asesoría de inversión. Dejemos esa distinción cristalina.",
+    "learningObjective": "Entender que la educación no es asesoría financiera, y reconocer la diferencia",
+    "exerciseContent": {
+      "scenario": "Acabas de completar el capítulo de Crypto y Tokens. Entiendes cómo nació Bitcoin, cómo funciona Ethereum, por qué se mueven los precios y cómo los tokens representan un tipo genuinamente nuevo de activo digital. Un amigo pregunta: '¿Entonces debería comprar criptomonedas?' Haces una pausa.",
+      "question": "¿Cuál respuesta refleja mejor la distinción entre educación financiera y asesoría financiera?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Di que sí — has aprendido que las criptomonedas tienen impulsores de valor reales y potencial a largo plazo, así que claramente es una buena inversión",
+          "isCorrect": false,
+          "explanation": "Entender por qué algo tiene valor no es lo mismo que saber si comprarlo, cuándo comprarlo o cuánto arriesgar. Algo puede tener valor genuino y aún así ser una mala inversión para una persona específica en un momento específico. La convicción educada sobre la tecnología no sustituye la asesoría financiera personalizada."
+        },
+        {
+          "id": "b",
+          "text": "No digas nada — las criptomonedas son demasiado riesgosas para recomendar y hablar de ellas podría causar daño",
+          "isCorrect": false,
+          "explanation": "Esto sobrecorrige. Negarse a discutir las criptomonedas no es responsable — solo deja a la gente menos informada. Puedes discutir las propiedades, riesgos, historia y mecánicas de las criptomonedas sin decirle a alguien qué hacer con su dinero. El silencio no protege a nadie; la buena información sí."
+        },
+        {
+          "id": "c",
+          "text": "Explica lo que has aprendido sobre cómo funcionan las criptomonedas y qué impulsa su valor — luego deja claro que si pertenecen a su situación financiera específica es una pregunta para un asesor financiero licenciado que conozca su panorama completo",
+          "isCorrect": true,
+          "explanation": "Este es el balance correcto. Has aprendido algo genuinamente valioso y vale la pena compartirlo. Pero las decisiones de inversión dependen de cosas que solo tu amigo — idealmente con un asesor calificado — puede evaluar: sus ingresos, deudas, tolerancia al riesgo, horizonte temporal, situación fiscal y metas. Transcendence te enseña a entender las criptomonedas de manera inteligente. No te dice — y no puede decirte — qué hacer con tu dinero. Esa distinción no es un aviso legal. Es una distinción intelectual genuina."
+        },
+        {
+          "id": "d",
+          "text": "Di que no — la volatilidad que aprendiste las hace demasiado peligrosas para la gente común",
+          "isCorrect": false,
+          "explanation": "La volatilidad es una característica real que vale la pena entender, pero 'demasiado peligroso para la gente común' es en sí una opinión financiera — y una paternalista. Algunas personas comunes tienen tolerancia al riesgo, horizontes temporales largos o casos de uso específicos donde las criptomonedas tienen sentido. El punto no es dar una respuesta predeterminada."
+        }
+      ]
+    }
+  },
+  "3.1.1": {
+    "title": "¿Qué es una Wallet Crypto?",
+    "description": "Una wallet crypto en realidad no guarda tus criptomonedas. Entendamos qué hace realmente.",
+    "learningObjective": "Entender que una wallet no 'guarda' criptomonedas — guarda las claves que prueban la propiedad",
+    "exerciseContent": {
+      "instruction": "Empareja cada concepto erróneo común sobre las wallets crypto con la realidad de cómo funcionan realmente.",
+      "pairs": [
+        {
+          "id": "1",
+          "term": "Una wallet almacena tus monedas crypto",
+          "definition": "Tus criptomonedas nunca se mueven — viven en la blockchain. Tu wallet almacena las claves que prueban que eres el dueño.",
+          "analogy": "Piénsalo como la llave de un auto. El auto existe en el estacionamiento. La llave no contiene el auto — solo prueba que tú tienes permitido manejarlo."
+        },
+        {
+          "id": "2",
+          "term": "Perder tu app de wallet significa perder tus criptomonedas",
+          "definition": "Tus criptomonedas están seguras mientras tengas tu clave privada o frase semilla — la app es solo una interfaz.",
+          "analogy": "Perder tu app bancaria no vacía tu cuenta. Tu dinero sigue en el banco. Lo que importan son tus claves, no el software."
+        },
+        {
+          "id": "3",
+          "term": "Una dirección de wallet es como un nombre de usuario que eliges",
+          "definition": "Una dirección de wallet se genera matemáticamente a partir de tu clave pública — es única y no puede elegirse libremente.",
+          "analogy": "Es más como una huella dactilar que un nombre de usuario. Se genera a partir de quién eres, no se elige de una lista."
+        },
+        {
+          "id": "4",
+          "term": "Necesitas una wallet por cada blockchain",
+          "definition": "Muchas wallets modernas soportan múltiples blockchains desde un solo conjunto de claves, actuando como una interfaz para muchas redes.",
+          "analogy": "Como un control remoto universal que controla múltiples dispositivos — una herramienta, muchas redes."
+        }
+      ]
+    }
+  },
+  "3.1.2": {
+    "title": "Clave Pública, Clave Privada",
+    "description": "Dos claves hacen que todo el sistema funcione. Una la compartes libremente, la otra la guardas con tu vida.",
+    "learningObjective": "Entender el par de claves — clave pública = dirección (buzón), clave privada = contraseña (llave del buzón)",
+    "exerciseContent": {
+      "instruction": "Coloca cada elemento en la zona correcta: ¿describe la Clave Pública o la Clave Privada?",
+      "items": [
+        { "id": "1", "label": "Tu dirección de wallet — compártela para recibir criptomonedas", "correctPosition": 0 },
+        { "id": "2", "label": "Firma cada transacción que envías — prueba que fuiste tú", "correctPosition": 1 },
+        { "id": "3", "label": "Segura para publicar — como una dirección de correo electrónico", "correctPosition": 0 },
+        { "id": "4", "label": "Nunca compartas esto con nadie — jamás", "correctPosition": 1 },
+        { "id": "5", "label": "Generada a partir de tu clave privada usando matemáticas", "correctPosition": 0 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Clave Pública (la dirección de tu buzón)" },
+        { "id": "z2", "label": "Clave Privada (la llave de tu buzón)" }
+      ]
+    }
+  },
+  "3.1.3": {
+    "title": "Hot Wallets vs. Cold Wallets",
+    "description": "No todas las wallets son iguales. El compromiso entre conveniencia y seguridad es real.",
+    "learningObjective": "Entender el compromiso — conveniencia (hot) vs seguridad (cold)",
+    "exerciseContent": {
+      "instruction": "Empareja cada tipo de wallet o situación con la categoría correcta: Hot Wallet o Cold Wallet.",
+      "pairs": [
+        { "id": "1", "term": "Extensión de navegador MetaMask — siempre conectada a internet", "definition": "Hot Wallet — conveniente para uso diario, pero expuesta a amenazas en línea como hackeos y phishing.", "analogy": "Como efectivo en tu bolsillo. Fácil de gastar, pero si alguien te roba el bolsillo, se fue." },
+        { "id": "2", "term": "Dispositivo hardware Ledger — almacena claves fuera de línea en un chip físico", "definition": "Cold Wallet — mucho más difícil de hackear porque nunca está conectada directamente a internet.", "analogy": "Como una caja fuerte atornillada al piso. Menos conveniente, pero mucho más segura para grandes cantidades." },
+        { "id": "3", "term": "Una app móvil para comprar café con criptomonedas todos los días", "definition": "Hot Wallet — la herramienta correcta para transacciones frecuentes y pequeñas donde la velocidad importa más que la máxima seguridad.", "analogy": "No llevarías todos los ahorros de tu vida en tu billetera de bolsillo. La misma lógica aplica aquí." },
+        { "id": "4", "term": "Almacenamiento a largo plazo para tus tenencias crypto más valiosas", "definition": "Cold Wallet — cuando la cantidad es significativa y no necesitas acceso rápido, el almacenamiento fuera de línea es la opción correcta.", "analogy": "Piensa en una bóveda bancaria versus una cuenta corriente. Ambas útiles, pero para propósitos muy diferentes." }
+      ]
+    }
+  },
+  "3.1.4": {
+    "title": "Configura Tu Primera Wallet",
+    "description": "Es hora de experimentar creando una wallet tú mismo. No te preocupes — esta es una simulación segura.",
+    "learningObjective": "Experimentar el flujo de creación de wallet en una simulación segura",
+    "exerciseContent": {
+      "instruction": "Simula la creación de tu primera wallet crypto. Cada paso refleja lo que realmente sucede cuando alguien configura una wallet real. Tómate tu tiempo — este conocimiento te acompañará para siempre.",
+      "steps": [
+        {
+          "id": "1",
+          "prompt": "Quieres crear una wallet. Encuentras dos opciones populares: MetaMask (una extensión de navegador) y una wallet hardware como Ledger. Estás empezando y quieres aprender. ¿Qué tiene más sentido ahora?",
+          "options": [
+            { "id": "a", "text": "MetaMask — es gratuita, fácil de instalar y perfecta para aprender", "isCorrect": true, "explanation": "Exactamente. Las wallets de software como MetaMask son el punto de partida estándar. No estás guardando los ahorros de tu vida aún — estás aprendiendo. Una wallet hardware tiene sentido más adelante cuando las cantidades sean reales." },
+            { "id": "b", "text": "Wallet hardware — siempre elige la máxima seguridad", "isCorrect": false, "explanation": "Las wallets hardware son excelentes, pero cuestan dinero y tienen una curva de aprendizaje más pronunciada. Para tus primeros pasos, una wallet de software te permite aprender sin fricción. Siempre puedes actualizar después." },
+            { "id": "c", "text": "Solo usaré un exchange — me dan una wallet automáticamente", "isCorrect": false, "explanation": "Las wallets de exchange son custodiales — el exchange tiene tus claves privadas, no tú. No es una wallet real en el sentido completo. 'Tus claves no, tus criptomonedas no' es una regla real en este espacio." }
+          ],
+          "microExplanation": "Una wallet de software se genera completamente en tu dispositivo. Ninguna empresa la crea por ti — tus claves se producen matemáticamente, justo ahí en tu máquina."
+        },
+        {
+          "id": "2",
+          "prompt": "MetaMask está instalado. Te pide crear una nueva wallet. Genera algo llamado una 'Frase de Recuperación Secreta' — 12 palabras aleatorias. ¿Qué deberías hacer con ella?",
+          "options": [
+            { "id": "a", "text": "Anotarla en papel y guardarla en un lugar físicamente seguro", "isCorrect": true, "explanation": "El papel es la respuesta correcta aquí. No puede ser hackeado, no depende de la electricidad y no desaparecerá si tu laptop muere. La seguridad física importa para algo tan importante." },
+            { "id": "b", "text": "Tomar una captura de pantalla y guardarla en mi app de fotos", "isCorrect": false, "explanation": "Las apps de fotos a menudo se sincronizan con la nube — y las cuentas en la nube son hackeadas. Una captura de pantalla de tu frase semilla en tu carrete de fotos es una invitación abierta al robo." },
+            { "id": "c", "text": "Guardarla en un archivo de texto en mi escritorio para fácil acceso", "isCorrect": false, "explanation": "Tu escritorio es uno de los lugares más expuestos de tu computadora. Malware, filtraciones de datos y acceso no autorizado podrían exponer ese archivo. Nunca almacenes frases semilla digitalmente." }
+          ],
+          "microExplanation": "Tu frase semilla es la llave maestra de todo. No es una contraseña que puedas restablecer. Si alguien la obtiene, obtienen tu wallet. Si la pierdes, podrías perderla también."
+        },
+        {
+          "id": "3",
+          "prompt": "MetaMask te pide verificar tu frase semilla seleccionando las palabras en el orden correcto. ¿Por qué te hacen hacer esto?",
+          "options": [
+            { "id": "a", "text": "Para confirmar que realmente la anotaste y no la saltaste", "isCorrect": true, "explanation": "Exacto. Este paso te obliga a probar que registraste tu frase antes de poder continuar. Es la única red de seguridad que la app puede ofrecer — después de esto, estás por tu cuenta." },
+            { "id": "b", "text": "Para enviar la frase a los servidores de MetaMask para resguardarla", "isCorrect": false, "explanation": "MetaMask no almacena tu frase semilla en ningún lugar. Esta verificación sucede completamente en tu dispositivo. Nadie — ni siquiera MetaMask — ve tu clave privada." },
+            { "id": "c", "text": "Es solo una elección de diseño sin propósito real", "isCorrect": false, "explanation": "Hay un propósito muy deliberado: esta es tu última oportunidad de darte cuenta de que no respaldaste adecuadamente tu frase. Muchas personas han perdido wallets porque se saltaron esto mentalmente." }
+          ],
+          "microExplanation": "Una vez que tu wallet es creada, no hay opción de 'olvidé mi contraseña'. La frase semilla es tu único camino de recuperación. Este paso existe para asegurarse de que la trates así."
+        },
+        {
+          "id": "4",
+          "prompt": "Tu wallet está creada. MetaMask te muestra una cadena larga como: 0x4f3e...8a2d — esta es tu dirección pública. Un amigo quiere enviarte algo de criptomonedas. ¿Qué le das?",
+          "options": [
+            { "id": "a", "text": "Tu dirección pública — 0x4f3e...8a2d", "isCorrect": true, "explanation": "Tu dirección pública está hecha para ser compartida. Es como tu IBAN o correo — cualquiera puede enviarte a ella, pero conocerla no les da la capacidad de tomar nada de ti." },
+            { "id": "b", "text": "Tu frase semilla, para que puedan verificar que la wallet es real", "isCorrect": false, "explanation": "Nunca. Tu frase semilla da control completo sobre tu wallet. Compartirla — incluso con un amigo de confianza — es entregarles todo lo que hay dentro, permanentemente." },
+            { "id": "c", "text": "Tu contraseña de MetaMask", "isCorrect": false, "explanation": "Tu contraseña de MetaMask solo desbloquea la app en tu dispositivo — no representa tu wallet en la blockchain. No es lo que alguien necesita para enviarte criptomonedas." }
+          ],
+          "microExplanation": "Tu wallet ahora es real en la blockchain — incluso con saldo cero. Esta dirección existe permanentemente. Acabas de pasar de observador a participante."
+        },
+        {
+          "id": "5",
+          "prompt": "Tu wallet está activa. En Transcendence, tu perfil se ha transformado para mostrar tu dirección de wallet, tu saldo y tu historial de transacciones. ¿Qué significa esto para cómo funciona la plataforma de ahora en adelante?",
+          "options": [
+            { "id": "a", "text": "La plataforma ahora te muestra datos reales de blockchain vinculados a tu propia wallet — lo estás experimentando de primera mano, no solo leyendo sobre ello", "isCorrect": true, "explanation": "Este es el cambio de aprender sobre crypto a experimentarlo. Tu wallet es el lente a través del cual todo en la blockchain se vuelve personal y real." },
+            { "id": "b", "text": "Nada cambia — la wallet es solo decorativa", "isCorrect": false, "explanation": "Lejos de eso. Una wallet es el punto de entrada a todo en el mundo blockchain — enviar, recibir, interactuar con apps, participar en redes. Es el comienzo, no un cosmético." },
+            { "id": "c", "text": "Ahora tengo que pagar dinero real por todo en la plataforma", "isCorrect": false, "explanation": "No exactamente — pero pronto encontrarás gas fees como parte de ciertas acciones en la plataforma. Eso no es un costo, es una lección. Estás a punto de aprender exactamente por qué existen esas tarifas." }
+          ],
+          "microExplanation": "Bienvenido. Ahora tienes una wallet. Todo lo que aprendas después — transacciones, gas, seguridad — lo verás reflejado justo aquí en tu propio perfil."
+        }
+      ]
+    }
+  },
+  "3.2.1": {
+    "title": "Anatomía de una Transacción",
+    "description": "Una transacción crypto es más que solo enviar dinero. Desglosemos lo que contiene.",
+    "learningObjective": "Entender qué contiene una transacción crypto (remitente, destinatario, monto, tarifa, firma)",
+    "exerciseContent": {
+      "instruction": "Una transacción crypto tiene cinco componentes clave. Coloca cada descripción en la parte correcta de la transacción.",
+      "items": [
+        { "id": "1", "label": "La dirección de wallet que inicia la transferencia", "correctPosition": 0 },
+        { "id": "2", "label": "La dirección de wallet que recibirá los fondos", "correctPosition": 1 },
+        { "id": "3", "label": "Cuántas criptomonedas se están transfiriendo", "correctPosition": 2 },
+        { "id": "4", "label": "El costo computacional pagado a mineros o validadores", "correctPosition": 3 },
+        { "id": "5", "label": "Prueba criptográfica de que el remitente autorizó esta transacción", "correctPosition": 4 }
+      ],
+      "zones": [
+        { "id": "z1", "label": "Dirección del remitente" },
+        { "id": "z2", "label": "Dirección del destinatario" },
+        { "id": "z3", "label": "Monto" },
+        { "id": "z4", "label": "Gas fee" },
+        { "id": "z5", "label": "Firma digital" }
+      ]
+    }
+  },
+  "3.2.2": { "title": "Enviando Tus Primeras Criptomonedas", "description": "Vamos a recorrer el envío de criptomonedas paso a paso en una simulación segura.", "learningObjective": "Experimentar el envío de criptomonedas paso a paso en simulación", "exerciseContent": { "placeholder": true } },
+  "3.2.3": { "title": "Esperando la Confirmación", "description": "Presionaste 'enviar' pero la transacción no es instantánea. ¿Qué está pasando tras bambalinas?", "learningObjective": "Entender los tiempos de confirmación, mempool y por qué las transacciones no son instantáneas", "exerciseContent": { "placeholder": true } },
+  "3.2.4": { "title": "Transacción en la Blockchain", "description": "Una vez confirmada, tu transacción queda permanentemente registrada. Exploremos qué significa eso.", "learningObjective": "Entender que cada transacción se registra permanentemente y es públicamente visible", "exerciseContent": { "placeholder": true } },
+  "3.3.1": { "title": "¿Qué es el Gas?", "description": "El gas es el combustible que impulsa cada acción en una blockchain. Sin gas, no hay acción.", "learningObjective": "Entender el gas como el costo computacional de hacer cualquier cosa en una blockchain", "exerciseContent": { "placeholder": true } },
+  "3.3.2": { "title": "Por Qué Cambian los Precios del Gas", "description": "Los precios del gas no son fijos. Fluctúan según qué tan ocupada esté la red.", "learningObjective": "Entender la oferta y demanda de espacio en bloques — red ocupada = gas costoso", "exerciseContent": { "placeholder": true } },
+  "3.3.3": { "title": "Gas en Acción", "description": "Experimenta cómo funcionan las gas fees en una operación blockchain de múltiples pasos.", "learningObjective": "Experimentar las gas fees de primera mano en una operación simulada de múltiples pasos", "exerciseContent": { "placeholder": true } },
+  "3.3.4": { "title": "Ups — Transacción Fallida, Gas Igual Pagado", "description": "Una de las lecciones más dolorosas en crypto: incluso las transacciones fallidas cuestan gas.", "learningObjective": "Entender que las transacciones fallidas igual consumen gas", "exerciseContent": { "placeholder": true } },
+  "3.4.1": { "title": "Tu Frase Semilla lo es Todo", "description": "Tu frase semilla es el respaldo definitivo de tu wallet. Piérdela y podrías perder todo.", "learningObjective": "Entender las frases semilla — qué son, por qué nunca deben compartirse", "exerciseContent": { "placeholder": true } },
+  "3.4.2": { "title": "Detecta la Estafa", "description": "Las estafas crypto están en todas partes. Aprender a reconocerlas es esencial para mantenerte seguro.", "learningObjective": "Reconocer patrones comunes de estafas crypto (phishing, airdrops falsos, rug pulls)", "exerciseContent": { "placeholder": true } },
+  "3.4.3": { "title": "Mejores Prácticas de Seguridad", "description": "Proteger tus criptomonedas requiere buenos hábitos. Estas son las reglas que más importan.", "learningObjective": "Conocer las reglas prácticas — 2FA, wallets hardware, verificar URLs, nunca compartir claves", "exerciseContent": { "placeholder": true } },
+  "3.4.4": { "title": "La Lista de Seguridad", "description": "Consolidemos todo lo que has aprendido sobre seguridad en una lista personal.", "learningObjective": "Consolidar todo el conocimiento de seguridad en una lista personal", "exerciseContent": { "placeholder": true } },
+  "4.1.1": { "title": "La Analogía de la Máquina Expendedora", "description": "Los smart contracts son más simples de lo que suenan. Piensa en ellos como máquinas expendedoras digitales.", "learningObjective": "Entender los smart contracts como acuerdos si/entonces automatizados", "exerciseContent": { "placeholder": true } },
+  "4.1.2": { "title": "Código que Cumple Promesas", "description": "A diferencia de un humano que podría olvidar o cambiar de opinión, los smart contracts siempre hacen lo que están programados para hacer.", "learningObjective": "Entender que los smart contracts se ejecutan automáticamente, sin intervención humana", "exerciseContent": { "placeholder": true } },
+  "4.1.3": { "title": "Smart Contracts en la Blockchain", "description": "Los smart contracts no se ejecutan en un servidor normal. Viven en la blockchain con propiedades únicas.", "learningObjective": "Entender que los smart contracts viven en blockchains, son transparentes y no pueden cambiarse", "exerciseContent": { "placeholder": true } },
+  "4.1.4": { "title": "Cuando los Smart Contracts Salen Mal", "description": "Los smart contracts son poderosos, pero los bugs en el código pueden tener consecuencias permanentes.", "learningObjective": "Entender las limitaciones — los bugs son permanentes, el código es ley, 'El hack de The DAO' simplificado", "exerciseContent": { "placeholder": true } },
+  "4.2.1": { "title": "Smart Contracts en Acción", "description": "Los smart contracts ya se usan en seguros, bienes raíces y cadenas de suministro.", "learningObjective": "Entender aplicaciones reales — reclamos de seguros, cadena de suministro, depósito inmobiliario", "exerciseContent": { "placeholder": true } },
+  "4.2.2": { "title": "Ejecutando un Smart Contract", "description": "Simulemos activar y ejecutar un smart contract real de principio a fin.", "learningObjective": "Experimentar la activación de un smart contract simulado de principio a fin", "exerciseContent": { "placeholder": true } },
+  "4.2.3": { "title": "El Momento de Marc en el Almuerzo", "description": "¿Puedes explicar los smart contracts a un amigo durante el almuerzo? Esta es tu prueba final.", "learningObjective": "Prueba final: explicar smart contracts de forma simple y correcta", "exerciseContent": { "placeholder": true } },
+  "5.1.1": { "title": "Fungible vs. No Fungible", "description": "Para entender los NFTs, primero necesitas entender qué significa 'no fungible' — y es más simple de lo que parece.", "learningObjective": "Entender el concepto central — intercambiable (billete de dólar) vs único (pintura)", "exerciseContent": { "placeholder": true } },
+  "5.1.2": { "title": "Propiedad Digital Antes de los NFTs", "description": "Has 'comprado' muchas cosas digitales. Pero, ¿realmente las posees?", "learningObjective": "Entender el problema — no 'posees' tus libros Kindle, playlists de Spotify o skins de juegos", "exerciseContent": { "placeholder": true } },
+  "5.1.3": { "title": "Cómo Funcionan los NFTs", "description": "Un NFT es un smart contract que prueba la propiedad de un artículo digital único en la blockchain.", "learningObjective": "Entender que un NFT es un smart contract que prueba que posees un artículo digital único", "exerciseContent": { "placeholder": true } },
+  "5.1.4": { "title": "Creando Tu Primer NFT", "description": "Experimenta el proceso de acuñación de NFTs en una simulación segura.", "learningObjective": "Experimentar la acuñación de un NFT simulado", "exerciseContent": { "placeholder": true } },
+  "5.2.1": { "title": "NFTs en Videojuegos, Música e Identidad", "description": "Los NFTs son más que solo arte digital. Se usan en videojuegos, música y verificación de identidad.", "learningObjective": "Entender casos de uso de NFTs más allá de fotos de perfil", "exerciseContent": { "placeholder": true } },
+  "5.2.2": { "title": "NFTs y Creadores", "description": "Los NFTs cambian la economía de ser creador. Las regalías en reventa son un cambio de juego.", "learningObjective": "Entender cómo los NFTs cambian la economía de los creadores — regalías en reventa, ventas directas", "exerciseContent": { "placeholder": true } },
+  "5.2.3": { "title": "La Pregunta de la Propiedad", "description": "Cuando compras un NFT, ¿qué posees realmente? La respuesta podría sorprenderte.", "learningObjective": "Entender qué realmente posees con un NFT — el token, no necesariamente el archivo", "exerciseContent": { "placeholder": true } },
+  "5.3.1": { "title": "El Auge y Caída de los NFTs", "description": "El mercado de NFTs explotó en 2021 y luego se desplomó fuertemente. ¿Qué pasó?", "learningObjective": "Entender el ciclo del mercado — hype de 2021, precios, desplome, qué sobrevivió", "exerciseContent": { "placeholder": true } },
+  "5.3.2": { "title": "Detectando Señales de Alerta en NFTs", "description": "Aprende a reconocer las señales de advertencia de estafas y mercados manipulados de NFTs.", "learningObjective": "Reconocer patrones comunes de estafas NFT — wash trading, rug pulls, colecciones falsas", "exerciseContent": { "placeholder": true } },
+  "5.3.3": { "title": "¿Qué es Realmente Valioso?", "description": "No todos los proyectos NFT son iguales. Construyamos un marco para evaluarlos.", "learningObjective": "Desarrollar un marco para evaluar proyectos NFT críticamente", "exerciseContent": { "placeholder": true } },
+  "5.3.4": { "title": "La Perspectiva Honesta", "description": "Consolidemos una perspectiva equilibrada y honesta sobre los NFTs — potencial, limitaciones y realidad.", "learningObjective": "Consolidar una visión equilibrada — potencial + limitaciones + postura personal", "exerciseContent": { "placeholder": true } },
+  "6.1.1": { "title": "¿Qué es DeFi?", "description": "Imagina servicios bancarios — préstamos, créditos, trading — sin ningún banco. Eso es DeFi.", "learningObjective": "Entender las finanzas descentralizadas — servicios financieros sin instituciones", "exerciseContent": { "placeholder": true } },
+  "6.1.2": { "title": "Préstamos y Créditos Sin Banco", "description": "DeFi te permite prestar tus criptomonedas para ganar intereses o pedir prestado contra tus tenencias — todo a través de smart contracts.", "learningObjective": "Entender los préstamos DeFi — pools de liquidez, tasas de interés, colateral", "exerciseContent": { "placeholder": true } },
+  "6.1.3": { "title": "Trading Sin un Exchange", "description": "Los exchanges descentralizados te permiten tradear criptomonedas sin crear una cuenta o confiar en una empresa.", "learningObjective": "Entender los DEXs y en qué se diferencian de Coinbase/Binance", "exerciseContent": { "placeholder": true } },
+  "6.1.4": { "title": "Los Riesgos de DeFi", "description": "DeFi es poderoso, pero viene con riesgos significativos que necesitas entender.", "learningObjective": "Entender los riesgos de DeFi — bugs en smart contracts, pérdida impermanente, rug pulls", "exerciseContent": { "placeholder": true } },
+  "6.2.1": { "title": "DAOs: Organizaciones Sin Jefes", "description": "¿Y si una organización fuera dirigida por sus miembros a través de votaciones, sin CEO ni junta directiva?", "learningObjective": "Entender las DAOs — votación, tesorerías, gobernanza", "exerciseContent": { "placeholder": true } },
+  "6.2.2": { "title": "Web3: ¿El Próximo Internet?", "description": "Web3 promete un internet donde los usuarios son dueños de sus datos y las plataformas son descentralizadas.", "learningObjective": "Entender la visión de Web3 — datos propiedad del usuario, apps descentralizadas, economías de tokens", "exerciseContent": { "placeholder": true } },
+  "6.2.3": { "title": "Blockchain en Tu Vida Diaria", "description": "Blockchain ya está entrando silenciosamente en la vida cotidiana de formas que quizás no esperas.", "learningObjective": "Entender la integración real a corto plazo — CBDCs, cadena de suministro, identidad digital", "exerciseContent": { "placeholder": true } },
+  "6.2.4": { "title": "Las Preguntas del Escéptico", "description": "Toda tecnología enfrenta críticas legítimas. Dialogar con los escépticos te hace más inteligente, no más débil.", "learningObjective": "Dialogar con críticas legítimas — uso de energía, escalabilidad, regulación, barreras de adopción", "exerciseContent": { "placeholder": true } },
+  "6.3.1": { "title": "El Panorama Completo", "description": "Todo lo que has aprendido se conecta. Veamos el panorama general de cómo se relacionan los conceptos blockchain.", "learningObjective": "Sintetizar todo el currículo — cómo se conectan todos los conceptos", "exerciseContent": { "placeholder": true } },
+  "6.3.2": { "title": "Explícalo Como Si lo Entendieras", "description": "La prueba definitiva de comprensión es poder explicar las cosas de forma simple y correcta.", "learningObjective": "Probar la comprensión seleccionando las mejores explicaciones para los conceptos centrales", "exerciseContent": { "placeholder": true } },
+  "6.3.3": { "title": "Tu Puntuación de Confianza en Blockchain", "description": "Es hora de una autoevaluación final. ¿Qué tan bien entiendes realmente blockchain?", "learningObjective": "Autoevaluación final y reflexión", "exerciseContent": { "placeholder": true } },
+  "6.3.4": { "title": "Graduación", "description": "Has completado todo el currículo. Es hora de recibir tu certificado y reflexionar sobre tu viaje.", "learningObjective": "Obtener y ver tu certificado de finalización", "exerciseContent": { "placeholder": true } }
+}

@@ -10,7 +10,7 @@ import { initializeContent } from "./utils/contentLoader.js";
 
 // Load and validate curriculum content before anything else (synchronous, blocking)
 try {
-  initializeContent(["en", "fr"]);
+  initializeContent(["en", "fr", "es"]);
 } catch (err) {
   console.error("Failed to initialize curriculum content. Server cannot start.", err);
   process.exit(1);
