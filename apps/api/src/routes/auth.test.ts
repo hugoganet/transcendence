@@ -5,6 +5,12 @@ import passport from "passport";
 import request from "supertest";
 import { errorHandler } from "../middleware/errorHandler.js";
 
+// Mock Prisma generated client to prevent loading the massive module
+vi.mock("../../generated/prisma/client.js", () => ({
+  PrismaClient: vi.fn(),
+  Prisma: { JsonNull: null },
+}));
+
 // Mock database
 vi.mock("../config/database.js", () => ({
   prisma: {
@@ -39,7 +45,7 @@ vi.mock("bcryptjs", () => ({
 // Use vi.hoisted for mocks referenced inside vi.mock factories
 const { mockSessionRedis, mockTotpValidate } = vi.hoisted(() => ({
   mockSessionRedis: {
-    scan: vi.fn().mockResolvedValue({ cursor: 0, keys: [] }),
+    scan: vi.fn().mockResolvedValue({ cursor: "0", keys: [] }),
     get: vi.fn(),
     del: vi.fn(),
   },
@@ -715,7 +721,7 @@ describe("POST /api/v1/auth/reset-password", () => {
   it("returns 200 for valid token and password", async () => {
     mockPrisma.passwordResetToken.findUnique.mockResolvedValue(validTokenRecord);
     mockPrisma.$transaction.mockResolvedValue([{}, {}]);
-    mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+    mockSessionRedis.scan.mockResolvedValue({ cursor: "0", keys: [] });
 
     const testApp = createTestApp();
     const res = await request(testApp)
@@ -795,7 +801,7 @@ describe("POST /api/v1/auth/reset-password", () => {
     mockPrisma.passwordResetToken.findUnique.mockResolvedValue(validTokenRecord);
     mockPrisma.$transaction.mockResolvedValue([{}, {}]);
     mockSessionRedis.scan.mockResolvedValue({
-      cursor: 0,
+      cursor: "0",
       keys: ["sess:abc"],
     });
     mockSessionRedis.get.mockResolvedValue(sessionData);
@@ -1031,7 +1037,7 @@ describe("2FA routes", () => {
         twoFactorSecret: null,
       });
       mockTotpValidate.mockReturnValue(0);
-      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+      mockSessionRedis.scan.mockResolvedValue({ cursor: "0", keys: [] });
 
       const testApp = createTestApp();
       const agent = request.agent(testApp);

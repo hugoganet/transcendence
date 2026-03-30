@@ -1,19 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import bcrypt from "bcryptjs";
-import {
-  register,
-  sanitizeUser,
-  getUserById,
-  findOrCreateOAuthUser,
-  requestPasswordReset,
-  resetPassword,
-  invalidateUserSessions,
-  setup2FA,
-  verifyAndEnable2FA,
-  verify2FALogin,
-  disable2FA,
-} from "./authService.js";
 import { AppError } from "../utils/AppError.js";
+
+// Mock Prisma generated client to prevent loading the massive module
+vi.mock("../../generated/prisma/client.js", () => ({
+  PrismaClient: vi.fn(),
+  Prisma: { JsonNull: null },
+}));
 
 // Mock Prisma
 vi.mock("../config/database.js", () => ({
@@ -120,6 +112,21 @@ vi.mock("qrcode", () => ({
   },
 }));
 
+// Dynamic imports — MUST come after vi.mock calls to avoid loading the real Prisma client
+const bcrypt = (await import("bcryptjs")).default;
+const {
+  register,
+  sanitizeUser,
+  getUserById,
+  findOrCreateOAuthUser,
+  requestPasswordReset,
+  resetPassword,
+  invalidateUserSessions,
+  setup2FA,
+  verifyAndEnable2FA,
+  verify2FALogin,
+  disable2FA,
+} = await import("./authService.js");
 const { prisma } = await import("../config/database.js");
 const mockPrisma = prisma as unknown as {
   user: {
@@ -466,7 +473,7 @@ describe("authService", () => {
       mockPrisma.passwordResetToken.findUnique.mockResolvedValue(validToken);
       mockPrisma.$transaction.mockResolvedValue([{}, {}]);
       // Mock session invalidation (no sessions to clear)
-      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+      mockSessionRedis.scan.mockResolvedValue({ cursor: "0", keys: [] });
 
       await resetPassword(validToken.token, "NewPass123");
 
@@ -526,7 +533,7 @@ describe("authService", () => {
       const otherSessionData = JSON.stringify({ passport: { user: "other-uuid" } });
 
       mockSessionRedis.scan.mockResolvedValue({
-        cursor: 0,
+        cursor: "0",
         keys: ["sess:abc", "sess:def"],
       });
       mockSessionRedis.get
@@ -541,7 +548,7 @@ describe("authService", () => {
     });
 
     it("handles empty session store gracefully", async () => {
-      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+      mockSessionRedis.scan.mockResolvedValue({ cursor: "0", keys: [] });
 
       await expect(
         invalidateUserSessions("test-uuid"),
@@ -554,8 +561,8 @@ describe("authService", () => {
 
       // First SCAN returns cursor 42 (more pages), second returns cursor 0 (done)
       mockSessionRedis.scan
-        .mockResolvedValueOnce({ cursor: 42, keys: ["sess:page1-match"] })
-        .mockResolvedValueOnce({ cursor: 0, keys: ["sess:page2-other"] });
+        .mockResolvedValueOnce({ cursor: "42", keys: ["sess:page1-match"] })
+        .mockResolvedValueOnce({ cursor: "0", keys: ["sess:page2-other"] });
       mockSessionRedis.get
         .mockResolvedValueOnce(targetSession)
         .mockResolvedValueOnce(otherSession);
@@ -720,7 +727,7 @@ describe("authService", () => {
       mockPrisma.user.findUnique.mockResolvedValue(userWith2FA);
       mockTotpValidate.mockReturnValue(0);
       mockPrisma.user.update.mockResolvedValue({ ...mockUser, twoFactorEnabled: false, twoFactorSecret: null });
-      mockSessionRedis.scan.mockResolvedValue({ cursor: 0, keys: [] });
+      mockSessionRedis.scan.mockResolvedValue({ cursor: "0", keys: [] });
 
       await disable2FA("test-uuid", "123456");
 

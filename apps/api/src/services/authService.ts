@@ -2,7 +2,7 @@ import crypto from "node:crypto";
 import bcrypt from "bcryptjs";
 import * as OTPAuth from "otpauth";
 import QRCode from "qrcode";
-import type { AuthProvider } from "../../generated/prisma/client.js";
+type AuthProvider = "LOCAL" | "GOOGLE" | "FACEBOOK";
 import { prisma } from "../config/database.js";
 import { sessionRedisClient } from "../config/session.js";
 import { sendPasswordResetEmail, sendWelcomeEmail } from "./emailService.js";
