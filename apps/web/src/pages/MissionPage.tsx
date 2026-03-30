@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { Lock, ChevronLeft, Clock } from "lucide-react";
 import { useMissionDetail } from "../hooks/useMissionDetail.js";
 import { disclaimersApi } from "../api/disclaimers.js";
 import { Card } from "../components/ui/Card.js";
@@ -63,17 +64,7 @@ export function MissionPage() {
       <div className="mx-auto max-w-lg py-12 text-center">
         <Card>
           <div className="py-6">
-            <svg
-              className="mx-auto mb-4 h-12 w-12 text-gray-300"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <Lock className="mx-auto mb-4 h-12 w-12 text-gray-300" />
             <h2 className="mb-2 text-lg font-semibold text-gray-900">
               Mission Locked
             </h2>
@@ -112,13 +103,7 @@ export function MissionPage() {
         to="/curriculum"
         className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary"
       >
-        <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-          <path
-            fillRule="evenodd"
-            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-            clipRule="evenodd"
-          />
-        </svg>
+        <ChevronLeft className="h-4 w-4" />
         Curriculum
       </Link>
 
@@ -151,17 +136,7 @@ export function MissionPage() {
 
           <div className="flex items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
-              <svg
-                className="h-4 w-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <Clock className="h-4 w-4" />
               ~{mission.estimatedMinutes} min
             </span>
           </div>

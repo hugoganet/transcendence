@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { IPExerciseContent } from "@transcendence/shared";
+import { GripVertical } from "lucide-react";
 import { Button } from "../ui/Button.js";
 
 interface IPExerciseProps {
@@ -118,13 +119,7 @@ export function IPExercise({
               {idx + 1}
             </span>
             <span className="text-gray-900">{item.label}</span>
-            <svg
-              className="ml-auto h-4 w-4 shrink-0 text-gray-300"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path d="M7 2a2 2 0 10 4 0 2 2 0 000-4zm6 0a2 2 0 100 4 2 2 0 000-4zM7 8a2 2 0 100 4 2 2 0 000-4zm6 0a2 2 0 100 4 2 2 0 000-4zM7 14a2 2 0 100 4 2 2 0 000-4zm6 0a2 2 0 100 4 2 2 0 000-4z" />
-            </svg>
+            <GripVertical className="ml-auto h-4 w-4 shrink-0 text-gray-300" />
           </div>
         ))}
       </div>
