@@ -38,10 +38,17 @@ Most people are confused by blockchain, crypto, NFTs, and all that world. Existi
 pnpm install
 
 # Start Postgres and Redis
-docker run -d --name transcendence-db \
-  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres \
-  -p 54322:5432 postgres:17
+docker run -d --name transcendence-db -e POSTGRES_USER=transcendence -e POSTGRES_PASSWORD=transcendence -e POSTGRES_DB=transcendence -p 54322:5432 postgres:17
 docker run -d --name transcendence-redis -p 6379:6379 redis:7-alpine
+
+# Create .env at the repo root (see Developer Guide for all variables)
+cat > .env << 'EOF'
+DATABASE_URL=postgresql://transcendence:transcendence@localhost:54322/transcendence?schema=public
+DATABASE_POOL_SIZE=10
+REDIS_URL=redis://localhost:6379
+SESSION_SECRET=dev-secret-change-in-production
+FRONTEND_URL=http://localhost:5173
+EOF
 
 # Setup database
 pnpm --filter api db:generate
