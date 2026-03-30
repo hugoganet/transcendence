@@ -99,7 +99,9 @@
     "friends": "Amis",
     "notifications": "Notifications",
     "settings": "Param\u00e8tres",
-    "logout": "Se d\u00e9connecter"
+    "logout": "Se d\u00e9connecter",
+    "skipToContent": "Aller au contenu",
+    "bottomNav": "Navigation"
   },
   "auth": {
     "login": {

@@ -99,7 +99,9 @@
     "friends": "Friends",
     "notifications": "Notifications",
     "settings": "Settings",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "skipToContent": "Skip to content",
+    "bottomNav": "Navigation"
   },
   "auth": {
     "login": {

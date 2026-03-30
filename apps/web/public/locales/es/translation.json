@@ -99,7 +99,9 @@
     "friends": "Amigos",
     "notifications": "Notificaciones",
     "settings": "Configuración",
-    "logout": "Cerrar Sesión"
+    "logout": "Cerrar Sesión",
+    "skipToContent": "Ir al contenido",
+    "bottomNav": "Navegación"
   },
   "auth": {
     "login": {

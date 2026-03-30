@@ -8,6 +8,14 @@ export function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[var(--color-background)]">
+      {/* Skip to content link — WCAG 2.4.1 */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[100] focus:rounded-lg focus:bg-[var(--color-primary)] focus:px-4 focus:py-2 focus:text-white focus:outline-2 focus:outline-offset-2 focus:outline-[var(--color-primary)]"
+      >
+        {t("labels.skipToContent", "Skip to content")}
+      </a>
+
       {/* Desktop header — hidden on mobile */}
       <header className="hidden border-b border-[var(--color-border)] bg-[var(--color-surface)] md:block">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
@@ -22,13 +30,13 @@ export function Layout() {
       </header>
 
       {/* Page content */}
-      <main className="flex-1 pb-20 md:pb-0">
+      <main id="main-content" className="flex-1 pb-20 md:pb-0">
         <Outlet />
       </main>
 
       {/* Mobile bottom nav — hidden on desktop */}
       <nav
-        aria-label="Bottom navigation"
+        aria-label={t("labels.bottomNav", "Navigation")}
         className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--color-border)] bg-[var(--color-surface)] md:hidden"
       >
         <div className="mx-auto flex h-16 max-w-sm items-center justify-around px-4">
@@ -84,9 +92,14 @@ export function Layout() {
             <span>{t("labels.settings")}</span>
           </Link>
 
-          <div className="flex min-h-[44px] min-w-[44px] items-center justify-center">
-            <LanguageSwitcher variant="pill" />
-          </div>
+          <Link
+            to="/settings"
+            aria-label={t("languageSwitcher.label")}
+            className="flex min-h-[44px] min-w-[44px] flex-col items-center justify-center gap-0.5 rounded-lg px-3 text-xs font-medium text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+          >
+            <span className="text-lg leading-none" aria-hidden="true">🌐</span>
+            <span>{t("languageSwitcher.label")}</span>
+          </Link>
         </div>
       </nav>
     </div>

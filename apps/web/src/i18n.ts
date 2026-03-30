@@ -17,16 +17,19 @@ i18n
     },
     fallbackLng: "en",
     interpolation: {
-      escapeValue: false, // React already handles XSS
+      escapeValue: false, // React JSX auto-escapes. NEVER use dangerouslySetInnerHTML with t() values.
     },
     detection: {
-      order: ["navigator", "htmlTag", "path", "subdomain"],
+      // localStorage first so user's saved preference takes priority over browser locale [M5 fix]
+      order: ["localStorage", "navigator", "htmlTag"],
       caches: ["localStorage"],
     },
   });
 
+// Sync <html lang=""> and dir attribute on every language change
 i18n.on("languageChanged", (lng) => {
   document.documentElement.lang = lng;
+  document.documentElement.dir = ["ar", "he", "fa"].includes(lng) ? "rtl" : "ltr";
 });
 
 export default i18n;
