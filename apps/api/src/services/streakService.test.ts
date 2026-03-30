@@ -38,7 +38,7 @@ import { createMockContent } from "../__fixtures__/curriculum.js";
 import type { DbClient } from "./streakService.js";
 const mockClient = mockPrisma as unknown as DbClient;
 
-import { minimalCurriculum, createMockContent } from "../__fixtures__/curriculum.js";
+import { minimalCurriculum as _minimalCurriculum, createMockContent } from "../__fixtures__/curriculum.js";
 const setupContent = createMockContent(mockGetContent);
 
 beforeEach(() => {

@@ -16,7 +16,7 @@ async function ensureTestDatabase(testDbUrl: string): Promise<void> {
   // Parse the test DB URL to extract the database name and build an admin URL
   const url = new URL(testDbUrl);
   const testDbName = url.pathname.slice(1); // remove leading "/"
-  url.pathname = "/transcendence"; // connect to main DB to run CREATE DATABASE
+  url.pathname = "/postgres"; // connect to default DB to run CREATE DATABASE
 
   const adminPool = new pg.Pool({ connectionString: url.toString(), max: 1 });
   try {
