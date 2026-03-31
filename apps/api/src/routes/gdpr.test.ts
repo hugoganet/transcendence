@@ -79,7 +79,7 @@ function createTestApp(authenticated: boolean) {
   if (authenticated) {
     app.use((req, _res, next) => {
       req.user = { id: TEST_USER_ID, email: TEST_USER_EMAIL } as Express.User;
-      req.isAuthenticated = (() => true) as any;
+      req.isAuthenticated = (() => true) as () => boolean;
       next();
     });
   }

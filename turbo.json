@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["DATABASE_URL", "SESSION_SECRET"],
   "tasks": {
     "db:generate": {
       "cache": false

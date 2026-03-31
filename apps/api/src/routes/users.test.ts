@@ -115,7 +115,7 @@ function createTestApp(authenticated = false, user = mockUser) {
   if (authenticated) {
     app.use((req, _res, next) => {
       req.user = user as Express.User;
-      req.isAuthenticated = (() => true) as any;
+      req.isAuthenticated = (() => true) as () => boolean;
       next();
     });
   }
