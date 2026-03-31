@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import type { PublicProfile } from "@transcendence/shared";
 import { usersApi } from "../api/users.js";
 import { friendsApi } from "../api/friends.js";
+import { useAuth } from "../contexts/AuthContext.js";
 import { ApiError } from "../api/client.js";
 import { Card } from "../components/ui/Card.js";
 import { Button } from "../components/ui/Button.js";
@@ -12,16 +13,20 @@ import { Alert } from "../components/ui/Alert.js";
 
 export function PublicProfilePage() {
   const { userId } = useParams<{ userId: string }>();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<PublicProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [friendStatus, setFriendStatus] = useState<
     "none" | "pending" | "friends" | "self"
-  >("none");
+  >(userId === user?.id ? "self" : "none");
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     if (!userId) return;
+    if (userId === user?.id) {
+      setFriendStatus("self");
+    }
     let cancelled = false;
     setIsLoading(true);
 
