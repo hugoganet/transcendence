@@ -12,6 +12,17 @@ export async function ensureUploadDir(): Promise<void> {
   await fs.mkdir(AVATAR_UPLOAD_DIR, { recursive: true });
 }
 
+export async function searchUsers(query: string, excludeId: string) {
+  return await prisma.user.findMany({
+    where: {
+      id: { not: excludeId },
+      displayName: { contains: query, mode: "insensitive" },
+    },
+    select: { id: true, displayName: true, avatarUrl: true },
+    take: 10,
+  });
+}
+
 export async function getProfile(userId: string) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) {
