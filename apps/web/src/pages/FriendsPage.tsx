@@ -9,6 +9,7 @@ import { Card } from "../components/ui/Card.js";
 import { Button } from "../components/ui/Button.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
+import { ChatBox } from "../components/ChatBox.js";
 
 export function FriendsPage() {
   const [tab, setTab] = useState<"friends" | "requests">("friends");
@@ -16,6 +17,7 @@ export function FriendsPage() {
   const [requests, setRequests] = useState<FriendRequestEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [chatWith, setChatWith] = useState<string | null>(null);
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
@@ -127,11 +129,18 @@ export function FriendsPage() {
                     {friend.displayName ?? "Anonymous"}
                   </Link>
                   <button
+                    onClick={() => setChatWith(friend.id)}
+                    className="text-xs text-gray-400 hover:text-blue-500"
+                  >
+                    Message
+                  </button>
+                  <button
                     onClick={() => handleRemove(friend.id)}
                     className="text-xs text-gray-400 hover:text-red-500"
                   >
                     Remove
                   </button>
+                  
                 </div>
               ))}
             </div>
@@ -182,6 +191,9 @@ export function FriendsPage() {
             </div>
           )}
         </Card>
+      )}
+      {chatWith && (
+        <ChatBox userId={chatWith} onClose={() => setChatWith(null)} />
       )}
     </div>
   );
