@@ -57,10 +57,15 @@ export function FriendsPage() {
   };
 
   const handleAddFriend = async (userId: string) => {
-    await friendsApi.sendRequest(userId);
-    setSearch("");
-    setSearchResults([]);
-    await loadData();
+    try {
+      await friendsApi.sendRequest(userId);
+    }
+    catch {} // tried to control the console error but it's not it
+    finally {
+      setSearch("");
+      setSearchResults([]);
+      await loadData();
+    }
   };
 
   const handleRemove = async (userId: string) => {
