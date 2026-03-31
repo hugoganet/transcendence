@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getSocket } from "../api/socket.js";
+import { useAuth } from "../contexts/AuthContext.js";
 
 type Message = {
   id: string;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export function ChatBox({ userId, onClose }: Props) {
+  const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
@@ -57,10 +59,17 @@ export function ChatBox({ userId, onClose }: Props) {
         <button onClick={onClose}>✕</button>
       </div>
 
-      <div style={{ height: 200, overflowY: "auto", margin: "8px 0" }}>
-        {messages.map((m) => (
-          <div key={m.id}>{m.content}</div>
-        ))}
+      <div style={{ height: "40vh", overflowY: "auto", margin: "8px 0", display: "flex", flexDirection: "column", gap: 4 }}>
+        {messages.map((m) => {
+          const isMine = m.senderId === user?.id;
+          return (
+            <div key={m.id} style={{ display: "flex", justifyContent: isMine ? "flex-end" : "flex-start" }}>
+              <span style={{ maxWidth: "70%", padding: "4px 8px", border: "1px solid #ccc", borderRadius: 8, fontSize: "0.85rem" }}>
+                {m.content}
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       <div style={{ display: "flex", gap: 4 }}>
