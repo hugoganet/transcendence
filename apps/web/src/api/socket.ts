@@ -5,6 +5,7 @@ interface ServerToClientEvents {
   "notification:push": (payload: NotificationPushPayload) => void;
   "presence:online": (userId: string) => void;
   "presence:offline": (userId: string) => void;
+  "message:new": (message: { id: string; senderId: string; content: string; createdAt: string }) => void;
 }
 
 type AppSocket = Socket<ServerToClientEvents>;

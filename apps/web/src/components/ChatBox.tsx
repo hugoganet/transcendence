@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { getSocket } from "../api/socket.js";
 
 type Message = {
   id: string;
@@ -22,6 +23,18 @@ export function ChatBox({ userId, onClose }: Props) {
       .then((body) => setMessages(body.data));
   }, [userId]);
   
+  useEffect(() => {
+    const socket = getSocket();
+    if (!socket) return;
+    const handler = (msg: Message) => {
+      if (msg.senderId === userId) {
+        setMessages((prev) => [...prev, msg]);
+      }
+    };
+    socket.on("message:new", handler);
+    return () => { socket.off("message:new", handler); };
+  }, [userId]);
+
   const handleSend = async () => {
     if (!input.trim()) return;
     await fetch("/api/v1/messages", {
