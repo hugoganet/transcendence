@@ -64,7 +64,7 @@ export function ChatBox({ userId, onClose }: Props) {
       </div>
 
       <div style={{ display: "flex", gap: 4 }}>
-        <input value={input} onChange={(e) => setInput(e.target.value)} style={{ flex: 1, border: "1px solid #ccc", borderRadius: 4, padding: 4 }} />
+        <input maxLength={100} value={input} onChange={(e) => setInput(e.target.value)} style={{ flex: 1, border: "1px solid #ccc", borderRadius: 4, padding: 4 }} />
         <button onClick={handleSend}>Send</button> 
         </div>
     </div>
