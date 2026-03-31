@@ -21,7 +21,7 @@ import { creditMissionTokensWithClient } from "./tokenService.js";
 import { updateStreakWithClient } from "./streakService.js";
 import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";
 import { triggerRevealWithClient } from "./revealService.js";
-import { generateCertificateWithClient } from "./certificateService.js";
+import { generateCertificateWithClient, getCertificate } from "./certificateService.js";
 import { sendAchievementEmail, sendCompletionEmail } from "./emailService.js";
 
 export async function getCurriculumWithProgress(
@@ -549,6 +549,9 @@ export async function completeMission(
     revealTriggered: txResult.revealTriggered,
     newAchievements: txResult.newAchievements,
     certificateGenerated: txResult.certificateGenerated,
+    certificate: txResult.certificateGenerated 
+    ? await getCertificate(userId)
+    : undefined,
   };
 }
 
