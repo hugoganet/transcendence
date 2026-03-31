@@ -1,6 +1,6 @@
 # Transcendence — Current Advancement
 
-*Last updated: 2026-03-20*
+*Last updated: 2026-03-31*
 
 ---
 
@@ -58,20 +58,24 @@ JB:       5,770 added  ( 7.0%)
 | Testing | 579 unit tests, 17 integration test suites |
 | Infrastructure | Docker Compose (4 services), Nginx reverse proxy, HTTPS, 19 Prisma migrations, 16 DB models |
 
-### Arthur (Artnebs) — Content + Infrastructure (26 commits, Mar 16 – Mar 20)
+### Arthur (Artnebs) — Content + Infrastructure + i18n (30+ commits, Mar 16 – Mar 31)
 
 | Area | Detail |
 |------|--------|
-| **Content** | 69/69 EN missions, 69/69 FR missions, 40 EN + 40 FR tooltips, tooltip triggers (EN + FR), UI copy 15 sections (EN + FR) |
+| **Content** | 69/69 EN missions, 69/69 FR missions, **69/69 ES missions** (all fully translated, 0 placeholders), 40 EN + 40 FR + **40 ES** tooltips, tooltip triggers (EN + FR + **ES**), UI copy **413 keys** (EN + FR + **ES**, perfect parity) |
 | **Spec Documents** | Onboarding flow, progressive reveals, curriculum syllabus, copy bank, accessibility copy, certificate spec, email copy, QA scenarios |
 | **Emails** | 8 email functions total (EN + FR): password reset, GDPR export, GDPR delete, re-engagement, streak reminder, achievement, welcome, completion |
 | **Email Wiring** | Welcome on register, streak reminder for offline users, achievement email on milestones, completion email on certificate |
-| **i18n** | react-i18next setup, EN/FR translation files (403 lines each), useLocale hook, UI copy API endpoint (Story 8.1 complete) |
+| **i18n** | react-i18next setup, EN/FR/ES translation files (308 keys each, perfect parity), useLocale hook with server sync, UI copy API endpoint, **auto-locale detection from browser**, **localStorage persistence** |
+| **Language Switcher** | LanguageSwitcher component (pill + menu-item variants), emoji flags, WCAG AA keyboard nav (arrow keys, roving tabindex), screen reader live region, skip-to-content link |
+| **Layout** | Responsive Layout component: desktop header + mobile bottom nav, Settings page with language selection |
 | **Design System** | Tailwind 4 tokens: teal/amber/warm palettes, semantic aliases, Plus Jakarta Sans + Source Sans 3, border radius scale |
 | **CI/CD** | GitHub Actions pipeline (5 parallel jobs: lint, typecheck, unit tests, integration tests, content validation) |
 | **E2E Testing** | Playwright config (Chrome/Firefox/Safari), auth fixtures, 5 API smoke tests |
-| **Content Validation** | Script with 9 integrity checks (structure, parity, tooltips, exercise types), runnable in CI |
+| **Content Validation** | Script with **14 integrity checks** (structure, parity, tooltips, exercise types, key structure, placeholder detection), runnable in CI |
 | **API Documentation** | OpenAPI 3.1 spec (40+ endpoints), Swagger UI at /api/docs |
+| **Security** | Path traversal guard in contentLoader (CWE-22), credentials:include on locale PATCH, Zod locale validation |
+| **Onboarding Doc** | `docs/ONBOARDING_NEW_MEMBERS.md` — 8-section guide for new team members |
 | **BMAD** | Story 8.1 artifact, Epic 8 retrospective, sprint status updates |
 
 ### JB (JBmader) — Frontend Scaffold (2 commits, Mar 16–17)
@@ -157,21 +161,25 @@ CATEGORY                        STATUS    DONE BY
 ────────────────────────────────────────────────────
 Planning & Design               100%      Hugo
 Backend API (35 BE stories)      95%      Hugo (+ Arthur email expansion)
-Content (missions/tooltips)     100%      Arthur
+Content (missions/tooltips)     100%      Arthur (EN+FR+ES, 69 missions x3, 40 tooltips x3)
 Spec Documents                  100%      Arthur
 QA Test Scenarios               100%      Arthur
 Docker + HTTPS                  100%      Hugo
 CI/CD Pipeline                  100%      Arthur
 E2E Test Infrastructure         100%      Arthur
-Content Validation              100%      Arthur
+Content Validation              100%      Arthur (14 integrity checks)
 API Documentation               100%      Arthur
-i18n Infrastructure             100%      Arthur
+i18n Infrastructure             100%      Arthur (3 languages, auto-detect, localStorage)
+Language Switcher               100%      Arthur (WCAG AA, keyboard nav, live region)
+Layout + Settings               100%      Arthur (responsive nav, skip-to-content)
 Design System Tokens            100%      Arthur
+Onboarding Doc                  100%      Arthur (8-section guide for new members)
+Security Hardening              100%      Arthur (path traversal, locale validation)
 BMAD Artifacts                   90%      Hugo + Arthur
 Frontend (11 stories)            15%      JB (scaffolded only)
 Integration Testing               0%      —
 ────────────────────────────────────────────────────
-OVERALL:                        ~60%
+OVERALL:                        ~65%
 ```
 
 ---
@@ -179,9 +187,9 @@ OVERALL:                        ~60%
 ## Work Share (% of total work done)
 
 ```
-Hugo:    ~52%   Backend + planning + infrastructure foundation
-Arthur:  ~38%   Content + specs + QA + infra + emails + i18n + CI + API docs
-JB:      ~10%   Frontend scaffolding (untested, unmerged)
+Hugo:    ~48%   Backend + planning + infrastructure foundation
+Arthur:  ~44%   Content (3 langs) + specs + QA + i18n + language switcher + layout + CI + API docs + security + onboarding doc
+JB:      ~8%    Frontend scaffolding (untested, unmerged)
 ```
 
 ---
@@ -197,7 +205,6 @@ JB:      ~10%   Frontend scaffolding (untested, unmerged)
 ### Team Decisions Needed
 5. 3rd OAuth provider (Instagram is dead — GitHub, Apple, or Twitter/X?)
 6. Disclaimer modal re-entry policy (first entry vs every entry)
-7. 3rd language choice (Spanish or Portuguese)
 
 ### Frontend — JB (11 stories)
 2.8, 3.6, 4.2, 4.3, 4.4, 4.5, 4.6, 5.7, 6.5, 7.4, 8.4, 8.5, 8.6
@@ -217,10 +224,12 @@ JB:      ~10%   Frontend scaffolding (untested, unmerged)
 | Branch | Commits ahead of main | Status |
 |--------|-----------------------|--------|
 | `main` | — | Backend complete (Hugo, Mar 13) |
-| `feat/arthur-content-curriculum` | 26 | Content + infrastructure (Arthur, Mar 20). Ready to merge. |
+| `feat/arthur-content-curriculum` | 30+ | Content + infrastructure (Arthur, Mar 20). Ready to merge. |
+| `feat/arthur-i18n-spanish` | — | Spanish + language switcher + layout + security (Arthur, Mar 31). Based on above. |
 | `feat/frontpages` | 2 | Frontend scaffold (JB, Mar 17). Needs review. |
 
 ### Merge Order
-1. Merge `feat/arthur-content-curriculum` into `main` (0 conflicts)
-2. JB rebases `feat/frontpages` onto new main
-3. JB continues frontend development
+1. Merge `feat/arthur-i18n-spanish` into `feat/arthur-content-curriculum`
+2. Merge `feat/arthur-content-curriculum` into `main`
+3. JB rebases `feat/frontpages` onto new main
+4. JB continues frontend development

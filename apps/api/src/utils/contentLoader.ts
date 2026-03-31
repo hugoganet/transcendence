@@ -45,6 +45,10 @@ const CONTENT_ROOT = resolve(__dirname, "../../../../content");
 
 function readJsonFile(filePath: string): unknown {
   const absolutePath = resolve(CONTENT_ROOT, filePath);
+  // Path containment check — prevent directory traversal (CWE-22)
+  if (!absolutePath.startsWith(CONTENT_ROOT + "/")) {
+    throw new Error(`Path traversal blocked: "${filePath}" resolves outside content root`);
+  }
   try {
     const raw = readFileSync(absolutePath, "utf-8");
     return JSON.parse(raw);
@@ -79,7 +83,8 @@ export function loadCurriculum(): CurriculumStructure {
 export function loadMissions(locale: string): MissionContentCollection {
   const file = `${locale}/missions.json`;
   const data = readJsonFile(file);
-  return validateWithContext(missionContentCollectionSchema, data, file) as MissionContentCollection;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return validateWithContext<MissionContentCollection>(missionContentCollectionSchema as any, data, file);
 }
 
 export function loadTooltips(locale: string): TooltipCollection {

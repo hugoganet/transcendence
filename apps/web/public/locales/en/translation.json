@@ -99,7 +99,9 @@
     "friends": "Friends",
     "notifications": "Notifications",
     "settings": "Settings",
-    "logout": "Log Out"
+    "logout": "Log Out",
+    "skipToContent": "Skip to content",
+    "bottomNav": "Navigation"
   },
   "auth": {
     "login": {
@@ -392,6 +394,17 @@
     "usernameAlreadyUsed": "That username is taken. Try a different one.",
     "invalidCredentials": "Email or password is incorrect.",
     "tooManyRequests": "Too many attempts. Wait a moment, then try again."
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "fr": "Français",
+    "es": "Español"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "languageDescription": "Choose your preferred language"
   },
   "emptyStates": {
     "noFriends": "You haven't added any friends yet. Search by username to find someone to learn alongside.",

@@ -10,7 +10,7 @@ import { initializeContent } from "./utils/contentLoader.js";
 
 // Load and validate curriculum content before anything else (synchronous, blocking)
 try {
-  initializeContent(["en", "fr"]);
+  initializeContent(["en", "fr", "es"]);
 } catch (err) {
   console.error("Failed to initialize curriculum content. Server cannot start.", err);
   process.exit(1);
@@ -57,11 +57,7 @@ process.on("SIGINT", () => gracefulShutdown("SIGINT"));
 const PORT = process.env.PORT ?? 3000;
 
 // Connect session Redis client before starting server
-// We don't await it here to allow the server to start even if Redis is down for dev.
-// The client will keep retrying in the background.
-sessionRedisClient.connect().catch((err) => {
-  console.error("Failed to connect to Redis for sessions. Sessions will not work until Redis is up.", err);
-});
+await sessionRedisClient.connect();
 
 httpServer.listen(Number(PORT), "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
