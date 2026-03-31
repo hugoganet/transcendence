@@ -6,6 +6,7 @@ import type {
   completeMissionBodySchema,
 } from "../schemas/progress.js";
 import type { ExerciseType } from "./curriculum.js";
+import type { Certificate } from "./certificate.js";
 
 export type MissionStatusValue = z.infer<typeof missionStatusSchema>;
 export type ChapterStatusValue = z.infer<typeof chapterStatusSchema>;
@@ -63,6 +64,7 @@ export interface CompleteMissionResponse {
   revealTriggered: boolean;
   newAchievements: Array<{ code: string; title: string; description: string }>;
   certificateGenerated: boolean;
+  certificate?: Certificate;
 }
 
 export interface RefresherExercise {
