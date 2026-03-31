@@ -8,6 +8,9 @@ export const messageRouter = Router()
 messageRouter.post("/", requireAuth, async (req: Request, res: Response) => {
     const user = req.user as Express.User;
     const { receiverId, content } = req.body;
+    if (!content || content.trim().length === 0 || content.length > 100) {
+      return res.status(400).json({ error: "Invalid message" });
+    }
     const data = await sendMessage(user.id, receiverId, content);
     getIO().to(`user:${receiverId}`).emit("message:new", data);
     res.status(201).json({ data });
