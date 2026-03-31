@@ -4,6 +4,7 @@ import { usersApi } from "../api/users.js";
 import { curriculumApi } from "../api/curriculum.js";
 import { ApiError } from "../api/client.js";
 import { Card } from "../components/ui/Card.js";
+import { CertificateCard } from "../components/CertificateCard.js";
 import { Button } from "../components/ui/Button.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
@@ -124,54 +125,24 @@ export function CertificatePage() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Certificate
-      </h1>
+  <div className="mx-auto max-w-2xl space-y-6 py-8">
+    <h1 className="text-2xl font-bold text-gray-900 font-heading text-center mb-8">
+      Certificate
+    </h1>
 
-      <Card>
-        <div className="space-y-6 py-4 text-center">
-          <div className="space-y-1">
-            <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
-              Certificate of Completion
-            </p>
-            <p className="text-xl font-bold text-primary font-heading">
-              {cert.curriculumTitle}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-sm text-gray-500">Awarded to</p>
-            <p className="text-lg font-semibold text-gray-900">
-              {user?.displayName ?? user?.email ?? "Learner"}
-            </p>
-          </div>
-
-          <div className="flex justify-center gap-8 text-sm text-gray-500">
-            <div>
-              <p className="font-medium text-gray-900">{cert.totalMissions}</p>
-              <p>Missions</p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-900">
-                {cert.totalCategories}
-              </p>
-              <p>Categories</p>
-            </div>
-          </div>
-
-          <p className="text-sm text-gray-500">
-            Completed on{" "}
-            {new Date(cert.completionDate).toLocaleDateString()}
-          </p>
-
-          {shareUrl && (
-            <Button variant="secondary" onClick={handleCopy}>
-              {copied ? "Copied!" : "Copy Share Link"}
-            </Button>
-          )}
-        </div>
-      </Card>
+    <div className="flex justify-center">
+      <CertificateCard
+        certificate={cert}
+        userName={user?.displayName ?? user?.email ?? "Learner"}
+        shareUrl={shareUrl}
+      />
     </div>
-  );
+
+    <div className="text-center mt-8">
+      <Button variant="secondary" onClick={handleCopy}>
+        {copied ? "Copied!" : "Copy Share Link"}
+      </Button>
+    </div>
+  </div>
+);
 }
