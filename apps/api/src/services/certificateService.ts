@@ -48,7 +48,7 @@ export async function generateCertificateWithClient(
       totalCategories: existing.totalCategories,
       nftTokenId: existing.nftTokenId ?? undefined,
       nftTxHash: existing.nftTxHash ?? undefined,
-      contractAddress: process.env.CONTRACT_ADDRESS,
+      contractAddress: existing.contractAddress ?? undefined,
     };
   }
 
@@ -78,7 +78,6 @@ export async function generateCertificateWithClient(
     shareToken: cert.shareToken,
     totalMissions: cert.totalMissions,
     totalCategories: cert.totalCategories,
-    contractAddress: process.env.CONTRACT_ADDRESS,
   };
 }
 
@@ -121,13 +120,13 @@ export async function mintNFTForCertificate(userId: string): Promise<void> {
       if (result.tokenId > 0) {
         await prisma.certificate.update({
           where: { id: cert.id },
-          data: { nftTokenId: result.tokenId },
+          data: { nftTokenId: result.tokenId, contractAddress: result.contractAddress },
         });
       }
     } else {
       await prisma.certificate.update({
         where: { id: cert.id },
-        data: { nftTokenId: result.tokenId, nftTxHash: result.txHash },
+        data: { nftTokenId: result.tokenId, nftTxHash: result.txHash, contractAddress: result.contractAddress },
       });
     }
   } catch (error) {
@@ -155,7 +154,7 @@ export async function getCertificate(userId: string): Promise<Certificate> {
     totalCategories: cert.totalCategories,
     nftTokenId: cert.nftTokenId ?? undefined,
     nftTxHash: cert.nftTxHash ?? undefined,
-    contractAddress: process.env.CONTRACT_ADDRESS,
+    contractAddress: cert.contractAddress ?? undefined,
   };
 }
 
@@ -170,6 +169,7 @@ export async function getCertificateByShareToken(shareToken: string): Promise<Pu
       totalMissions: true,
       totalCategories: true,
       nftTokenId: true,
+      contractAddress: true,
     },
   });
   if (!cert) {
@@ -183,7 +183,7 @@ export async function getCertificateByShareToken(shareToken: string): Promise<Pu
     totalMissions: cert.totalMissions,
     totalCategories: cert.totalCategories,
     nftTokenId: cert.nftTokenId ?? undefined,
-    contractAddress: process.env.CONTRACT_ADDRESS,
+    contractAddress: cert.contractAddress ?? undefined,
   };
 }
 

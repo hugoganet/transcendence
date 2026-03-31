@@ -240,6 +240,7 @@ model Certificate {
   createdAt       DateTime @default(now())
   nftTokenId      Int?
   nftTxHash       String?
+  contractAddress String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

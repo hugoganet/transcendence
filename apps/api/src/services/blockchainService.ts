@@ -23,7 +23,7 @@ export async function mintCertificateNFT(
     userEthereumWallet: string,
     curriculumTitle: string,
     totalMissions: number,
-): Promise<{ tokenId: number; txHash: string; alreadyExists?: boolean }> {
+): Promise<{ tokenId: number; txHash: string; contractAddress: string; alreadyExists?: boolean }> {
     try {
         const provider = new ethers.JsonRpcProvider(AVALANCHE_RPC);
         const signer = new ethers.Wallet(BLOCKCHAIN_PRIVATE_KEY, provider);
@@ -48,7 +48,7 @@ export async function mintCertificateNFT(
                 // Skip logs that can't be parsed by this contract
             }
         }
-        return { tokenId, txHash: tx.hash };
+        return { tokenId, txHash: tx.hash, contractAddress: CONTRACT_ADDRESS };
     } catch (error) {
         console.log("[mintCertificateNFT] Error caught:", error);
         // Check if it's a "Certificate already exists" error, this is expected, not an error
@@ -61,13 +61,14 @@ export async function mintCertificateNFT(
                 const recipientAddress = ethers.getAddress(userEthereumWallet);
                 const certData = await contract.getCertificate(recipientAddress);
                 return {
-                tokenId: Number(certData.tokenId),
-                txHash: "",
-                alreadyExists: true,
+                    tokenId: Number(certData.tokenId),
+                    txHash: "",
+                    contractAddress: CONTRACT_ADDRESS,
+                    alreadyExists: true,
                 };
             } catch (fetchError) {
                 console.log("[mintCertificateNFT] Failed to fetch existing certificate:", fetchError);
-                return { tokenId: 0, txHash: "", alreadyExists: true };
+                return { tokenId: 0, txHash: "", contractAddress: CONTRACT_ADDRESS, alreadyExists: true };
             }
         }
         console.error("Blockchain error:", error);
