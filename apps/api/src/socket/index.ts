@@ -20,7 +20,7 @@ export interface ServerToClientEvents {
   "notification:push": (payload: NotificationPushPayload) => void;
   "presence:online": (userId: string) => void;
   "presence:offline": (userId: string) => void;
-  "message:new": (message: { id: string; senderId: string; receiverId: string; content: string; createdAt: Date }) => void;
+  "message:new": (message: { id: string; senderId: string; receiverId: string; content: string; createdAt: string }) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
