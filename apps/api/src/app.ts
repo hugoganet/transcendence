@@ -20,6 +20,7 @@ import { gdprRouter } from "./routes/gdpr.js";
 import { notificationsRouter } from "./routes/notifications.js";
 import { uiCopyRouter } from "./routes/uiCopy.js";
 import swaggerRouter from "./docs/swagger.js";
+import { messageRouter } from "./routes/message.js";
 
 const app: Express = express();
 
@@ -72,6 +73,7 @@ function registerRoutes(sessionMw?: RequestHandler) {
   app.use("/api/v1/certificates", certificatesRouter);
   app.use("/api/v1/notifications", notificationsRouter);
   app.use("/api/v1/ui-copy", uiCopyRouter);
+  app.use("/api/v1/message", messageRouter);
 
   // API documentation (Swagger UI)
   app.use("/api/docs", swaggerRouter);
