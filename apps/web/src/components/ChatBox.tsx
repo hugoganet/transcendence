@@ -5,6 +5,7 @@ import { useAuth } from "../contexts/AuthContext.js";
 type Message = {
   id: string;
   senderId: string;
+  receiverId: string;
   content: string;
   createdAt: string;
 };
@@ -29,7 +30,9 @@ export function ChatBox({ userId, onClose }: Props) {
     const socket = getSocket();
     if (!socket) return;
     const handler = (msg: Message) => {
-      if (msg.senderId === userId) {
+      const isThisConversation =
+        msg.senderId === userId || msg.receiverId === userId;
+      if (isThisConversation) {
         setMessages((prev) => [...prev, msg]);
       }
     };
@@ -39,16 +42,13 @@ export function ChatBox({ userId, onClose }: Props) {
 
   const handleSend = async () => {
     if (!input.trim()) return;
+    setInput("");
     await fetch("/api/v1/messages", {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ receiverId: userId, content: input }),
     });
-    setInput("");
-    fetch(`/api/v1/messages/${userId}`, { credentials: "include" })
-      .then((res) => res.json())
-      .then((body) => setMessages(body.data));
   };
 
 
