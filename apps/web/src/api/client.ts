@@ -45,6 +45,7 @@ async function request<T>(
     throw new ApiError(res.status, errorBody.code, errorBody.details);
   }
 
+  if (res.status === 204) return undefined as T;
   const json = await res.json();
   return json.data as T;
 }
