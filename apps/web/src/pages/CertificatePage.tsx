@@ -3,7 +3,7 @@ import { GraduationCap } from "lucide-react";
 import type { Certificate } from "@transcendence/shared";
 import { usersApi } from "../api/users.js";
 import { curriculumApi } from "../api/curriculum.js";
-import { ApiError } from "../api/client.js";
+
 import { Card } from "../components/ui/Card.js";
 import { Button } from "../components/ui/Button.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
@@ -26,25 +26,12 @@ export function CertificatePage() {
     usersApi.getCertificate().then(
       (data) => {
         if (cancelled) return;
-        setCert(data);
-        setIsLoading(false);
-        // Also fetch share URL
-        usersApi.getCertificateShareUrl().then(
-          (share) => {
-            if (!cancelled) setShareUrl(share.shareUrl);
-          },
-          () => {},
-        );
-      },
-      (err) => {
-        if (cancelled) return;
-        if (err instanceof ApiError && err.status === 404) {
+        if (data === null) {
           setNoCert(true);
-          // Fetch completion percentage for progress display
           curriculumApi.getCurriculum().then(
-            (data) => {
+            (curriculum) => {
               if (!cancelled) {
-                setCompletionPct(data.completionPercentage);
+                setCompletionPct(curriculum.completionPercentage);
                 setIsLoading(false);
               }
             },
@@ -53,8 +40,18 @@ export function CertificatePage() {
             },
           );
         } else {
+          setCert(data);
           setIsLoading(false);
+          usersApi.getCertificateShareUrl().then(
+            (share) => {
+              if (!cancelled) setShareUrl(share.shareUrl);
+            },
+            () => {},
+          );
         }
+      },
+      () => {
+        if (!cancelled) setIsLoading(false);
       },
     );
     return () => {
