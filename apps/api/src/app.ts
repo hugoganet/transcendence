@@ -73,7 +73,7 @@ function registerRoutes(sessionMw?: RequestHandler) {
   app.use("/api/v1/certificates", certificatesRouter);
   app.use("/api/v1/notifications", notificationsRouter);
   app.use("/api/v1/ui-copy", uiCopyRouter);
-  app.use("/api/v1/message", messageRouter);
+  app.use("/api/v1/messages", messageRouter);
 
   // API documentation (Swagger UI)
   app.use("/api/docs", swaggerRouter);
