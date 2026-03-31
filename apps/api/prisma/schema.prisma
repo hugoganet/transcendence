@@ -237,6 +237,8 @@ model Certificate {
   totalMissions   Int
   totalCategories Int
   createdAt       DateTime @default(now())
+  nftTokenId      Int?
+  nftTxHash       String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

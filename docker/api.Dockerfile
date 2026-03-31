@@ -18,6 +18,10 @@ RUN pnpm install --frozen-lockfile
 # Copy source code
 COPY packages/shared/ packages/shared/
 COPY apps/api/ apps/api/
+COPY content/ content/
+
+# Copy .env for build context
+COPY .env .env
 
 # Generate Prisma client
 RUN pnpm --filter @transcendence/api exec prisma generate
@@ -46,6 +50,8 @@ COPY --from=builder /app/packages/shared/ packages/shared/
 
 # Copy API compiled output and Prisma artifacts
 COPY --from=builder /app/apps/api/dist/ apps/api/dist/
+COPY --from=builder /app/content/ apps/content/
+COPY --from=builder /app/apps/api/src/docs/openapi.yaml apps/api/dist/src/docs/openapi.yaml
 COPY --from=builder /app/apps/api/package.json apps/api/
 COPY --from=builder /app/apps/api/node_modules/ apps/api/node_modules/
 COPY --from=builder /app/apps/api/prisma/ apps/api/prisma/
