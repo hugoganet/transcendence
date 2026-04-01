@@ -1,6 +1,6 @@
 # Transcendence — Developer Guide
 
-> Last updated: 2026-03-20
+> Last updated: 2026-04-01
 
 This document is your onboarding reference for the Transcendence project. It covers everything built so far — architecture, API, database, testing, deployment — so you can contribute from day one.
 
@@ -47,9 +47,11 @@ This document is your onboarding reference for the Transcendence project. It cov
 | Database | PostgreSQL | 17 |
 | Cache / Sessions | Redis | 7 |
 | Real-time | Socket.IO + `@socket.io/redis-adapter` | 4.8 |
+| Blockchain | Solidity + ethers.js | 0.8.x / 6.16 |
 | Auth | Passport.js (local + Google + Facebook) | 0.7 |
 | Validation | Zod | 3.25 |
 | Email | Resend | 6.9 |
+| PDF generation | jsPDF | 4.2 |
 | Image processing | Sharp | 0.34 |
 | Frontend (scaffold) | React 19 + Vite 7 + Tailwind 4 | — |
 | Testing | Vitest + Supertest | 4.0 / 7.2 |
@@ -67,7 +69,8 @@ transcendence/
 │   │   ├── prisma/
 │   │   │   ├── schema.prisma       # Database models
 │   │   │   ├── seed.ts             # Achievement + test user seeding
-│   │   │   └── migrations/         # 19 migration files
+│   │   │   └── migrations/         # 21 migration files
+│   │   ├── contracts/              # Solidity smart contracts (certificate NFT)
 │   │   ├── src/
 │   │   │   ├── app.ts              # Express app factory + registerRoutes()
 │   │   │   ├── index.ts            # Server entry point, graceful shutdown
@@ -167,6 +170,11 @@ RATE_LIMIT_MAX=100
 # Session
 SESSION_SECRET=docker-dev-secret-not-for-production
 SESSION_TTL_SECONDS=1800
+
+# Blockchain (required for certificate NFT minting service)
+CONTRACT_ADDRESS=0x000000000000000000000000000000000000dEaD
+AVALANCHE_RPC_URL=http://localhost:8545
+BLOCKCHAIN_PRIVATE_KEY=0x1111111111111111111111111111111111111111111111111111111111111111
 
 # Frontend (Vite — baked at build time)
 VITE_API_URL=https://localhost
@@ -339,7 +347,8 @@ GdprAuditLog                 (best-effort audit trail)
 | `UserProgress` | `(userId, missionId)` unique | `AVAILABLE` status is computed, never persisted |
 | `TokenTransaction` | `(userId, missionId, type)` unique | Prevents double-crediting mission rewards |
 | `ExerciseAttempt` | indexed on `(userId, exerciseId)` | Multiple attempts allowed (gas is charged each time) |
-| `Certificate` | `userId` unique, `shareToken` unique | Auto-generated when mission 6.3.4 is completed |
+| `User` | `ethereumWallet` unique (nullable) | Wallet is optional; when present, used as NFT recipient for certificate minting |
+| `Certificate` | `userId` unique, `shareToken` unique | Auto-generated when mission 6.3.4 is completed; includes optional `nftTokenId`, `nftTxHash`, `contractAddress` |
 
 ### Enums
 
@@ -484,6 +493,8 @@ All responses follow the envelope format: `{ data: ... }` for success, `{ error:
 
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
+| GET | `/certificates/me` | Yes | Authenticated certificate with NFT metadata (`nftTokenId`, `nftTxHash`, `contractAddress`) |
+| GET | `/certificates/me/pdf` | Yes | Download PDF certificate (includes blockchain fields when available) |
 | GET | `/certificates/:shareToken` | No | Public certificate view |
 
 ### Tooltips (`/tooltips`)
@@ -722,7 +733,8 @@ The most complex transaction in the system. When `POST /curriculum/missions/:mis
    - Check and award achievements (module completion, token thresholds, streak targets)
    - Check and trigger progressive reveals (token UI, wallet, gas fees, dashboard)
    - If this is mission `6.3.4` (the last mission) → generate completion certificate
-3. **After transaction:** Push notifications for achievements earned, via Socket.IO
+3. **After transaction:** trigger asynchronous NFT mint attempt (`mintNFTForCertificate`) for users with `ethereumWallet`
+4. **After transaction:** Push notifications for achievements earned, via Socket.IO
 
 ### Token economy
 
@@ -803,7 +815,7 @@ pnpm test:integration
 | `leaderboard.test.ts` | Weekly leaderboard with rankings |
 | `notifications.test.ts` | Notification creation, delivery, preferences |
 | `engagement.test.ts` | Streak reminders, re-engagement logic |
-| `certificate.test.ts` | Certificate generation and sharing |
+| `certificate.test.ts` | Certificate generation, sharing, NFT metadata, and PDF endpoint |
 | `gdpr.test.ts` | Data export and account deletion |
 | `presence.test.ts` | Socket.IO online/offline tracking |
 | `publicProfile.test.ts` | Public profile endpoint |
@@ -902,6 +914,9 @@ POSTGRES_PASSWORD=change-me-in-production
 POSTGRES_DB=transcendence
 SESSION_SECRET=change-me-in-production
 DATABASE_URL=postgresql://transcendence:change-me-in-production@db:5432/transcendence?schema=public
+CONTRACT_ADDRESS=0x000000000000000000000000000000000000dEaD
+AVALANCHE_RPC_URL=http://localhost:8545
+BLOCKCHAIN_PRIVATE_KEY=0x1111111111111111111111111111111111111111111111111111111111111111
 EOF
 
 # Build and start
@@ -944,6 +959,9 @@ All environment variables are configured in a **single `.env` file at the repo r
 | `RESEND_API_KEY` | For emails | — | Resend API key (emails no-op if absent) |
 | `RESEND_FROM_EMAIL` | For emails | — | Sender email address |
 | `AVATAR_UPLOAD_DIR` | No | `uploads/avatars` | Directory for avatar storage |
+| `CONTRACT_ADDRESS` | Yes (for NFT minting) | — | Deployed certificate NFT contract address |
+| `AVALANCHE_RPC_URL` | Yes (for NFT minting) | — | Avalanche JSON-RPC endpoint used by ethers.js |
+| `BLOCKCHAIN_PRIVATE_KEY` | Yes (for NFT minting) | — | Signer private key used to mint certificate NFTs |
 
 ---
 

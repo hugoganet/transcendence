@@ -1,6 +1,6 @@
 # Transcendence — Current Advancement
 
-*Last updated: 2026-03-20*
+*Last updated: 2026-04-01*
 
 ---
 
@@ -84,6 +84,18 @@ JB:       5,770 added  ( 7.0%)
 | **Architecture** | AuthContext, NotificationContext, RevealContext, API client layer, AppLayout |
 | **Status** | All in 1 unmerged branch (`feat/frontpages`). Not tested, not reviewed, not connected to real API. |
 
+### Kauana — Backend & Blockchain (Mar 31 – Apr 1)
+
+| Area | Detail |
+|------|--------|
+| **Blockchain Contract** | Added Solidity `CertificateNFT` contract for on-chain certificate minting/retrieval |
+| **Backend Integration** | Implemented `blockchainService.ts` with ethers.js + Avalanche RPC integration |
+| **Certificate Flow** | Added async NFT mint trigger after final mission completion (`mintNFTForCertificate`) with idempotent handling |
+| **Database** | Added `ethereumWallet` to `User` and `nftTokenId`/`nftTxHash`/`contractAddress` to `Certificate` |
+| **API/Output** | Added authenticated certificate NFT endpoints and PDF output with blockchain metadata |
+| **CI/Env** | Added blockchain env vars to Turbo + CI using safe placeholder values and YAML-safe quoting |
+| **Documentation** | Updated README, TEAM_STATUS, and DEVELOPER_GUIDE to reflect blockchain/NFT implementation |
+
 ---
 
 ## Story Completion Status
@@ -157,6 +169,7 @@ CATEGORY                        STATUS    DONE BY
 ────────────────────────────────────────────────────
 Planning & Design               100%      Hugo
 Backend API (35 BE stories)      95%      Hugo (+ Arthur email expansion)
+Blockchain/NFT Certificates      Branch    Kauana (`feat/certificate`)
 Content (missions/tooltips)     100%      Arthur
 Spec Documents                  100%      Arthur
 QA Test Scenarios               100%      Arthur
@@ -182,6 +195,7 @@ OVERALL:                        ~60%
 Hugo:    ~52%   Backend + planning + infrastructure foundation
 Arthur:  ~38%   Content + specs + QA + infra + emails + i18n + CI + API docs
 JB:      ~10%   Frontend scaffolding (untested, unmerged)
+Kauana:   scope delivered in `feat/certificate` (backend + blockchain integration, pending merge)
 ```
 
 ---
@@ -194,6 +208,9 @@ JB:      ~10%   Frontend scaffolding (untested, unmerged)
 3. HTTP polling fallback for notifications (NFR16)
 4. Break suggestion after 3+ missions (UX spec)
 
+### FrontEnd Certificate (Kauana)
+1. Test certificate frontend style and functionality
+
 ### Team Decisions Needed
 5. 3rd OAuth provider (Instagram is dead — GitHub, Apple, or Twitter/X?)
 6. Disclaimer modal re-entry policy (first entry vs every entry)
@@ -204,6 +221,7 @@ JB:      ~10%   Frontend scaffolding (untested, unmerged)
 
 ### Integration (team, after frontend)
 - Merge branches (Arthur first, then JB rebases)
+- Merge `feat/certificate` after content branch (before or alongside frontend rebase)
 - End-to-end integration testing
 - Cross-browser Playwright tests
 - Performance verification (NFR1-4)
@@ -218,9 +236,11 @@ JB:      ~10%   Frontend scaffolding (untested, unmerged)
 |--------|-----------------------|--------|
 | `main` | — | Backend complete (Hugo, Mar 13) |
 | `feat/arthur-content-curriculum` | 26 | Content + infrastructure (Arthur, Mar 20). Ready to merge. |
+| `feat/certificate` | In progress | Certificate/NFT blockchain integration + docs/CI updates (Kauana, Apr 1). |
 | `feat/frontpages` | 2 | Frontend scaffold (JB, Mar 17). Needs review. |
 
 ### Merge Order
 1. Merge `feat/arthur-content-curriculum` into `main` (0 conflicts)
-2. JB rebases `feat/frontpages` onto new main
-3. JB continues frontend development
+2. Merge `feat/certificate` into `main` after content branch
+3. JB rebases `feat/frontpages` onto new main
+4. JB continues frontend development
