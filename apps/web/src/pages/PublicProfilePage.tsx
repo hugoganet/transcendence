@@ -42,13 +42,14 @@ export function PublicProfilePage() {
       usersApi.getPublicProfile(userId),
       friendsApi.getFriends(),
       friendsApi.getPendingRequests(),
+      friendsApi.getSentRequests(),
     ]).then(
-      ([data, friends, pending]) => {
+      ([data, friends, incoming, sent]) => {
         if (cancelled) return;
         setProfile(data);
         document.title = `${data.displayName ?? "User"} — Transcendence`;
         if (friends.some((f) => f.id === userId)) setFriendStatus("friends");
-        else if (pending.some((p) => p.id === userId)) setFriendStatus("pending");
+        else if (incoming.some((p) => p.id === userId) || sent.some((p) => p.id === userId)) setFriendStatus("pending");
         else setFriendStatus("none");
         setIsLoading(false);
       },
@@ -142,7 +143,7 @@ export function PublicProfilePage() {
             </Button>
           )}
           {friendStatus === "pending" && (
-            <p className="mt-4 text-sm text-gray-500">Request sent</p>
+            <p className="mt-4 text-sm text-gray-500">Friend request pending</p>
           )}
           {friendStatus === "friends" && (
             <p className="mt-4 text-sm text-green-600">Already friends</p>
