@@ -11,7 +11,7 @@ coverage/
 .DS_Store
 docker/nginx/certs/*.pem
 uploads/
-
+.pnpm-store/
 # Playwright
 test-results/
 playwright-report/
