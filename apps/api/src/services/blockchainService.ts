@@ -50,7 +50,7 @@ export async function mintCertificateNFT(
         }
         return { tokenId, txHash: tx.hash, contractAddress: CONTRACT_ADDRESS };
     } catch (error) {
-        console.log("[mintCertificateNFT] Error caught:", error);
+        console.log("[mintCertificate] Error caught:", error);
         // Check if it's a "Certificate already exists" error, this is expected, not an error
         const errorMessage = error instanceof Error ? error.message : String(error);
         if (errorMessage.includes("Certificate already exists")) {
@@ -67,7 +67,7 @@ export async function mintCertificateNFT(
                     alreadyExists: true,
                 };
             } catch (fetchError) {
-                console.log("[mintCertificateNFT] Failed to fetch existing certificate:", fetchError);
+                console.log("[mintCertificate] Failed to fetch existing certificate:", fetchError);
                 return { tokenId: 0, txHash: "", contractAddress: CONTRACT_ADDRESS, alreadyExists: true };
             }
         }

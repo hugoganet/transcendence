@@ -90,11 +90,11 @@ JB:       5,770 added  ( 7.0%)
 |------|--------|
 | **Blockchain Contract** | Added Solidity `CertificateNFT` contract for on-chain certificate minting/retrieval |
 | **Backend Integration** | Implemented `blockchainService.ts` with ethers.js + Avalanche RPC integration |
-| **Certificate Flow** | Added async NFT mint trigger after final mission completion (`mintNFTForCertificate`) with idempotent handling |
+| **Certificate Flow** | Added async on-chain mint trigger after final mission completion (`mintNFTForCertificate`) with idempotent handling |
 | **Database** | Added `ethereumWallet` to `User` and `nftTokenId`/`nftTxHash`/`contractAddress` to `Certificate` |
-| **API/Output** | Added authenticated certificate NFT endpoints and PDF output with blockchain metadata |
+| **API/Output** | Added authenticated certificate on-chain endpoints and PDF output with blockchain metadata |
 | **CI/Env** | Added blockchain env vars to Turbo + CI using safe placeholder values and YAML-safe quoting |
-| **Documentation** | Updated README, TEAM_STATUS, and DEVELOPER_GUIDE to reflect blockchain/NFT implementation |
+| **Documentation** | Updated README, TEAM_STATUS, and DEVELOPER_GUIDE to reflect blockchain implementation |
 
 ---
 
@@ -169,7 +169,7 @@ CATEGORY                        STATUS    DONE BY
 ────────────────────────────────────────────────────
 Planning & Design               100%      Hugo
 Backend API (35 BE stories)      95%      Hugo (+ Arthur email expansion)
-Blockchain/NFT Certificates      Branch    Kauana (`feat/certificate`)
+Blockchain Certificates      Branch    Kauana (`feat/certificate`)
 Content (missions/tooltips)     100%      Arthur
 Spec Documents                  100%      Arthur
 QA Test Scenarios               100%      Arthur
@@ -236,7 +236,7 @@ Kauana:   scope delivered in `feat/certificate` (backend + blockchain integratio
 |--------|-----------------------|--------|
 | `main` | — | Backend complete (Hugo, Mar 13) |
 | `feat/arthur-content-curriculum` | 26 | Content + infrastructure (Arthur, Mar 20). Ready to merge. |
-| `feat/certificate` | In progress | Certificate/NFT blockchain integration + docs/CI updates (Kauana, Apr 1). |
+| `feat/certificate` | In progress | Certificate blockchain integration + docs/CI updates (Kauana, Apr 1). |
 | `feat/frontpages` | 2 | Frontend scaffold (JB, Mar 17). Needs review. |
 
 ### Merge Order

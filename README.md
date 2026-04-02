@@ -6,7 +6,7 @@ Most people are confused by blockchain, crypto, NFTs, and all that world. Existi
 
 ## Current State
 
-**Backend: ✅ complete.** All 8 epics (50+ endpoints, 17 integration test files) are implemented and tested. This includes authentication (local + OAuth + 2FA), curriculum engine, exercise system, token economy, gamification, social features, notifications, GDPR compliance, and blockchain-backed certificate NFT minting.
+**Backend: ✅ complete.** All 8 epics (50+ endpoints, 17 integration test files) are implemented and tested. This includes authentication (local + OAuth + 2FA), curriculum engine, exercise system, token economy, gamification, social features, notifications, GDPR compliance, and blockchain-backed certificate minting.
 
 **Content: ✅ complete.** All 69 missions in EN and FR, 40 tooltips (EN + FR), tooltip trigger maps, full UI copy (15 sections, EN + FR), and 9 QA/spec docs. Branch `feat/arthur-content-curriculum` is 6 commits ahead of main.
 
@@ -18,7 +18,7 @@ Most people are confused by blockchain, crypto, NFTs, and all that world. Existi
 - Real-time Socket.IO events (notifications, presence)
 - Shared Zod schemas and TypeScript types in `@transcendence/shared` — use them for form validation and API response typing
 - Full integration test suite (17 test files) as living documentation of API behavior
-- Certificate APIs include NFT metadata (`nftTokenId`, `nftTxHash`, `contractAddress`) and authenticated PDF download (`GET /api/v1/certificates/me/pdf`)
+- Certificate APIs include metadata (`nftTokenId`, `nftTxHash`, `contractAddress`) and authenticated PDF download (`GET /api/v1/certificates/me/pdf`)
 - Docker Compose deployment with Nginx reverse proxy
 - Complete content layer: all mission text, exercise content, tooltips, and UI copy in EN + FR
 
@@ -175,7 +175,7 @@ Features mapped to Transcendence subject modules (17 points total):
 | 11 | Accessibility: Multiple languages (Minor) | 1 | French + English + 1 more |
 | 12 | Accessibility: Additional browsers (Minor) | 1 | Chrome + Firefox + Safari |
 | 13 | Data: GDPR compliance (Minor) | 1 | Data export, deletion, confirmation emails |
-| 14 | IV.9 Blockchain (Major) | 2 | Avalanche + Solidity smart contract for on-chain certificate NFTs (mint, retrieval, integrity/immutability), integrated with backend, DB fields (`nftTokenId`, `nftTxHash`, `contractAddress`) and certificate APIs/PDF |
+| 14 | IV.9 Blockchain (Major) | 2 | Avalanche + Solidity smart contract for on-chain certificate (mint, retrieval, integrity/immutability), integrated with backend, DB fields (`nftTokenId`, `nftTxHash`, `contractAddress`) and certificate APIs/PDF |
 | | **TOTAL** | **19** | |
 
 ### Blockchain Module Justification (Adapted IV.9)

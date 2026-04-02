@@ -62,7 +62,7 @@ export async function generateCertificatePdf(
 
   doc.setFontSize(8);
   if (certificate.nftTokenId) {
-    doc.text(`NFT Token ID: ${certificate.nftTokenId}`, 105, 250, { align: "center" });
+    doc.text(`Token ID: ${certificate.nftTokenId}`, 105, 250, { align: "center" });
   }
   if (certificate.nftTxHash) {
     doc.text(`Tx Hash: ${certificate.nftTxHash.substring(0, 20)}...`, 105, 260, { align: "center" });

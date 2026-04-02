@@ -8,7 +8,7 @@ import { prisma } from "../config/database.js";
 
 export const certificatesRouter = Router();
 
-// GET /api/v1/certificates/me — Return certificate data (with NFT info)
+// GET /api/v1/certificates/me — Return certificate data (with on-chain info)
 certificatesRouter.get("/me", requireAuth, async (req: Request, res: Response) => {
   if (!req.user || !req.user.id) {
     return res.status(401).json({ error: "Unauthorized" });

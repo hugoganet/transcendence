@@ -520,9 +520,9 @@ export async function completeMission(
 
   // Send course completion email when certificate is generated (fire-and-forget)
   if (txResult.certificateGenerated) {
-    // Mint NFT outside transaction (blockchain calls are slow)
+    // Mint on-chain outside transaction (blockchain calls are slow)
     mintNFTForCertificate(userId).catch((err) => {
-      console.error("mintNFTForCertificate failed:", err);
+      console.error("mintForCertificate failed:", err);
     });
 
     const user = await prisma.user.findUnique({

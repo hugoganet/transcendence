@@ -69,7 +69,7 @@ export async function generateCertificateWithClient(
     },
   });
 
-  // Return certificate without NFT info, blockchain call happens separately
+  // Return certificate without on-chain info, blockchain call happens separately
   return {
     id: cert.id,
     displayName: cert.displayName,
@@ -81,9 +81,9 @@ export async function generateCertificateWithClient(
   };
 }
 
-// Mint NFT for certificate, call this OUTSIDE of transaction (blockchain calls are slow)
+// Mint on-chain for certificate, call this OUTSIDE of transaction (blockchain calls are slow)
 export async function mintNFTForCertificate(userId: string): Promise<void> {
-  console.log("[mintNFTForCertificate] Starting for user:", userId);
+  console.log("[mintForCertificate] Starting for user:", userId);
 
   const cert = await prisma.certificate.findUnique({ where: { userId } });
   if (!cert) {
@@ -92,7 +92,7 @@ export async function mintNFTForCertificate(userId: string): Promise<void> {
 
   // Skip if already minted
   if (cert.nftTokenId) {
-    console.log("[mintNFTForCertificate] Already minted, skipping:", cert.nftTokenId);
+    console.log("[mintForCertificate] Already minted, skipping:", cert.nftTokenId);
     return;
   }
 
@@ -101,9 +101,9 @@ export async function mintNFTForCertificate(userId: string): Promise<void> {
     select: { ethereumWallet: true },
   });
 
-  // Skip if user has no wallet, NFT needs a real recipient
+  // Skip if user has no wallet, on-chain needs a real recipient
   if (!user?.ethereumWallet) {
-    console.log("[mintNFTForCertificate] User has no wallet configured, skipping NFT mint");
+    console.log("[mintForCertificate] User has no wallet configured, skipping on-chain mint");
     return;
   }
 
@@ -130,8 +130,8 @@ export async function mintNFTForCertificate(userId: string): Promise<void> {
       });
     }
   } catch (error) {
-    // Log error but don't fail, certificate exists, NFT is optional
-    console.error("Failed to mint NFT for user:", userId, error);
+    // Log error but don't fail, certificate exists, on-chain is optional
+    console.error("Failed to mint on-chain for user:", userId, error);
   }
 }
 

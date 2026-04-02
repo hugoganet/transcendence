@@ -70,7 +70,7 @@ transcendence/
 │   │   │   ├── schema.prisma       # Database models
 │   │   │   ├── seed.ts             # Achievement + test user seeding
 │   │   │   └── migrations/         # 21 migration files
-│   │   ├── contracts/              # Solidity smart contracts (certificate NFT)
+│   │   ├── contracts/              # Solidity smart contracts (certificate)
 │   │   ├── src/
 │   │   │   ├── app.ts              # Express app factory + registerRoutes()
 │   │   │   ├── index.ts            # Server entry point, graceful shutdown
@@ -171,7 +171,7 @@ RATE_LIMIT_MAX=100
 SESSION_SECRET=docker-dev-secret-not-for-production
 SESSION_TTL_SECONDS=1800
 
-# Blockchain (required for certificate NFT minting service)
+# Blockchain (required for certificate minting service)
 CONTRACT_ADDRESS=0x000000000000000000000000000000000000dEaD
 AVALANCHE_RPC_URL=http://localhost:8545
 BLOCKCHAIN_PRIVATE_KEY=0x1111111111111111111111111111111111111111111111111111111111111111
@@ -347,7 +347,7 @@ GdprAuditLog                 (best-effort audit trail)
 | `UserProgress` | `(userId, missionId)` unique | `AVAILABLE` status is computed, never persisted |
 | `TokenTransaction` | `(userId, missionId, type)` unique | Prevents double-crediting mission rewards |
 | `ExerciseAttempt` | indexed on `(userId, exerciseId)` | Multiple attempts allowed (gas is charged each time) |
-| `User` | `ethereumWallet` unique (nullable) | Wallet is optional; when present, used as NFT recipient for certificate minting |
+| `User` | `ethereumWallet` unique (nullable) | Wallet is optional; when present, used as recipient for certificate minting |
 | `Certificate` | `userId` unique, `shareToken` unique | Auto-generated when mission 6.3.4 is completed; includes optional `nftTokenId`, `nftTxHash`, `contractAddress` |
 
 ### Enums
@@ -493,7 +493,7 @@ All responses follow the envelope format: `{ data: ... }` for success, `{ error:
 
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
-| GET | `/certificates/me` | Yes | Authenticated certificate with NFT metadata (`nftTokenId`, `nftTxHash`, `contractAddress`) |
+| GET | `/certificates/me` | Yes | Authenticated certificate with on-chain metadata (`nftTokenId`, `nftTxHash`, `contractAddress`) |
 | GET | `/certificates/me/pdf` | Yes | Download PDF certificate (includes blockchain fields when available) |
 | GET | `/certificates/:shareToken` | No | Public certificate view |
 
@@ -733,7 +733,7 @@ The most complex transaction in the system. When `POST /curriculum/missions/:mis
    - Check and award achievements (module completion, token thresholds, streak targets)
    - Check and trigger progressive reveals (token UI, wallet, gas fees, dashboard)
    - If this is mission `6.3.4` (the last mission) → generate completion certificate
-3. **After transaction:** trigger asynchronous NFT mint attempt (`mintNFTForCertificate`) for users with `ethereumWallet`
+3. **After transaction:** trigger asynchronous on-chain mint attempt (`mintNFTForCertificate`) for users with `ethereumWallet`
 4. **After transaction:** Push notifications for achievements earned, via Socket.IO
 
 ### Token economy
@@ -815,7 +815,7 @@ pnpm test:integration
 | `leaderboard.test.ts` | Weekly leaderboard with rankings |
 | `notifications.test.ts` | Notification creation, delivery, preferences |
 | `engagement.test.ts` | Streak reminders, re-engagement logic |
-| `certificate.test.ts` | Certificate generation, sharing, NFT metadata, and PDF endpoint |
+| `certificate.test.ts` | Certificate generation, sharing on-chain metadata, and PDF endpoint |
 | `gdpr.test.ts` | Data export and account deletion |
 | `presence.test.ts` | Socket.IO online/offline tracking |
 | `publicProfile.test.ts` | Public profile endpoint |
@@ -959,9 +959,9 @@ All environment variables are configured in a **single `.env` file at the repo r
 | `RESEND_API_KEY` | For emails | — | Resend API key (emails no-op if absent) |
 | `RESEND_FROM_EMAIL` | For emails | — | Sender email address |
 | `AVATAR_UPLOAD_DIR` | No | `uploads/avatars` | Directory for avatar storage |
-| `CONTRACT_ADDRESS` | Yes (for NFT minting) | — | Deployed certificate NFT contract address |
-| `AVALANCHE_RPC_URL` | Yes (for NFT minting) | — | Avalanche JSON-RPC endpoint used by ethers.js |
-| `BLOCKCHAIN_PRIVATE_KEY` | Yes (for NFT minting) | — | Signer private key used to mint certificate NFTs |
+| `CONTRACT_ADDRESS` | Yes (for on-chain minting) | — | Deployed certificate on-chain contract address |
+| `AVALANCHE_RPC_URL` | Yes (for on-chain minting) | — | Avalanche JSON-RPC endpoint used by ethers.js |
+| `BLOCKCHAIN_PRIVATE_KEY` | Yes (for on-chain minting) | — | Signer private key used to mint certificate on-chains |
 
 ---
 
