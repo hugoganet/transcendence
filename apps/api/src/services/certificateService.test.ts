@@ -158,13 +158,11 @@ describe("getCertificate", () => {
     expect(result.completionDate).toBe("2026-03-01T00:00:00.000Z");
   });
 
-  it("throws CERTIFICATE_NOT_AVAILABLE for user without cert", async () => {
+  it("returns null for user without cert", async () => {
     mockPrisma.certificate.findUnique.mockResolvedValue(null);
 
-    await expect(getCertificate("user-1")).rejects.toMatchObject({
-      statusCode: 404,
-      code: "CERTIFICATE_NOT_AVAILABLE",
-    });
+    const result = await getCertificate("user-1");
+    expect(result).toBeNull();
   });
 });
 

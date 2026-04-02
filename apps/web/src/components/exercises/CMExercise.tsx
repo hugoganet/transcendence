@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { CMExerciseContent } from "@transcendence/shared";
+import { ArrowRight } from "lucide-react";
 import { Button } from "../ui/Button.js";
 
 interface CMExerciseProps {
@@ -73,17 +74,7 @@ export function CMExercise({
                 <span className="flex-1 font-medium text-gray-900">
                   {term?.term}
                 </span>
-                <svg
-                  className="h-4 w-4 shrink-0 text-green-500"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <ArrowRight className="h-4 w-4 shrink-0 text-green-500" />
                 <span className="flex-1 text-gray-700">{def?.definition}</span>
                 <button
                   onClick={() => handleUndo(match.termId)}

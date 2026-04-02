@@ -2,30 +2,13 @@ import crypto from "node:crypto";
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";
+import { mintCertificateNFT } from "./blockchainService.js";
 import type { Certificate, PublicCertificate } from "@transcendence/shared";
 
-export type DbClient = Pick<typeof prisma, "certificate" | "userProgress">;
+export type DbClient = Pick<typeof prisma, "certificate" | "userProgress" | "user">;
 
-export async function generateCertificateWithClient(
-  client: DbClient,
-  userId: string,
-  displayName: string | null,
-): Promise<Certificate> {
-  // Idempotent: return existing certificate if already generated
-  const existing = await client.certificate.findUnique({ where: { userId } });
-  if (existing) {
-    return {
-      id: existing.id,
-      displayName: existing.displayName,
-      completionDate: existing.completionDate.toISOString(),
-      curriculumTitle: existing.curriculumTitle,
-      shareToken: existing.shareToken,
-      totalMissions: existing.totalMissions,
-      totalCategories: existing.totalCategories,
-    };
-  }
-
-  // Verify all missions completed
+// Helper: Validate missions completed
+async function validateMissionsCompleted(client: DbClient, userId: string): Promise<number> {
   const completed = await client.userProgress.count({
     where: { userId, status: "COMPLETED" },
   });
@@ -44,8 +27,35 @@ export async function generateCertificateWithClient(
     );
   }
 
-  const shareToken = crypto.randomUUID();
-  const totalCategories = curriculum.length;
+  return completed;
+}
+
+export async function generateCertificateWithClient(
+  client: DbClient,
+  userId: string,
+  displayName: string | null,
+): Promise<Certificate> {
+  // Idempotent: return existing certificate if already generated
+  const existing = await client.certificate.findUnique({ where: { userId } });
+  if (existing) {
+    return {
+      id: existing.id,
+      displayName: existing.displayName,
+      completionDate: existing.completionDate.toISOString(),
+      curriculumTitle: existing.curriculumTitle,
+      shareToken: existing.shareToken,
+      totalMissions: existing.totalMissions,
+      totalCategories: existing.totalCategories,
+      nftTokenId: existing.nftTokenId ?? undefined,
+      nftTxHash: existing.nftTxHash ?? undefined,
+      contractAddress: existing.contractAddress ?? undefined,
+    };
+  }
+
+  // Validate all missions completed
+  const totalMissions = await validateMissionsCompleted(client, userId);
+
+  const curriculum = getContent().curriculum;
 
   const cert = await client.certificate.create({
     data: {
@@ -53,12 +63,13 @@ export async function generateCertificateWithClient(
       displayName,
       completionDate: new Date(),
       curriculumTitle: "Blockchain Fundamentals",
-      shareToken,
-      totalMissions: completed,
-      totalCategories,
+      shareToken: crypto.randomUUID(),
+      totalMissions,
+      totalCategories: curriculum.length,
     },
   });
 
+  // Return certificate without on-chain info, blockchain call happens separately
   return {
     id: cert.id,
     displayName: cert.displayName,
@@ -70,15 +81,63 @@ export async function generateCertificateWithClient(
   };
 }
 
-export async function getCertificate(userId: string): Promise<Certificate> {
+// Mint on-chain for certificate, call this OUTSIDE of transaction (blockchain calls are slow)
+export async function mintNFTForCertificate(userId: string): Promise<void> {
+  console.log("[mintForCertificate] Starting for user:", userId);
+
   const cert = await prisma.certificate.findUnique({ where: { userId } });
   if (!cert) {
-    throw new AppError(
-      404,
-      "CERTIFICATE_NOT_AVAILABLE",
-      "Complete all missions to earn your certificate",
-    );
+    return;
   }
+
+  // Skip if already minted
+  if (cert.nftTokenId) {
+    console.log("[mintForCertificate] Already minted, skipping:", cert.nftTokenId);
+    return;
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { ethereumWallet: true },
+  });
+
+  // Skip if user has no wallet, on-chain needs a real recipient
+  if (!user?.ethereumWallet) {
+    console.log("[mintForCertificate] User has no wallet configured, skipping on-chain mint");
+    return;
+  }
+
+  try {
+    const result = await mintCertificateNFT(
+      userId,
+      user.ethereumWallet,
+      cert.curriculumTitle,
+      cert.totalMissions,
+    );
+
+    // Certificate already exists on blockchain, still save tokenId if found
+    if (result.alreadyExists) {
+      if (result.tokenId > 0) {
+        await prisma.certificate.update({
+          where: { id: cert.id },
+          data: { nftTokenId: result.tokenId, contractAddress: result.contractAddress },
+        });
+      }
+    } else {
+      await prisma.certificate.update({
+        where: { id: cert.id },
+        data: { nftTokenId: result.tokenId, nftTxHash: result.txHash, contractAddress: result.contractAddress },
+      });
+    }
+  } catch (error) {
+    // Log error but don't fail, certificate exists, on-chain is optional
+    console.error("Failed to mint on-chain for user:", userId, error);
+  }
+}
+
+export async function getCertificate(userId: string): Promise<Certificate | null> {
+  const cert = await prisma.certificate.findUnique({ where: { userId } });
+  if (!cert) return null;
   return {
     id: cert.id,
     displayName: cert.displayName,
@@ -87,12 +146,13 @@ export async function getCertificate(userId: string): Promise<Certificate> {
     shareToken: cert.shareToken,
     totalMissions: cert.totalMissions,
     totalCategories: cert.totalCategories,
+    nftTokenId: cert.nftTokenId ?? undefined,
+    nftTxHash: cert.nftTxHash ?? undefined,
+    contractAddress: cert.contractAddress ?? undefined,
   };
 }
 
-export async function getCertificateByShareToken(
-  shareToken: string,
-): Promise<PublicCertificate> {
+export async function getCertificateByShareToken(shareToken: string): Promise<PublicCertificate> {
   const cert = await prisma.certificate.findUnique({
     where: { shareToken },
     select: {
@@ -102,6 +162,8 @@ export async function getCertificateByShareToken(
       shareToken: true,
       totalMissions: true,
       totalCategories: true,
+      nftTokenId: true,
+      contractAddress: true,
     },
   });
   if (!cert) {
@@ -114,13 +176,16 @@ export async function getCertificateByShareToken(
     shareToken: cert.shareToken,
     totalMissions: cert.totalMissions,
     totalCategories: cert.totalCategories,
+    nftTokenId: cert.nftTokenId ?? undefined,
+    contractAddress: cert.contractAddress ?? undefined,
   };
 }
 
-export async function getShareableUrl(
-  userId: string,
-): Promise<{ shareUrl: string }> {
+export async function getShareableUrl(userId: string): Promise<{ shareUrl: string }> {
   const certificate = await getCertificate(userId);
+  if (!certificate) {
+    throw new AppError(404, "CERTIFICATE_NOT_AVAILABLE", "No certificate found");
+  }
   const baseUrl = process.env.BASE_URL || "https://localhost";
   const shareUrl = `${baseUrl}/certificates/${certificate.shareToken}`;
   return { shareUrl };

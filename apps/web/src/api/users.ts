@@ -22,7 +22,7 @@ export const usersApi = {
     api.get<PublicProfile>(`/api/v1/users/${userId}/profile`),
 
   getCertificate: () =>
-    api.get<Certificate>("/api/v1/users/me/certificate"),
+    api.get<Certificate | null>("/api/v1/users/me/certificate"),
 
   getCertificateShareUrl: () =>
     api.get<CertificateShareResponse>("/api/v1/users/me/certificate/share"),

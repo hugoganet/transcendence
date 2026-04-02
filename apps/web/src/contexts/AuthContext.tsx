@@ -43,9 +43,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const user = await authApi.getMe();
       setState({
-        user,
+        user: user ?? null,
         isLoading: false,
-        isAuthenticated: true,
+        isAuthenticated: !!user,
         requires2FA: false,
       });
     } catch {
@@ -64,9 +64,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       (user) => {
         if (!cancelled) {
           setState({
-            user,
+            user: user ?? null,
             isLoading: false,
-            isAuthenticated: true,
+            isAuthenticated: !!user,
             requires2FA: false,
           });
         }

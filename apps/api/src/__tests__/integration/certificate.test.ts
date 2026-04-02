@@ -83,10 +83,10 @@ describe("Certificate Integration", () => {
   });
 
   describe("GET /api/v1/users/me/certificate (AC #5, #8)", () => {
-    it("returns 404 CERTIFICATE_NOT_AVAILABLE when no missions completed", async () => {
+    it("returns 200 with null data when no certificate exists", async () => {
       const res = await agent.get("/api/v1/users/me/certificate");
-      expect(res.status).toBe(404);
-      expect(res.body.error.code).toBe("CERTIFICATE_NOT_AVAILABLE");
+      expect(res.status).toBe(200);
+      expect(res.body.data).toBeNull();
     });
 
     it("returns 401 for unauthenticated request", async () => {

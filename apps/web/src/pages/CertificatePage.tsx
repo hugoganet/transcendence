@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { GraduationCap } from "lucide-react";
 import type { Certificate } from "@transcendence/shared";
 import { usersApi } from "../api/users.js";
 import { curriculumApi } from "../api/curriculum.js";
-import { ApiError } from "../api/client.js";
+
 import { Card } from "../components/ui/Card.js";
+import { CertificateCard } from "../components/CertificateCard.js";
 import { Button } from "../components/ui/Button.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
@@ -25,25 +27,12 @@ export function CertificatePage() {
     usersApi.getCertificate().then(
       (data) => {
         if (cancelled) return;
-        setCert(data);
-        setIsLoading(false);
-        // Also fetch share URL
-        usersApi.getCertificateShareUrl().then(
-          (share) => {
-            if (!cancelled) setShareUrl(share.shareUrl);
-          },
-          () => {},
-        );
-      },
-      (err) => {
-        if (cancelled) return;
-        if (err instanceof ApiError && err.status === 404) {
+        if (data === null) {
           setNoCert(true);
-          // Fetch completion percentage for progress display
           curriculumApi.getCurriculum().then(
-            (data) => {
+            (curriculum) => {
               if (!cancelled) {
-                setCompletionPct(data.completionPercentage);
+                setCompletionPct(curriculum.completionPercentage);
                 setIsLoading(false);
               }
             },
@@ -52,8 +41,18 @@ export function CertificatePage() {
             },
           );
         } else {
+          setCert(data);
           setIsLoading(false);
+          usersApi.getCertificateShareUrl().then(
+            (share) => {
+              if (!cancelled) setShareUrl(share.shareUrl);
+            },
+            () => {},
+          );
         }
+      },
+      () => {
+        if (!cancelled) setIsLoading(false);
       },
     );
     return () => {
@@ -83,19 +82,7 @@ export function CertificatePage() {
         </h1>
         <Card>
           <div className="py-8 text-center">
-            <svg
-              className="mx-auto mb-4 h-16 w-16 text-gray-300"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342"
-              />
-            </svg>
+            <GraduationCap className="mx-auto mb-4 h-16 w-16 text-gray-300" />
             <h2 className="mb-2 text-lg font-semibold text-gray-900">
               Certificate Not Yet Earned
             </h2>
@@ -124,54 +111,24 @@ export function CertificatePage() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Certificate
-      </h1>
+  <div className="mx-auto max-w-2xl space-y-6 py-8">
+    <h1 className="text-2xl font-bold text-gray-900 font-heading text-center mb-8">
+      Certificate
+    </h1>
 
-      <Card>
-        <div className="space-y-6 py-4 text-center">
-          <div className="space-y-1">
-            <p className="text-xs font-medium uppercase tracking-wider text-gray-400">
-              Certificate of Completion
-            </p>
-            <p className="text-xl font-bold text-primary font-heading">
-              {cert.curriculumTitle}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-sm text-gray-500">Awarded to</p>
-            <p className="text-lg font-semibold text-gray-900">
-              {user?.displayName ?? user?.email ?? "Learner"}
-            </p>
-          </div>
-
-          <div className="flex justify-center gap-8 text-sm text-gray-500">
-            <div>
-              <p className="font-medium text-gray-900">{cert.totalMissions}</p>
-              <p>Missions</p>
-            </div>
-            <div>
-              <p className="font-medium text-gray-900">
-                {cert.totalCategories}
-              </p>
-              <p>Categories</p>
-            </div>
-          </div>
-
-          <p className="text-sm text-gray-500">
-            Completed on{" "}
-            {new Date(cert.completionDate).toLocaleDateString()}
-          </p>
-
-          {shareUrl && (
-            <Button variant="secondary" onClick={handleCopy}>
-              {copied ? "Copied!" : "Copy Share Link"}
-            </Button>
-          )}
-        </div>
-      </Card>
+    <div className="flex justify-center">
+      <CertificateCard
+        certificate={cert}
+        userName={user?.displayName ?? user?.email ?? "Learner"}
+        shareUrl={shareUrl}
+      />
     </div>
-  );
+
+    <div className="text-center mt-8">
+      <Button variant="secondary" onClick={handleCopy}>
+        {copied ? "Copied!" : "Copy Share Link"}
+      </Button>
+    </div>
+  </div>
+);
 }

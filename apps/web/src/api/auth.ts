@@ -22,7 +22,7 @@ export const authApi = {
 
   logout: () => api.post<MessageResponse>("/api/v1/auth/logout"),
 
-  getMe: () => api.get<UserProfile>("/api/v1/auth/me"),
+  getMe: () => api.get<UserProfile | null>("/api/v1/auth/me"),
 
   forgotPassword: (email: string) =>
     api.post<MessageResponse>("/api/v1/auth/forgot-password", { email }),

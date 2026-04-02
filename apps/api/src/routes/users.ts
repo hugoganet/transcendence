@@ -8,6 +8,7 @@ import {
   getProfile,
   updateProfile,
   uploadAvatar,
+  searchUsers,
 } from "../services/userService.js";
 import { getReveals } from "../services/revealService.js";
 import { getPublicProfile } from "../services/publicProfileService.js";
@@ -41,6 +42,18 @@ export const usersRouter = Router();
 
 // Serve avatar files as static assets
 usersRouter.use("/avatars", express.static(AVATAR_UPLOAD_DIR));
+
+// GET /api/v1/users/search?q=... — search users by display name
+usersRouter.get(
+  "/search",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const q = String(req.query.q ?? "").trim();
+    if (!q) return res.json({ data: [] });
+    const data = await searchUsers(q, (req.user as Express.User).id);
+    res.json({ data });
+  },
+);
 
 // GET /api/v1/users/me — return authenticated user profile
 usersRouter.get(

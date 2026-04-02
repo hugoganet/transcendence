@@ -23,6 +23,7 @@ model User {
   id                 String       @id @default(uuid())
   email              String?      @unique
   passwordHash       String?
+  ethereumWallet     String?      @unique
   authProvider       AuthProvider @default(LOCAL)
   displayName        String?
   bio                String?
@@ -237,6 +238,9 @@ model Certificate {
   totalMissions   Int
   totalCategories Int
   createdAt       DateTime @default(now())
+  nftTokenId      Int?
+  nftTxHash       String?
+  contractAddress String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -276,4 +280,12 @@ model GdprAuditLog {
 
   @@index([userId])
   @@index([createdAt])
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  content    String
+  createdAt  DateTime @default(now())
 }

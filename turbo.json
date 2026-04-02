@@ -1,6 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["DATABASE_URL", "SESSION_SECRET"],
+  "globalEnv": [
+    "DATABASE_URL",
+    "SESSION_SECRET",
+    "CONTRACT_ADDRESS",
+    "AVALANCHE_RPC_URL",
+    "BLOCKCHAIN_PRIVATE_KEY"
+  ],
   "tasks": {
     "db:generate": {
       "cache": false

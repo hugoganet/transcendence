@@ -1,5 +1,5 @@
 # Team Status — Transcendence
-*Last updated: 2026-03-16*
+*Last updated: 2026-04-01*
 
 ---
 
@@ -63,9 +63,32 @@ Transcendence is a gamified blockchain learning platform — Duolingo-style, bui
 
 **Infrastructure**
 - Docker Compose: Nginx reverse proxy (HTTPS, TLS 1.2/1.3) → API → PostgreSQL + Redis
-- 19 Prisma migrations, 16 DB models
-- 17 integration test suites (auth, curriculum, exercises, gas, tokens, streak, achievements, reveals, friends, leaderboard, notifications, engagement, certificate, GDPR, presence, public profile, health)
+- 21 Prisma migrations, 16 DB models
+- 18 integration test suites (auth, curriculum, exercises, gas, tokens, streak, achievements, reveals, friends, leaderboard, notifications, engagement, certificate, GDPR, presence, public profile, health, token-system)
 - `@transcendence/shared` package: Zod schemas, TypeScript types, constants used by both API and web
+
+---
+
+### Kauana — Backend & Blockchain ✅
+
+**Blockchain certificate integration**
+- Implemented Solidity certificate contract (`CertificateNFT`) for immutable on-chain certificate records
+- Added blockchain integration service with ethers.js (`blockchainService.ts`) to mint and query certificates on Avalanche RPC
+- Added asynchronous on-chain mint flow after final mission completion (`mintNFTForCertificate`) with idempotent behavior and graceful failure handling
+
+**Database & schema updates**
+- Added `ethereumWallet` to `User` (unique, nullable)
+- Added `nftTokenId`, `nftTxHash`, and `contractAddress` to `Certificate`
+- Added corresponding Prisma migrations and API response fields
+
+**API and certificate delivery**
+- Added authenticated certificate endpoints with on-chain data: `GET /api/v1/certificates/me`
+- Added certificate PDF download endpoint: `GET /api/v1/certificates/me/pdf`
+- PDF output now includes blockchain metadata when available (token ID, tx hash)
+
+**CI and environment hardening**
+- Added blockchain env vars to Turborepo global env and CI workflow with safe placeholder values
+- Ensured YAML-safe quoting for hex private key placeholders in GitHub Actions
 
 ---
 
@@ -117,6 +140,7 @@ Transcendence is a gamified blockchain learning platform — Duolingo-style, bui
 |--------|-------------|
 | `main` | Backend complete. Original README and developer guide. |
 | `feat/arthur-content-curriculum` | 6 commits ahead of main. Adds: all content files (EN+FR missions, tooltips, tooltip-triggers, UI copy), all spec docs (onboarding, reveals, syllabus, copy bank, accessibility, certificate, email, QA scenarios). **This branch must be merged before frontend work starts.** |
+| `feat/certificate` | Active implementation branch for certificate/blockchain updates (contract integration, API updates, CI env alignment, and documentation sync). |
 
 ---
 

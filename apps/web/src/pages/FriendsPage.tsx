@@ -9,6 +9,7 @@ import { Card } from "../components/ui/Card.js";
 import { Button } from "../components/ui/Button.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
+import { ChatBox } from "../components/ChatBox.js";
 
 export function FriendsPage() {
   const [tab, setTab] = useState<"friends" | "requests">("friends");
@@ -16,6 +17,9 @@ export function FriendsPage() {
   const [requests, setRequests] = useState<FriendRequestEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [chatWith, setChatWith] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [searchResults, setSearchResults] = useState<{ id: string; displayName: string | null }[]>([]);
 
   const loadData = useCallback(async () => {
     setIsLoading(true);
@@ -44,6 +48,21 @@ export function FriendsPage() {
     await loadData();
   };
 
+  const handleSearch = async (q: string) => {
+    setSearch(q);
+    if (!q.trim()) return setSearchResults([]);
+    const res = await fetch(`/api/v1/users/search?q=${encodeURIComponent(q)}`, { credentials: "include" });
+    const body = await res.json();
+    setSearchResults(body.data);
+  };
+
+  const handleAddFriend = async (userId: string) => {
+    await friendsApi.sendRequest(userId);
+    setSearch("");
+    setSearchResults([]);
+    await loadData();
+  };
+
   const handleRemove = async (userId: string) => {
     await friendsApi.removeFriend(userId);
     setFriends((prev) => prev.filter((f) => f.id !== userId));
@@ -64,6 +83,31 @@ export function FriendsPage() {
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
         Friends
       </h1>
+
+      {/* Search */}
+      <div className="relative">
+        <input
+          value={search}
+          onChange={(e) => handleSearch(e.target.value)}
+          placeholder="Search users to add..."
+          className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+        />
+        {searchResults.length > 0 && (
+          <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow">
+            {searchResults.map((u) => (
+              <div key={u.id} className="flex items-center justify-between px-3 py-2 hover:bg-gray-50">
+                <span className="text-sm">{u.displayName ?? "Anonymous"}</span>
+                <button
+                  onClick={() => handleAddFriend(u.id)}
+                  className="text-xs text-blue-500 hover:text-blue-700"
+                >
+                  Add friend
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* Tabs */}
       <div className="flex gap-1 rounded-lg bg-gray-100 p-1">
@@ -127,11 +171,18 @@ export function FriendsPage() {
                     {friend.displayName ?? "Anonymous"}
                   </Link>
                   <button
+                    onClick={() => setChatWith(friend.id)}
+                    className="text-xs text-gray-400 hover:text-blue-500"
+                  >
+                    Message
+                  </button>
+                  <button
                     onClick={() => handleRemove(friend.id)}
                     className="text-xs text-gray-400 hover:text-red-500"
                   >
                     Remove
                   </button>
+                  
                 </div>
               ))}
             </div>
@@ -182,6 +233,9 @@ export function FriendsPage() {
             </div>
           )}
         </Card>
+      )}
+      {chatWith && (
+        <ChatBox userId={chatWith} onClose={() => setChatWith(null)} />
       )}
     </div>
   );

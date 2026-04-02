@@ -20,6 +20,7 @@ export interface ServerToClientEvents {
   "notification:push": (payload: NotificationPushPayload) => void;
   "presence:online": (userId: string) => void;
   "presence:offline": (userId: string) => void;
+  "message:new": (message: { id: string; senderId: string; receiverId: string; content: string; createdAt: string }) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -34,6 +35,13 @@ export interface SocketData {
 
 export type IO = Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
 export type AppSocket = Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
+
+let _io: IO | null = null;
+
+export function getIO(): IO {
+  if (!_io) throw new Error("Socket.IO not initialized");
+  return _io;
+}
 
 export function createSocketServer(
   httpServer: HttpServer,
@@ -92,5 +100,6 @@ export function createSocketServer(
     });
   });
 
+  _io = io;
   return io;
 }
