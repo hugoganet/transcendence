@@ -97,8 +97,11 @@ authRouter.post(
   },
 );
 
-// GET /api/v1/auth/me
-authRouter.get("/me", requireAuth, (req: Request, res: Response) => {
+// GET /api/v1/auth/me — returns null (not 401) when unauthenticated to avoid console errors
+authRouter.get("/me", (req: Request, res: Response) => {
+  if (!req.isAuthenticated() || !req.user) {
+    return res.json({ data: null });
+  }
   res.json({ data: sanitizeUser(req.user as Express.User) });
 });
 
