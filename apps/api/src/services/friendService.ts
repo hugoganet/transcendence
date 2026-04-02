@@ -176,3 +176,22 @@ export async function getPendingRequests(userId: string): Promise<FriendRequestE
     createdAt: f.createdAt.toISOString(),
   }));
 }
+
+export async function getSentRequests(userId: string): Promise<FriendRequestEntry[]> {
+  const friendships = await prisma.friendship.findMany({
+    where: {
+      requesterId: userId,
+      status: "PENDING",
+    },
+    include: {
+      addressee: { select: { id: true, displayName: true, avatarUrl: true } },
+    },
+  });
+
+  return friendships.map((f) => ({
+    id: f.addressee.id,
+    displayName: f.addressee.displayName,
+    avatarUrl: f.addressee.avatarUrl,
+    createdAt: f.createdAt.toISOString(),
+  }));
+}

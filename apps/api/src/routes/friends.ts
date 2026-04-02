@@ -8,6 +8,7 @@ import {
   removeFriend,
   getFriends,
   getPendingRequests,
+  getSentRequests,
 } from "../services/friendService.js";
 
 export const friendsRouter = Router();
@@ -30,6 +31,17 @@ friendsRouter.get(
   async (req: Request, res: Response) => {
     const user = req.user as Express.User;
     const data = await getPendingRequests(user.id);
+    res.json({ data });
+  },
+);
+
+// GET /api/v1/friends/requests/sent — list pending outgoing requests
+friendsRouter.get(
+  "/requests/sent",
+  requireAuth,
+  async (req: Request, res: Response) => {
+    const user = req.user as Express.User;
+    const data = await getSentRequests(user.id);
     res.json({ data });
   },
 );
