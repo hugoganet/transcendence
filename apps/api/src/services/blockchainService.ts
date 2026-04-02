@@ -15,7 +15,8 @@ const BLOCKCHAIN_PRIVATE_KEY = getEnvVar("BLOCKCHAIN_PRIVATE_KEY");
 
 const CONTRACT_ABI = [
   "function mintCertificate(address recipient, string memory curriculumTitle, uint256 totalMissions) public returns (uint256)",
-  "function getCertificate(address recipient) public view returns ((uint256,address,string,uint256,uint256))",
+  "function getCertificate(address recipient) public view returns (tuple(uint256 tokenId, address recipient, string curriculumTitle, uint256 totalMissions, uint256 completedAt))",
+  "event CertificateMinted(address indexed recipient, uint256 indexed tokenId, string curriculumTitle, uint256 totalMissions)",
 ];
 
 export async function mintCertificateNFT(
@@ -60,9 +61,9 @@ export async function mintCertificateNFT(
                 const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
                 const recipientAddress = ethers.getAddress(userEthereumWallet);
                 const certData = await contract.getCertificate(recipientAddress);
-                // certData is a tuple: (tokenId, recipient, curriculumTitle, totalMissions, timestamp)
+                // certData is CertificateData struct with named properties
                 return {
-                    tokenId: Number(certData[0]),
+                    tokenId: Number(certData.tokenId),
                     txHash: "",
                     contractAddress: CONTRACT_ADDRESS,
                     alreadyExists: true,
