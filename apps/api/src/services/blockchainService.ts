@@ -14,8 +14,8 @@ const AVALANCHE_RPC = getEnvVar("AVALANCHE_RPC_URL");
 const BLOCKCHAIN_PRIVATE_KEY = getEnvVar("BLOCKCHAIN_PRIVATE_KEY");
 
 const CONTRACT_ABI = [
-    "function mintCertificate(address recipient, string memory curriculumTitle, uint256 totalMissions) public returns (uint256)",
-    "function getCertificate(address recipient) public view returns (uint256 tokenId, address recipient, string curriculumTitle, uint256 totalMissions, uint256 completedAt)",
+  "function mintCertificate(address recipient, string memory curriculumTitle, uint256 totalMissions) public returns (uint256)",
+  "function getCertificate(address recipient) public view returns ((uint256,address,string,uint256,uint256))",
 ];
 
 export async function mintCertificateNFT(
@@ -60,8 +60,9 @@ export async function mintCertificateNFT(
                 const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
                 const recipientAddress = ethers.getAddress(userEthereumWallet);
                 const certData = await contract.getCertificate(recipientAddress);
+                // certData is a tuple: (tokenId, recipient, curriculumTitle, totalMissions, timestamp)
                 return {
-                    tokenId: Number(certData.tokenId),
+                    tokenId: Number(certData[0]),
                     txHash: "",
                     contractAddress: CONTRACT_ADDRESS,
                     alreadyExists: true,
