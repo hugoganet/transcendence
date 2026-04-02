@@ -8,9 +8,15 @@ export const certificateSchema = z.object({
   shareToken: z.string(),
   totalMissions: z.number().int(),
   totalCategories: z.number().int(),
+  nftTokenId: z.number().int().optional(),
+  nftTxHash: z.string().optional(),
+  contractAddress: z.string().optional()
 });
 
-export const publicCertificateSchema = certificateSchema.omit({ id: true });
+export const publicCertificateSchema = certificateSchema.omit({ 
+  id: true,
+  nftTxHash: true 
+});
 
 export const shareTokenParamSchema = z.object({
   shareToken: z.string().min(1),

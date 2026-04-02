@@ -21,7 +21,11 @@ import { creditMissionTokensWithClient } from "./tokenService.js";
 import { updateStreakWithClient } from "./streakService.js";
 import { checkAndAwardAchievementsWithClient, type AwardedAchievement } from "./achievementService.js";
 import { triggerRevealWithClient } from "./revealService.js";
-import { generateCertificateWithClient } from "./certificateService.js";
+import {
+  generateCertificateWithClient,
+  getCertificate,
+  mintNFTForCertificate,
+} from "./certificateService.js";
 import { sendAchievementEmail, sendCompletionEmail } from "./emailService.js";
 
 export async function getCurriculumWithProgress(
@@ -516,7 +520,15 @@ export async function completeMission(
 
   // Send course completion email when certificate is generated (fire-and-forget)
   if (txResult.certificateGenerated) {
-    const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, displayName: true } });
+    // Mint on-chain outside transaction (blockchain calls are slow)
+    mintNFTForCertificate(userId).catch((err) => {
+      console.error("mintForCertificate failed:", err);
+    });
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { email: true, displayName: true },
+    });
     if (user?.email) {
       const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
       const certLink = `${frontendUrl}/certificate`;
@@ -549,6 +561,9 @@ export async function completeMission(
     revealTriggered: txResult.revealTriggered,
     newAchievements: txResult.newAchievements,
     certificateGenerated: txResult.certificateGenerated,
+    certificate: txResult.certificateGenerated 
+    ? await getCertificate(userId)
+    : undefined,
   };
 }
 
