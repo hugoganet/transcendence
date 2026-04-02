@@ -61,7 +61,7 @@ describe("Auth flow (real DB + real Redis sessions)", () => {
     expect(res.body.data).not.toHaveProperty("passwordHash");
   });
 
-  it("logout → session destroyed → GET /me → 200 null", async () => {
+  it("logout → session destroyed → GET /me → 200 with null data", async () => {
     const agent = await createAndLoginUser(credentials);
 
     // Verify authenticated
@@ -71,8 +71,8 @@ describe("Auth flow (real DB + real Redis sessions)", () => {
     await agent.post("/api/v1/auth/logout").expect(200);
 
     // Session should be destroyed — /me returns 200 with null data (no console errors)
-    const res = await agent.get("/api/v1/auth/me").expect(200);
-    expect(res.body.data).toBeNull();
+    const me = await agent.get("/api/v1/auth/me").expect(200);
+    expect(me.body.data).toBeNull();
   });
 
   it("duplicate registration → 409 EMAIL_ALREADY_EXISTS", async () => {
