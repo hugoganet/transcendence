@@ -281,3 +281,11 @@ model GdprAuditLog {
   @@index([userId])
   @@index([createdAt])
 }
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  content    String
+  createdAt  DateTime @default(now())
+}

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import type { PublicProfile } from "@transcendence/shared";
 import { usersApi } from "../api/users.js";
 import { friendsApi } from "../api/friends.js";
+import { useAuth } from "../contexts/AuthContext.js";
 import { ApiError } from "../api/client.js";
 import { Card } from "../components/ui/Card.js";
 import { Button } from "../components/ui/Button.js";
@@ -12,24 +13,44 @@ import { Alert } from "../components/ui/Alert.js";
 
 export function PublicProfilePage() {
   const { userId } = useParams<{ userId: string }>();
+  const { user } = useAuth();
   const [profile, setProfile] = useState<PublicProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [friendStatus, setFriendStatus] = useState<
     "none" | "pending" | "friends" | "self"
-  >("none");
+  >(userId === user?.id ? "self" : "none");
   const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     if (!userId) return;
+    if (userId === user?.id) {
+      setFriendStatus("self");
+      // still load the profile, just skip friendship checks
+      usersApi.getPublicProfile(userId).then((data) => {
+        setProfile(data);
+        document.title = `${data.displayName ?? "User"} — Transcendence`;
+        setIsLoading(false);
+      }, () => { setError("Failed to load profile"); setIsLoading(false); });
+      return;
+    }
+
     let cancelled = false;
     setIsLoading(true);
 
-    usersApi.getPublicProfile(userId).then(
-      (data) => {
+    Promise.all([
+      usersApi.getPublicProfile(userId),
+      friendsApi.getFriends(),
+      friendsApi.getPendingRequests(),
+      friendsApi.getSentRequests(),
+    ]).then(
+      ([data, friends, incoming, sent]) => {
         if (cancelled) return;
         setProfile(data);
         document.title = `${data.displayName ?? "User"} — Transcendence`;
+        if (friends.some((f) => f.id === userId)) setFriendStatus("friends");
+        else if (incoming.some((p) => p.id === userId) || sent.some((p) => p.id === userId)) setFriendStatus("pending");
+        else setFriendStatus("none");
         setIsLoading(false);
       },
       () => {
@@ -52,9 +73,7 @@ export function PublicProfilePage() {
       setFriendStatus("pending");
     } catch (err) {
       if (err instanceof ApiError) {
-        if (err.code === "ALREADY_FRIENDS") setFriendStatus("friends");
-        else if (err.code === "REQUEST_ALREADY_EXISTS")
-          setFriendStatus("pending");
+        if (err.code === "FRIENDSHIP_ALREADY_EXISTS") setFriendStatus("friends");
         else if (err.code === "CANNOT_FRIEND_SELF") setFriendStatus("self");
       }
     } finally {
@@ -124,7 +143,7 @@ export function PublicProfilePage() {
             </Button>
           )}
           {friendStatus === "pending" && (
-            <p className="mt-4 text-sm text-gray-500">Request sent</p>
+            <p className="mt-4 text-sm text-gray-500">Friend request pending</p>
           )}
           {friendStatus === "friends" && (
             <p className="mt-4 text-sm text-green-600">Already friends</p>

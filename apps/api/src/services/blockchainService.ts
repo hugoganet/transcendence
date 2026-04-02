@@ -63,7 +63,7 @@ export async function mintCertificateNFT(
                 const certData = await contract.getCertificate(recipientAddress);
                 // certData is CertificateData struct with named properties
                 return {
-                    tokenId: Number(certData.tokenId),
+                    tokenId: Number(certData[0]),
                     txHash: "",
                     contractAddress: CONTRACT_ADDRESS,
                     alreadyExists: true,

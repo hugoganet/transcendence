@@ -11,6 +11,9 @@ export const friendsApi = {
   getPendingRequests: () =>
     api.get<FriendRequestEntry[]>("/api/v1/friends/requests"),
 
+  getSentRequests: () =>
+    api.get<FriendRequestEntry[]>("/api/v1/friends/requests/sent"),
+
   sendRequest: (userId: string) =>
     api.post<FriendshipResponse>(`/api/v1/friends/${userId}`),
 

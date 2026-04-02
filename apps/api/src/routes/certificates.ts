@@ -5,6 +5,7 @@ import { shareTokenParamSchema } from "@transcendence/shared";
 import { requireAuth } from "../middleware/auth.js";
 import { generateCertificatePdf } from "../services/certificatePdfService.js";
 import { prisma } from "../config/database.js";
+import { AppError } from "../utils/AppError.js";
 
 export const certificatesRouter = Router();
 
@@ -30,6 +31,9 @@ certificatesRouter.get("/me/pdf", requireAuth, async (req: Request, res: Respons
   });
 
   const certificate = await getCertificate(userId);
+  if (!certificate) {
+    throw new AppError(404, "CERTIFICATE_NOT_AVAILABLE", "No certificate found");
+  }
   const pdfBuffer = await generateCertificatePdf(certificate, user?.displayName ?? "Learner");
 
   res.setHeader("Content-Type", "application/pdf");

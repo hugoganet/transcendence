@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext.js";
 import { useReveals } from "../contexts/RevealContext.js";
 import { StreakWidget } from "../components/StreakWidget.js";
@@ -142,28 +143,11 @@ export function AppLayout() {
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
             >
-              <svg
-                className="h-6 w-6 text-gray-600"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                {menuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                )}
-              </svg>
+              {menuOpen ? (
+                <X className="h-6 w-6 text-gray-600" />
+              ) : (
+                <Menu className="h-6 w-6 text-gray-600" />
+              )}
             </button>
           </div>
         </div>

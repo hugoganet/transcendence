@@ -135,15 +135,9 @@ export async function mintNFTForCertificate(userId: string): Promise<void> {
   }
 }
 
-export async function getCertificate(userId: string): Promise<Certificate> {
+export async function getCertificate(userId: string): Promise<Certificate | null> {
   const cert = await prisma.certificate.findUnique({ where: { userId } });
-  if (!cert) {
-    throw new AppError(
-      404,
-      "CERTIFICATE_NOT_AVAILABLE",
-      "Complete all missions to earn your certificate",
-    );
-  }
+  if (!cert) return null;
   return {
     id: cert.id,
     displayName: cert.displayName,
@@ -189,6 +183,9 @@ export async function getCertificateByShareToken(shareToken: string): Promise<Pu
 
 export async function getShareableUrl(userId: string): Promise<{ shareUrl: string }> {
   const certificate = await getCertificate(userId);
+  if (!certificate) {
+    throw new AppError(404, "CERTIFICATE_NOT_AVAILABLE", "No certificate found");
+  }
   const baseUrl = process.env.BASE_URL || "https://localhost";
   const shareUrl = `${baseUrl}/certificates/${certificate.shareToken}`;
   return { shareUrl };
