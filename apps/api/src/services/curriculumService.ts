@@ -561,9 +561,9 @@ export async function completeMission(
     revealTriggered: txResult.revealTriggered,
     newAchievements: txResult.newAchievements,
     certificateGenerated: txResult.certificateGenerated,
-    certificate: txResult.certificateGenerated 
-    ? await getCertificate(userId)
-    : undefined,
+    certificate: txResult.certificateGenerated
+      ? ((await getCertificate(userId)) ?? undefined)
+      : undefined,
   };
 }
 

@@ -15,8 +15,15 @@ messageRouter.post("/", requireAuth, async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Invalid message" });
     }
     const data = await sendMessage(user.id, receiverId, content);
-    getIO().to(`user:${receiverId}`).emit("message:new", data);
-    getIO().to(`user:${user.id}`).emit("message:new", data);
+    const payload = {
+      id: data.id,
+      senderId: data.senderId,
+      receiverId: data.receiverId,
+      content: data.content,
+      createdAt: data.createdAt.toISOString(),
+    };
+    getIO().to(`user:${receiverId}`).emit("message:new", payload);
+    getIO().to(`user:${user.id}`).emit("message:new", payload);
     res.status(201).json({ data });
 });
 
