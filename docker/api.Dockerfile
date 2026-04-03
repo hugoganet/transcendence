@@ -20,8 +20,7 @@ COPY packages/shared/ packages/shared/
 COPY apps/api/ apps/api/
 COPY content/ content/
 
-# Copy .env for build context
-COPY .env .env
+ENV DATABASE_URL=postgresql://transcendence:transcendence@localhost:5432/transcendence?schema=public
 
 # Generate Prisma client
 RUN pnpm --filter @transcendence/api exec prisma generate
