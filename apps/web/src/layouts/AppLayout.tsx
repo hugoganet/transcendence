@@ -105,13 +105,17 @@ export function AppLayout() {
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
           <Link
             to="/home"
-            className="text-lg font-bold text-primary font-heading dark:text-teal-400"
+            className="flex items-center gap-2 text-lg font-bold font-heading"
           >
-            Unblock.chain
+            <img src="/blocky-logo.png" alt="" className="h-8 w-8 rounded" />
+            <span>
+              <span className="text-primary dark:text-teal-400">Unblock</span>
+              <span className="text-amber-500">.chain</span>
+            </span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-5 md:flex">
+          <nav className="hidden items-center gap-5 md:flex ml-6">
             {navLinks()}
 
             {/* Streak + Tokens in nav */}

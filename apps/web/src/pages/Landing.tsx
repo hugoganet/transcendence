@@ -82,11 +82,13 @@ export function Landing() {
       {/* Hero section */}
       <section className="flex min-h-screen flex-col items-center justify-center px-4">
         <div className="relative max-w-lg text-center">
-          <AnimatedText
-            text="Unblock.chain"
-            className="mb-4 text-5xl font-bold tracking-tight text-primary font-heading dark:text-teal-400"
-            delayMs={50}
-          />
+          <div className="mb-4 flex flex-col items-center gap-4">
+            <img src="/blocky-logo.png" alt="Blocky mascot" className="h-20 w-20 rounded-xl" />
+            <h1 className="text-5xl font-bold tracking-tight font-heading">
+              <span className="text-primary dark:text-teal-400">Unblock</span>
+              <span className="text-amber-500">.chain</span>
+            </h1>
+          </div>
           <p
             className="mb-8 text-lg text-gray-600 dark:text-warm-200"
             style={{ animation: "fade-in-up 0.6s ease-out 0.8s both" }}
