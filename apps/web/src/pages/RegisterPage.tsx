@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { registerSchema } from "@transcendence/shared";
 import { useAuth, ApiError } from "../contexts/AuthContext.js";
 import { Card } from "../components/ui/Card.js";
@@ -9,6 +10,7 @@ import { FormField } from "../components/ui/FormField.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function RegisterPage() {
+  const { t } = useTranslation();
   const { register } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -41,9 +43,9 @@ export function RegisterPage() {
     } catch (err) {
       if (err instanceof ApiError) {
         if (err.code === "EMAIL_ALREADY_EXISTS") {
-          setErrors({ email: "An account with this email already exists" });
+          setErrors({ email: t("errors.emailAlreadyUsed") });
         } else {
-          setGlobalError("An error occurred. Please try again.");
+          setGlobalError(t("errors.serverError"));
         }
       }
     } finally {
@@ -54,7 +56,7 @@ export function RegisterPage() {
   return (
     <Card>
       <h1 className="mb-6 text-center text-xl font-bold text-gray-900 font-heading">
-        Create Account
+        {t("auth.signup.title")}
       </h1>
       {globalError && (
         <Alert variant="error" className="mb-4">
@@ -62,7 +64,7 @@ export function RegisterPage() {
         </Alert>
       )}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <FormField label="Email" error={errors.email} htmlFor="reg-email">
+        <FormField label={t("auth.signup.emailLabel")} error={errors.email} htmlFor="reg-email">
           <Input
             id="reg-email"
             type="email"
@@ -74,7 +76,7 @@ export function RegisterPage() {
           />
         </FormField>
         <FormField
-          label="Password"
+          label={t("auth.signup.passwordLabel")}
           error={errors.password}
           htmlFor="reg-password"
         >
@@ -82,7 +84,7 @@ export function RegisterPage() {
             id="reg-password"
             type="password"
             autoComplete="new-password"
-            placeholder="Min 8 chars, uppercase, lowercase, number"
+            placeholder={t("auth.signup.passwordLabel")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             error={errors.password}
@@ -97,23 +99,23 @@ export function RegisterPage() {
             className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
           />
           <label htmlFor="age-confirm" className="text-sm text-gray-600">
-            I confirm that I am at least 18 years old
+            {t("auth.signup.ageConfirm")}
           </label>
         </div>
         {errors.ageConfirmed && (
           <p className="text-sm text-red-600">{errors.ageConfirmed}</p>
         )}
         <Button type="submit" isLoading={isSubmitting} className="w-full">
-          Create Account
+          {t("auth.signup.submitButton")}
         </Button>
       </form>
       <p className="mt-4 text-center text-sm text-gray-500">
-        Already have an account?{" "}
+        {t("auth.signup.hasAccount")}{" "}
         <Link
           to="/login"
           className="font-medium text-primary hover:text-primary/80"
         >
-          Sign In
+          {t("auth.signup.loginLink")}
         </Link>
       </p>
     </Card>

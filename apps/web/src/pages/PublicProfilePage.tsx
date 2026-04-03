@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type { PublicProfile } from "@transcendence/shared";
 import { usersApi } from "../api/users.js";
 import { friendsApi } from "../api/friends.js";
@@ -12,6 +13,7 @@ import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function PublicProfilePage() {
+  const { t } = useTranslation();
   const { userId } = useParams<{ userId: string }>();
   const { user } = useAuth();
   const [profile, setProfile] = useState<PublicProfile | null>(null);
@@ -29,9 +31,9 @@ export function PublicProfilePage() {
       // still load the profile, just skip friendship checks
       usersApi.getPublicProfile(userId).then((data) => {
         setProfile(data);
-        document.title = `${data.displayName ?? "User"} — Transcendence`;
+        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Transcendence`;
         setIsLoading(false);
-      }, () => { setError("Failed to load profile"); setIsLoading(false); });
+      }, () => { setError(t("pages.publicProfile.loadError")); setIsLoading(false); });
       return;
     }
 
@@ -47,7 +49,7 @@ export function PublicProfilePage() {
       ([data, friends, incoming, sent]) => {
         if (cancelled) return;
         setProfile(data);
-        document.title = `${data.displayName ?? "User"} — Transcendence`;
+        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Transcendence`;
         if (friends.some((f) => f.id === userId)) setFriendStatus("friends");
         else if (incoming.some((p) => p.id === userId) || sent.some((p) => p.id === userId)) setFriendStatus("pending");
         else setFriendStatus("none");
@@ -55,7 +57,7 @@ export function PublicProfilePage() {
       },
       () => {
         if (!cancelled) {
-          setError("Failed to load profile");
+          setError(t("pages.publicProfile.loadError"));
           setIsLoading(false);
         }
       },
@@ -90,7 +92,7 @@ export function PublicProfilePage() {
   }
 
   if (error || !profile) {
-    return <Alert variant="error">{error ?? "Profile not found"}</Alert>;
+    return <Alert variant="error">{error ?? t("pages.publicProfile.notFound")}</Alert>;
   }
 
   return (
@@ -109,7 +111,7 @@ export function PublicProfilePage() {
             </div>
           )}
           <h1 className="mt-3 text-xl font-bold text-gray-900 font-heading">
-            {profile.displayName ?? "Anonymous"}
+            {profile.displayName ?? t("pages.publicProfile.anonymous")}
           </h1>
 
           <div className="mt-3 flex gap-6 text-sm text-gray-500">
@@ -117,13 +119,13 @@ export function PublicProfilePage() {
               <span className="block text-lg font-bold text-gray-900">
                 {profile.xp}
               </span>
-              XP
+              {t("pages.publicProfile.xp")}
             </div>
             <div>
               <span className="block text-lg font-bold text-gray-900">
                 {profile.currentStreak}
               </span>
-              Streak
+              {t("social.publicProfile.streak")}
             </div>
           </div>
 
@@ -139,14 +141,14 @@ export function PublicProfilePage() {
               isLoading={isSending}
               className="mt-4"
             >
-              Add Friend
+              {t("pages.publicProfile.addFriend")}
             </Button>
           )}
           {friendStatus === "pending" && (
-            <p className="mt-4 text-sm text-gray-500">Friend request pending</p>
+            <p className="mt-4 text-sm text-gray-500">{t("pages.publicProfile.requestPending")}</p>
           )}
           {friendStatus === "friends" && (
-            <p className="mt-4 text-sm text-green-600">Already friends</p>
+            <p className="mt-4 text-sm text-green-600">{t("pages.publicProfile.alreadyFriends")}</p>
           )}
         </div>
       </Card>
@@ -154,7 +156,7 @@ export function PublicProfilePage() {
       {profile.achievements.length > 0 && (
         <Card>
           <h2 className="mb-3 text-sm font-semibold text-gray-900">
-            Achievements ({profile.achievements.length})
+            {t("pages.publicProfile.achievementsHeading", { count: profile.achievements.length })}
           </h2>
           <div className="space-y-2">
             {profile.achievements.map((a) => (

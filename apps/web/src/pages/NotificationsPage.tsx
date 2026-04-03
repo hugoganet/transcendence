@@ -1,23 +1,25 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useNotifications } from "../contexts/NotificationContext.js";
 import { Card } from "../components/ui/Card.js";
 import { Button } from "../components/ui/Button.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 
-const typeIcons: Record<string, string> = {
-  STREAK_REMINDER: "Streak",
-  MODULE_COMPLETE: "Module",
-  TOKEN_THRESHOLD: "Tokens",
-  STREAK_MILESTONE: "Milestone",
-  REENGAGEMENT: "Welcome",
-};
-
 export function NotificationsPage() {
+  const { t } = useTranslation();
+
+  const typeLabels: Record<string, string> = {
+    STREAK_REMINDER: t("notifications.streak_milestone"),
+    MODULE_COMPLETE: t("notifications.level_up"),
+    TOKEN_THRESHOLD: t("notifications.token_earned"),
+    STREAK_MILESTONE: t("notifications.streak_milestone"),
+    REENGAGEMENT: t("notifications.mission_reminder"),
+  };
   const { notifications, isLoading, markAsRead, loadMore, hasMore } =
     useNotifications();
 
   useEffect(() => {
-    document.title = "Notifications — Transcendence";
+    document.title = `${t("labels.notifications")} — Transcendence`;
   }, []);
 
   if (isLoading && notifications.length === 0) {
@@ -31,13 +33,13 @@ export function NotificationsPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Notifications
+        {t("labels.notifications")}
       </h1>
 
       <Card>
         {notifications.length === 0 ? (
           <p className="py-8 text-center text-sm text-gray-500">
-            No notifications yet.
+            {t("emptyStates.noNotifications")}
           </p>
         ) : (
           <div className="divide-y divide-gray-100">
@@ -53,7 +55,7 @@ export function NotificationsPage() {
               >
                 <div className="flex items-start gap-3">
                   <span className="mt-0.5 rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
-                    {typeIcons[notif.type] ?? notif.type}
+                    {typeLabels[notif.type] ?? notif.type}
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900">
@@ -78,7 +80,7 @@ export function NotificationsPage() {
         {hasMore && (
           <div className="border-t border-gray-100 pt-4 text-center">
             <Button variant="ghost" onClick={loadMore}>
-              Load more
+              {t("pages.notifications.loadMore")}
             </Button>
           </div>
         )}

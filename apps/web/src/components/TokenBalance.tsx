@@ -1,5 +1,6 @@
 import type { TokenBalance as TokenBalanceType } from "@transcendence/shared";
 import { Coins } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useReveals } from "../contexts/RevealContext.js";
 
 interface TokenBalanceProps {
@@ -11,6 +12,7 @@ export function TokenBalanceDisplay({
   balance,
   compact = false,
 }: TokenBalanceProps) {
+  const { t } = useTranslation();
   const { tokensRevealed } = useReveals();
 
   if (!tokensRevealed) return null;
@@ -19,7 +21,7 @@ export function TokenBalanceDisplay({
     return (
       <div
         className="flex items-center gap-1 text-sm"
-        title="Knowledge Tokens"
+        title={t("gamification.tokens.tokenBalance")}
       >
         <Coins className="h-4 w-4 text-secondary" />
         <span className="font-medium text-gray-700">
@@ -39,12 +41,12 @@ export function TokenBalanceDisplay({
           <p className="text-2xl font-bold text-gray-900">
             {balance.tokenBalance}
           </p>
-          <p className="text-xs text-gray-500">Knowledge Tokens</p>
+          <p className="text-xs text-gray-500">{t("gamification.tokens.tokenBalance")}</p>
         </div>
       </div>
       <div className="mt-3 flex gap-4 border-t border-gray-100 pt-3 text-xs text-gray-400">
-        <span>Earned: {balance.totalEarned}</span>
-        <span>Spent: {balance.totalSpent}</span>
+        <span>{t("labels.earned")} {balance.totalEarned}</span>
+        <span>{t("labels.spent")} {balance.totalSpent}</span>
       </div>
     </div>
   );

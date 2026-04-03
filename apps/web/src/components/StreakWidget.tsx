@@ -1,5 +1,6 @@
 import type { StreakStatus } from "@transcendence/shared";
 import { Flame } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface StreakWidgetProps {
   streak: StreakStatus;
@@ -7,9 +8,11 @@ interface StreakWidgetProps {
 }
 
 export function StreakWidget({ streak, compact = false }: StreakWidgetProps) {
+  const { t } = useTranslation();
+
   if (compact) {
     return (
-      <div className="flex items-center gap-1 text-sm" title="Current streak">
+      <div className="flex items-center gap-1 text-sm" title={t("labels.currentStreak")}>
         <Flame
           className={`h-4 w-4 ${streak.currentStreak > 0 ? "text-orange-500" : "text-gray-300"}`}
         />
@@ -34,12 +37,12 @@ export function StreakWidget({ streak, compact = false }: StreakWidgetProps) {
           <span className="text-2xl font-bold text-gray-900">
             {streak.currentStreak}
           </span>
-          <span className="text-sm text-gray-500">day streak</span>
+          <span className="text-sm text-gray-500">{t("labels.dayStreak")}</span>
         </div>
         <div className="mt-0.5 flex gap-3 text-xs text-gray-400">
-          <span>Best: {streak.longestStreak}</span>
-          <span>{streak.totalMissionsCompleted} missions</span>
-          <span>{streak.totalModulesMastered} modules</span>
+          <span>{t("labels.best")} {streak.longestStreak}</span>
+          <span>{streak.totalMissionsCompleted} {t("labels.missions")}</span>
+          <span>{streak.totalModulesMastered} {t("labels.modules")}</span>
         </div>
       </div>
     </div>

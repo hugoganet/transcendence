@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Card } from "../components/ui/Card.js";
@@ -7,6 +8,7 @@ import { Alert } from "../components/ui/Alert.js";
 import { Button } from "../components/ui/Button.js";
 
 export function OAuthCallbackPage() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { refreshUser } = useAuth();
@@ -25,10 +27,10 @@ export function OAuthCallbackPage() {
   if (errorParam) {
     return (
       <Card>
-        <Alert variant="error">Authentication failed. Please try again.</Alert>
+        <Alert variant="error">{t("auth.oauth.authFailed")}</Alert>
         <div className="mt-4 text-center">
           <Button variant="ghost" onClick={() => navigate("/login")}>
-            Back to Sign In
+            {t("auth.oauth.backToLogin")}
           </Button>
         </div>
       </Card>

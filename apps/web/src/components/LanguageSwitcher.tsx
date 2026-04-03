@@ -135,7 +135,7 @@ export function LanguageSwitcher({ variant = "pill" }: LanguageSwitcherProps) {
       <ul
         ref={listRef}
         role="listbox"
-        className={`absolute ${widthClass} ${positionClass} z-50 overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg`}
+        className={`absolute ${widthClass} ${positionClass} z-[100] overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] shadow-lg`}
       >
         {LANGUAGES.map((lang) => {
           const isSelected = lang.code === current.code;
@@ -244,7 +244,7 @@ export function LanguageSwitcher({ variant = "pill" }: LanguageSwitcherProps) {
         <span className="uppercase tracking-wide">{current.code}</span>
       </button>
 
-      {open && renderOptions("up")}
+      {open && renderOptions("down")}
       {liveRegion}
     </div>
   );

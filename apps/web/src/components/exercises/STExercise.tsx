@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { STExerciseContent } from "@transcendence/shared";
+import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
 interface STExerciseProps {
@@ -15,6 +16,7 @@ export function STExercise({
   onSubmit,
   isSubmitting,
 }: STExerciseProps) {
+  const { t } = useTranslation();
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [currentStepIdx, setCurrentStepIdx] = useState(0);
 
@@ -62,14 +64,14 @@ export function STExercise({
                   ? "bg-primary/40 cursor-pointer"
                   : "bg-gray-200"
             }`}
-            aria-label={`Step ${idx + 1}`}
+            aria-label={t("exercise.ST.step", { current: idx + 1, total: content.steps.length })}
           />
         ))}
       </div>
 
       <div>
         <p className="mb-1 text-xs font-medium text-gray-400">
-          Step {currentStepIdx + 1} of {content.steps.length}
+          {t("exercise.ST.step", { current: currentStepIdx + 1, total: content.steps.length })}
         </p>
         <h3 className="text-base font-semibold text-gray-900">
           {currentStep.prompt}
@@ -99,7 +101,7 @@ export function STExercise({
             variant="ghost"
             onClick={() => setCurrentStepIdx((prev) => prev - 1)}
           >
-            Back
+            {t("labels.back")}
           </Button>
         )}
 
@@ -110,7 +112,7 @@ export function STExercise({
             isLoading={isSubmitting}
             className="w-full sm:w-auto"
           >
-            Submit All Answers
+            {t("labels.submit")}
           </Button>
         ) : (
           <Button
@@ -118,7 +120,7 @@ export function STExercise({
             disabled={!currentAnswer}
             className="w-full sm:w-auto"
           >
-            Next Step
+            {t("exercise.ST.nextStep")}
           </Button>
         )}
       </div>

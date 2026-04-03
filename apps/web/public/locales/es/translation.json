@@ -101,7 +101,20 @@
     "settings": "Configuración",
     "logout": "Cerrar Sesión",
     "skipToContent": "Ir al contenido",
-    "bottomNav": "Navegación"
+    "bottomNav": "Navegación",
+    "achievements": "Logros",
+    "dashboard": "Panel",
+    "glossary": "Glosario",
+    "toggleMenu": "Abrir menú",
+    "currentStreak": "Racha actual",
+    "dayStreak": "días seguidos",
+    "best": "Mejor:",
+    "modules": "módulos",
+    "earned": "Ganado:",
+    "spent": "Gastado:",
+    "earnedDate": "Obtenido el",
+    "noNotificationsYet": "Sin notificaciones todavía",
+    "viewAll": "Ver todo"
   },
   "auth": {
     "login": {
@@ -126,7 +139,8 @@
       "submitButton": "Crear cuenta",
       "hasAccount": "¿Ya tienes una cuenta?",
       "loginLink": "Inicia sesión",
-      "termsAccept": "Al crear una cuenta, aceptas nuestros Términos de Servicio y Política de Privacidad."
+      "termsAccept": "Al crear una cuenta, aceptas nuestros Términos de Servicio y Política de Privacidad.",
+      "ageConfirm": "Confirmo que tengo al menos 18 años"
     },
     "forgotPassword": {
       "title": "Restablecer tu contraseña",
@@ -142,14 +156,23 @@
       "newPasswordLabel": "Nueva contraseña",
       "confirmPasswordLabel": "Confirmar nueva contraseña",
       "submitButton": "Actualizar contraseña",
-      "success": "Contraseña actualizada. Ya puedes iniciar sesión."
+      "success": "Contraseña actualizada. Ya puedes iniciar sesión.",
+      "expiredToken": "Este enlace de restablecimiento ha expirado. Por favor, solicita uno nuevo.",
+      "invalidLink": "Enlace de restablecimiento inválido. Por favor, solicita un nuevo restablecimiento de contraseña.",
+      "requestReset": "Solicitar restablecimiento"
     },
     "twoFactor": {
       "title": "Verificación en dos pasos",
       "subtitle": "Ingresa el código de 6 dígitos de tu aplicación de autenticación.",
       "codeLabel": "Código de verificación",
       "submitButton": "Verificar",
-      "resend": "¿No recibiste un código? Reenviar"
+      "resend": "¿No recibiste un código? Reenviar",
+      "codeMustBe6Digits": "El código debe tener 6 dígitos",
+      "invalidCode": "Código inválido. Por favor, inténtalo de nuevo."
+    },
+    "oauth": {
+      "authFailed": "Error de autenticación. Por favor, inténtalo de nuevo.",
+      "backToLogin": "Volver a iniciar sesión"
     }
   },
   "onboarding": {
@@ -175,7 +198,12 @@
       "instructionPrefix": "Empareja cada concepto con su descripción correcta.",
       "matchAll": "Empareja todos los pares para continuar.",
       "checkMatches": "Verificar emparejamientos",
-      "allMatched": "¡Todos emparejados!"
+      "allMatched": "¡Todos emparejados!",
+      "matched": "Emparejado ({{count}}/{{total}})",
+      "undoAriaLabel": "Deshacer emparejamiento",
+      "undoButton": "Deshacer",
+      "termsLabel": "Términos",
+      "definitionsLabel": "Definiciones"
     },
     "IP": {
       "instructionPrefix": "Arrastra cada elemento a la posición correcta.",
@@ -202,12 +230,27 @@
       "almostThere": "Ya casi.",
       "niceWork": "Buen trabajo."
     },
+    "gasFeeLabel": "Tarifa de gas",
+    "correctAnswerPrefix": "Respuesta correcta: ",
+    "chapterComplete": "¡Capítulo completado!",
+    "categoryMastered": "¡Categoría dominada!",
+    "overallProgress": "Progreso general",
+    "featureUnlocked": "¡Nueva función desbloqueada!",
+    "achievementPrefix": "Logro: ",
+    "certificateGenerated": "¡Felicitaciones! Tu certificado de finalización ha sido generado.",
+    "nextMission": "Siguiente misión",
+    "viewCurriculumMap": "Ver mapa del currículo",
+    "errors": {
+      "insufficientTokens": "No tienes suficientes tokens. Completa más misiones para ganar tokens.",
+      "submitFailed": "No se pudo enviar la respuesta. Por favor, inténtalo de nuevo.",
+      "unknownType": "Tipo de ejercicio desconocido"
+    },
     "gasFeeNotice": "Esta acción cuesta {{amount}} Knowledge Tokens",
     "gasFeeFirstTime": "Cada intento de ejercicio cuesta 2 KT. Esto es gas — el mismo mecanismo que acabas de estudiar. Tu saldo ha sido actualizado.",
-    "gasFeeStandard": "\u22122 KT gas",
-    "gasFeeLowBalance": "\u22122 KT gas \u00b7 Tu saldo está bajo. Completa una misión para recargarlo.",
-    "gasFeeZeroBalance": "\u22122 KT gas \u00b7 Tu saldo está en 0. Puedes continuar esta misión, pero necesitarás completarla antes de comenzar una nueva.",
-    "gasFeeNegativeBalance": "\u22122 KT gas \u00b7 Tu saldo está por debajo de 0. Completa esta misión para ganar tokens y saldar tu deuda antes de comenzar algo nuevo."
+    "gasFeeStandard": "−2 KT gas",
+    "gasFeeLowBalance": "−2 KT gas · Tu saldo está bajo. Completa una misión para recargarlo.",
+    "gasFeeZeroBalance": "−2 KT gas · Tu saldo está en 0. Puedes continuar esta misión, pero necesitarás completarla antes de comenzar una nueva.",
+    "gasFeeNegativeBalance": "−2 KT gas · Tu saldo está por debajo de 0. Completa esta misión para ganar tokens y saldar tu deuda antes de comenzar algo nuevo."
   },
   "gamification": {
     "achievements": {
@@ -350,7 +393,9 @@
     "shareBody": "Acabo de completar Transcendence — un curso completo de alfabetización en blockchain. 69 misiones, cero atajos.",
     "downloadButton": "Descargar certificado",
     "shareButton": "Compartir",
-    "linkedInButton": "Agregar a LinkedIn"
+    "linkedInButton": "Agregar a LinkedIn",
+    "tokenId": "ID del token:",
+    "contract": "Contrato:"
   },
   "social": {
     "friendsList": {
@@ -393,13 +438,18 @@
     "emailAlreadyUsed": "Ya existe una cuenta con este correo. Intenta iniciar sesión.",
     "usernameAlreadyUsed": "Ese nombre de usuario ya está en uso. Prueba con otro.",
     "invalidCredentials": "Correo o contraseña incorrectos.",
-    "tooManyRequests": "Demasiados intentos. Espera un momento e inténtalo de nuevo."
+    "tooManyRequests": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+    "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo."
   },
   "languageSwitcher": {
     "label": "Idioma",
     "en": "English",
     "fr": "Français",
     "es": "Español"
+  },
+  "chat": {
+    "title": "Chat",
+    "send": "Enviar"
   },
   "settings": {
     "title": "Ajustes",
@@ -412,5 +462,176 @@
     "noAchievements": "Sin logros aún. Completa tu primera misión para comenzar.",
     "noMissionsAvailable": "No hay misiones disponibles ahora. Termina el capítulo actual para desbloquear más.",
     "leaderboardLoading": "Cargando la clasificación... Completa una misión para reclamar tu puesto."
+  },
+  "pages": {
+    "home": {
+      "welcome": "Bienvenido",
+      "welcomeNamed": "Bienvenido, {{name}}",
+      "subtitle": "¿Listo para continuar tu viaje de aprendizaje sobre blockchain?",
+      "nextMission": "Siguiente misión",
+      "continueLearning": "Continuar aprendiendo",
+      "browseCurriculum": "Explorar el currículo",
+      "startLearning": "Empezar a aprender",
+      "startLearningSubtitle": "Explora el currículo y comienza tu primera misión."
+    },
+    "curriculum": {
+      "categoryLabel": "Categoría {{id}}",
+      "chapterLabel": "Capítulo {{id}}",
+      "loadError": "No se pudo cargar el currículo"
+    },
+    "mission": {
+      "lockedTitle": "Misión bloqueada",
+      "lockedBody": "Completa las misiones anteriores para desbloquear esta.",
+      "backToCurriculum": "Volver al currículo",
+      "loadError": "No se pudo cargar la misión",
+      "continueExercise": "Continuar ejercicio",
+      "startExercise": "Comenzar ejercicio",
+      "alreadyCompleted": "Ya has completado esta misión.",
+      "keyTerms": "Términos clave"
+    },
+    "exercise": {
+      "lockedMessage": "Esta misión está bloqueada. Completa primero las misiones anteriores.",
+      "missionDetails": "Detalles de la misión",
+      "confidenceQuestion": "¿Qué tan seguro te sientes sobre este tema?",
+      "confidenceScale": "1 = Nada seguro · 5 = Muy seguro",
+      "completeMission": "Completar misión",
+      "completeMissionError": "No se pudo completar la misión. Por favor, inténtalo de nuevo."
+    },
+    "dashboard": {
+      "title": "Panel de wallet",
+      "learningChain": "Cadena de aprendizaje ({{count}} bloques)",
+      "learningChainTruncated": "Mostrando los últimos 20 de {{total}} bloques",
+      "recentTransactions": "Transacciones recientes",
+      "achievements": "Logros ({{earned}}/{{total}})",
+      "viewAll": "Ver todo"
+    },
+    "leaderboard": {
+      "weeklyTitle": "Clasificación semanal",
+      "loadError": "No se pudo cargar la clasificación",
+      "missionsThisWeek": "{{count}} misiones esta semana",
+      "noEntries": "Sin entradas esta semana. ¡Completa misiones para escalar en la clasificación!",
+      "anonymous": "Anónimo",
+      "you": "Tú"
+    },
+    "achievements": {
+      "title": "Logros",
+      "loadError": "No se pudieron cargar los logros",
+      "earnedCount": "{{earned}} de {{total}} obtenidos"
+    },
+    "friends": {
+      "loadError": "No se pudieron cargar los amigos",
+      "tabFriends": "Amigos ({{count}})",
+      "tabRequests": "Solicitudes ({{count}})",
+      "message": "Mensaje",
+      "noPendingRequests": "No hay solicitudes de amistad pendientes."
+    },
+    "profile": {
+      "updateSuccess": "Perfil actualizado",
+      "updateError": "No se pudo actualizar el perfil",
+      "avatarUpdated": "Avatar actualizado",
+      "avatarTooLarge": "El avatar debe pesar menos de 2 MB",
+      "avatarInvalidType": "Solo se aceptan JPEG, PNG y WebP",
+      "avatarUploadError": "No se pudo subir el avatar",
+      "uploading": "Subiendo...",
+      "changeAvatar": "Cambiar avatar",
+      "avatarHint": "JPEG, PNG o WebP. Máximo 2 MB.",
+      "emailLabel": "Correo electrónico",
+      "displayNameLabel": "Nombre de usuario",
+      "displayNamePlaceholder": "Tu nombre de usuario",
+      "walletLabel": "Dirección de wallet",
+      "bioLabel": "Biografía",
+      "bioPlaceholder": "Cuéntanos sobre ti",
+      "saveChanges": "Guardar cambios",
+      "accountSection": "Cuenta",
+      "twoFa": "2FA",
+      "twoFaEnabled": "Activada",
+      "twoFaDisabled": "Desactivada",
+      "memberSince": "Miembro desde",
+      "notificationPreferences": "Preferencias de notificaciones",
+      "certificate": "Certificado",
+      "exportData": "Exportar mis datos",
+      "deleteAccount": "Eliminar cuenta"
+    },
+    "publicProfile": {
+      "defaultUser": "Usuario",
+      "loadError": "No se pudo cargar el perfil",
+      "notFound": "Perfil no encontrado",
+      "anonymous": "Anónimo",
+      "xp": "XP",
+      "addFriend": "Agregar amigo",
+      "requestPending": "Solicitud de amistad pendiente",
+      "alreadyFriends": "Ya son amigos",
+      "achievementsHeading": "Logros ({{count}})"
+    },
+    "notifications": {
+      "loadMore": "Cargar más"
+    },
+    "notificationPreferences": {
+      "title": "Configuración de notificaciones",
+      "streakReminder": "Recordatorios de racha",
+      "reengagement": "Recordatorios de reenganche",
+      "moduleComplete": "Finalización de módulo",
+      "tokenThreshold": "Umbrales de tokens",
+      "streakMilestone": "Hitos de racha",
+      "loadError": "No se pudieron cargar las preferencias"
+    },
+    "certificate": {
+      "title": "Certificado",
+      "notEarnedTitle": "Certificado aún no obtenido",
+      "notEarnedBody": "Completa todas las misiones para obtener tu certificado de finalización.",
+      "completionPct": "{{pct}}% completado",
+      "loadError": "No se pudo cargar el certificado",
+      "copied": "¡Copiado!",
+      "copyShareLink": "Copiar enlace para compartir",
+      "notFound": "Certificado no encontrado",
+      "certificateOfCompletion": "Certificado de finalización",
+      "awardedTo": "Otorgado a",
+      "verifiedOn": "Verificado en Transcendence"
+    },
+    "glossary": {
+      "title": "Glosario",
+      "searchPlaceholder": "Buscar términos...",
+      "loadError": "No se pudo cargar el glosario",
+      "noTermsFound": "No se encontraron términos.",
+      "analogy": "Analogía",
+      "related": "Relacionado",
+      "termCount": "{{count}} término",
+      "termCount_other": "{{count}} términos"
+    },
+    "landing": {
+      "subtitle": "Aprende blockchain desde cero hasta sentirte seguro — con misiones interactivas, no con clases magistrales.",
+      "getStarted": "Comenzar",
+      "signIn": "Iniciar sesión",
+      "privacyPolicy": "Política de privacidad",
+      "termsOfService": "Términos de servicio"
+    },
+    "notFound": {
+      "body": "La página que buscas no existe.",
+      "backHome": "Volver al inicio"
+    },
+    "dataExport": {
+      "title": "Exportar mis datos",
+      "body1": "Puedes solicitar una exportación completa de tus datos personales. Esto incluye tu perfil, progreso, historial de tokens, logros, amigos e intentos de ejercicios.",
+      "body2": "Una vez solicitado, recibirás un correo con un enlace de descarga. La exportación se proporciona en formato JSON.",
+      "requestButton": "Solicitar exportación de datos",
+      "requestError": "No se pudo solicitar la exportación de datos. Por favor, inténtalo de nuevo."
+    },
+    "deleteAccount": {
+      "title": "Eliminar cuenta",
+      "warningTitle": "Esta acción es irreversible",
+      "warningBody": "Eliminar tu cuenta borrará permanentemente todos tus datos, incluyendo tu progreso, tokens, logros y amigos. Esta acción no se puede deshacer.",
+      "confirmationEmailNote": "Tras solicitar la eliminación, recibirás un correo de confirmación. Debes hacer clic en el enlace de ese correo para confirmar la eliminación.",
+      "checkboxLabel": "Entiendo que esto eliminará permanentemente mi cuenta y todos los datos asociados.",
+      "requestButton": "Solicitar eliminación de cuenta",
+      "requestError": "No se pudo solicitar la eliminación de la cuenta. Por favor, inténtalo de nuevo."
+    },
+    "privacyPolicy": {
+      "title": "Política de privacidad",
+      "backToHome": "Volver al inicio"
+    },
+    "termsOfService": {
+      "title": "Términos de servicio",
+      "backToHome": "Volver al inicio"
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { loginSchema } from "@transcendence/shared";
 import { useAuth, ApiError } from "../contexts/AuthContext.js";
 import { Card } from "../components/ui/Card.js";
@@ -9,6 +10,7 @@ import { FormField } from "../components/ui/FormField.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function LoginPage() {
+  const { t } = useTranslation();
   const { login, verify2FA, requires2FA } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -42,10 +44,10 @@ export function LoginPage() {
       if (err instanceof ApiError) {
         setGlobalError(
           err.code === "INVALID_CREDENTIALS"
-            ? "Invalid email or password"
+            ? t("errors.invalidCredentials")
             : err.code === "RATE_LIMIT_EXCEEDED"
-              ? "Too many attempts. Please try again later."
-              : "An error occurred. Please try again.",
+              ? t("errors.tooManyRequests")
+              : t("errors.serverError"),
         );
       }
     } finally {
@@ -58,7 +60,7 @@ export function LoginPage() {
     setGlobalError("");
 
     if (!/^\d{6}$/.test(totpCode)) {
-      setErrors({ code: "Code must be 6 digits" });
+      setErrors({ code: t("auth.twoFactor.codeMustBe6Digits") });
       return;
     }
 
@@ -68,7 +70,7 @@ export function LoginPage() {
       navigate("/home");
     } catch (err) {
       if (err instanceof ApiError) {
-        setGlobalError("Invalid code. Please try again.");
+        setGlobalError(t("auth.twoFactor.invalidCode"));
       }
     } finally {
       setIsSubmitting(false);
@@ -79,7 +81,7 @@ export function LoginPage() {
     return (
       <Card>
         <h1 className="mb-6 text-center text-xl font-bold text-gray-900 font-heading">
-          Two-Factor Authentication
+          {t("auth.twoFactor.title")}
         </h1>
         {globalError && (
           <Alert variant="error" className="mb-4">
@@ -87,7 +89,7 @@ export function LoginPage() {
           </Alert>
         )}
         <form onSubmit={handle2FA} className="space-y-4">
-          <FormField label="Authentication Code" error={errors.code} htmlFor="totp-code">
+          <FormField label={t("auth.twoFactor.codeLabel")} error={errors.code} htmlFor="totp-code">
             <Input
               id="totp-code"
               type="text"
@@ -101,7 +103,7 @@ export function LoginPage() {
             />
           </FormField>
           <Button type="submit" isLoading={isSubmitting} className="w-full">
-            Verify
+            {t("auth.twoFactor.submitButton")}
           </Button>
         </form>
       </Card>
@@ -111,7 +113,7 @@ export function LoginPage() {
   return (
     <Card>
       <h1 className="mb-6 text-center text-xl font-bold text-gray-900 font-heading">
-        Sign In
+        {t("auth.login.title")}
       </h1>
       {globalError && (
         <Alert variant="error" className="mb-4">
@@ -119,7 +121,7 @@ export function LoginPage() {
         </Alert>
       )}
       <form onSubmit={handleLogin} className="space-y-4">
-        <FormField label="Email" error={errors.email} htmlFor="email">
+        <FormField label={t("auth.login.emailLabel")} error={errors.email} htmlFor="email">
           <Input
             id="email"
             type="email"
@@ -130,19 +132,19 @@ export function LoginPage() {
             error={errors.email}
           />
         </FormField>
-        <FormField label="Password" error={errors.password} htmlFor="password">
+        <FormField label={t("auth.login.passwordLabel")} error={errors.password} htmlFor="password">
           <Input
             id="password"
             type="password"
             autoComplete="current-password"
-            placeholder="Your password"
+            placeholder={t("auth.login.passwordLabel")}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             error={errors.password}
           />
         </FormField>
         <Button type="submit" isLoading={isSubmitting} className="w-full">
-          Sign In
+          {t("auth.login.submitButton")}
         </Button>
       </form>
       <div className="mt-4 space-y-2 text-center text-sm">
@@ -151,16 +153,16 @@ export function LoginPage() {
             to="/forgot-password"
             className="text-primary hover:text-primary/80"
           >
-            Forgot your password?
+            {t("auth.login.forgotPassword")}
           </Link>
         </p>
         <p className="text-gray-500">
-          Don't have an account?{" "}
+          {t("auth.login.noAccount")}{" "}
           <Link
             to="/register"
             className="font-medium text-primary hover:text-primary/80"
           >
-            Sign Up
+            {t("auth.login.signUpLink")}
           </Link>
         </p>
       </div>
