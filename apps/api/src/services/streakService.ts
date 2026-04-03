@@ -1,3 +1,9 @@
+/**
+ * @module services/streakService
+ * @description Daily streak logic: updates current/longest streak on mission
+ * completion and returns streak data with cumulative progress stats.
+ */
+
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import type { StreakStatus } from "@transcendence/shared";

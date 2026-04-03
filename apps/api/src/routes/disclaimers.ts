@@ -1,3 +1,9 @@
+/**
+ * @module routes/disclaimers
+ * @description Disclaimer routes: general, onboarding, and module-specific
+ * financial disclaimers. Acceptance is recorded per user.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -11,7 +17,7 @@ import {
 
 export const disclaimersRouter = Router();
 
-// GET /api/v1/disclaimers — public, returns general disclaimer
+/** GET /api/v1/disclaimers — Public. Returns general financial disclaimer. */
 disclaimersRouter.get(
   "/",
   async (_req: Request, res: Response) => {
@@ -20,7 +26,7 @@ disclaimersRouter.get(
   },
 );
 
-// GET /api/v1/disclaimers/onboarding — authenticated, returns onboarding disclaimer
+/** GET /api/v1/disclaimers/onboarding — Returns onboarding disclaimer shown on first login. */
 disclaimersRouter.get(
   "/onboarding",
   requireAuth,
@@ -30,7 +36,7 @@ disclaimersRouter.get(
   },
 );
 
-// GET /api/v1/disclaimers/module/:moduleId — authenticated, returns module-specific disclaimer
+/** GET /api/v1/disclaimers/module/:moduleId — Returns disclaimer for a specific curriculum module. */
 disclaimersRouter.get(
   "/module/:moduleId",
   requireAuth,
@@ -41,7 +47,7 @@ disclaimersRouter.get(
   },
 );
 
-// POST /api/v1/disclaimers/accept — authenticated, records disclaimer acceptance
+/** POST /api/v1/disclaimers/accept — Records that the user accepted the disclaimer. */
 disclaimersRouter.post(
   "/accept",
   requireAuth,

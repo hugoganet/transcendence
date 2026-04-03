@@ -1,3 +1,8 @@
+/**
+ * @module services/certificatePdfService
+ * @description Generates downloadable PDF certificates using jsPDF.
+ */
+
 import { jsPDF } from "jspdf";
 import type { Certificate } from "@transcendence/shared";
 

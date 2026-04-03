@@ -1,3 +1,9 @@
+/**
+ * @module routes/exercises
+ * @description Exercise routes: submit answers (SI, CM, IP, ST types)
+ * and check mission exercise status. Gas fees are deducted on each submission.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -9,7 +15,7 @@ import {
 
 export const exercisesRouter = Router();
 
-// POST /api/v1/exercises/:exerciseId/submit — authenticated, submit exercise answer
+/** POST /api/v1/exercises/:exerciseId/submit — Validates answer, records attempt, deducts gas fee. */
 exercisesRouter.post(
   "/:exerciseId/submit",
   requireAuth,
@@ -23,7 +29,7 @@ exercisesRouter.post(
   },
 );
 
-// GET /api/v1/exercises/missions/:missionId/status — authenticated, get mission exercise status
+/** GET /api/v1/exercises/missions/:missionId/status — Returns attempt count and whether mission is completable. */
 exercisesRouter.get(
   "/missions/:missionId/status",
   requireAuth,

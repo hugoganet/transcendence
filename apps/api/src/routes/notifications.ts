@@ -1,3 +1,9 @@
+/**
+ * @module routes/notifications
+ * @description Notification routes: paginated list, mark as read,
+ * and per-user notification preferences (streaks, milestones, etc.).
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -14,7 +20,7 @@ import {
 
 export const notificationsRouter = Router();
 
-// GET /api/v1/notifications
+/** GET /api/v1/notifications — Returns paginated notification list. */
 notificationsRouter.get(
   "/",
   requireAuth,
@@ -27,7 +33,7 @@ notificationsRouter.get(
   },
 );
 
-// GET /api/v1/notifications/preferences
+/** GET /api/v1/notifications/preferences — Returns user's notification preference flags. */
 notificationsRouter.get(
   "/preferences",
   requireAuth,
@@ -38,7 +44,7 @@ notificationsRouter.get(
   },
 );
 
-// PATCH /api/v1/notifications/preferences
+/** PATCH /api/v1/notifications/preferences — Updates notification preference flags. */
 notificationsRouter.patch(
   "/preferences",
   requireAuth,
@@ -50,7 +56,7 @@ notificationsRouter.patch(
   },
 );
 
-// PATCH /api/v1/notifications/:id/read
+/** PATCH /api/v1/notifications/:id/read — Marks a single notification as read. Returns 204. */
 notificationsRouter.patch(
   "/:id/read",
   requireAuth,

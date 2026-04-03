@@ -1,3 +1,9 @@
+/**
+ * @module services/achievementService
+ * @description Evaluates and awards achievements based on module completions,
+ * token thresholds, and streak targets. Works within Prisma transactions.
+ */
+
 import { prisma } from "../config/database.js";
 import type { AchievementStatus } from "@transcendence/shared";
 

@@ -1,3 +1,9 @@
+/**
+ * @module routes/gdpr
+ * @description GDPR compliance routes: data export and account deletion,
+ * both with email-based token confirmation flows.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -14,7 +20,7 @@ import {
 
 export const gdprRouter = Router();
 
-// POST /api/v1/gdpr/export — request data export (requires auth)
+/** POST /api/v1/gdpr/export — Initiates data export, sends download link via email. */
 gdprRouter.post("/export", requireAuth, async (req: Request, res: Response) => {
   const user = req.user as { id: string; email: string };
   await requestDataExport(user.id, user.email, req.ip);
@@ -23,7 +29,7 @@ gdprRouter.post("/export", requireAuth, async (req: Request, res: Response) => {
   });
 });
 
-// GET /api/v1/gdpr/export/:token — download export (token-based, no auth)
+/** GET /api/v1/gdpr/export/:token — Downloads exported user data as JSON. No auth (token-based). */
 gdprRouter.get(
   "/export/:token",
   validate({ params: gdprExportTokenParamSchema }),
@@ -33,7 +39,7 @@ gdprRouter.get(
   },
 );
 
-// POST /api/v1/gdpr/delete — request account deletion (requires auth)
+/** POST /api/v1/gdpr/delete — Initiates account deletion, sends confirmation email. */
 gdprRouter.post(
   "/delete",
   requireAuth,
@@ -48,7 +54,7 @@ gdprRouter.post(
   },
 );
 
-// POST /api/v1/gdpr/delete/confirm/:token — confirm deletion (token-based, no auth)
+/** POST /api/v1/gdpr/delete/confirm/:token — Permanently deletes user and all data. No auth (token-based). */
 gdprRouter.post(
   "/delete/confirm/:token",
   validate({ params: gdprDeletionTokenParamSchema }),

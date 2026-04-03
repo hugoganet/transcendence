@@ -1,3 +1,9 @@
+/**
+ * @module services/certificateService
+ * @description Manages completion certificates: generation (with share token),
+ * NFT minting, retrieval by user or share token, and shareable URL creation.
+ */
+
 import crypto from "node:crypto";
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";

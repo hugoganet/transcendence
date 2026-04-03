@@ -1,3 +1,9 @@
+/**
+ * @module services/userService
+ * @description User profile management: get/update profile, avatar upload
+ * (resize + save to disk), user search, and avatar file cleanup.
+ */
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";

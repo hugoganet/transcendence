@@ -1,3 +1,10 @@
+/**
+ * @module services/curriculumService
+ * @description Curriculum engine: progress overlay, mission access status,
+ * mission detail with locale-aware content, mission completion (awards tokens,
+ * updates streaks, checks achievements, triggers reveals), resume point, and learning chain.
+ */
+
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";

@@ -1,3 +1,9 @@
+/**
+ * @module routes/tokens
+ * @description Token routes: Knowledge Token balance summary
+ * and paginated transaction history (earnings + gas fee deductions).
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -6,7 +12,7 @@ import { getTokenBalance, getTokenHistory } from "../services/tokenService.js";
 
 export const tokensRouter = Router();
 
-// GET /api/v1/tokens/balance — authenticated, returns token balance summary
+/** GET /api/v1/tokens/balance — Returns current token balance and earning/spending totals. */
 tokensRouter.get(
   "/balance",
   requireAuth,
@@ -17,7 +23,7 @@ tokensRouter.get(
   },
 );
 
-// GET /api/v1/tokens/history — authenticated, returns paginated transaction history
+/** GET /api/v1/tokens/history — Returns paginated token transaction history (earnings + gas fees). */
 tokensRouter.get(
   "/history",
   requireAuth,

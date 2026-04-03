@@ -1,3 +1,8 @@
+/**
+ * @module services/publicProfileService
+ * @description Returns a user's public profile (display name, avatar, stats).
+ */
+
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import type { PublicProfile } from "@transcendence/shared";
