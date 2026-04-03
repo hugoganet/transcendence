@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { getSocket } from "../api/socket.js";
 import { useAuth } from "../contexts/AuthContext.js";
 
@@ -16,6 +17,7 @@ type Props = {
 };
 
 export function ChatBox({ userId, onClose }: Props) {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -55,7 +57,7 @@ export function ChatBox({ userId, onClose }: Props) {
   return (
     <div style={{ position: "fixed", bottom: 20, right: 20, width: 300, border: "1px solid #ccc", background: "white", borderRadius: 8, padding: 12 }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <strong>Chat</strong>
+        <strong>{t("chat.title")}</strong>
         <button onClick={onClose}>✕</button>
       </div>
 
@@ -74,7 +76,7 @@ export function ChatBox({ userId, onClose }: Props) {
 
       <div style={{ display: "flex", gap: 4 }}>
         <input maxLength={100} value={input} onChange={(e) => setInput(e.target.value)} style={{ flex: 1, border: "1px solid #ccc", borderRadius: 4, padding: 4 }} />
-        <button onClick={handleSend}>Send</button> 
+        <button onClick={handleSend}>{t("chat.send")}</button>
         </div>
     </div>
   );

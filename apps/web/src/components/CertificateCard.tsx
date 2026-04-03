@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { Certificate } from "@transcendence/shared";
 
 interface CertificateCardProps {
@@ -8,6 +9,7 @@ interface CertificateCardProps {
 }
 
 export function CertificateCard({ certificate, userName }: CertificateCardProps) {
+  const { t } = useTranslation();
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showGlow, setShowGlow] = useState(false);
@@ -60,41 +62,41 @@ export function CertificateCard({ certificate, userName }: CertificateCardProps)
       {/* Content */}
       <div className="relative z-10 text-center text-white">
         <div className="mb-2 text-xs font-semibold uppercase tracking-wider opacity-90">
-          Certificate of Completion
+          {t("pages.certificate.certificateOfCompletion")}
         </div>
 
         <div className="mb-6 text-3xl font-bold drop-shadow-lg">{certificate.curriculumTitle}</div>
 
         <div className="mb-6">
-          <div className="mb-1 text-xs opacity-80">Awarded to</div>
+          <div className="mb-1 text-xs opacity-80">{t("pages.certificate.awardedTo")}</div>
           <div className="text-xl font-semibold drop-shadow-lg">{userName}</div>
         </div>
 
         <div className="mb-6 flex justify-center gap-8 border-t border-b border-white/20 py-5">
           <div className="text-center">
             <span className="block text-2xl font-bold">{certificate.totalMissions}</span>
-            <div className="mt-1 text-xs opacity-80">Missions</div>
+            <div className="mt-1 text-xs opacity-80">{t("labels.missions")}</div>
           </div>
           <div className="text-center">
             <span className="block text-2xl font-bold">{certificate.totalCategories}</span>
-            <div className="mt-1 text-xs opacity-80">Categories</div>
+            <div className="mt-1 text-xs opacity-80">{t("labels.category")}</div>
           </div>
         </div>
 
         <div className="text-xs opacity-80">
-          Completed on {new Date(certificate.completionDate).toLocaleDateString()}
+          {t("certificate.completedOn")} {new Date(certificate.completionDate).toLocaleDateString()}
         </div>
 
         {(certificate.nftTokenId !== undefined || certificate.contractAddress) && (
           <div className="mt-4 border-t border-white/20 pt-4 text-xs opacity-80">
             {certificate.nftTokenId !== undefined && (
               <div className="mb-1">
-                <span className="font-semibold">Token ID:</span> {certificate.nftTokenId}
+                <span className="font-semibold">{t("certificate.tokenId")}</span> {certificate.nftTokenId}
               </div>
             )}
             {certificate.contractAddress && (
               <div className="truncate">
-                <span className="font-semibold">Contract:</span> {certificate.contractAddress}
+                <span className="font-semibold">{t("certificate.contract")}</span> {certificate.contractAddress}
               </div>
             )}
           </div>

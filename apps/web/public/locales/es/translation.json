@@ -393,7 +393,9 @@
     "shareBody": "Acabo de completar Transcendence — un curso completo de alfabetización en blockchain. 69 misiones, cero atajos.",
     "downloadButton": "Descargar certificado",
     "shareButton": "Compartir",
-    "linkedInButton": "Agregar a LinkedIn"
+    "linkedInButton": "Agregar a LinkedIn",
+    "tokenId": "ID del token:",
+    "contract": "Contrato:"
   },
   "social": {
     "friendsList": {
@@ -444,6 +446,10 @@
     "en": "English",
     "fr": "Français",
     "es": "Español"
+  },
+  "chat": {
+    "title": "Chat",
+    "send": "Enviar"
   },
   "settings": {
     "title": "Ajustes",
