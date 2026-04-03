@@ -2,7 +2,7 @@
  * @file HomePage — Home Page — landing page for authenticated users.
  * FR: Page Accueil — page d'accueil pour utilisateurs authentifies.
  */
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -27,7 +27,7 @@ export function HomePage() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const { resume, isLoading } = useResume();
-  const quote = useMemo(() => quotes[Math.floor(Math.random() * quotes.length)], []);
+  const [quote] = useState(() => quotes[Math.floor(Math.random() * quotes.length)]);
 
   useEffect(() => {
     document.title = `${t("labels.home")} — Unblock.chain`;

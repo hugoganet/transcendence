@@ -31,8 +31,8 @@ export function Card({ children, className = "", glow = true }: CardProps) {
           style={{
             width: 300,
             height: 300,
-            left: mouse.x!,
-            top: mouse.y!,
+            left: mouse.x as number,
+            top: mouse.y as number,
             background: "radial-gradient(circle, rgba(43,158,158,0.12) 0%, transparent 70%)",
           }}
         />

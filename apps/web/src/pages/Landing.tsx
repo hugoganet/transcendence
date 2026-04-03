@@ -2,14 +2,13 @@
  * @file Landing — Landing Page — public marketing page with feature highlights.
  * FR: Page d'Atterrissage — page marketing publique.
  */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { BookOpen, Code2, Coins, ChevronDown } from "lucide-react";
 import { Button } from "../components/ui/Button.js";
 import { ThemeToggle } from "../components/ThemeToggle.js";
 import { LanguageSwitcher } from "../components/LanguageSwitcher.js";
-import { AnimatedText } from "../components/AnimatedText.js";
 import { AnimatedCounter } from "../components/AnimatedCounter.js";
 import { useScrollReveal } from "../hooks/useScrollReveal.js";
 
@@ -22,14 +21,16 @@ export function Landing() {
     document.title = "Unblock.chain — Learn Blockchain by Doing";
   }, []);
 
-  const particles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    left: `${Math.random() * 100}%`,
-    top: `${Math.random() * 100}%`,
-    size: 2 + Math.random() * 4,
-    delay: Math.random() * 5,
-    duration: 5 + Math.random() * 5,
-  }));
+  const [particles] = useState(() =>
+    Array.from({ length: 20 }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      size: 2 + Math.random() * 4,
+      delay: Math.random() * 5,
+      duration: 5 + Math.random() * 5,
+    })),
+  );
 
   const features = [
     {

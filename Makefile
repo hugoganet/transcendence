@@ -1,9 +1,9 @@
-.PHONY: all start stop down full-down re ensure-env ensure-certs \
+.PHONY: all start stop down full-down re ensure-certs \
        setup dev db-setup db-test-setup install
 
 all: start
 
-start: ensure-env ensure-certs
+start: ensure-certs
 	docker compose build --no-cache && docker compose up -d
 
 stop:
@@ -17,13 +17,6 @@ full-down:
 
 re: full-down start
 
-ensure-env:
-	@if [ ! -f .env ]; then \
-		cp .env.example .env; \
-		SECRET=$$(openssl rand -hex 32); \
-		sed -i '' "s/SESSION_SECRET=change-me-in-production/SESSION_SECRET=$$SECRET/" .env; \
-		echo "Generated .env with random SESSION_SECRET"; \
-	fi
 
 ensure-certs:
 	bash docker/generate-certs.sh

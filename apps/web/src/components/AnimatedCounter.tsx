@@ -30,7 +30,6 @@ export function AnimatedCounter({
 
   useEffect(() => {
     hasAnimated.current = false;
-    setCount(0);
     if (target <= 0) return;
 
     const observer = new IntersectionObserver(
