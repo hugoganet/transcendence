@@ -393,7 +393,9 @@
     "shareBody": "Je viens de terminer Transcendence — un cours complet de littératie blockchain. 69 missions, zéro raccourci.",
     "downloadButton": "Télécharger le certificat",
     "shareButton": "Partager",
-    "linkedInButton": "Ajouter à LinkedIn"
+    "linkedInButton": "Ajouter à LinkedIn",
+    "tokenId": "ID du jeton :",
+    "contract": "Contrat :"
   },
   "social": {
     "friendsList": {
@@ -444,6 +446,10 @@
     "en": "English",
     "fr": "Français",
     "es": "Español"
+  },
+  "chat": {
+    "title": "Discussion",
+    "send": "Envoyer"
   },
   "settings": {
     "title": "Paramètres",
