@@ -2,7 +2,14 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { AchievementStatus } from "@transcendence/shared";
 import { gamificationApi } from "../api/gamification.js";
-import { AchievementCard } from "../components/AchievementCard.js";
+import { AchievementCard, type AchievementRank } from "../components/AchievementCard.js";
+
+function getRank(index: number): AchievementRank {
+  if (index < 2) return "legendary";
+  if (index < 5) return "epic";
+  if (index < 10) return "rare";
+  return "common";
+}
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
 
@@ -68,7 +75,7 @@ export function AchievementsPage() {
               animationDelay: `${i * 60}ms`,
             }}
           >
-            <AchievementCard achievement={achievement} />
+            <AchievementCard achievement={achievement} rank={getRank(i)} />
           </div>
         ))}
       </div>
