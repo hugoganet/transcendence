@@ -1,3 +1,10 @@
+/**
+ * @module services/authService
+ * @description Core authentication logic: registration (bcrypt hashing), OAuth
+ * user creation/linking, password reset with token flow, 2FA setup/verify/disable,
+ * and session invalidation. No HTTP concerns — called by auth routes.
+ */
+
 import crypto from "node:crypto";
 import bcrypt from "bcryptjs";
 import * as OTPAuth from "otpauth";
@@ -12,6 +19,7 @@ import { encryptOAuthToken } from "../utils/oauthCrypto.js";
 
 const BCRYPT_COST_FACTOR = 12;
 
+/** Creates a TOTP instance configured for Transcendence (6 digits, 30s period, SHA1). */
 function createTotpInstance(
   email: string | null,
   userId: string,
@@ -39,6 +47,7 @@ export interface OAuthTokens {
   refreshToken: string | undefined;
 }
 
+/** Registers a new user: hashes password with bcrypt, creates DB record, sends welcome email. Throws 409 if email exists. */
 export async function register(
   email: string,
   password: string,
@@ -79,10 +88,12 @@ export async function register(
   }
 }
 
+/** Fetches a user by ID. Returns null if not found. */
 export async function getUserById(id: string) {
   return prisma.user.findUnique({ where: { id } });
 }
 
+/** Finds or creates a user from an OAuth profile. Handles 3 cases: existing OAuth account, email-based account linking, or new user creation. Tokens are encrypted with AES-256-GCM before storage. */
 export async function findOrCreateOAuthUser(
   provider: AuthProvider,
   profile: OAuthProfile,
@@ -157,6 +168,7 @@ export async function findOrCreateOAuthUser(
 const RESET_TOKEN_EXPIRY_MS = 60 * 60 * 1000; // 1 hour
 const FRONTEND_URL = process.env.FRONTEND_URL ?? "http://localhost:5173";
 
+/** Generates a password reset token (32 bytes, 1h expiry), invalidates previous tokens, and sends reset email. Silent return if email not found (no enumeration). */
 export async function requestPasswordReset(email: string): Promise<void> {
   const user = await prisma.user.findUnique({ where: { email } });
   if (!user) return; // Silent return — no email enumeration
@@ -180,6 +192,7 @@ export async function requestPasswordReset(email: string): Promise<void> {
   await sendPasswordResetEmail(email, resetLink, user.locale || "en");
 }
 
+/** Verifies reset token, hashes new password, marks token as used, and invalidates all user sessions. */
 export async function resetPassword(
   token: string,
   newPassword: string,
@@ -215,6 +228,7 @@ export async function resetPassword(
   await invalidateUserSessions(resetToken.userId);
 }
 
+/** Scans all Redis sessions and deletes those belonging to the given user. Used after password reset and 2FA disable. */
 export async function invalidateUserSessions(
   userId: string,
 ): Promise<void> {
@@ -244,6 +258,7 @@ export async function invalidateUserSessions(
   } while (cursor !== "0");
 }
 
+/** Generates a TOTP secret (160-bit), encrypts it, stores in DB, and returns QR code + manual key. */
 export async function setup2FA(userId: string) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) {
@@ -274,6 +289,7 @@ export async function setup2FA(userId: string) {
   return { qrCodeDataUri, manualKey: secret.base32, otpauthUri };
 }
 
+/** Verifies the first TOTP code during setup and enables 2FA on the user account. */
 export async function verifyAndEnable2FA(userId: string, code: string) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user || !user.twoFactorSecret) {
@@ -298,6 +314,7 @@ export async function verifyAndEnable2FA(userId: string, code: string) {
   });
 }
 
+/** Verifies a TOTP code at login (pending2FA session). Returns the user if valid. */
 export async function verify2FALogin(userId: string, code: string) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user || !user.twoFactorEnabled || !user.twoFactorSecret) {
@@ -315,6 +332,7 @@ export async function verify2FALogin(userId: string, code: string) {
   return user;
 }
 
+/** Disables 2FA after verifying current TOTP code. Clears secret from DB and invalidates all sessions. */
 export async function disable2FA(userId: string, code: string) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user || !user.twoFactorEnabled || !user.twoFactorSecret) {
@@ -341,6 +359,7 @@ export async function disable2FA(userId: string, code: string) {
   await invalidateUserSessions(userId);
 }
 
+/** Strips sensitive fields (passwordHash, twoFactorSecret) from a user object for API responses. */
 export function sanitizeUser(user: {
   id: string;
   email: string | null;

@@ -428,6 +428,10 @@
     "gas_deducted": "Gas descontado",
     "system_message": "Actualización de Transcendence"
   },
+  "theme": {
+    "switchToLight": "Cambiar a modo claro",
+    "switchToDark": "Cambiar a modo oscuro"
+  },
   "errors": {
     "networkError": "No se puede conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
     "serverError": "Algo salió mal de nuestro lado. Inténtalo de nuevo en un momento.",
@@ -447,10 +451,6 @@
     "fr": "Français",
     "es": "Español",
     "ar": "العربية"
-  },
-  "chat": {
-    "title": "Chat",
-    "send": "Enviar"
   },
   "chat": {
     "title": "Chat",

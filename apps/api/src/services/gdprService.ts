@@ -1,3 +1,10 @@
+/**
+ * @module services/gdprService
+ * @description GDPR compliance: data export (gathers all user data into JSON),
+ * account deletion (cascading delete), both with email-based token confirmation
+ * and audit logging.
+ */
+
 import { randomBytes } from "crypto";
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";

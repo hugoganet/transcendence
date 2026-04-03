@@ -1,3 +1,9 @@
+/**
+ * @module routes/curriculum
+ * @description Curriculum routes: full curriculum with progress overlay,
+ * mission details, mission completion, resume point, and learning chain.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -12,7 +18,7 @@ import {
 
 export const curriculumRouter = Router();
 
-// GET /api/v1/curriculum — authenticated, returns full curriculum with progress overlay
+/** GET /api/v1/curriculum — Returns full curriculum tree with user's progress overlay. */
 curriculumRouter.get(
   "/",
   requireAuth,
@@ -23,7 +29,7 @@ curriculumRouter.get(
   },
 );
 
-// GET /api/v1/curriculum/chain — authenticated, returns learning chain visualization
+/** GET /api/v1/curriculum/chain — Returns learning chain visualization (node map). */
 curriculumRouter.get(
   "/chain",
   requireAuth,
@@ -35,7 +41,7 @@ curriculumRouter.get(
   },
 );
 
-// GET /api/v1/curriculum/missions/:missionId — authenticated, returns mission detail
+/** GET /api/v1/curriculum/missions/:missionId — Returns mission content + exercise for the user's locale. */
 curriculumRouter.get(
   "/missions/:missionId",
   requireAuth,
@@ -49,7 +55,7 @@ curriculumRouter.get(
   },
 );
 
-// POST /api/v1/curriculum/missions/:missionId/complete — authenticated, marks mission completed
+/** POST /api/v1/curriculum/missions/:missionId/complete — Marks mission as completed, awards tokens, checks achievements. */
 curriculumRouter.post(
   "/missions/:missionId/complete",
   requireAuth,
@@ -63,7 +69,7 @@ curriculumRouter.post(
   },
 );
 
-// GET /api/v1/curriculum/resume — authenticated, returns resume point
+/** GET /api/v1/curriculum/resume — Returns the next mission the user should work on. */
 curriculumRouter.get(
   "/resume",
   requireAuth,

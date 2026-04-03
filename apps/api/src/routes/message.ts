@@ -1,3 +1,9 @@
+/**
+ * @module routes/message
+ * @description Chat routes: send messages and retrieve conversation history.
+ * New messages are pushed in real-time via Socket.IO to both sender and receiver.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { sendMessage, getConversation } from "../services/messageService.js";
@@ -5,6 +11,7 @@ import { getIO } from "../socket/index.js";
 
 export const messageRouter = Router()
 
+/** POST /api/v1/messages — Sends a message. Pushes real-time event to sender and receiver via Socket.IO. */
 messageRouter.post("/", requireAuth, async (req: Request, res: Response) => {
     const user = req.user as Express.User;
     const { receiverId, content } = req.body;
@@ -28,6 +35,7 @@ messageRouter.post("/", requireAuth, async (req: Request, res: Response) => {
 });
 
 
+/** GET /api/v1/messages/:userId — Returns conversation history with the specified user. */
 messageRouter.get("/:userId", requireAuth, async (req: Request, res: Response) => {
     const user = req.user as Express.User;
     const data = await getConversation(user.id, String(req.params.userId));

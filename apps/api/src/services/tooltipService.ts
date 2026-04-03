@@ -1,3 +1,9 @@
+/**
+ * @module services/tooltipService
+ * @description Serves blockchain jargon tooltips: single-term lookup and
+ * full glossary, both locale-aware (EN/FR) from static content.
+ */
+
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";
 import type { TooltipCollection, TooltipResponse, GlossaryResponse } from "@transcendence/shared";

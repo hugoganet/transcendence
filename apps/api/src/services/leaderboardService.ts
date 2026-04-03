@@ -1,3 +1,9 @@
+/**
+ * @module services/leaderboardService
+ * @description Weekly leaderboard: ranks users by missions completed in the
+ * current week. Returns paginated entries and the current user's rank.
+ */
+
 import { prisma } from "../config/database.js";
 import type { LeaderboardEntry, LeaderboardCurrentUser } from "@transcendence/shared";
 

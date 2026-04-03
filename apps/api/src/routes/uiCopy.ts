@@ -1,3 +1,9 @@
+/**
+ * @module routes/uiCopy
+ * @description UI copy routes: serves localized UI strings (EN/FR/ES).
+ * Public endpoint — no auth required. Cached for 1 hour.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { AppError } from "../utils/AppError.js";
 import { getContent } from "../utils/contentLoader.js";
@@ -7,7 +13,7 @@ export const uiCopyRouter = Router();
 
 const VALID_LOCALES = new Set(["en", "fr", "es"]);
 
-// GET /api/v1/ui-copy/:locale — public, returns UI strings for given locale
+/** GET /api/v1/ui-copy/:locale — Returns all UI strings for the given locale. Cached 1h. */
 uiCopyRouter.get(
   "/:locale",
   (req: Request, res: Response) => {

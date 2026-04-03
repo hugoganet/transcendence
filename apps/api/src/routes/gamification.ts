@@ -1,3 +1,9 @@
+/**
+ * @module routes/gamification
+ * @description Gamification routes: daily streaks, achievements with
+ * earned status, and paginated weekly leaderboard.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -8,7 +14,7 @@ import { getLeaderboard } from "../services/leaderboardService.js";
 
 export const gamificationRouter = Router();
 
-// GET /api/v1/gamification/streak — authenticated, returns streak + cumulative progress
+/** GET /api/v1/gamification/streak — Returns current/longest streak and cumulative progress. */
 gamificationRouter.get(
   "/streak",
   requireAuth,
@@ -19,7 +25,7 @@ gamificationRouter.get(
   },
 );
 
-// GET /api/v1/gamification/achievements — authenticated, returns all achievements with earned status
+/** GET /api/v1/gamification/achievements — Returns all achievements with user's earned status. */
 gamificationRouter.get(
   "/achievements",
   requireAuth,
@@ -30,7 +36,7 @@ gamificationRouter.get(
   },
 );
 
-// GET /api/v1/gamification/leaderboard — authenticated, returns paginated weekly leaderboard
+/** GET /api/v1/gamification/leaderboard — Returns paginated weekly leaderboard + current user's rank. */
 gamificationRouter.get(
   "/leaderboard",
   requireAuth,

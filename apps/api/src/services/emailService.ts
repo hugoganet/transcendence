@@ -1,3 +1,9 @@
+/**
+ * @module services/emailService
+ * @description Sends transactional emails via the Resend API: welcome, password reset,
+ * GDPR export/deletion, re-engagement, streak reminders, achievements, and completion.
+ */
+
 import { Resend } from "resend";
 
 let resend: Resend | null = null;

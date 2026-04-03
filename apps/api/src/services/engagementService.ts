@@ -1,3 +1,10 @@
+/**
+ * @module services/engagementService
+ * @description User engagement logic: re-engagement checks for inactive users,
+ * streak reminder checks, notification preference management, and preference-aware
+ * notification gating. Used by Socket.IO handlers and schedulers.
+ */
+
 import { prisma } from "../config/database.js";
 import { createAndPushNotification } from "./notificationService.js";
 import { sendReEngagementEmail, sendStreakReminderEmail } from "./emailService.js";

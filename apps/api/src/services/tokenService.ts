@@ -1,3 +1,10 @@
+/**
+ * @module services/tokenService
+ * @description Knowledge Token economy: credit tokens on mission completion,
+ * deduct gas fees on exercise submission (both transaction-safe), check debt,
+ * and query balance/history.
+ */
+
 import { prisma } from "../config/database.js";
 import { MISSION_COMPLETION_TOKEN_REWARD, GAS_FEE_PER_SUBMISSION } from "@transcendence/shared";
 import type { TokenBalance } from "@transcendence/shared";

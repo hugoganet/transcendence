@@ -1,3 +1,9 @@
+/**
+ * @module services/friendService
+ * @description Friendship lifecycle: send/accept/remove friend requests,
+ * list accepted friends, and list pending incoming/outgoing requests.
+ */
+
 import { prisma } from "../config/database.js";
 import { redisClient } from "../config/redis.js";
 import { AppError } from "../utils/AppError.js";

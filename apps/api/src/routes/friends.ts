@@ -1,3 +1,9 @@
+/**
+ * @module routes/friends
+ * @description Friends routes: send/accept/remove friend requests,
+ * list accepted friends, and list pending incoming/outgoing requests.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -13,7 +19,7 @@ import {
 
 export const friendsRouter = Router();
 
-// GET /api/v1/friends — list accepted friends
+/** GET /api/v1/friends — Returns list of accepted friends. */
 friendsRouter.get(
   "/",
   requireAuth,
@@ -24,7 +30,7 @@ friendsRouter.get(
   },
 );
 
-// GET /api/v1/friends/requests — list pending incoming requests
+/** GET /api/v1/friends/requests — Returns pending incoming friend requests. */
 friendsRouter.get(
   "/requests",
   requireAuth,
@@ -35,7 +41,7 @@ friendsRouter.get(
   },
 );
 
-// GET /api/v1/friends/requests/sent — list pending outgoing requests
+/** GET /api/v1/friends/requests/sent — Returns pending outgoing friend requests. */
 friendsRouter.get(
   "/requests/sent",
   requireAuth,
@@ -46,7 +52,7 @@ friendsRouter.get(
   },
 );
 
-// POST /api/v1/friends/:userId — send friend request
+/** POST /api/v1/friends/:userId — Sends a friend request. Returns 201. */
 friendsRouter.post(
   "/:userId",
   requireAuth,
@@ -58,7 +64,7 @@ friendsRouter.post(
   },
 );
 
-// POST /api/v1/friends/:userId/accept — accept friend request
+/** POST /api/v1/friends/:userId/accept — Accepts a pending friend request. */
 friendsRouter.post(
   "/:userId/accept",
   requireAuth,
@@ -70,7 +76,7 @@ friendsRouter.post(
   },
 );
 
-// DELETE /api/v1/friends/:userId — remove friend
+/** DELETE /api/v1/friends/:userId — Removes friendship. Returns 204. */
 friendsRouter.delete(
   "/:userId",
   requireAuth,

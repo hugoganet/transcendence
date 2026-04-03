@@ -1,3 +1,9 @@
+/**
+ * @module services/disclaimerService
+ * @description Serves financial disclaimers (general, onboarding, module-specific)
+ * from static content and records user acceptance in the database.
+ */
+
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";
 import { getGeneralDisclaimer, getModuleDisclaimer } from "../content/disclaimers.js";

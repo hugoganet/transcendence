@@ -1,3 +1,10 @@
+/**
+ * @module routes/auth
+ * @description Authentication routes: register, login, logout, password reset,
+ * OAuth (Google/Facebook), and 2FA (TOTP). Sensitive endpoints have dedicated
+ * rate limiters stricter than the global one.
+ */
+
 import { Router, type Request, type Response, type NextFunction } from "express";
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
@@ -30,7 +37,7 @@ export const authRouter = Router();
 // If a custom `name` is ever set in config/session.ts, update this constant.
 const SESSION_COOKIE_NAME = "connect.sid";
 
-// POST /api/v1/auth/register
+/** POST /api/v1/auth/register — Create account, hash password, auto-login. Returns 201. */
 authRouter.post(
   "/register",
   validate({ body: registerSchema }),
@@ -46,7 +53,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/login
+/** POST /api/v1/auth/login — Verify credentials via Passport Local. If 2FA enabled, sets pending2FA flag. */
 authRouter.post(
   "/login",
   validate({ body: loginSchema }),
@@ -73,7 +80,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/logout
+/** POST /api/v1/auth/logout — Destroy session in Redis and clear cookie. */
 authRouter.post(
   "/logout",
   requireAuth,
@@ -97,7 +104,7 @@ authRouter.post(
   },
 );
 
-// GET /api/v1/auth/me — returns null (not 401) when unauthenticated to avoid console errors
+/** GET /api/v1/auth/me — Returns current user or null if unauthenticated (no 401). */
 authRouter.get("/me", (req: Request, res: Response) => {
   if (!req.isAuthenticated() || !req.user) {
     return res.json({ data: null });
@@ -126,7 +133,7 @@ const forgotPasswordLimiter = rateLimit({
   },
 });
 
-// POST /api/v1/auth/forgot-password
+/** POST /api/v1/auth/forgot-password — Sends reset email. Silent return if email not found (no enumeration). */
 authRouter.post(
   "/forgot-password",
   forgotPasswordLimiter,
@@ -163,7 +170,7 @@ const resetPasswordLimiter = rateLimit({
   },
 });
 
-// POST /api/v1/auth/reset-password
+/** POST /api/v1/auth/reset-password — Verifies token, hashes new password, invalidates all sessions. */
 authRouter.post(
   "/reset-password",
   resetPasswordLimiter,
@@ -198,7 +205,7 @@ const twoFactorVerifyLimiter = rateLimit({
   },
 });
 
-// POST /api/v1/auth/2fa/setup
+/** POST /api/v1/auth/2fa/setup — Generates TOTP secret and QR code for initial 2FA activation. */
 authRouter.post(
   "/2fa/setup",
   requireAuth,
@@ -208,7 +215,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/2fa/verify-setup
+/** POST /api/v1/auth/2fa/verify-setup — Confirms first TOTP code to enable 2FA. Rate limited: 3/15min. */
 authRouter.post(
   "/2fa/verify-setup",
   requireAuth,
@@ -222,8 +229,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/2fa/verify (special auth — pending2FA session only)
-// Auth check runs before rate limiter so unauthenticated requests don't consume rate limit quota
+/** POST /api/v1/auth/2fa/verify — Verifies TOTP code at login (pending2FA sessions only). Rate limited: 3/15min. */
 authRouter.post(
   "/2fa/verify",
   (req: Request, _res: Response, next: NextFunction) => {
@@ -243,7 +249,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/2fa/disable
+/** POST /api/v1/auth/2fa/disable — Disables 2FA after verifying current TOTP code. Invalidates all sessions. */
 authRouter.post(
   "/2fa/disable",
   requireAuth,
@@ -263,7 +269,7 @@ function isStrategyConfigured(name: string): boolean {
   return configuredStrategies.has(name);
 }
 
-// GET /api/v1/auth/google — initiates Google OAuth flow
+/** GET /api/v1/auth/google — Redirects to Google consent screen. 503 if not configured. */
 authRouter.get(
   "/google",
   (req: Request, res: Response, next: NextFunction) => {
@@ -275,7 +281,7 @@ authRouter.get(
   },
 );
 
-// GET /api/v1/auth/google/callback — handles Google callback
+/** GET /api/v1/auth/google/callback — Exchanges code for token, creates/links user, redirects to frontend. */
 authRouter.get(
   "/google/callback",
   (req: Request, res: Response, next: NextFunction) => {
@@ -300,7 +306,7 @@ authRouter.get(
   },
 );
 
-// GET /api/v1/auth/facebook — initiates Facebook OAuth flow
+/** GET /api/v1/auth/facebook — Redirects to Facebook consent screen. 503 if not configured. */
 authRouter.get(
   "/facebook",
   (req: Request, res: Response, next: NextFunction) => {
@@ -312,7 +318,7 @@ authRouter.get(
   },
 );
 
-// GET /api/v1/auth/facebook/callback — handles Facebook callback
+/** GET /api/v1/auth/facebook/callback — Exchanges code for token, creates/links user, redirects to frontend. */
 authRouter.get(
   "/facebook/callback",
   (req: Request, res: Response, next: NextFunction) => {

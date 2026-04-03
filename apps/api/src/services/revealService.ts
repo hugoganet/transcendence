@@ -1,3 +1,9 @@
+/**
+ * @module services/revealService
+ * @description Progressive reveal mechanic: unlocks UI features (tokens, wallet,
+ * gas, dashboard) as users reach specific curriculum milestones.
+ */
+
 import { prisma } from "../config/database.js";
 import type { RevealStatus } from "@transcendence/shared";
 

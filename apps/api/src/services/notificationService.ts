@@ -1,3 +1,9 @@
+/**
+ * @module services/notificationService
+ * @description Notification CRUD: create (with optional Socket.IO push),
+ * paginated listing, mark as read, and unread retrieval for Socket.IO connect.
+ */
+
 import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";
