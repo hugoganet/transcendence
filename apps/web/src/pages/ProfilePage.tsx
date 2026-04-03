@@ -11,6 +11,7 @@ import { Alert } from "../components/ui/Alert.js";
 export function ProfilePage() {
   const { user, refreshUser } = useAuth();
   const [displayName, setDisplayName] = useState(user?.displayName ?? "");
+  const [ethereumWallet, setEthereumWallet] = useState(user?.ethereumWallet ?? "",);
   const [bio, setBio] = useState(user?.bio ?? "");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [success, setSuccess] = useState("");
@@ -28,9 +29,12 @@ export function ProfilePage() {
     setIsSaving(true);
 
     try {
+      const trimmedWallet = ethereumWallet.trim();
       await usersApi.updateProfile({
         displayName: displayName || undefined,
         bio: bio || undefined,
+        ethereumWallet:
+          trimmedWallet === "" ? null : trimmedWallet,
       });
       await refreshUser();
       setSuccess("Profile updated");
@@ -140,6 +144,20 @@ export function ProfilePage() {
               maxLength={50}
               placeholder="Your display name"
               error={errors.displayName}
+            />
+          </FormField>
+          <FormField
+            label="Wallet Address"
+            error={errors.ethereumWallet}
+            htmlFor="ethereumWallet"
+          >
+            <Input
+              id="ethereumWallet"
+              value={ethereumWallet}
+              onChange={(e) => setEthereumWallet(e.target.value)}
+              maxLength={42}
+              placeholder="0x"
+              error={errors.ethereumWallet}
             />
           </FormField>
           <FormField label="Bio" error={errors.bio} htmlFor="bio">

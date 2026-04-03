@@ -1,6 +1,7 @@
 import type {
   UserProfile,
   PublicProfile,
+  UpdateProfileInput,
   Certificate,
   CertificateShareResponse,
 } from "@transcendence/shared";
@@ -9,7 +10,7 @@ import { api } from "./client.js";
 export const usersApi = {
   getProfile: () => api.get<UserProfile>("/api/v1/users/me"),
 
-  updateProfile: (data: { displayName?: string; bio?: string }) =>
+  updateProfile: (data: UpdateProfileInput) =>
     api.patch<UserProfile>("/api/v1/users/me", data),
 
   uploadAvatar: (file: File) => {

@@ -44,15 +44,24 @@ export async function getProfile(userId: string) {
 
 export async function updateProfile(
   userId: string,
-  data: { displayName?: string; bio?: string },
+  data: {
+    displayName?: string;
+    bio?: string;
+    locale?: "en" | "fr" | "es";
+    ethereumWallet?: string | null;
+  },
 ) {
   const existing = await prisma.user.findUnique({ where: { id: userId } });
   if (!existing) {
     throw AppError.notFound("User not found");
   }
+  const payload = { ...data };
+  if (payload.ethereumWallet === "") {
+    payload.ethereumWallet = null;
+  }
   const user = await prisma.user.update({
     where: { id: userId },
-    data,
+    data: payload,
   });
   return sanitizeUser(user);
 }
