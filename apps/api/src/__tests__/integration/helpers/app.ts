@@ -28,7 +28,7 @@ export async function setupApp(): Promise<void> {
   if (initialized) return;
 
   // Load real curriculum content
-  initializeContent(["en", "fr"]);
+  initializeContent(["en", "fr", "es"]);
 
   // Connect the session Redis client (reconnect if previously disconnected)
   if (!sessionRedisClient.isOpen) {

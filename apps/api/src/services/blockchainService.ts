@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 
-// Helper function to load env secure
+// Helper function to load env secure — called lazily so tests that don't
+// use blockchain are not blocked by missing env vars.
 function getEnvVar(name: string): string {
     const value = process.env[name];
     if (!value) {
@@ -9,9 +10,9 @@ function getEnvVar(name: string): string {
     return value;
 }
 
-const CONTRACT_ADDRESS = getEnvVar("CONTRACT_ADDRESS");
-const AVALANCHE_RPC = getEnvVar("AVALANCHE_RPC_URL");
-const BLOCKCHAIN_PRIVATE_KEY = getEnvVar("BLOCKCHAIN_PRIVATE_KEY");
+function getContractAddress(): string { return getEnvVar("CONTRACT_ADDRESS"); }
+function getAvalancheRpc(): string { return getEnvVar("AVALANCHE_RPC_URL"); }
+function getBlockchainPrivateKey(): string { return getEnvVar("BLOCKCHAIN_PRIVATE_KEY"); }
 
 const CONTRACT_ABI = [
   "function mintCertificate(address recipient, string memory curriculumTitle, uint256 totalMissions) public returns (uint256)",
@@ -26,9 +27,9 @@ export async function mintCertificateNFT(
     totalMissions: number,
 ): Promise<{ tokenId: number; txHash: string; contractAddress: string; alreadyExists?: boolean }> {
     try {
-        const provider = new ethers.JsonRpcProvider(AVALANCHE_RPC);
-        const signer = new ethers.Wallet(BLOCKCHAIN_PRIVATE_KEY, provider);
-        const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+        const provider = new ethers.JsonRpcProvider(getAvalancheRpc());
+        const signer = new ethers.Wallet(getBlockchainPrivateKey(), provider);
+        const contract = new ethers.Contract(getContractAddress(), CONTRACT_ABI, signer);
 
         const recipientAddress = ethers.getAddress(userEthereumWallet);
         const tx = await contract.mintCertificate(recipientAddress, curriculumTitle, totalMissions);
@@ -49,7 +50,7 @@ export async function mintCertificateNFT(
                 // Skip logs that can't be parsed by this contract
             }
         }
-        return { tokenId, txHash: tx.hash, contractAddress: CONTRACT_ADDRESS };
+        return { tokenId, txHash: tx.hash, contractAddress: getContractAddress() };
     } catch (error) {
         console.log("[mintCertificate] Error caught:", error);
         // Check if it's a "Certificate already exists" error, this is expected, not an error
@@ -57,20 +58,20 @@ export async function mintCertificateNFT(
         if (errorMessage.includes("Certificate already exists")) {
             // Try to fetch existing certificate info from blockchain
             try {
-                const provider = new ethers.JsonRpcProvider(AVALANCHE_RPC);
-                const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+                const provider = new ethers.JsonRpcProvider(getAvalancheRpc());
+                const contract = new ethers.Contract(getContractAddress(), CONTRACT_ABI, provider);
                 const recipientAddress = ethers.getAddress(userEthereumWallet);
                 const certData = await contract.getCertificate(recipientAddress);
                 // certData is CertificateData struct with named properties
                 return {
                     tokenId: Number(certData[0]),
                     txHash: "",
-                    contractAddress: CONTRACT_ADDRESS,
+                    contractAddress: getContractAddress(),
                     alreadyExists: true,
                 };
             } catch (fetchError) {
                 console.log("[mintCertificate] Failed to fetch existing certificate:", fetchError);
-                return { tokenId: 0, txHash: "", contractAddress: CONTRACT_ADDRESS, alreadyExists: true };
+                return { tokenId: 0, txHash: "", contractAddress: getContractAddress(), alreadyExists: true };
             }
         }
         console.error("Blockchain error:", error);

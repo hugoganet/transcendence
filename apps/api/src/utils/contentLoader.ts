@@ -45,6 +45,10 @@ const CONTENT_ROOT = resolve(__dirname, "../../../../content");
 
 function readJsonFile(filePath: string): unknown {
   const absolutePath = resolve(CONTENT_ROOT, filePath);
+  // Path containment check — prevent directory traversal (CWE-22)
+  if (!absolutePath.startsWith(CONTENT_ROOT + "/")) {
+    throw new Error(`Path traversal blocked: "${filePath}" resolves outside content root`);
+  }
   try {
     const raw = readFileSync(absolutePath, "utf-8");
     return JSON.parse(raw);
