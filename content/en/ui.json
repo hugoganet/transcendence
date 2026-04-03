@@ -113,7 +113,9 @@
       "signUpLink": "Sign up",
       "orContinueWith": "or continue with",
       "googleButton": "Continue with Google",
-      "facebookButton": "Continue with Facebook"
+      "facebookButton": "Continue with Facebook",
+      "emailPlaceholder": "your@email.com",
+      "passwordPlaceholder": "Your password"
     },
     "signup": {
       "title": "Start learning",
@@ -124,7 +126,14 @@
       "submitButton": "Create account",
       "hasAccount": "Already have an account?",
       "loginLink": "Log in",
-      "termsAccept": "By creating an account, you agree to our Terms of Service and Privacy Policy."
+      "termsAccept": "By creating an account, you agree to our Terms of Service and Privacy Policy.",
+      "usernamePlaceholder": "Choose a username",
+      "emailPlaceholder": "your@email.com",
+      "passwordPlaceholder": "Minimum 8 characters",
+      "confirmPasswordLabel": "Confirm password",
+      "confirmPasswordPlaceholder": "Repeat your password",
+      "orContinueWith": "or continue with",
+      "googleButton": "Continue with Google"
     },
     "forgotPassword": {
       "title": "Reset your password",
@@ -133,21 +142,27 @@
       "submitButton": "Send reset link",
       "backToLogin": "Back to log in",
       "emailSent": "Check your inbox",
-      "emailSentSubtitle": "We've sent a reset link to your email. It expires in 30 minutes."
+      "emailSentSubtitle": "We've sent a reset link to your email. It expires in 30 minutes.",
+      "emailPlaceholder": "your@email.com"
     },
     "resetPassword": {
       "title": "Set a new password",
       "newPasswordLabel": "New password",
       "confirmPasswordLabel": "Confirm new password",
       "submitButton": "Update password",
-      "success": "Password updated. You can now log in."
+      "success": "Password updated. You can now log in.",
+      "subtitle": "Choose a new secure password.",
+      "passwordPlaceholder": "Minimum 8 characters",
+      "confirmPasswordPlaceholder": "Repeat your new password"
     },
     "twoFactor": {
       "title": "Two-factor verification",
       "subtitle": "Enter the 6-digit code from your authenticator app.",
       "codeLabel": "Verification code",
       "submitButton": "Verify",
-      "resend": "Didn't receive a code? Resend"
+      "resend": "Didn't receive a code? Resend",
+      "codePlaceholder": "000000",
+      "resendCountdown": "Resend available in {seconds}s"
     }
   },
   "onboarding": {
@@ -160,7 +175,26 @@
     "step3Title": "Track your progress",
     "step3Body": "See your streak, your token balance, and exactly where you stand in the curriculum.",
     "ctaStart": "Start learning",
-    "firstMissionPrompt": "Your first mission is ready. It takes about 5 minutes."
+    "firstMissionPrompt": "Your first mission is ready. It takes about 5 minutes.",
+    "chooseGoal": {
+      "title": "What's your goal?",
+      "subtitle": "This doesn't change the content — just the context.",
+      "option1": "Understand what everyone's talking about",
+      "option2": "Evaluate a potential investment",
+      "option3": "Understand the technology in depth",
+      "option4": "Just curious",
+      "ctaLabel": "Continue"
+    },
+    "disclaimerIntro": {
+      "title": "An important note",
+      "body": "Transcendence is an educational platform. Nothing here constitutes financial advice. We cover digital finance topics — honestly, without promising returns.",
+      "ctaLabel": "Got it, let's start"
+    },
+    "allSet": {
+      "title": "All set.",
+      "body": "Your first chapter is waiting. Every concept you master adds to your foundation — and foundations matter.",
+      "ctaLabel": "Start my first mission"
+    }
   },
   "exercise": {
     "SI": {
@@ -202,64 +236,94 @@
     },
     "gasFeeNotice": "This action costs {amount} Knowledge Tokens",
     "gasFeeFirstTime": "Each exercise attempt costs 2 KT. This is gas — the same mechanism you just studied. Your balance has been updated.",
-    "gasFeeStandard": "\u22122 KT gas",
-    "gasFeeLowBalance": "\u22122 KT gas \u00b7 Your balance is running low. Complete a mission to top up.",
-    "gasFeeZeroBalance": "\u22122 KT gas \u00b7 Your balance is at 0. You can still continue this mission, but you'll need to complete it before starting a new one.",
-    "gasFeeNegativeBalance": "\u22122 KT gas \u00b7 Your balance is below 0. Complete this mission to earn tokens and clear your debt before starting anything new."
+    "gasFeeStandard": "−2 KT gas",
+    "gasFeeLowBalance": "−2 KT gas · Your balance is running low. Complete a mission to top up.",
+    "gasFeeZeroBalance": "−2 KT gas · Your balance is at 0. You can still continue this mission, but you'll need to complete it before starting a new one.",
+    "gasFeeNegativeBalance": "−2 KT gas · Your balance is below 0. Complete this mission to earn tokens and clear your debt before starting anything new.",
+    "progress": {
+      "questionOf": "Question {current} of {total}",
+      "missionProgress": "Mission {current} of {total}"
+    }
   },
   "gamification": {
     "achievements": {
       "BLOCKCHAIN_BEGINNER": {
         "toastTitle": "Category 1 complete.",
-        "toastBody": "You understand the problem blockchain solves."
+        "toastBody": "You understand the problem blockchain solves.",
+        "title": "Blockchain Foundations",
+        "description": "Complete Category 1: Blockchain Foundations"
       },
       "CRYPTO_CURIOUS": {
         "toastTitle": "Category 2 complete.",
-        "toastBody": "Coins, tokens, volatility — you've got the vocabulary."
+        "toastBody": "Coins, tokens, volatility — you've got the vocabulary.",
+        "title": "Crypto Curious",
+        "description": "Complete Category 2: Crypto & Tokens"
       },
       "WALLET_WIZARD": {
         "toastTitle": "Category 3 complete.",
-        "toastBody": "Wallets, transactions, gas. You know how it actually works."
+        "toastBody": "Wallets, transactions, gas. You know how it actually works.",
+        "title": "Wallet Wizard",
+        "description": "Complete Category 3: Wallets & Gas"
       },
       "SMART_COOKIE": {
         "toastTitle": "Category 4 complete.",
-        "toastBody": "Blockchain as a computer. You now see what's possible."
+        "toastBody": "Blockchain as a computer. You now see what's possible.",
+        "title": "Smart Cookie",
+        "description": "Complete Category 4: Smart Contracts"
       },
       "NFT_NATIVE": {
         "toastTitle": "Category 5 complete.",
-        "toastBody": "You can see through the hype now."
+        "toastBody": "You can see through the hype now.",
+        "title": "NFT Native",
+        "description": "Complete Category 5: NFTs & Digital Ownership"
       },
       "DEFI_EXPLORER": {
         "toastTitle": "Course complete.",
-        "toastBody": "All six categories. Every concept. You earned this."
+        "toastBody": "All six categories. Every concept. You earned this.",
+        "title": "DeFi Explorer",
+        "description": "Complete Category 6: DeFi & Beyond"
       },
       "FIRST_TOKENS": {
         "toastTitle": "First tokens earned.",
-        "toastBody": "Your first Knowledge Tokens are in. The balance only goes up from here."
+        "toastBody": "Your first Knowledge Tokens are in. The balance only goes up from here.",
+        "title": "First Tokens",
+        "description": "Earn 10 Knowledge Tokens"
       },
       "TOKEN_COLLECTOR": {
         "toastTitle": "50 Knowledge Tokens.",
-        "toastBody": "Halfway to a hundred. Consistent effort compounds."
+        "toastBody": "Halfway to a hundred. Consistent effort compounds.",
+        "title": "Token Collector",
+        "description": "Earn 50 Knowledge Tokens"
       },
       "TOKEN_RICH": {
         "toastTitle": "100 Knowledge Tokens.",
-        "toastBody": "Your balance just hit triple digits."
+        "toastBody": "Your balance just hit triple digits.",
+        "title": "Token Rich",
+        "description": "Earn 100 Knowledge Tokens"
       },
       "GETTING_STARTED": {
         "toastTitle": "3 days in a row.",
-        "toastBody": "Consistency is a skill. You're building it."
+        "toastBody": "Consistency is a skill. You're building it.",
+        "title": "Getting Started",
+        "description": "Reach a 3-day learning streak"
       },
       "WEEK_WARRIOR": {
         "toastTitle": "7-day streak.",
-        "toastBody": "A full week without missing a day."
+        "toastBody": "A full week without missing a day.",
+        "title": "Week Warrior",
+        "description": "Reach a 7-day learning streak"
       },
       "DEDICATED_LEARNER": {
         "toastTitle": "14-day streak.",
-        "toastBody": "Two weeks straight. This is a habit now."
+        "toastBody": "Two weeks straight. This is a habit now.",
+        "title": "Dedicated Learner",
+        "description": "Reach a 14-day learning streak"
       },
       "MONTHLY_MASTER": {
         "toastTitle": "30 days straight.",
-        "toastBody": "A month of daily learning. That's remarkable."
+        "toastBody": "A month of daily learning. That's remarkable.",
+        "title": "Monthly Master",
+        "description": "Reach a 30-day learning streak"
       }
     },
     "streak": {
@@ -272,12 +336,20 @@
       "day14": "Two weeks straight. At this point, the habit is doing most of the work.",
       "day30": "Thirty days. A month. The consistency you've shown here transfers to everything.",
       "streakLost": "You missed a day. It happens. Your progress is exactly where you left it — start again from today.",
-      "streakRecovered": "Back. One day doesn't define a streak. Today does."
+      "streakRecovered": "Back. One day doesn't define a streak. Today does.",
+      "streakLabel": "Current streak",
+      "streakDays": "{count} day",
+      "streakDays_plural": "{count} days"
     },
     "tokens": {
       "tokenEarned": "+ {amount} Knowledge Tokens",
       "tokenSpent": "- {amount} Knowledge Tokens (gas)",
-      "tokenBalance": "Knowledge Tokens"
+      "tokenBalance": "Knowledge Tokens",
+      "knowledgeTokens": "Knowledge Tokens",
+      "ktAbbreviation": "KT",
+      "lowBalanceWarning": "Your balance is low. Complete a mission to top up.",
+      "zeroBalanceWarning": "Your balance is at 0. Complete this mission before starting a new one.",
+      "negativeBalanceWarning": "Negative balance. Complete this mission to clear your debt."
     },
     "leaderboard": {
       "title": "Leaderboard",
@@ -285,7 +357,10 @@
       "topLearners": "Top Learners",
       "weeklyBoard": "This week",
       "allTimeBoard": "All time",
-      "noRankYet": "Complete a mission to appear on the leaderboard."
+      "noRankYet": "Complete a mission to appear on the leaderboard.",
+      "rankChange_up": "+{count} place",
+      "rankChange_down": "-{count} place",
+      "rankChange_same": "Rank unchanged"
     },
     "welcomeBack": {
       "shortAbsence": "Good to have you back. Your progress is right where you left it.",
@@ -348,7 +423,15 @@
     "shareBody": "I just completed Transcendence — a full blockchain literacy course. 69 missions, zero shortcuts.",
     "downloadButton": "Download certificate",
     "shareButton": "Share",
-    "linkedInButton": "Add to LinkedIn"
+    "linkedInButton": "Add to LinkedIn",
+    "title": "Certificate of Completion",
+    "subtitle": "Awarded to",
+    "completionStatement": "has successfully completed the entire Transcendence program — 6 categories, {chapterCount} chapters, {missionCount} missions.",
+    "dateLabel": "Date of completion",
+    "toastTitle": "Certificate earned.",
+    "toastBody": "Your proof of completion is ready to share.",
+    "programName": "Transcendence — Blockchain Literacy",
+    "verificationLabel": "Verification"
   },
   "social": {
     "friendsList": {
@@ -359,7 +442,13 @@
       "pendingRequests": "Pending requests",
       "acceptButton": "Accept",
       "declineButton": "Decline",
-      "removeButton": "Remove"
+      "removeButton": "Remove",
+      "friendsSince": "Friends since {date}",
+      "removeFriend": "Remove friend",
+      "blockUser": "Block",
+      "requestSent": "Request sent",
+      "friendCount": "{count} friend",
+      "friendCount_plural": "{count} friends"
     },
     "publicProfile": {
       "missions": "Missions completed",
@@ -367,7 +456,15 @@
       "streak": "Current streak",
       "achievements": "Achievements",
       "joinedDate": "Joined",
-      "friendSince": "Friends since"
+      "friendSince": "Friends since",
+      "editProfile": "Edit profile",
+      "longestStreak": "Longest streak",
+      "tokenBalance": "KT balance",
+      "achievementsUnlocked": "Achievements unlocked",
+      "rank": "Rank",
+      "shareProfile": "Share my profile",
+      "statsTitle": "My stats",
+      "bioPlaceholder": "Say something about yourself..."
     }
   },
   "notifications": {
@@ -379,7 +476,32 @@
     "level_up": "Level up",
     "token_earned": "Tokens earned",
     "gas_deducted": "Gas deducted",
-    "system_message": "Update from Transcendence"
+    "system_message": "Update from Transcendence",
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "noNotifications": "No notifications right now. Keep learning!",
+    "types": {
+      "achievement_unlocked": "Achievement unlocked",
+      "streak_milestone": "Streak milestone",
+      "friend_request": "Friend request",
+      "friend_accepted": "Friend request accepted",
+      "mission_reminder": "Mission reminder",
+      "level_up": "Level up",
+      "token_earned": "Tokens earned",
+      "gas_deducted": "Gas deducted",
+      "system_message": "System message"
+    },
+    "messages": {
+      "achievement_unlocked": "You just unlocked the \"{achievementTitle}\" achievement.",
+      "streak_milestone": "Congratulations! You've reached a {days}-day streak.",
+      "friend_request": "{username} sent you a friend request.",
+      "friend_accepted": "{username} accepted your friend request.",
+      "mission_reminder": "Your next mission is waiting. Don't break your streak!",
+      "level_up": "You've reached level {level}. Keep going.",
+      "token_earned": "You earned {amount} KT for completing this mission.",
+      "gas_deducted": "-{amount} KT gas was deducted for this attempt.",
+      "system_message": "{message}"
+    }
   },
   "errors": {
     "networkError": "Can't reach the server right now. Check your connection and try again.",
@@ -391,7 +513,11 @@
     "emailAlreadyUsed": "An account with this email already exists. Try logging in instead.",
     "usernameAlreadyUsed": "That username is taken. Try a different one.",
     "invalidCredentials": "Email or password is incorrect.",
-    "tooManyRequests": "Too many attempts. Wait a moment, then try again."
+    "tooManyRequests": "Too many attempts. Wait a moment, then try again.",
+    "passwordTooShort": "Your password must be at least 8 characters.",
+    "passwordMismatch": "The two passwords don't match.",
+    "emailInvalid": "Please enter a valid email address.",
+    "requiredField": "This field is required."
   },
   "emptyStates": {
     "noFriends": "You haven't added any friends yet. Search by username to find someone to learn alongside.",

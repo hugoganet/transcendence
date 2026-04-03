@@ -64,29 +64,34 @@
     "locked": "Verrouillé",
     "available": "Disponible",
     "inProgress": "En cours",
+    "skipped": "Passé",
     "category": "Catégorie",
     "chapter": "Chapitre",
     "progress": "Progression",
+    "of": "sur",
+    "allMissions": "Toutes les missions",
+    "completedMissions": "Missions terminées",
     "continue": "Continuer",
     "start": "Commencer",
     "next": "Suivant",
     "previous": "Précédent",
     "submit": "Valider",
     "tryAgain": "Réessayer",
-    "correct": "Correct !",
-    "incorrect": "Pas tout à fait...",
-    "estimatedTime": "Durée estimée",
-    "minutes": "min",
-    "learningObjective": "Objectif pédagogique",
-    "missionComplete": "Mission Accomplie !",
-    "xpEarned": "XP Gagnés",
-    "tokensEarned": "Jetons gagnés",
-    "gasPaid": "Gas déduit",
     "skip": "Passer",
     "save": "Enregistrer",
     "cancel": "Annuler",
     "back": "Retour",
     "close": "Fermer",
+    "correct": "Correct !",
+    "incorrect": "Pas tout à fait...",
+    "estimatedTime": "Durée estimée",
+    "minutes": "min",
+    "hours": "h",
+    "learningObjective": "Objectif pédagogique",
+    "missionComplete": "Mission Accomplie !",
+    "xpEarned": "XP Gagnés",
+    "tokensEarned": "Jetons gagnés",
+    "gasPaid": "Gas déduit",
     "home": "Accueil",
     "curriculum": "Programme",
     "leaderboard": "Classement",
@@ -101,32 +106,32 @@
       "title": "Connexion",
       "subtitle": "Reprenez là où vous vous êtes arrêté.",
       "emailLabel": "Adresse e-mail",
-      "emailPlaceholder": "votre@email.com",
       "passwordLabel": "Mot de passe",
-      "passwordPlaceholder": "Votre mot de passe",
       "submitButton": "Se connecter",
       "forgotPassword": "Mot de passe oublié ?",
       "noAccount": "Pas encore de compte ?",
-      "signupLink": "S'inscrire",
+      "signUpLink": "S'inscrire",
       "orContinueWith": "Ou continuer avec",
       "googleButton": "Continuer avec Google",
-      "facebookButton": "Continuer avec Facebook"
+      "facebookButton": "Continuer avec Facebook",
+      "emailPlaceholder": "votre@email.com",
+      "passwordPlaceholder": "Votre mot de passe"
     },
     "signup": {
       "title": "Inscription",
       "subtitle": "Commencez votre parcours blockchain dès aujourd'hui.",
       "usernameLabel": "Nom d'utilisateur",
-      "usernamePlaceholder": "Choisissez un pseudonyme",
       "emailLabel": "Adresse e-mail",
-      "emailPlaceholder": "votre@email.com",
       "passwordLabel": "Mot de passe",
+      "submitButton": "Créer mon compte",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "loginLink": "Se connecter",
+      "termsAccept": "En vous inscrivant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.",
+      "usernamePlaceholder": "Choisissez un pseudonyme",
+      "emailPlaceholder": "votre@email.com",
       "passwordPlaceholder": "Minimum 8 caractères",
       "confirmPasswordLabel": "Confirmer le mot de passe",
       "confirmPasswordPlaceholder": "Répétez votre mot de passe",
-      "submitButton": "Créer mon compte",
-      "alreadyHaveAccount": "Vous avez déjà un compte ?",
-      "loginLink": "Se connecter",
-      "termsNotice": "En vous inscrivant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité.",
       "orContinueWith": "Ou continuer avec",
       "googleButton": "Continuer avec Google"
     },
@@ -134,47 +139,43 @@
       "title": "Mot de passe oublié",
       "subtitle": "Saisissez votre e-mail et nous vous enverrons un lien de réinitialisation.",
       "emailLabel": "Adresse e-mail",
-      "emailPlaceholder": "votre@email.com",
       "submitButton": "Envoyer le lien",
       "backToLogin": "Retour à la connexion",
-      "successMessage": "Un e-mail de réinitialisation vous a été envoyé. Vérifiez votre boîte de réception."
+      "emailSent": "Vérifiez votre boîte de réception",
+      "emailSentSubtitle": "Un e-mail de réinitialisation vous a été envoyé. Vérifiez votre boîte de réception.",
+      "emailPlaceholder": "votre@email.com"
     },
     "resetPassword": {
       "title": "Nouveau mot de passe",
-      "subtitle": "Choisissez un nouveau mot de passe sécurisé.",
-      "passwordLabel": "Nouveau mot de passe",
-      "passwordPlaceholder": "Minimum 8 caractères",
+      "newPasswordLabel": "Nouveau mot de passe",
       "confirmPasswordLabel": "Confirmer le mot de passe",
-      "confirmPasswordPlaceholder": "Répétez votre nouveau mot de passe",
       "submitButton": "Réinitialiser le mot de passe",
-      "successMessage": "Votre mot de passe a été mis à jour. Vous pouvez vous connecter."
+      "success": "Votre mot de passe a été mis à jour. Vous pouvez vous connecter.",
+      "subtitle": "Choisissez un nouveau mot de passe sécurisé.",
+      "passwordPlaceholder": "Minimum 8 caractères",
+      "confirmPasswordPlaceholder": "Répétez votre nouveau mot de passe"
     },
     "twoFactor": {
       "title": "Vérification en deux étapes",
       "subtitle": "Saisissez le code envoyé à votre appareil.",
       "codeLabel": "Code de vérification",
-      "codePlaceholder": "000000",
       "submitButton": "Vérifier",
-      "resendCode": "Renvoyer le code",
+      "resend": "Renvoyer le code",
+      "codePlaceholder": "000000",
       "resendCountdown": "Renvoi possible dans {{seconds}}s"
     }
   },
   "onboarding": {
-    "welcome": {
-      "title": "Bienvenue sur Transcendence",
-      "subtitle": "La blockchain expliquée à travers des missions courtes. Pas de jargon inutile, pas de capital requis.",
-      "ctaLabel": "C'est parti"
-    },
-    "howItWorks": {
-      "title": "Comment ça marche",
-      "step1Title": "Des missions courtes",
-      "step1Body": "Chaque mission dure 3 à 5 minutes. Avancez à votre rythme.",
-      "step2Title": "Gagnez des Jetons de Connaissance",
-      "step2Body": "Chaque mission réussie vous rapporte des KT. Votre solde reflète votre progression.",
-      "step3Title": "Montez dans le classement",
-      "step3Body": "Comparez votre progression avec d'autres apprenants. La régularité prime sur la vitesse.",
-      "ctaLabel": "Suivant"
-    },
+    "welcomeTitle": "Bienvenue sur Transcendence",
+    "welcomeSubtitle": "La blockchain expliquée à travers des missions courtes. Pas de jargon inutile, pas de capital requis.",
+    "step1Title": "Des missions courtes",
+    "step1Body": "Chaque mission dure 3 à 5 minutes. Avancez à votre rythme.",
+    "step2Title": "Gagnez des Jetons de Connaissance",
+    "step2Body": "Chaque mission réussie vous rapporte des KT. Votre solde reflète votre progression.",
+    "step3Title": "Montez dans le classement",
+    "step3Body": "Comparez votre progression avec d'autres apprenants. La régularité prime sur la vitesse.",
+    "ctaStart": "C'est parti",
+    "firstMissionPrompt": "Votre premier chapitre vous attend. Chaque concept que vous maîtrisez s'ajoute à votre base — et les bases, ça compte.",
     "chooseGoal": {
       "title": "Quel est votre objectif ?",
       "subtitle": "Cela ne change pas le contenu — juste le contexte.",
@@ -196,37 +197,49 @@
     }
   },
   "exercise": {
-    "instructions": {
-      "SI": "Lisez le scénario, puis répondez à la question.",
-      "CM": "Associez chaque concept à sa définition.",
-      "IP": "Placez les éléments dans le bon ordre ou au bon endroit.",
-      "ST": "Suivez les étapes pour compléter la simulation."
+    "SI": {
+      "instructionPrefix": "Lisez le scénario, puis répondez à la question.",
+      "submitAnswer": "Valider la réponse",
+      "seeExplanation": "Voir l'explication",
+      "nextMission": "Mission suivante"
+    },
+    "CM": {
+      "instructionPrefix": "Associez chaque concept à sa définition.",
+      "matchAll": "Associez toutes les paires pour continuer.",
+      "checkMatches": "Vérifier les associations",
+      "allMatched": "Tout est associé !"
+    },
+    "IP": {
+      "instructionPrefix": "Placez les éléments dans le bon ordre ou au bon endroit.",
+      "dragItems": "Glissez les éléments à leur place.",
+      "checkPlacement": "Vérifier le placement",
+      "allPlaced": "Tout est placé !"
+    },
+    "ST": {
+      "instructionPrefix": "Suivez les étapes pour compléter la simulation.",
+      "step": "Étape {current} sur {total}",
+      "chooseAnswer": "Choisissez une réponse pour continuer.",
+      "nextStep": "Étape suivante",
+      "lastStep": "Terminer la simulation"
     },
     "feedback": {
-      "correct": [
-        "Excellent !",
-        "Bravo !",
-        "C'est ça !",
-        "Parfait.",
-        "Exactement."
-      ],
-      "incorrect": [
-        "Pas tout à fait...",
-        "Presque.",
-        "Pas cette fois.",
-        "Ce n'est pas la bonne réponse.",
-        "Réessayez."
-      ],
-      "correctExplanationLabel": "Pourquoi c'est juste :",
-      "incorrectExplanationLabel": "La bonne réponse :"
+      "correctHeadline1": "Excellent !",
+      "correctHeadline2": "Bravo !",
+      "correctHeadline3": "C'est ça !",
+      "incorrectHeadline1": "Pas tout à fait...",
+      "incorrectHeadline2": "Presque.",
+      "incorrectHeadline3": "Pas cette fois.",
+      "explanationLabel": "Pourquoi c'est juste :",
+      "keepGoing": "Continuez — vous assurez.",
+      "almostThere": "Presque.",
+      "niceWork": "Bien joué."
     },
-    "gasFeeNotice": {
-      "firstTime": "Chaque tentative coûte 2 KT. C'est le gas — le même mécanisme que vous venez d'étudier. Votre solde a été mis à jour.",
-      "standard": "−2 KT gas",
-      "lowBalance": "−2 KT gas · Votre solde est faible. Terminez une mission pour le recharger.",
-      "zeroBalance": "−2 KT gas · Votre solde est à 0. Vous pouvez terminer cette mission, mais vous devrez le faire avant d'en commencer une nouvelle.",
-      "negativeBalance": "−2 KT gas · Votre solde est négatif. Terminez cette mission pour gagner des jetons et effacer votre dette avant de continuer."
-    },
+    "gasFeeNotice": "Cette action coûte {amount} Jetons de Connaissance",
+    "gasFeeFirstTime": "Chaque tentative coûte 2 KT. C'est le gas — le même mécanisme que vous venez d'étudier. Votre solde a été mis à jour.",
+    "gasFeeStandard": "−2 KT gas",
+    "gasFeeLowBalance": "−2 KT gas · Votre solde est faible. Terminez une mission pour le recharger.",
+    "gasFeeZeroBalance": "−2 KT gas · Votre solde est à 0. Vous pouvez terminer cette mission, mais vous devrez le faire avant d'en commencer une nouvelle.",
+    "gasFeeNegativeBalance": "−2 KT gas · Votre solde est négatif. Terminez cette mission pour gagner des jetons et effacer votre dette avant de continuer.",
     "progress": {
       "questionOf": "Question {{current}} sur {{total}}",
       "missionProgress": "Mission {{current}} sur {{total}}"
@@ -314,17 +327,19 @@
       }
     },
     "streak": {
-      "streakLabel": "Série en cours",
-      "streakDays": "{{count}} jour",
-      "streakDays_plural": "{{count}} jours",
       "streakContinued": "Aujourd'hui compte. Revenez demain.",
       "streakBroken": "Vous avez manqué un jour. Ça arrive. Votre progression est exactement là où vous l'avez laissée — recommencez dès aujourd'hui.",
-      "streakRecovered": "De retour. Un jour ne définit pas une série. Aujourd'hui, si.",
       "streakRecord": "Nouveau record : {{days}} jours !",
+      "day1": "Aujourd'hui compte. Revenez demain.",
       "day3": "Trois jours consécutifs. Vous avez passé la partie la plus difficile.",
       "day7": "Sept jours. Une semaine de présence. Voilà à quoi ressemble l'apprentissage.",
       "day14": "Deux semaines d'affilée. À ce stade, l'habitude fait la majorité du travail.",
-      "day30": "Trente jours. Un mois. La régularité que vous avez montrée ici se transfère à tout."
+      "day30": "Trente jours. Un mois. La régularité que vous avez montrée ici se transfère à tout.",
+      "streakLost": "Vous avez manqué un jour. Ça arrive. Votre progression est exactement là où vous l'avez laissée — recommencez dès aujourd'hui.",
+      "streakRecovered": "De retour. Un jour ne définit pas une série. Aujourd'hui, si.",
+      "streakLabel": "Série en cours",
+      "streakDays": "{{count}} jour",
+      "streakDays_plural": "{{count}} jours"
     },
     "tokens": {
       "tokenEarned": "+{{amount}} KT gagnés",
@@ -347,34 +362,28 @@
       "rankChange_down": "−{{count}} place",
       "rankChange_same": "Rang stable"
     },
-    "postMission": {
-      "completionMessages": [
-        "Correct. Une pièce supplémentaire dans le tableau.",
-        "Bien joué. Ce concept est maintenant le vôtre.",
-        "Réussi. On passe à la suite.",
-        "C'est ça. Vous venez d'ajouter quelque chose qui se capitalise."
-      ],
-      "chapterCompleteMessages": [
-        "Chapitre terminé. Vous avez couvert l'intégralité de ce sujet. Le chapitre suivant s'appuie sur ce que vous venez de finir.",
-        "Voilà pour ce chapitre. Chaque concept qu'il contient fait maintenant partie de votre base.",
-        "Chapitre terminé. Prenez un moment — c'est une vraie progression."
-      ],
-      "categoryCompleteMessages": [
-        "Catégorie terminée. Vous avez tout fini dans cette section. La catégorie suivante va plus loin avec ce que vous avez appris.",
-        "Vous avez terminé cette catégorie. Six sections au total — en voilà une de faite. Continuez."
-      ]
-    },
     "welcomeBack": {
-      "variant1": "Ravi de vous retrouver. Votre progression est exactement là où vous l'avez laissée.",
-      "variant2": "Ça fait une semaine. Pas de souci — votre savoir n'expire pas. Reprenez là où vous vous êtes arrêté.",
-      "variant3": "Vous avez été absent un moment. Tout est encore là. Quand vous êtes prêt, la prochaine mission vous attend.",
-      "variant4": "Bienvenue. Ça fait un moment, mais ce que vous avez appris n'est pas parti. Pas de pression — juste la prochaine mission quand vous êtes prêt.",
-      "variant5": "De retour. Votre progression est intacte. Continuez."
+      "shortAbsence": "Ravi de vous retrouver. Votre progression est exactement là où vous l'avez laissée.",
+      "oneWeekAbsence": "Ça fait une semaine. Pas de souci — votre savoir n'expire pas. Reprenez là où vous vous êtes arrêté.",
+      "twoWeekAbsence": "Vous avez été absent un moment. Tout est encore là. Quand vous êtes prêt, la prochaine mission vous attend.",
+      "longAbsence": "Bienvenue. Ça fait un moment, mais ce que vous avez appris n'est pas parti. Pas de pression — juste la prochaine mission quand vous êtes prêt.",
+      "generic": "De retour. Votre progression est intacte. Continuez."
     },
-    "conceptRefresher": {
+    "refresher": {
       "variant1": "Avant de commencer, voici un rappel rapide de ce sur quoi cette mission s'appuie.",
       "variant2": "Ça fait un moment que vous n'avez pas abordé ce sujet. Un récapitulatif rapide avant de plonger.",
       "variant3": "Cette mission fait référence à quelque chose vu plus tôt. Voici l'idée clé — trente secondes, et vous êtes prêt."
+    },
+    "postMission": {
+      "correct1": "Correct. Une pièce supplémentaire dans le tableau.",
+      "correct2": "Bien joué. Ce concept est maintenant le vôtre.",
+      "correct3": "Réussi. On passe à la suite.",
+      "correct4": "C'est ça. Vous venez d'ajouter quelque chose qui se capitalise.",
+      "chapterComplete1": "Chapitre terminé. Vous avez couvert l'intégralité de ce sujet. Le chapitre suivant s'appuie sur ce que vous venez de finir.",
+      "chapterComplete2": "Voilà pour ce chapitre. Chaque concept qu'il contient fait maintenant partie de votre base.",
+      "chapterComplete3": "Chapitre terminé. Prenez un moment — c'est une vraie progression.",
+      "categoryComplete1": "Catégorie terminée. Vous avez tout fini dans cette section. La catégorie suivante va plus loin avec ce que vous avez appris.",
+      "categoryComplete2": "Vous avez terminé cette catégorie. Six sections au total — en voilà une de faite. Continuez."
     }
   },
   "reveals": {
@@ -407,40 +416,48 @@
     "learnMoreLink": "En savoir plus sur notre approche éditoriale"
   },
   "certificate": {
+    "headline": "Vous avez terminé Transcendence.",
+    "subheadline": "Six catégories. 69 missions. Tout est fait.",
+    "completedOn": "Date d'obtention",
+    "shareTitle": "Partagez votre accomplissement",
+    "shareBody": "Je viens de terminer Transcendence — un cours complet de littératie blockchain. 69 missions, zéro raccourci.",
+    "downloadButton": "Télécharger en PDF",
+    "shareButton": "Partager mon certificat",
+    "linkedInButton": "Ajouter à LinkedIn",
     "title": "Certificat d'accomplissement",
     "subtitle": "Délivré à",
     "completionStatement": "a complété avec succès l'intégralité du programme Transcendence — 6 catégories, {{chapterCount}} chapitres, {{missionCount}} missions.",
     "dateLabel": "Date d'obtention",
-    "shareButton": "Partager mon certificat",
-    "downloadButton": "Télécharger en PDF",
-    "linkedinButton": "Ajouter à LinkedIn",
     "toastTitle": "Certificat obtenu.",
     "toastBody": "Votre preuve de complétion est prête à être partagée.",
     "programName": "Transcendence — Littératie Blockchain",
     "verificationLabel": "Vérification"
   },
   "social": {
-    "friends": {
+    "friendsList": {
       "title": "Amis",
       "addFriend": "Ajouter un ami",
       "searchPlaceholder": "Rechercher par nom d'utilisateur",
+      "noFriendsYet": "Vous n'avez pas encore d'amis sur Transcendence. Invitez quelqu'un et apprenez ensemble.",
       "pendingRequests": "Demandes en attente",
+      "acceptButton": "Accepter",
+      "declineButton": "Refuser",
+      "removeButton": "Retirer",
       "friendsSince": "Amis depuis {{date}}",
       "removeFriend": "Retirer de mes amis",
       "blockUser": "Bloquer",
-      "acceptRequest": "Accepter",
-      "declineRequest": "Refuser",
       "requestSent": "Demande envoyée",
-      "noFriendsYet": "Vous n'avez pas encore d'amis sur Transcendence. Invitez quelqu'un et apprenez ensemble.",
       "friendCount": "{{count}} ami",
       "friendCount_plural": "{{count}} amis"
     },
-    "profile": {
-      "editProfile": "Modifier le profil",
-      "publicProfile": "Profil public",
+    "publicProfile": {
+      "missions": "Missions complétées",
+      "tokens": "Solde KT",
+      "streak": "Série en cours",
+      "achievements": "Succès débloqués",
       "joinedDate": "Membre depuis {{date}}",
-      "missionsCompleted": "Missions complétées",
-      "currentStreak": "Série en cours",
+      "friendSince": "Amis depuis",
+      "editProfile": "Modifier le profil",
       "longestStreak": "Meilleure série",
       "tokenBalance": "Solde KT",
       "achievementsUnlocked": "Succès débloqués",
@@ -451,6 +468,15 @@
     }
   },
   "notifications": {
+    "achievement_unlocked": "Succès débloqué",
+    "streak_milestone": "Étape de série atteinte",
+    "friend_request": "Nouvelle demande d'ami",
+    "friend_accepted": "Demande d'ami acceptée",
+    "mission_reminder": "Rappel de mission",
+    "level_up": "Niveau supérieur atteint",
+    "token_earned": "Jetons gagnés",
+    "gas_deducted": "Gas déduit",
+    "system_message": "Message système",
     "title": "Notifications",
     "markAllRead": "Tout marquer comme lu",
     "noNotifications": "Aucune notification pour le moment. Continuez à apprendre !",
@@ -494,30 +520,10 @@
     "requiredField": "Ce champ est obligatoire."
   },
   "emptyStates": {
-    "noFriends": {
-      "title": "Aucun ami pour l'instant",
-      "body": "Apprenez aux côtés d'autres. Recherchez un nom d'utilisateur pour envoyer votre première demande.",
-      "ctaLabel": "Trouver des amis"
-    },
-    "noNotifications": {
-      "title": "Aucune notification",
-      "body": "Tout est calme ici. Continuez à avancer dans le programme pour voir vos succès et mises à jour apparaître.",
-      "ctaLabel": "Reprendre le programme"
-    },
-    "noAchievements": {
-      "title": "Aucun succès encore",
-      "body": "Les succès se débloquent en progressant dans le programme. Votre premier vous attend après la première mission.",
-      "ctaLabel": "Commencer à apprendre"
-    },
-    "noMissionsAvailable": {
-      "title": "Aucune mission disponible",
-      "body": "Vous avez terminé toutes les missions disponibles pour l'instant. Revenez bientôt pour la suite.",
-      "ctaLabel": "Retour à l'accueil"
-    },
-    "leaderboardLoading": {
-      "title": "Classement en cours de chargement",
-      "body": "Les données arrivent. Encore quelques secondes.",
-      "ctaLabel": null
-    }
+    "noFriends": "Apprenez aux côtés d'autres. Recherchez un nom d'utilisateur pour envoyer votre première demande.",
+    "noNotifications": "Tout est calme ici. Continuez à avancer dans le programme pour voir vos succès et mises à jour apparaître.",
+    "noAchievements": "Les succès se débloquent en progressant dans le programme. Votre premier vous attend après la première mission.",
+    "noMissionsAvailable": "Vous avez terminé toutes les missions disponibles pour l'instant. Revenez bientôt pour la suite.",
+    "leaderboardLoading": "Les données arrivent. Encore quelques secondes."
   }
 }

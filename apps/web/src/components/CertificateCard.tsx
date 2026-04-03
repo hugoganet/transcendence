@@ -84,6 +84,21 @@ export function CertificateCard({ certificate, userName }: CertificateCardProps)
         <div className="text-xs opacity-80">
           Completed on {new Date(certificate.completionDate).toLocaleDateString()}
         </div>
+
+        {(certificate.nftTokenId !== undefined || certificate.contractAddress) && (
+          <div className="mt-4 border-t border-white/20 pt-4 text-xs opacity-80">
+            {certificate.nftTokenId !== undefined && (
+              <div className="mb-1">
+                <span className="font-semibold">Token ID:</span> {certificate.nftTokenId}
+              </div>
+            )}
+            {certificate.contractAddress && (
+              <div className="truncate">
+                <span className="font-semibold">Contract:</span> {certificate.contractAddress}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
