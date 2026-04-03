@@ -56,6 +56,8 @@ export const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   rolling: true,
+  // only that.. after 2 hours .....
+  proxy: true,
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
