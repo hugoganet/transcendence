@@ -359,6 +359,7 @@ export function sanitizeUser(user: {
     email: user.email,
     displayName: user.displayName,
     bio: user.bio,
+    ethereumWallet: user.ethereumWallet,
     avatarUrl: user.avatarUrl,
     locale: user.locale,
     ageConfirmed: user.ageConfirmed,

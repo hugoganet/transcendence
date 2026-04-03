@@ -22,6 +22,10 @@ export function ProfilePage() {
     document.title = "Profile — Transcendence";
   }, []);
 
+  useEffect(() => {
+    setEthereumWallet(user?.ethereumWallet ?? "");
+  }, [user?.ethereumWallet]);
+
   const handleSave = async (e: FormEvent) => {
     e.preventDefault();
     setErrors({});
