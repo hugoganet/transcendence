@@ -1,13 +1,22 @@
+/**
+ * @file CertificateCard — premium card showing curriculum completion with mouse-tracking glow effect.
+ * FR: CertificateCard — carte premium affichant la complétion d'un cursus avec effet lumineux suivant la souris.
+ */
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Certificate } from "@transcendence/shared";
 
+/** Props for CertificateCard. / FR: Props pour CertificateCard. */
 interface CertificateCardProps {
   certificate: Certificate;
   userName: string;
   shareUrl: string;
 }
 
+/**
+ * Displays a completion certificate with stats, NFT info, and an interactive glow effect.
+ * FR: Affiche un certificat de complétion avec statistiques, info NFT et un effet lumineux interactif.
+ */
 export function CertificateCard({ certificate, userName }: CertificateCardProps) {
   const { t } = useTranslation();
   const cardRef = useRef<HTMLDivElement>(null);

@@ -1,9 +1,14 @@
+/**
+ * @file ExerciseResult — displays score, gas fee, token balance, and per-item feedback.
+ * FR: ExerciseResult — affiche le score, les frais de gas, le solde de jetons et le feedback par item.
+ */
 import type { ExerciseResult as ExerciseResultType } from "@transcendence/shared";
 import { Check, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useReveals } from "../../contexts/RevealContext.js";
 import { Alert } from "../ui/Alert.js";
 
+/** Props for ExerciseResultView. / FR: Props pour ExerciseResultView. */
 interface ExerciseResultProps {
   result: ExerciseResultType;
 }

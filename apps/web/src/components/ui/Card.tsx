@@ -1,3 +1,7 @@
+/**
+ * @file Card — container card with optional mouse-tracking glow effect.
+ * FR: Card — carte conteneur avec effet lumineux optionnel suivant la souris.
+ */
 import { type ReactNode } from "react";
 import { useMouse } from "../../hooks/useMouse.js";
 

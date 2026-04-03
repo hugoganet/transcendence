@@ -1,3 +1,7 @@
+/**
+ * @file ProgressBar — animated horizontal progress bar with optional percentage label.
+ * FR: ProgressBar — barre de progression horizontale animée avec label de pourcentage optionnel.
+ */
 interface ProgressBarProps {
   value: number;
   max?: number;
@@ -11,7 +15,7 @@ export function ProgressBar({
   className = "",
   showLabel = false,
 }: ProgressBarProps) {
-  const percentage = Math.min(Math.round((value / max) * 100), 100);
+  const percentage = max > 0 ? Math.min(Math.round((value / max) * 100), 100) : 0;
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>

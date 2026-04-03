@@ -1,3 +1,7 @@
+/**
+ * @file ioredis singleton for rate limiting and Socket.IO adapter.
+ * FR: Singleton ioredis pour la limitation de debit et l'adaptateur Socket.IO.
+ */
 import "./env.js";
 import Redis from "ioredis";
 
@@ -33,8 +37,10 @@ if (!globalForRedis.redisClient) {
   });
 }
 
+/** Shared ioredis client instance. FR: Instance partagee du client ioredis. */
 export const redisClient: Redis = globalForRedis.redisClient;
 
+/** Gracefully close the ioredis connection. FR: Ferme proprement la connexion ioredis. */
 export async function disconnectRedis(): Promise<void> {
   await redisClient.quit();
   console.log("Redis disconnected.");

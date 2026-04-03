@@ -1,9 +1,14 @@
+/**
+ * @file ErrorBoundary — catches React rendering errors and displays a fallback UI.
+ * FR: ErrorBoundary — capture les erreurs de rendu React et affiche une interface de secours.
+ */
 import { Component, type ReactNode } from "react";
 import { AlertTriangle } from "lucide-react";
 import { Card } from "./ui/Card.js";
 import { Button } from "./ui/Button.js";
 import i18n from "../i18n.js";
 
+/** Props for ErrorBoundary. / FR: Props pour ErrorBoundary. */
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
@@ -14,6 +19,10 @@ interface State {
   error: Error | null;
 }
 
+/**
+ * React class component that catches child errors and renders a retry-able fallback.
+ * FR: Composant classe React qui capture les erreurs enfants et affiche un fallback avec option de réessai.
+ */
 export class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {
     super(props);

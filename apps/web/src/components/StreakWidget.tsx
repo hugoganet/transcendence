@@ -1,3 +1,7 @@
+/**
+ * @file StreakWidget — displays the user's current learning streak with flame icon.
+ * FR: StreakWidget — affiche la série d'apprentissage en cours de l'utilisateur avec une icône flamme.
+ */
 import type { StreakStatus } from "@transcendence/shared";
 import { Flame } from "lucide-react";
 import { useTranslation } from "react-i18next";

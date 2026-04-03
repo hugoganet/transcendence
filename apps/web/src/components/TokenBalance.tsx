@@ -1,3 +1,7 @@
+/**
+ * @file TokenBalance — shows the user's token balance, total earned, and total spent.
+ * FR: TokenBalance — affiche le solde de jetons de l'utilisateur, le total gagné et le total dépensé.
+ */
 import type { TokenBalance as TokenBalanceType } from "@transcendence/shared";
 import { Coins } from "lucide-react";
 import { useTranslation } from "react-i18next";

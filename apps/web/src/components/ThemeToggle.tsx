@@ -1,3 +1,7 @@
+/**
+ * @file ThemeToggle — button to switch between light and dark mode.
+ * FR: ThemeToggle — bouton pour basculer entre le mode clair et le mode sombre.
+ */
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext.js";
 

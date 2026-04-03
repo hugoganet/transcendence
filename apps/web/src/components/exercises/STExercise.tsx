@@ -1,3 +1,7 @@
+/**
+ * @file STExercise — step-through exercise with sequential prompts and per-step options.
+ * FR: STExercise — exercice par étapes avec questions séquentielles et options par étape.
+ */
 import { useState } from "react";
 import type { STExerciseContent } from "@transcendence/shared";
 import { useTranslation } from "react-i18next";

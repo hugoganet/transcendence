@@ -1,3 +1,7 @@
+/**
+ * @file MissionComplete — success screen shown after completing a mission with progress and rewards.
+ * FR: MissionComplete — écran de succès affiché après la complétion d'une mission avec progression et récompenses.
+ */
 import { Link } from "react-router-dom";
 import type { CompleteMissionResponse } from "@transcendence/shared";
 import { Check } from "lucide-react";

@@ -1,3 +1,8 @@
+/**
+ * @file Curriculum Routes — handles curriculum tree, mission details, completion, resume, and learning chain.
+ * FR: Routes du curriculum — gere l'arbre, details des missions, completion, reprise et chaine d'apprentissage.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -10,9 +15,10 @@ import {
   getLearningChain,
 } from "../services/curriculumService.js";
 
+/** Curriculum router — all /api/v1/curriculum endpoints. / FR: Routeur du curriculum. */
 export const curriculumRouter = Router();
 
-// GET /api/v1/curriculum — authenticated, returns full curriculum with progress overlay
+/** GET / — return full curriculum tree with user progress. / FR: Retourne l'arbre complet du curriculum avec la progression. */
 curriculumRouter.get(
   "/",
   requireAuth,
@@ -23,7 +29,7 @@ curriculumRouter.get(
   },
 );
 
-// GET /api/v1/curriculum/chain — authenticated, returns learning chain visualization
+/** GET /chain — return learning chain visualization. / FR: Retourne la visualisation de la chaine d'apprentissage. */
 curriculumRouter.get(
   "/chain",
   requireAuth,
@@ -35,7 +41,7 @@ curriculumRouter.get(
   },
 );
 
-// GET /api/v1/curriculum/missions/:missionId — authenticated, returns mission detail
+/** GET /missions/:missionId — return mission detail for user's locale. / FR: Retourne le detail de la mission selon la locale. */
 curriculumRouter.get(
   "/missions/:missionId",
   requireAuth,
@@ -49,7 +55,7 @@ curriculumRouter.get(
   },
 );
 
-// POST /api/v1/curriculum/missions/:missionId/complete — authenticated, marks mission completed
+/** POST /missions/:missionId/complete — mark mission completed, award tokens. / FR: Marque la mission terminee, attribue les tokens. */
 curriculumRouter.post(
   "/missions/:missionId/complete",
   requireAuth,
@@ -63,7 +69,7 @@ curriculumRouter.post(
   },
 );
 
-// GET /api/v1/curriculum/resume — authenticated, returns resume point
+/** GET /resume — return the next mission to work on. / FR: Retourne la prochaine mission a traiter. */
 curriculumRouter.get(
   "/resume",
   requireAuth,

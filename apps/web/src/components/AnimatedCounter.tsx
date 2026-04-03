@@ -1,5 +1,10 @@
+/**
+ * @file AnimatedCounter — animates a number from 0 to a target value on scroll into view.
+ * FR: AnimatedCounter — anime un nombre de 0 à une valeur cible lorsqu'il apparaît à l'écran.
+ */
 import { useState, useEffect, useRef } from "react";
 
+/** Props for AnimatedCounter. / FR: Props pour AnimatedCounter. */
 interface AnimatedCounterProps {
   target: number;
   duration?: number;
@@ -8,6 +13,10 @@ interface AnimatedCounterProps {
   suffix?: string;
 }
 
+/**
+ * Counts up from 0 to a target number with an animation triggered by IntersectionObserver.
+ * FR: Compte de 0 jusqu'à un nombre cible avec une animation déclenchée par IntersectionObserver.
+ */
 export function AnimatedCounter({
   target,
   duration = 1500,
@@ -20,7 +29,9 @@ export function AnimatedCounter({
   const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (hasAnimated.current) return;
+    hasAnimated.current = false;
+    setCount(0);
+    if (target <= 0) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {

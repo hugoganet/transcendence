@@ -1,3 +1,8 @@
+/**
+ * @file Exercise Routes — handles exercise submission and mission exercise status.
+ * FR: Routes d'exercices — gere la soumission des exercices et le statut par mission.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -7,9 +12,10 @@ import {
   getMissionExerciseStatus,
 } from "../services/exerciseService.js";
 
+/** Exercises router — all /api/v1/exercises endpoints. / FR: Routeur d'exercices. */
 export const exercisesRouter = Router();
 
-// POST /api/v1/exercises/:exerciseId/submit — authenticated, submit exercise answer
+/** POST /:exerciseId/submit — validate answer, record attempt, deduct gas fee. / FR: Valide la reponse, enregistre la tentative, deduit les frais de gas. */
 exercisesRouter.post(
   "/:exerciseId/submit",
   requireAuth,
@@ -23,7 +29,7 @@ exercisesRouter.post(
   },
 );
 
-// GET /api/v1/exercises/missions/:missionId/status — authenticated, get mission exercise status
+/** GET /missions/:missionId/status — return attempt count and completability. / FR: Retourne le nombre de tentatives et si la mission est completable. */
 exercisesRouter.get(
   "/missions/:missionId/status",
   requireAuth,

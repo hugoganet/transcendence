@@ -1,3 +1,7 @@
+/**
+ * @file SIExercise — single-input multiple-choice exercise with scenario and question.
+ * FR: SIExercise — exercice à choix unique avec scénario et question.
+ */
 import { useState } from "react";
 import type { SIExerciseContent } from "@transcendence/shared";
 import { useTranslation } from "react-i18next";

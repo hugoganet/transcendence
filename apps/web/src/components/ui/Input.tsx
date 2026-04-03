@@ -1,3 +1,7 @@
+/**
+ * @file Input — styled text input with error state and forwarded ref.
+ * FR: Input — champ de saisie stylisé avec état d'erreur et ref transmise.
+ */
 import { forwardRef, type InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {

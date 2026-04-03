@@ -1,3 +1,7 @@
+/**
+ * @file Online presence tracking via Redis set with debounced disconnect.
+ * FR: Suivi de presence en ligne via un set Redis avec deconnexion temporisee.
+ */
 import type { Server, Socket } from "socket.io";
 import { redisClient } from "../config/redis.js";
 import { prisma } from "../config/database.js";

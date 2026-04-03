@@ -1,3 +1,7 @@
+/**
+ * @file StatusBadge — colored pill showing item status (locked, available, inProgress, completed).
+ * FR: StatusBadge — pastille colorée indiquant le statut d'un élément (verrouillé, disponible, en cours, terminé).
+ */
 import { Check, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 

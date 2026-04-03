@@ -1,3 +1,7 @@
+/**
+ * @file Button — reusable button with variant styles and loading state.
+ * FR: Button — bouton réutilisable avec variantes de style et état de chargement.
+ */
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { Loader2 } from "lucide-react";
 

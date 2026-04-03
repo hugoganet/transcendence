@@ -1,3 +1,7 @@
+/**
+ * @file IPExercise — drag-and-drop ordering exercise for item positioning.
+ * FR: IPExercise — exercice de positionnement par glisser-déposer pour ordonner des éléments.
+ */
 import { useState } from "react";
 import type { IPExerciseContent } from "@transcendence/shared";
 import { GripVertical } from "lucide-react";

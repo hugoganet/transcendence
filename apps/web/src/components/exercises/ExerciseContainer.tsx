@@ -1,3 +1,7 @@
+/**
+ * @file ExerciseContainer — dispatches to the correct exercise component by type and handles submission.
+ * FR: ExerciseContainer — aiguille vers le bon composant d'exercice par type et gère la soumission.
+ */
 import { useState } from "react";
 import type {
   ExerciseResult,

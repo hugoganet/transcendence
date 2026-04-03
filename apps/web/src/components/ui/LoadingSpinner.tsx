@@ -1,12 +1,16 @@
+/**
+ * @file LoadingSpinner — spinner and skeleton loading indicators.
+ * FR: LoadingSpinner — indicateurs de chargement spinner et skeleton.
+ */
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   variant?: "spinner" | "dots";
 }
 
 const sizeConfig = {
-  sm: { container: "h-4 w-4", dot: "h-1.5 w-1.5", ring: "h-4 w-4" },
-  md: { container: "h-8 w-8", dot: "h-2 w-2", ring: "h-8 w-8" },
-  lg: { container: "h-12 w-12", dot: "h-3 w-3", ring: "h-12 w-12" },
+  sm: { container: "h-4", dot: "h-1.5 w-1.5", ring: "h-4 w-4" },
+  md: { container: "h-8", dot: "h-2 w-2", ring: "h-8 w-8" },
+  lg: { container: "h-12", dot: "h-3 w-3", ring: "h-12 w-12" },
 };
 
 export function LoadingSpinner({ size = "md", variant = "dots" }: LoadingSpinnerProps) {

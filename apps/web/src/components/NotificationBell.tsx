@@ -1,9 +1,17 @@
+/**
+ * @file NotificationBell — bell icon with badge and dropdown listing recent notifications.
+ * FR: NotificationBell — icône cloche avec badge et menu déroulant listant les notifications récentes.
+ */
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Bell } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNotifications } from "../contexts/NotificationContext.js";
 
+/**
+ * Renders a notification bell with unread count badge and a dropdown of recent notifications.
+ * FR: Affiche une cloche de notifications avec un badge de non-lus et un dropdown des notifications récentes.
+ */
 export function NotificationBell() {
   const { t } = useTranslation();
   const { notifications, unreadCount, markAsRead } = useNotifications();

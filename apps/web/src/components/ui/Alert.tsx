@@ -1,3 +1,7 @@
+/**
+ * @file Alert — themed alert banner for success, error, and info messages.
+ * FR: Alert — bannière d'alerte thématique pour les messages de succès, erreur et information.
+ */
 import type { ReactNode } from "react";
 
 type AlertVariant = "success" | "error" | "info";

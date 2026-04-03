@@ -1,3 +1,7 @@
+/**
+ * @file CMExercise — concept-matching exercise where users pair terms with definitions.
+ * FR: CMExercise — exercice d'association de concepts où l'utilisateur relie termes et définitions.
+ */
 import { useState } from "react";
 import type { CMExerciseContent } from "@transcendence/shared";
 import { ArrowRight } from "lucide-react";

@@ -1,3 +1,7 @@
+/**
+ * @file FormField — labeled form wrapper with optional error message.
+ * FR: FormField — wrapper de formulaire avec label et message d'erreur optionnel.
+ */
 import type { ReactNode } from "react";
 
 interface FormFieldProps {

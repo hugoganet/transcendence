@@ -1,3 +1,7 @@
+/**
+ * @file ExerciseTypeBadge — small badge showing the exercise type code and label.
+ * FR: ExerciseTypeBadge — petit badge affichant le code et le libellé du type d'exercice.
+ */
 import { useTranslation } from "react-i18next";
 
 type ExerciseTypeValue = "SI" | "CM" | "IP" | "ST";

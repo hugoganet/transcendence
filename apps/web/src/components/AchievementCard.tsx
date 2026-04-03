@@ -1,3 +1,7 @@
+/**
+ * @file AchievementCard — displays an achievement with rank-based styling and unlock status.
+ * FR: AchievementCard — affiche un succès avec un style basé sur la rareté et le statut de déblocage.
+ */
 import type { AchievementStatus } from "@transcendence/shared";
 import { Award, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -35,11 +39,16 @@ const rankStyles: Record<AchievementRank, { border: string; bg: string; icon: st
   },
 };
 
+/** Props for AchievementCard. / FR: Props pour AchievementCard. */
 interface AchievementCardProps {
   achievement: AchievementStatus;
   rank?: AchievementRank;
 }
 
+/**
+ * Displays a card with achievement details, rank badge, and unlock status.
+ * FR: Affiche une carte avec les détails du succès, le badge de rareté et le statut de déblocage.
+ */
 export function AchievementCard({ achievement, rank = "common" }: AchievementCardProps) {
   const { t } = useTranslation();
   const isEarned = achievement.earnedAt !== null;
