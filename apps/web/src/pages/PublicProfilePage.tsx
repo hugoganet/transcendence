@@ -31,7 +31,7 @@ export function PublicProfilePage() {
       // still load the profile, just skip friendship checks
       usersApi.getPublicProfile(userId).then((data) => {
         setProfile(data);
-        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Transcendence`;
+        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Unblock.chain`;
         setIsLoading(false);
       }, () => { setError(t("pages.publicProfile.loadError")); setIsLoading(false); });
       return;
@@ -49,7 +49,7 @@ export function PublicProfilePage() {
       ([data, friends, incoming, sent]) => {
         if (cancelled) return;
         setProfile(data);
-        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Transcendence`;
+        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Unblock.chain`;
         if (friends.some((f) => f.id === userId)) setFriendStatus("friends");
         else if (incoming.some((p) => p.id === userId) || sent.some((p) => p.id === userId)) setFriendStatus("pending");
         else setFriendStatus("none");
@@ -106,23 +106,23 @@ export function PublicProfilePage() {
               className="h-20 w-20 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-200 text-2xl font-bold text-gray-400">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-2xl font-bold text-gray-400 dark:text-warm-300">
               {(profile.displayName ?? "?")[0].toUpperCase()}
             </div>
           )}
-          <h1 className="mt-3 text-xl font-bold text-gray-900 font-heading">
+          <h1 className="mt-3 text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
             {profile.displayName ?? t("pages.publicProfile.anonymous")}
           </h1>
 
-          <div className="mt-3 flex gap-6 text-sm text-gray-500">
+          <div className="mt-3 flex gap-6 text-sm text-gray-500 dark:text-warm-200">
             <div>
-              <span className="block text-lg font-bold text-gray-900">
+              <span className="block text-lg font-bold text-gray-900 dark:text-warm-50">
                 {profile.xp}
               </span>
               {t("pages.publicProfile.xp")}
             </div>
             <div>
-              <span className="block text-lg font-bold text-gray-900">
+              <span className="block text-lg font-bold text-gray-900 dark:text-warm-50">
                 {profile.currentStreak}
               </span>
               {t("social.publicProfile.streak")}
@@ -145,17 +145,17 @@ export function PublicProfilePage() {
             </Button>
           )}
           {friendStatus === "pending" && (
-            <p className="mt-4 text-sm text-gray-500">{t("pages.publicProfile.requestPending")}</p>
+            <p className="mt-4 text-sm text-gray-500 dark:text-warm-200">{t("pages.publicProfile.requestPending")}</p>
           )}
           {friendStatus === "friends" && (
-            <p className="mt-4 text-sm text-green-600">{t("pages.publicProfile.alreadyFriends")}</p>
+            <p className="mt-4 text-sm text-green-600 dark:text-green-400">{t("pages.publicProfile.alreadyFriends")}</p>
           )}
         </div>
       </Card>
 
       {profile.achievements.length > 0 && (
         <Card>
-          <h2 className="mb-3 text-sm font-semibold text-gray-900">
+          <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
             {t("pages.publicProfile.achievementsHeading", { count: profile.achievements.length })}
           </h2>
           <div className="space-y-2">

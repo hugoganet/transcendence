@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useScrollReveal } from "../hooks/useScrollReveal.js";
 import type {
   TokenBalance,
   TokenTransaction,
@@ -29,7 +30,7 @@ export function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    document.title = `${t("pages.dashboard.title")} — Transcendence`;
+    document.title = `${t("pages.dashboard.title")} — Unblock.chain`;
     let cancelled = false;
 
     Promise.all([
@@ -71,6 +72,9 @@ export function DashboardPage() {
   }
 
   const earnedAchievements = achievements.filter((a) => a.earnedAt !== null);
+  const chainRef = useScrollReveal<HTMLDivElement>({ delay: 100 });
+  const txRef = useScrollReveal<HTMLDivElement>({ delay: 200 });
+  const achRef = useScrollReveal<HTMLDivElement>({ delay: 300 });
 
   return (
     <div className="space-y-6">
@@ -86,7 +90,7 @@ export function DashboardPage() {
 
       {/* Learning chain */}
       {chain && chain.blocks.length > 0 && (
-        <Card>
+        <div ref={chainRef}><Card>
           <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
             {t("pages.dashboard.learningChain", { count: chain.totalBlocks })}
           </h2>
@@ -100,23 +104,23 @@ export function DashboardPage() {
                 <span className="text-xs font-bold text-primary">
                   #{block.index + 1}
                 </span>
-                <span className="mt-0.5 max-w-[80px] truncate text-xs text-gray-600 dark:text-warm-300">
+                <span className="mt-0.5 max-w-[80px] truncate text-xs text-gray-600 dark:text-warm-200">
                   {block.missionTitle}
                 </span>
               </Link>
             ))}
           </div>
           {chain.totalBlocks > 20 && (
-            <p className="mt-2 text-xs text-gray-400 dark:text-warm-500">
+            <p className="mt-2 text-xs text-gray-400 dark:text-warm-200">
               {t("pages.dashboard.learningChainTruncated", { total: chain.totalBlocks })}
             </p>
           )}
-        </Card>
+        </Card></div>
       )}
 
       {/* Token history */}
       {transactions.length > 0 && (
-        <Card>
+        <div ref={txRef}><Card>
           <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
             {t("pages.dashboard.recentTransactions")}
           </h2>
@@ -128,7 +132,7 @@ export function DashboardPage() {
               >
                 <div>
                   <p className="text-sm text-gray-900 dark:text-warm-50">{tx.description}</p>
-                  <p className="text-xs text-gray-400 dark:text-warm-500">
+                  <p className="text-xs text-gray-400 dark:text-warm-200">
                     {new Date(tx.createdAt).toLocaleDateString()}
                   </p>
                 </div>
@@ -143,12 +147,12 @@ export function DashboardPage() {
               </div>
             ))}
           </div>
-        </Card>
+        </Card></div>
       )}
 
       {/* Achievements */}
       {earnedAchievements.length > 0 && (
-        <div>
+        <div ref={achRef}>
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-gray-900 dark:text-warm-50">
               {t("pages.dashboard.achievements", { earned: earnedAchievements.length, total: achievements.length })}

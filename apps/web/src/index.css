@@ -3,6 +3,9 @@
 
 @import "tailwindcss";
 
+/* Dark mode: use .dark class on <html> instead of prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Colors — Teal (Primary) */
   --color-teal-50: #E6F5F5;
@@ -113,4 +116,29 @@
 
 .animate-skeleton {
   animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Text reveal — cinematic blur-in per character */
+@keyframes char-reveal {
+  0% { opacity: 0; filter: blur(12px); transform: translateY(40%) scale(1.1); }
+  50% { opacity: 0.7; filter: blur(4px); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+
+/* Floating particle animation */
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+  50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+}
+
+/* Staggered list fade-in */
+@keyframes stagger-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Gradient border glow for focused inputs */
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(43, 158, 158, 0.2); }
+  50% { box-shadow: 0 0 16px rgba(43, 158, 158, 0.4); }
 }

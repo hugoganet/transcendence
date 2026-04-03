@@ -46,28 +46,28 @@ export function AppLayout() {
     <>
       <Link
         to="/home"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.home")}
       </Link>
       <Link
         to="/curriculum"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.curriculum")}
       </Link>
       <Link
         to="/leaderboard"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.leaderboard")}
       </Link>
       <Link
         to="/achievements"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.achievements")}
@@ -75,7 +75,7 @@ export function AppLayout() {
       {dashboardRevealed && (
         <Link
           to="/dashboard"
-          className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+          className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
           onClick={onClick}
         >
           {t("labels.dashboard")}
@@ -83,14 +83,14 @@ export function AppLayout() {
       )}
       <Link
         to="/friends"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.friends")}
       </Link>
       <Link
         to="/glossary"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.glossary")}
@@ -105,13 +105,17 @@ export function AppLayout() {
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
           <Link
             to="/home"
-            className="text-lg font-bold text-primary font-heading dark:text-teal-400"
+            className="flex items-center gap-2 text-lg font-bold font-heading"
           >
-            Transcendence
+            <img src="/blocky-logo.png" alt="" className="h-8 w-8 rounded" />
+            <span>
+              <span className="text-primary dark:text-teal-400">Unblock</span>
+              <span className="text-amber-500">.chain</span>
+            </span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-5 md:flex">
+          <nav className="hidden items-center gap-5 md:flex ml-6">
             {navLinks()}
 
             {/* Streak + Tokens in nav */}
@@ -126,13 +130,13 @@ export function AppLayout() {
               <NotificationBell />
               <Link
                 to="/profile"
-                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
               >
                 {user?.displayName || user?.email}
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-sm text-gray-500 hover:text-red-600 dark:text-warm-400"
+                className="text-sm text-gray-500 hover:text-red-600 dark:text-warm-200"
               >
                 {t("labels.logout")}
               </button>
@@ -150,9 +154,9 @@ export function AppLayout() {
               aria-label={t("labels.toggleMenu")}
             >
               {menuOpen ? (
-                <X className="h-6 w-6 text-gray-600 dark:text-warm-300" />
+                <X className="h-6 w-6 text-gray-600 dark:text-warm-200" />
               ) : (
-                <Menu className="h-6 w-6 text-gray-600 dark:text-warm-300" />
+                <Menu className="h-6 w-6 text-gray-600 dark:text-warm-200" />
               )}
             </button>
           </div>
@@ -165,7 +169,7 @@ export function AppLayout() {
               {navLinks(() => setMenuOpen(false))}
               <Link
                 to="/profile"
-                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
                 onClick={() => setMenuOpen(false)}
               >
                 {t("labels.profile")}

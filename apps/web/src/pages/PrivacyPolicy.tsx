@@ -6,7 +6,7 @@ export function PrivacyPolicy() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = `${t("pages.privacyPolicy.title")} — Transcendence`;
+    document.title = `${t("pages.privacyPolicy.title")} — Unblock.chain`;
   }, [t]);
 
   return (

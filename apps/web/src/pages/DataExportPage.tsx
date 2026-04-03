@@ -12,7 +12,7 @@ export function DataExportPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = `${t("pages.dataExport.title")} — Transcendence`;
+    document.title = `${t("pages.dataExport.title")} — Unblock.chain`;
   }, []);
 
   const handleExport = async () => {
@@ -31,16 +31,16 @@ export function DataExportPage() {
 
   return (
     <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 font-heading">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
         {t("pages.dataExport.title")}
       </h1>
 
       <Card>
         <div className="space-y-4">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-warm-200">
             {t("pages.dataExport.body1")}
           </p>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-warm-200">
             {t("pages.dataExport.body2")}
           </p>
 

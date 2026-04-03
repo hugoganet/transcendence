@@ -428,10 +428,6 @@
     "gas_deducted": "Gas deducted",
     "system_message": "Update from Transcendence"
   },
-  "theme": {
-    "switchToLight": "Switch to light mode",
-    "switchToDark": "Switch to dark mode"
-  },
   "errors": {
     "networkError": "Can't reach the server right now. Check your connection and try again.",
     "serverError": "Something went wrong on our end. Try again in a moment.",
@@ -591,18 +587,7 @@
       "notFound": "Certificate not found",
       "certificateOfCompletion": "Certificate of Completion",
       "awardedTo": "Awarded to",
-      "verifiedOn": "Verified on Transcendence",
-      "importNftTitle": "Import NFT to Your Wallet",
-      "importNftStep1": "Open MetaMask (or your preferred wallet)",
-      "importNftStep2": "Go to the NFTs tab",
-      "importNftStep3": "Click Import NFT",
-      "importNftStep4": "Enter the contract address and token ID below",
-      "importNftStep5": "Make sure you're connected to the Avalanche C-Chain network",
-      "contractAddress": "Contract Address",
-      "tokenId": "Token ID",
-      "copyContractAddress": "Copy contract address",
-      "copyTokenId": "Copy token ID",
-      "viewOnSnowtrace": "View transaction on Snowtrace"
+      "verifiedOn": "Verified on Transcendence"
     },
     "glossary": {
       "title": "Glossary",

@@ -9,8 +9,12 @@ export function AuthLayout() {
         <ThemeToggle />
         <LanguageSwitcher variant="pill" />
       </div>
-      <Link to="/" className="mb-8 text-2xl font-bold text-primary font-heading dark:text-teal-400">
-        Transcendence
+      <Link to="/" className="mb-8 flex items-center gap-3 text-2xl font-bold font-heading">
+        <img src="/blocky-logo.png" alt="" className="h-10 w-10 rounded" />
+        <span>
+          <span className="text-primary dark:text-teal-400">Unblock</span>
+          <span className="text-amber-500">.chain</span>
+        </span>
       </Link>
       <div className="w-full max-w-md animate-fade-in-up">
         <Outlet />

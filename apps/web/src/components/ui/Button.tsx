@@ -17,7 +17,7 @@ const variantClasses: Record<ButtonVariant, string> = {
   danger:
     "bg-red-600 text-white hover:bg-red-700 hover:shadow-md focus-visible:ring-red-500/50",
   ghost:
-    "bg-transparent text-gray-700 dark:text-warm-300 hover:bg-gray-100 dark:hover:bg-warm-700 focus-visible:ring-gray-300",
+    "bg-transparent text-gray-700 dark:text-warm-200 hover:bg-gray-100 dark:hover:bg-warm-700 focus-visible:ring-gray-300",
 };
 
 export function Button({

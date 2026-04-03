@@ -6,7 +6,7 @@ export function Settings() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = `${t("settings.title")} — Transcendence`;
+    document.title = `${t("settings.title")} — Unblock.chain`;
   }, [t]);
 
   return (

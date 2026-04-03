@@ -2,6 +2,7 @@ import type { TokenBalance as TokenBalanceType } from "@transcendence/shared";
 import { Coins } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useReveals } from "../contexts/RevealContext.js";
+import { AnimatedCounter } from "./AnimatedCounter.js";
 
 interface TokenBalanceProps {
   balance: TokenBalanceType;
@@ -24,7 +25,7 @@ export function TokenBalanceDisplay({
         title={t("gamification.tokens.tokenBalance")}
       >
         <Coins className="h-4 w-4 text-secondary" />
-        <span className="font-medium text-gray-700 dark:text-warm-300">
+        <span className="font-medium text-gray-700 dark:text-warm-200">
           {balance.tokenBalance}
         </span>
       </div>
@@ -39,12 +40,12 @@ export function TokenBalanceDisplay({
         </div>
         <div>
           <p className="text-2xl font-bold text-gray-900 dark:text-warm-50">
-            {balance.tokenBalance}
+            <AnimatedCounter target={balance.tokenBalance} />
           </p>
-          <p className="text-xs text-gray-500 dark:text-warm-400">{t("gamification.tokens.tokenBalance")}</p>
+          <p className="text-xs text-gray-500 dark:text-warm-200">{t("gamification.tokens.tokenBalance")}</p>
         </div>
       </div>
-      <div className="mt-3 flex gap-4 border-t border-gray-100 dark:border-warm-700 pt-3 text-xs text-gray-400 dark:text-warm-500">
+      <div className="mt-3 flex gap-4 border-t border-gray-100 dark:border-warm-700 pt-3 text-xs text-gray-400 dark:text-warm-200">
         <span>{t("labels.earned")} {balance.totalEarned}</span>
         <span>{t("labels.spent")} {balance.totalSpent}</span>
       </div>
