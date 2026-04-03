@@ -27,7 +27,7 @@ export function NotificationBell() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-1 text-gray-500 hover:text-gray-700 dark:text-warm-400 dark:hover:text-warm-200"
+        className="relative p-1 text-gray-500 hover:text-gray-700 dark:text-warm-200 dark:hover:text-warm-200"
         aria-label={t("labels.notifications")}
       >
         <Bell className="h-5 w-5" />
@@ -46,7 +46,7 @@ export function NotificationBell() {
             </span>
           </div>
           {recent.length === 0 ? (
-            <p className="px-4 py-6 text-center text-sm text-gray-400 dark:text-warm-500">
+            <p className="px-4 py-6 text-center text-sm text-gray-400 dark:text-warm-200">
               {t("labels.noNotificationsYet")}
             </p>
           ) : (
@@ -62,7 +62,7 @@ export function NotificationBell() {
                   }`}
                 >
                   <p className="font-medium text-gray-900 dark:text-warm-50">{notif.title}</p>
-                  <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-400">{notif.body}</p>
+                  <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-200">{notif.body}</p>
                 </button>
               ))}
             </div>

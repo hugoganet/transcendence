@@ -23,7 +23,7 @@ export function HomePage() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
           {user?.displayName ? t("pages.home.welcomeNamed", { name: user.displayName }) : t("pages.home.welcome")}
         </h1>
-        <p className="mt-1 text-gray-500 dark:text-warm-400">
+        <p className="mt-1 text-gray-500 dark:text-warm-200">
           {t("pages.home.subtitle")}
         </p>
       </div>
@@ -36,10 +36,10 @@ export function HomePage() {
         <Card>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-400 dark:text-warm-500">
+              <span className="text-xs font-medium text-gray-400 dark:text-warm-200">
                 {t("pages.home.nextMission")}
               </span>
-              <span className="text-xs text-gray-500 dark:text-warm-400">
+              <span className="text-xs text-gray-500 dark:text-warm-200">
                 {resume.chapterTitle}
               </span>
             </div>
@@ -69,7 +69,7 @@ export function HomePage() {
             <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
               {t("pages.home.startLearning")}
             </h2>
-            <p className="mb-6 text-sm text-gray-500 dark:text-warm-400">
+            <p className="mb-6 text-sm text-gray-500 dark:text-warm-200">
               {t("pages.home.startLearningSubtitle")}
             </p>
             <Link to="/curriculum">

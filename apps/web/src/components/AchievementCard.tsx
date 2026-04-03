@@ -35,16 +35,16 @@ export function AchievementCard({ achievement }: AchievementCardProps) {
               )}
             </>
           ) : (
-            <Lock className="h-5 w-5 text-gray-400 dark:text-warm-500" />
+            <Lock className="h-5 w-5 text-gray-400 dark:text-warm-200" />
           )}
         </div>
         <div className="min-w-0">
           <h3
-            className={`text-sm font-semibold ${isEarned ? "text-gray-900 dark:text-warm-50" : "text-gray-500 dark:text-warm-500"}`}
+            className={`text-sm font-semibold ${isEarned ? "text-gray-900 dark:text-warm-50" : "text-gray-500 dark:text-warm-200"}`}
           >
             {achievement.title}
           </h3>
-          <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-400">
+          <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-200">
             {achievement.description}
           </p>
           {isEarned && achievement.earnedAt && (

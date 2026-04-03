@@ -100,14 +100,14 @@ export function DashboardPage() {
                 <span className="text-xs font-bold text-primary">
                   #{block.index + 1}
                 </span>
-                <span className="mt-0.5 max-w-[80px] truncate text-xs text-gray-600 dark:text-warm-300">
+                <span className="mt-0.5 max-w-[80px] truncate text-xs text-gray-600 dark:text-warm-200">
                   {block.missionTitle}
                 </span>
               </Link>
             ))}
           </div>
           {chain.totalBlocks > 20 && (
-            <p className="mt-2 text-xs text-gray-400 dark:text-warm-500">
+            <p className="mt-2 text-xs text-gray-400 dark:text-warm-200">
               {t("pages.dashboard.learningChainTruncated", { total: chain.totalBlocks })}
             </p>
           )}
@@ -128,7 +128,7 @@ export function DashboardPage() {
               >
                 <div>
                   <p className="text-sm text-gray-900 dark:text-warm-50">{tx.description}</p>
-                  <p className="text-xs text-gray-400 dark:text-warm-500">
+                  <p className="text-xs text-gray-400 dark:text-warm-200">
                     {new Date(tx.createdAt).toLocaleDateString()}
                   </p>
                 </div>

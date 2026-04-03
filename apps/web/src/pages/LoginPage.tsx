@@ -156,7 +156,7 @@ export function LoginPage() {
             {t("auth.login.forgotPassword")}
           </Link>
         </p>
-        <p className="text-gray-500 dark:text-warm-400">
+        <p className="text-gray-500 dark:text-warm-200">
           {t("auth.login.noAccount")}{" "}
           <Link
             to="/register"

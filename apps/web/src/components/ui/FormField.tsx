@@ -12,7 +12,7 @@ export function FormField({ label, error, children, htmlFor }: FormFieldProps) {
     <div className="space-y-1.5">
       <label
         htmlFor={htmlFor}
-        className="block text-sm font-medium text-gray-700 dark:text-warm-300"
+        className="block text-sm font-medium text-gray-700 dark:text-warm-200"
       >
         {label}
       </label>

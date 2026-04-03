@@ -73,7 +73,7 @@ export function LeaderboardPage() {
               <p className="text-sm font-medium text-gray-900 dark:text-warm-50">
                 {currentUser.displayName ?? t("pages.leaderboard.you")}
               </p>
-              <p className="text-xs text-gray-500 dark:text-warm-400">
+              <p className="text-xs text-gray-500 dark:text-warm-200">
                 {t("pages.leaderboard.missionsThisWeek", { count: currentUser.missionsCompleted })}
               </p>
             </div>
@@ -84,14 +84,18 @@ export function LeaderboardPage() {
       {/* Leaderboard table */}
       <Card>
         {entries.length === 0 ? (
-          <p className="py-8 text-center text-sm text-gray-500 dark:text-warm-400">
+          <p className="py-8 text-center text-sm text-gray-500 dark:text-warm-200">
             {t("pages.leaderboard.noEntries")}
           </p>
         ) : (
           <div className="divide-y divide-gray-100 dark:divide-warm-700">
-            {entries.map((entry) => (
+            {entries.map((entry, i) => (
               <div
                 key={entry.userId}
+                style={{
+                  animation: "stagger-in 0.3s ease-out both",
+                  animationDelay: `${i * 40}ms`,
+                }}
                 className={`flex items-center gap-4 py-3 ${
                   currentUser && entry.userId === currentUser.userId
                     ? "bg-primary/5 -mx-6 px-6 rounded"
@@ -102,7 +106,7 @@ export function LeaderboardPage() {
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                     entry.rank <= 3
                       ? "bg-secondary/20 text-secondary"
-                      : "bg-gray-100 dark:bg-warm-700 text-gray-500 dark:text-warm-400"
+                      : "bg-gray-100 dark:bg-warm-700 text-gray-500 dark:text-warm-200"
                   }`}
                 >
                   {entry.rank}
@@ -118,7 +122,7 @@ export function LeaderboardPage() {
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-xs font-medium text-gray-500 dark:text-warm-400">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-xs font-medium text-gray-500 dark:text-warm-200">
                       {(entry.displayName ?? "?")[0].toUpperCase()}
                     </div>
                   )}
@@ -126,7 +130,7 @@ export function LeaderboardPage() {
                     {entry.displayName ?? t("pages.leaderboard.anonymous")}
                   </span>
                 </Link>
-                <span className="text-sm font-medium text-gray-600 dark:text-warm-300">
+                <span className="text-sm font-medium text-gray-600 dark:text-warm-200">
                   {entry.missionsCompleted}
                 </span>
               </div>
@@ -144,7 +148,7 @@ export function LeaderboardPage() {
             >
               {t("labels.previous")}
             </Button>
-            <span className="text-sm text-gray-500 dark:text-warm-400">
+            <span className="text-sm text-gray-500 dark:text-warm-200">
               {currentPage} / {totalPages}
             </span>
             <Button

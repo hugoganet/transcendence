@@ -21,7 +21,7 @@ function MissionNode({ mission }: { mission: MissionProgressOverlay }) {
     <div
       className={`flex items-center justify-between rounded-lg border px-3 py-2 transition-colors ${
         mission.status === "locked"
-          ? "border-gray-100 dark:border-warm-700 bg-gray-50 dark:bg-warm-900 text-gray-400 dark:text-warm-500"
+          ? "border-gray-100 dark:border-warm-700 bg-gray-50 dark:bg-warm-900 text-gray-400 dark:text-warm-200"
           : mission.status === "completed"
             ? "border-green-100 dark:border-green-800 bg-green-50/50 dark:bg-green-900/20"
             : "border-primary/20 bg-white dark:bg-warm-800 hover:border-primary/40"
@@ -29,7 +29,7 @@ function MissionNode({ mission }: { mission: MissionProgressOverlay }) {
     >
       <span
         className={`text-sm ${
-          mission.status === "locked" ? "text-gray-400 dark:text-warm-500" : "text-gray-900 dark:text-warm-50"
+          mission.status === "locked" ? "text-gray-400 dark:text-warm-200" : "text-gray-900 dark:text-warm-50"
         }`}
       >
         {mission.missionId}
@@ -67,7 +67,7 @@ function ChapterSection({
         aria-expanded={open}
       >
         <div className="flex items-center gap-3">
-          <span className="text-xs font-medium text-gray-400 dark:text-warm-500">
+          <span className="text-xs font-medium text-gray-400 dark:text-warm-200">
             {chapter.chapterId}
           </span>
           <div>
@@ -77,13 +77,13 @@ function ChapterSection({
               </span>
               <StatusBadge status={chapter.status} />
             </div>
-            <span className="text-xs text-gray-500 dark:text-warm-400">
+            <span className="text-xs text-gray-500 dark:text-warm-200">
               {completedCount}/{chapter.missions.length} {t("labels.missions")}
             </span>
           </div>
         </div>
         <ChevronDown
-          className={`h-5 w-5 text-gray-400 dark:text-warm-500 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`h-5 w-5 text-gray-400 dark:text-warm-200 transition-transform ${open ? "rotate-180" : ""}`}
         />
       </button>
 
@@ -127,7 +127,7 @@ function CategorySection({ category }: { category: CategoryProgressOverlay }) {
               </h2>
               <StatusBadge status={category.status} />
             </div>
-            <span className="text-xs text-gray-500 dark:text-warm-400">
+            <span className="text-xs text-gray-500 dark:text-warm-200">
               {completedMissions}/{totalMissions} {t("labels.missions")}
             </span>
           </div>
@@ -188,7 +188,7 @@ export function CurriculumPage() {
             showLabel
             className="flex-1"
           />
-          <span className="text-sm text-gray-500 dark:text-warm-400">
+          <span className="text-sm text-gray-500 dark:text-warm-200">
             {curriculum.completedMissions}/{curriculum.totalMissions} {t("labels.missions")}
           </span>
         </div>

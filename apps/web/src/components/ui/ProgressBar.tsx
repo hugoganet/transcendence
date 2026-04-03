@@ -28,7 +28,7 @@ export function ProgressBar({
         </div>
       </div>
       {showLabel && (
-        <span className="text-xs font-medium text-gray-500 dark:text-warm-400">{percentage}%</span>
+        <span className="text-xs font-medium text-gray-500 dark:text-warm-200">{percentage}%</span>
       )}
     </div>
   );

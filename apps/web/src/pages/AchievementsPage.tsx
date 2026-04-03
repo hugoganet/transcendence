@@ -54,14 +54,22 @@ export function AchievementsPage() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("pages.achievements.title")}
         </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-warm-400">
+        <p className="mt-1 text-sm text-gray-500 dark:text-warm-200">
           {t("pages.achievements.earnedCount", { earned: earned.length, total: achievements.length })}
         </p>
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        {achievements.map((achievement) => (
-          <AchievementCard key={achievement.id} achievement={achievement} />
+        {achievements.map((achievement, i) => (
+          <div
+            key={achievement.id}
+            style={{
+              animation: "stagger-in 0.4s ease-out both",
+              animationDelay: `${i * 60}ms`,
+            }}
+          >
+            <AchievementCard achievement={achievement} />
+          </div>
         ))}
       </div>
     </div>

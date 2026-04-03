@@ -13,7 +13,7 @@ export function NotFound() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 dark:bg-warm-900">
       <h1 className="mb-4 text-3xl font-bold text-gray-900 dark:text-warm-50">{t("errors.notFound")}</h1>
-      <p className="mb-6 text-gray-500 dark:text-warm-400">
+      <p className="mb-6 text-gray-500 dark:text-warm-200">
         {t("pages.notFound.body")}
       </p>
       <Link to="/">
