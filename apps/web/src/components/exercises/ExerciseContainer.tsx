@@ -21,6 +21,7 @@ import { STExercise } from "./STExercise.js";
 import { ExerciseResultView } from "./ExerciseResult.js";
 import { Alert } from "../ui/Alert.js";
 
+/** Props for ExerciseContainer. / FR: Props pour ExerciseContainer. */
 interface ExerciseContainerProps {
   exerciseId: string;
   exerciseType: string;
@@ -28,6 +29,10 @@ interface ExerciseContainerProps {
   onComplete: (result: ExerciseResult) => void;
 }
 
+/**
+ * Routes to the right exercise type (SI/CM/IP/ST), submits answers, and shows results.
+ * FR: Dirige vers le bon type d'exercice (SI/CM/IP/ST), soumet les réponses et affiche les résultats.
+ */
 export function ExerciseContainer({
   exerciseId,
   exerciseType,

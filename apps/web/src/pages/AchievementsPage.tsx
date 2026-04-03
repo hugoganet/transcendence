@@ -1,3 +1,7 @@
+/**
+ * @file AchievementsPage — displays all user achievements with unlock status and ranks.
+ * FR: Page Succès — affiche tous les succès utilisateur avec statut et rangs.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { AchievementStatus } from "@transcendence/shared";

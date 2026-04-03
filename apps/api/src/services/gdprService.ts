@@ -1,3 +1,8 @@
+/**
+ * @file GDPR Service — processes data export and account deletion requests.
+ * FR: Service RGPD — traite les demandes d'export de donnees et de suppression de compte.
+ */
+
 import { randomBytes } from "crypto";
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";

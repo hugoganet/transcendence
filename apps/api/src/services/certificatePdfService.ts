@@ -1,3 +1,8 @@
+/**
+ * @file Certificate PDF Service — generates PDF documents for earned certificates.
+ * FR: Service PDF de certificat — genere des documents PDF pour les certificats obtenus.
+ */
+
 import { jsPDF } from "jspdf";
 import type { Certificate } from "@transcendence/shared";
 

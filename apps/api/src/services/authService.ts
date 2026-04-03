@@ -1,3 +1,8 @@
+/**
+ * @file Auth Service — handles registration, login, 2FA, password reset and session management.
+ * FR: Service d'authentification — gere inscription, connexion, 2FA, reinitialisation de mot de passe et sessions.
+ */
+
 import crypto from "node:crypto";
 import bcrypt from "bcryptjs";
 import * as OTPAuth from "otpauth";

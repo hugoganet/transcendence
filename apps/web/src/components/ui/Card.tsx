@@ -5,12 +5,17 @@
 import { type ReactNode } from "react";
 import { useMouse } from "../../hooks/useMouse.js";
 
+/** Props for Card. / FR: Props pour Card. */
 interface CardProps {
   children: ReactNode;
   className?: string;
   glow?: boolean;
 }
 
+/**
+ * Renders a bordered card with hover lift and an optional radial glow on mouse move.
+ * FR: Affiche une carte bordée avec effet de levée au survol et un halo radial optionnel au mouvement de souris.
+ */
 export function Card({ children, className = "", glow = true }: CardProps) {
   const { mouse, ref } = useMouse<HTMLDivElement>();
   const showGlow = glow && mouse.x !== null && mouse.y !== null;

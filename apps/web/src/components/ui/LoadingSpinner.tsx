@@ -2,6 +2,7 @@
  * @file LoadingSpinner — spinner and skeleton loading indicators.
  * FR: LoadingSpinner — indicateurs de chargement spinner et skeleton.
  */
+/** Props for LoadingSpinner. / FR: Props pour LoadingSpinner. */
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   variant?: "spinner" | "dots";
@@ -13,6 +14,10 @@ const sizeConfig = {
   lg: { container: "h-12", dot: "h-3 w-3", ring: "h-12 w-12" },
 };
 
+/**
+ * Renders a loading indicator as bouncing dots or a spinning ring.
+ * FR: Affiche un indicateur de chargement sous forme de points rebondissants ou d'anneau tournant.
+ */
 export function LoadingSpinner({ size = "md", variant = "dots" }: LoadingSpinnerProps) {
   const cfg = sizeConfig[size];
 
@@ -56,6 +61,10 @@ export function LoadingSpinner({ size = "md", variant = "dots" }: LoadingSpinner
   );
 }
 
+/**
+ * Animated placeholder skeleton for content loading states.
+ * FR: Squelette animé de remplacement pour les états de chargement de contenu.
+ */
 export function Skeleton({ className = "" }: { className?: string }) {
   return (
     <div

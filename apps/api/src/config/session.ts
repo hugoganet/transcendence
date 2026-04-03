@@ -1,3 +1,7 @@
+/**
+ * @file Session Config — Redis-backed session middleware with secure cookie settings.
+ * FR: Config Session — middleware de session Redis avec cookies securises.
+ */
 import "./env.js";
 import { createClient } from "redis";
 import session from "express-session";
@@ -11,8 +15,10 @@ declare module "express-session" {
   }
 }
 
-// Node-redis client specifically for connect-redis session store
-// Separate from the ioredis client in config/redis.ts
+/**
+ * Redis client dedicated to the session store (node-redis, separate from ioredis).
+ * FR: Client Redis dedie au store de session (node-redis, distinct de ioredis).
+ */
 export const sessionRedisClient = createClient({
   url: process.env.REDIS_URL ?? "redis://localhost:6379",
 });
@@ -25,6 +31,10 @@ sessionRedisClient.on("ready", () => {
   console.log("Session Redis client connected.");
 });
 
+/**
+ * Gracefully close the session Redis connection.
+ * FR: Ferme proprement la connexion Redis de session.
+ */
 export async function disconnectSessionRedis(): Promise<void> {
   await sessionRedisClient.quit();
   console.log("Session Redis disconnected.");
@@ -50,6 +60,10 @@ const store = new RedisStore({
   client: sessionRedisClient,
 });
 
+/**
+ * Express session middleware configured with Redis store and secure cookies.
+ * FR: Middleware de session Express configure avec un store Redis et cookies securises.
+ */
 export const sessionMiddleware = session({
   store,
   secret: sessionSecret,

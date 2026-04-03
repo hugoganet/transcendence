@@ -1,3 +1,8 @@
+/**
+ * @file Reveal Service — manages progressive UI reveal mechanics per user.
+ * FR: Service de revelation — gere les mecaniques de revelation progressive de l'interface par utilisateur.
+ */
+
 import { prisma } from "../config/database.js";
 import type { RevealStatus } from "@transcendence/shared";
 

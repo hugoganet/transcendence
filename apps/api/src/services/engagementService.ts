@@ -1,3 +1,8 @@
+/**
+ * @file Engagement Service — manages re-engagement emails, streak reminders and notification preferences.
+ * FR: Service d'engagement — gere les emails de relance, rappels de serie et preferences de notification.
+ */
+
 import { prisma } from "../config/database.js";
 import { createAndPushNotification } from "./notificationService.js";
 import { sendReEngagementEmail, sendStreakReminderEmail } from "./emailService.js";

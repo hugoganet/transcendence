@@ -5,6 +5,10 @@
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext.js";
 
+/**
+ * Toggle button that switches the app between light and dark themes.
+ * FR: Bouton bascule qui alterne l'application entre thème clair et sombre.
+ */
 export function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 

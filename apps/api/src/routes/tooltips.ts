@@ -1,12 +1,18 @@
+/**
+ * @file Tooltips Routes — glossary lookup and single-term tooltip.
+ * FR: Routes Infobulles — consultation du glossaire et infobulle par terme.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
 import { termParamSchema } from "@transcendence/shared";
 import { getTooltip, getGlossary } from "../services/tooltipService.js";
 
+/** Tooltips router — all /api/v1/tooltips endpoints. / FR: Routeur infobulles. */
 export const tooltipsRouter = Router();
 
-// GET /api/v1/tooltips — authenticated, returns full glossary sorted alphabetically
+/** GET / — return full glossary sorted alphabetically. / FR: Retourne le glossaire complet tri par ordre alphabetique. */
 tooltipsRouter.get(
   "/",
   requireAuth,
@@ -18,7 +24,7 @@ tooltipsRouter.get(
   },
 );
 
-// GET /api/v1/tooltips/:term — authenticated, returns single tooltip
+/** GET /:term — return a single tooltip by term. / FR: Retourne une infobulle par terme. */
 tooltipsRouter.get(
   "/:term",
   requireAuth,

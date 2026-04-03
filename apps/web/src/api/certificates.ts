@@ -1,3 +1,7 @@
+/**
+ * @file Certificates API Client — fetch and share public certificates.
+ * FR: Client API Certificats — recuperation et partage de certificats publics.
+ */
 import type { PublicCertificate } from "@transcendence/shared";
 import { api } from "./client.js";
 

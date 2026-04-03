@@ -2,6 +2,7 @@
  * @file AnimatedText — reveals text character by character with staggered animation.
  * FR: AnimatedText — révèle le texte caractère par caractère avec une animation décalée.
  */
+/** Props for AnimatedText. / FR: Props pour AnimatedText. */
 interface AnimatedTextProps {
   text: string;
   className?: string;

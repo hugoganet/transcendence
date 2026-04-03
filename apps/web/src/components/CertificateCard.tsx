@@ -68,7 +68,7 @@ export function CertificateCard({ certificate, userName }: CertificateCardProps)
       {/* Diagonal gradient overlay */}
       <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-transparent via-transparent to-transparent opacity-10" />
 
-      {/* Content */}
+      {/* Content — always white text on the purple gradient, no dark: overrides needed */}
       <div className="relative z-10 text-center text-white">
         <div className="mb-2 text-xs font-semibold uppercase tracking-wider opacity-90">
           {t("pages.certificate.certificateOfCompletion")}

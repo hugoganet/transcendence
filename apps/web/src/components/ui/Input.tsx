@@ -4,10 +4,15 @@
  */
 import { forwardRef, type InputHTMLAttributes } from "react";
 
+/** Props for Input. / FR: Props pour Input. */
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
+/**
+ * Forwarded-ref input with border highlighting on error and dark mode support.
+ * FR: Input avec ref transmise, bordure d'erreur et support du mode sombre.
+ */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ error, className = "", ...props }, ref) => {
     return (

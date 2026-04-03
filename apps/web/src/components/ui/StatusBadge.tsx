@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 type Status = "locked" | "available" | "inProgress" | "completed";
 
+/** Props for StatusBadge. / FR: Props pour StatusBadge. */
 interface StatusBadgeProps {
   status: Status;
   className?: string;
@@ -26,6 +27,10 @@ const statusKeys: Record<Status, string> = {
   completed: "labels.completed",
 };
 
+/**
+ * Displays a status pill with icon and translated label.
+ * FR: Affiche une pastille de statut avec icône et libellé traduit.
+ */
 export function StatusBadge({ status, className = "" }: StatusBadgeProps) {
   const { t } = useTranslation();
   const classes = statusClasses[status];

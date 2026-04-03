@@ -1,7 +1,15 @@
+/**
+ * @file Error Handler — centralised Express error middleware for AppError, Zod, and unknown errors.
+ * FR: Gestionnaire d'erreurs — middleware Express centralise pour AppError, Zod et erreurs inconnues.
+ */
 import type { Request, Response, NextFunction } from "express";
 import { ZodError } from "zod";
 import { AppError } from "../utils/AppError.js";
 
+/**
+ * Global error handler that formats AppError, ZodError, and fallback 500 responses.
+ * FR: Gestionnaire global qui formate les AppError, ZodError et les reponses 500 par defaut.
+ */
 export function errorHandler(
   err: unknown,
   _req: Request,

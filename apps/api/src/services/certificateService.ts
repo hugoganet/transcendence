@@ -1,3 +1,8 @@
+/**
+ * @file Certificate Service — issues, verifies and manages completion certificates.
+ * FR: Service de certificats — emet, verifie et gere les certificats de completion.
+ */
+
 import crypto from "node:crypto";
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";

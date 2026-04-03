@@ -1,3 +1,8 @@
+/**
+ * @file Blockchain Service — mints certificate NFTs on-chain via ethers.
+ * FR: Service blockchain — cree des NFT de certificat sur la blockchain via ethers.
+ */
+
 import { ethers } from "ethers";
 
 // Helper function to load env secure — called lazily so tests that don't

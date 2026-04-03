@@ -1,3 +1,8 @@
+/**
+ * @file Curriculum Service — builds curriculum trees with user progress overlays.
+ * FR: Service du programme — construit les arbres de cours avec la progression utilisateur.
+ */
+
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";

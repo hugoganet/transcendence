@@ -6,11 +6,16 @@ import { useTranslation } from "react-i18next";
 
 type ExerciseTypeValue = "SI" | "CM" | "IP" | "ST";
 
+/** Props for ExerciseTypeBadge. / FR: Props pour ExerciseTypeBadge. */
 interface ExerciseTypeBadgeProps {
   type: ExerciseTypeValue;
   className?: string;
 }
 
+/**
+ * Displays a colored pill with the exercise type abbreviation (SI, CM, IP, ST).
+ * FR: Affiche une pastille colorée avec l'abréviation du type d'exercice (SI, CM, IP, ST).
+ */
 export function ExerciseTypeBadge({
   type,
   className = "",
