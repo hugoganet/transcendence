@@ -63,7 +63,7 @@ export async function register(
     const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
     const startLink = `${frontendUrl}/curriculum`;
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    sendWelcomeEmail(user.email!, "en", null, startLink).catch(() => {});
+    sendWelcomeEmail(user.email!, user.locale || "en", null, startLink).catch(() => {});
 
     return user;
   } catch (err: unknown) {
@@ -177,7 +177,7 @@ export async function requestPasswordReset(email: string): Promise<void> {
   });
 
   const resetLink = `${FRONTEND_URL}/reset-password?token=${token}`;
-  await sendPasswordResetEmail(email, resetLink);
+  await sendPasswordResetEmail(email, resetLink, user.locale || "en");
 }
 
 export async function resetPassword(
