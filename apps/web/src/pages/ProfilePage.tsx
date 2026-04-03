@@ -21,7 +21,7 @@ export function ProfilePage() {
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    document.title = `${t("labels.profile")} — Transcendence`;
+    document.title = `${t("labels.profile")} — Unblock.chain`;
   }, []);
 
   const handleSave = async (e: FormEvent) => {

@@ -12,7 +12,7 @@ export function DataExportPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = `${t("pages.dataExport.title")} — Transcendence`;
+    document.title = `${t("pages.dataExport.title")} — Unblock.chain`;
   }, []);
 
   const handleExport = async () => {

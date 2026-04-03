@@ -37,7 +37,7 @@ export function LeaderboardPage() {
   }, [t]);
 
   useEffect(() => {
-    document.title = `${t("gamification.leaderboard.title")} — Transcendence`;
+    document.title = `${t("gamification.leaderboard.title")} — Unblock.chain`;
     loadPage(1);
   }, [loadPage]);
 

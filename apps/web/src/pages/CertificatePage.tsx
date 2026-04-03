@@ -23,7 +23,7 @@ export function CertificatePage() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    document.title = `${t("pages.certificate.title")} — Transcendence`;
+    document.title = `${t("pages.certificate.title")} — Unblock.chain`;
     let cancelled = false;
 
     usersApi.getCertificate().then(

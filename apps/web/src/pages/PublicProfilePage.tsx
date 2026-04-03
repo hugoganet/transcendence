@@ -31,7 +31,7 @@ export function PublicProfilePage() {
       // still load the profile, just skip friendship checks
       usersApi.getPublicProfile(userId).then((data) => {
         setProfile(data);
-        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Transcendence`;
+        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Unblock.chain`;
         setIsLoading(false);
       }, () => { setError(t("pages.publicProfile.loadError")); setIsLoading(false); });
       return;
@@ -49,7 +49,7 @@ export function PublicProfilePage() {
       ([data, friends, incoming, sent]) => {
         if (cancelled) return;
         setProfile(data);
-        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Transcendence`;
+        document.title = `${data.displayName ?? t("pages.publicProfile.defaultUser")} — Unblock.chain`;
         if (friends.some((f) => f.id === userId)) setFriendStatus("friends");
         else if (incoming.some((p) => p.id === userId) || sent.some((p) => p.id === userId)) setFriendStatus("pending");
         else setFriendStatus("none");

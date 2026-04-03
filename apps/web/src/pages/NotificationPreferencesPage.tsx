@@ -20,7 +20,7 @@ export function NotificationPreferencesPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = `${t("pages.notificationPreferences.title")} — Transcendence`;
+    document.title = `${t("pages.notificationPreferences.title")} — Unblock.chain`;
     let cancelled = false;
     notificationsApi.getPreferences().then(
       (data) => {

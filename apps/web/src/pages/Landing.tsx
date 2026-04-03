@@ -10,7 +10,7 @@ export function Landing() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = "Transcendence — Learn Blockchain by Doing";
+    document.title = "Unblock.chain — Learn Blockchain by Doing";
   }, []);
 
   // Generate floating particles
@@ -54,8 +54,8 @@ export function Landing() {
 
       <div className="relative max-w-lg text-center">
         <AnimatedText
-          text="Transcendence"
-          className="mb-4 text-5xl font-bold tracking-tight text-gray-900 font-heading dark:text-warm-50"
+          text="Unblock.chain"
+          className="mb-4 text-5xl font-bold tracking-tight text-primary font-heading dark:text-teal-400"
           delayMs={50}
         />
         <p

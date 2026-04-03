@@ -160,7 +160,7 @@ export function CurriculumPage() {
   const { curriculum, isLoading, error } = useCurriculum();
 
   useEffect(() => {
-    document.title = `${t("labels.curriculum")} — Transcendence`;
+    document.title = `${t("labels.curriculum")} — Unblock.chain`;
   }, [t]);
 
   if (isLoading) {

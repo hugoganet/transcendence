@@ -41,7 +41,7 @@ export function FriendsPage() {
   }, [t]);
 
   useEffect(() => {
-    document.title = `${t("social.friendsList.title")} — Transcendence`;
+    document.title = `${t("social.friendsList.title")} — Unblock.chain`;
     loadData();
   }, [loadData]);
 

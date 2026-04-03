@@ -19,7 +19,7 @@ export function NotificationsPage() {
     useNotifications();
 
   useEffect(() => {
-    document.title = `${t("labels.notifications")} — Transcendence`;
+    document.title = `${t("labels.notifications")} — Unblock.chain`;
   }, []);
 
   if (isLoading && notifications.length === 0) {

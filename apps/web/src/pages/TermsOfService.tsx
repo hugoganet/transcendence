@@ -6,7 +6,7 @@ export function TermsOfService() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = `${t("pages.termsOfService.title")} — Transcendence`;
+    document.title = `${t("pages.termsOfService.title")} — Unblock.chain`;
   }, [t]);
 
   return (

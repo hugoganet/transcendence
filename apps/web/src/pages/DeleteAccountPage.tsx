@@ -13,7 +13,7 @@ export function DeleteAccountPage() {
   const [confirmed, setConfirmed] = useState(false);
 
   useEffect(() => {
-    document.title = `${t("pages.deleteAccount.title")} — Transcendence`;
+    document.title = `${t("pages.deleteAccount.title")} — Unblock.chain`;
   }, []);
 
   const handleDelete = async () => {

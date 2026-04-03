@@ -14,7 +14,7 @@ export function HomePage() {
   const { resume, isLoading } = useResume();
 
   useEffect(() => {
-    document.title = `${t("labels.home")} — Transcendence`;
+    document.title = `${t("labels.home")} — Unblock.chain`;
   }, [t]);
 
   return (

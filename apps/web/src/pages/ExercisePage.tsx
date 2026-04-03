@@ -36,7 +36,7 @@ export function ExercisePage() {
 
   useEffect(() => {
     if (mission) {
-      document.title = `${mission.title} — Exercise — Transcendence`;
+      document.title = `${mission.title} — Exercise — Unblock.chain`;
     }
   }, [mission]);
 

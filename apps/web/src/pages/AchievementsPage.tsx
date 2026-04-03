@@ -13,7 +13,7 @@ export function AchievementsPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = `${t("pages.achievements.title")} — Transcendence`;
+    document.title = `${t("pages.achievements.title")} — Unblock.chain`;
     let cancelled = false;
     gamificationApi.getAchievements().then(
       (data) => {

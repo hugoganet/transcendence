@@ -7,7 +7,7 @@ export function NotFound() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = `${t("errors.notFound")} — Transcendence`;
+    document.title = `${t("errors.notFound")} — Unblock.chain`;
   }, [t]);
 
   return (

@@ -17,7 +17,7 @@ export function GlossaryPage() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = `${t("pages.glossary.title")} — Transcendence`;
+    document.title = `${t("pages.glossary.title")} — Unblock.chain`;
     let cancelled = false;
     tooltipsApi.getGlossary().then(
       (data) => {

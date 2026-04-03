@@ -27,9 +27,9 @@ export function MissionPage() {
 
   useEffect(() => {
     if (mission) {
-      document.title = `${mission.title} — Transcendence`;
+      document.title = `${mission.title} — Unblock.chain`;
     } else {
-      document.title = `${t("labels.mission")} — Transcendence`;
+      document.title = `${t("labels.mission")} — Unblock.chain`;
     }
   }, [mission, t]);
 

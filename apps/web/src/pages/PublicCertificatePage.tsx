@@ -15,7 +15,7 @@ export function PublicCertificatePage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = `${t("pages.certificate.title")} — Transcendence`;
+    document.title = `${t("pages.certificate.title")} — Unblock.chain`;
     if (!token) return;
     let cancelled = false;
     certificatesApi.getPublicCertificate(token).then(
