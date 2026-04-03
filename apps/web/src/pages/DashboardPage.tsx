@@ -28,6 +28,9 @@ export function DashboardPage() {
   const [achievements, setAchievements] = useState<AchievementStatus[]>([]);
   const [chain, setChain] = useState<LearningChainResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const chainRef = useScrollReveal<HTMLDivElement>({ delay: 100 });
+  const txRef = useScrollReveal<HTMLDivElement>({ delay: 200 });
+  const achRef = useScrollReveal<HTMLDivElement>({ delay: 300 });
 
   useEffect(() => {
     document.title = `${t("pages.dashboard.title")} — Unblock.chain`;
@@ -72,9 +75,6 @@ export function DashboardPage() {
   }
 
   const earnedAchievements = achievements.filter((a) => a.earnedAt !== null);
-  const chainRef = useScrollReveal<HTMLDivElement>({ delay: 100 });
-  const txRef = useScrollReveal<HTMLDivElement>({ delay: 200 });
-  const achRef = useScrollReveal<HTMLDivElement>({ delay: 300 });
 
   return (
     <div className="space-y-6">
