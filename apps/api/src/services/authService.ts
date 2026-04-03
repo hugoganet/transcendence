@@ -347,6 +347,7 @@ export function sanitizeUser(user: {
   displayName: string | null;
   bio: string | null;
   avatarUrl: string | null;
+  ethereumWallet: string | null;
   locale: string;
   ageConfirmed: boolean;
   twoFactorEnabled: boolean;

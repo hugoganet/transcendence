@@ -9,6 +9,7 @@ import type { StreakStatus, TokenBalance } from "@transcendence/shared";
 import { gamificationApi } from "../api/gamification.js";
 import { tokensApi } from "../api/tokens.js";
 import { NotificationBell } from "../components/NotificationBell.js";
+import { LanguageSwitcher } from "../components/LanguageSwitcher.js";
 
 export function AppLayout() {
   const { user, logout } = useAuth();
@@ -117,6 +118,7 @@ export function AppLayout() {
             </div>
 
             <div className="flex items-center gap-3 border-l border-gray-200 pl-4">
+              <LanguageSwitcher variant="pill" />
               <NotificationBell />
               <Link
                 to="/profile"
@@ -164,6 +166,9 @@ export function AppLayout() {
               >
                 Profile
               </Link>
+              <div className="border-t border-gray-100 pt-3">
+                <LanguageSwitcher variant="menu-item" />
+              </div>
               <button
                 onClick={handleLogout}
                 className="text-left text-sm text-red-600"

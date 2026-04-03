@@ -22,6 +22,7 @@ export const userProfileSchema = z.object({
   displayName: z.string().nullable(),
   bio: z.string().nullable(),
   avatarUrl: z.string().nullable(),
+  ethereumWallet: z.string().nullable(),
   locale: z.string(),
   ageConfirmed: z.boolean(),
   twoFactorEnabled: z.boolean(),
