@@ -84,7 +84,7 @@ Arthur (agravier) — Product Owner and content owner. Defines curriculum scope,
 
 JB (jbriz) — Developer, frontend. Builds the React application, routing, forms, gamification and social screens, Tailwind layout, and hooks the UI to shared Zod types and REST plus Socket.IO.
 
-Kauana (kamaral) — Developer, backend and blockchain. Works on certificate flows, smart contract interaction, Avalanche RPC usage, and related persistence and API surfaces alongside core backend features.
+Kauana (ktombola) — Developer, backend and blockchain. Works on certificate flows, smart contract interaction, Avalanche RPC usage, and related persistence and API surfaces alongside core backend features.
 
 Theo (theveste) — Project Manager and Developer. Keeps milestones and tasks visible, facilitates syncs and blockers, and contributes to the codebase (Docker, Makefile, deployment flow, and shared fixes across API and tooling).
 
@@ -120,7 +120,7 @@ Legal: Privacy Policy and Terms of Service pages linked from the app — Arthur 
 
 GDPR: data export and account deletion flows with confirmation — Hugo Ganet, Kauana; UI JB.
 
-Certificates: completion certificate, PDF when implemented, mint and metadata fields on chain — Kauana, Hugo Ganet; copy Arthur; UI JB.
+Certificates: completion certificate, mint and metadata fields on chain — Kauana, Hugo Ganet; copy Arthur; UI JB.
 
 Internationalization: English and French content and UI strings; i18n wiring in the web app — Arthur, JB.
 
@@ -156,7 +156,7 @@ Point scale: Major 2 points, Minor 1 point. Total claimed: 19 points (five point
 
 13. Data — Minor — GDPR features: 1 pt — Export and deletion with confirmations — Hugo Ganet.
 
-14. Blockchain — Major — Adapted IV.9: 2 pts — Certificates recorded on Avalanche with a Solidity contract, ethers.js integration, fields nftTokenId, nftTxHash, contractAddress, and certificate APIs including PDF where enabled. The subject text mentions tournament scores; this project stores completion certificates instead because they match an education product. Same technical bar: deploy contract, call chain from backend, persist proofs, expose authenticated reads — Kauana (deployment and env wiring).
+14. Blockchain — Major — Adapted IV.9: 2 pts — Certificates recorded on Avalanche with a Solidity contract, ethers.js integration, fields nftTokenId, nftTxHash, contractAddress, and certificate APIs. The subject text mentions tournament scores; this project stores completion certificates instead because they match an education product. Same technical bar: deploy contract, call chain from backend, persist proofs, expose authenticated reads — Kauana (deployment and env wiring).
 
 
 INDIVIDUAL CONTRIBUTIONS

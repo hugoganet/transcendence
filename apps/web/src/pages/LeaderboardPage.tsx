@@ -58,7 +58,7 @@ export function LeaderboardPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 font-heading">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
         {t("pages.leaderboard.weeklyTitle")}
       </h1>
 
@@ -70,10 +70,10 @@ export function LeaderboardPage() {
               #{currentUser.rank}
             </span>
             <div className="flex-1">
-              <p className="text-sm font-medium text-gray-900">
+              <p className="text-sm font-medium text-gray-900 dark:text-warm-50">
                 {currentUser.displayName ?? t("pages.leaderboard.you")}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-500 dark:text-warm-400">
                 {t("pages.leaderboard.missionsThisWeek", { count: currentUser.missionsCompleted })}
               </p>
             </div>
@@ -84,11 +84,11 @@ export function LeaderboardPage() {
       {/* Leaderboard table */}
       <Card>
         {entries.length === 0 ? (
-          <p className="py-8 text-center text-sm text-gray-500">
+          <p className="py-8 text-center text-sm text-gray-500 dark:text-warm-400">
             {t("pages.leaderboard.noEntries")}
           </p>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-100 dark:divide-warm-700">
             {entries.map((entry) => (
               <div
                 key={entry.userId}
@@ -102,7 +102,7 @@ export function LeaderboardPage() {
                   className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
                     entry.rank <= 3
                       ? "bg-secondary/20 text-secondary"
-                      : "bg-gray-100 text-gray-500"
+                      : "bg-gray-100 dark:bg-warm-700 text-gray-500 dark:text-warm-400"
                   }`}
                 >
                   {entry.rank}
@@ -118,15 +118,15 @@ export function LeaderboardPage() {
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 text-xs font-medium text-gray-500">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-xs font-medium text-gray-500 dark:text-warm-400">
                       {(entry.displayName ?? "?")[0].toUpperCase()}
                     </div>
                   )}
-                  <span className="truncate text-sm font-medium text-gray-900">
+                  <span className="truncate text-sm font-medium text-gray-900 dark:text-warm-50">
                     {entry.displayName ?? t("pages.leaderboard.anonymous")}
                   </span>
                 </Link>
-                <span className="text-sm font-medium text-gray-600">
+                <span className="text-sm font-medium text-gray-600 dark:text-warm-300">
                   {entry.missionsCompleted}
                 </span>
               </div>
@@ -136,7 +136,7 @@ export function LeaderboardPage() {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="mt-4 flex items-center justify-center gap-2 border-t border-gray-100 pt-4">
+          <div className="mt-4 flex items-center justify-center gap-2 border-t border-gray-100 dark:border-warm-700 pt-4">
             <Button
               variant="ghost"
               disabled={currentPage <= 1 || isLoading}
@@ -144,7 +144,7 @@ export function LeaderboardPage() {
             >
               {t("labels.previous")}
             </Button>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-warm-400">
               {currentPage} / {totalPages}
             </span>
             <Button

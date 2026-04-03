@@ -2,6 +2,7 @@ import { Component, type ReactNode } from "react";
 import { AlertTriangle } from "lucide-react";
 import { Card } from "./ui/Card.js";
 import { Button } from "./ui/Button.js";
+import i18n from "../i18n.js";
 
 interface Props {
   children: ReactNode;
@@ -39,12 +40,12 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="py-6 text-center">
               <AlertTriangle className="mx-auto mb-4 h-12 w-12 text-gray-300" />
               <h2 className="mb-2 text-lg font-semibold text-gray-900">
-                Something went wrong
+                {i18n.t("errors.serverError")}
               </h2>
               <p className="mb-4 text-sm text-gray-500">
-                An unexpected error occurred. Please try again.
+                {i18n.t("errors.unexpectedError")}
               </p>
-              <Button onClick={this.handleRetry}>Try Again</Button>
+              <Button onClick={this.handleRetry}>{i18n.t("labels.tryAgain")}</Button>
             </div>
           </Card>
         </div>

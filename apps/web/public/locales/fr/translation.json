@@ -198,7 +198,12 @@
       "instructionPrefix": "Associez chaque concept à sa description.",
       "matchAll": "Associez toutes les paires pour continuer.",
       "checkMatches": "Vérifier les associations",
-      "allMatched": "Tout est associé !"
+      "allMatched": "Tout est associé !",
+      "matched": "Associé ({{count}}/{{total}})",
+      "undoAriaLabel": "Annuler l'association",
+      "undoButton": "Annuler",
+      "termsLabel": "Termes",
+      "definitionsLabel": "Définitions"
     },
     "IP": {
       "instructionPrefix": "Placez chaque élément à la bonne position.",
@@ -224,6 +229,21 @@
       "keepGoing": "Continuez — vous y arrivez.",
       "almostThere": "Presque.",
       "niceWork": "Bien joué."
+    },
+    "gasFeeLabel": "Frais de gas",
+    "correctAnswerPrefix": "Bonne réponse : ",
+    "chapterComplete": "Chapitre terminé !",
+    "categoryMastered": "Catégorie maîtrisée !",
+    "overallProgress": "Progression globale",
+    "featureUnlocked": "Nouvelle fonctionnalité débloquée !",
+    "achievementPrefix": "Succès : ",
+    "certificateGenerated": "Félicitations ! Votre certificat de réussite a été généré.",
+    "nextMission": "Mission suivante",
+    "viewCurriculumMap": "Voir la carte du programme",
+    "errors": {
+      "insufficientTokens": "Vous n'avez pas assez de jetons. Terminez d'autres missions pour en gagner.",
+      "submitFailed": "Impossible de soumettre la réponse. Veuillez réessayer.",
+      "unknownType": "Type d'exercice inconnu"
     },
     "gasFeeNotice": "Cette action coûte {{amount}} Jetons de Connaissance",
     "gasFeeFirstTime": "Chaque tentative coûte 2 KT. C'est le gas — le même mécanisme que vous venez d'étudier. Votre solde a été mis à jour.",
@@ -373,7 +393,9 @@
     "shareBody": "Je viens de terminer Transcendence — un cours complet de littératie blockchain. 69 missions, zéro raccourci.",
     "downloadButton": "Télécharger le certificat",
     "shareButton": "Partager",
-    "linkedInButton": "Ajouter à LinkedIn"
+    "linkedInButton": "Ajouter à LinkedIn",
+    "tokenId": "ID du jeton :",
+    "contract": "Contrat :"
   },
   "social": {
     "friendsList": {
@@ -416,13 +438,18 @@
     "emailAlreadyUsed": "Cette adresse e-mail est déjà associée à un compte. Connectez-vous ou utilisez une autre adresse.",
     "usernameAlreadyUsed": "Ce nom d'utilisateur est déjà pris. Choisissez-en un autre.",
     "invalidCredentials": "E-mail ou mot de passe incorrect.",
-    "tooManyRequests": "Trop de tentatives. Attendez quelques instants avant de réessayer."
+    "tooManyRequests": "Trop de tentatives. Attendez quelques instants avant de réessayer.",
+    "unexpectedError": "Une erreur inattendue s'est produite. Veuillez réessayer."
   },
   "languageSwitcher": {
     "label": "Langue",
     "en": "English",
     "fr": "Français",
     "es": "Español"
+  },
+  "chat": {
+    "title": "Discussion",
+    "send": "Envoyer"
   },
   "settings": {
     "title": "Paramètres",

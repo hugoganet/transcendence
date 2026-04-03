@@ -50,6 +50,7 @@ services:
       CONTRACT_ADDRESS: ${CONTRACT_ADDRESS}
       AVALANCHE_RPC_URL: ${AVALANCHE_RPC_URL}
       BLOCKCHAIN_PRIVATE_KEY: ${BLOCKCHAIN_PRIVATE_KEY}
+      BASE_URL: ${BASE_URL}
     volumes:
       - avatar-data:/app/uploads
     depends_on:

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { CMExerciseContent } from "@transcendence/shared";
 import { ArrowRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
 interface CMExerciseProps {
@@ -14,6 +15,7 @@ export function CMExercise({
   onSubmit,
   isSubmitting,
 }: CMExerciseProps) {
+  const { t } = useTranslation();
   const [selectedTerm, setSelectedTerm] = useState<string | null>(null);
   const [matches, setMatches] = useState<
     Array<{ termId: string; definitionId: string }>
@@ -61,7 +63,7 @@ export function CMExercise({
       {matches.length > 0 && (
         <div className="space-y-2">
           <p className="text-xs font-medium text-gray-500">
-            Matched ({matches.length}/{content.pairs.length})
+            {t("exercise.CM.matched", { count: matches.length, total: content.pairs.length })}
           </p>
           {matches.map((match) => {
             const term = content.pairs.find((p) => p.id === match.termId);
@@ -79,9 +81,9 @@ export function CMExercise({
                 <button
                   onClick={() => handleUndo(match.termId)}
                   className="ml-2 text-xs text-gray-400 hover:text-red-500"
-                  aria-label="Undo match"
+                  aria-label={t("exercise.CM.undoAriaLabel")}
                 >
-                  Undo
+                  {t("exercise.CM.undoButton")}
                 </button>
               </div>
             );
@@ -93,7 +95,7 @@ export function CMExercise({
       {!allMatched && (
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <p className="text-xs font-medium text-gray-500">Terms</p>
+            <p className="text-xs font-medium text-gray-500">{t("exercise.CM.termsLabel")}</p>
             {content.pairs
               .filter((p) => !matchedTermIds.has(p.id))
               .map((pair) => (
@@ -112,7 +114,7 @@ export function CMExercise({
               ))}
           </div>
           <div className="space-y-2">
-            <p className="text-xs font-medium text-gray-500">Definitions</p>
+            <p className="text-xs font-medium text-gray-500">{t("exercise.CM.definitionsLabel")}</p>
             {shuffledDefs
               .filter((d) => !matchedDefIds.has(d.id))
               .map((def) => (
@@ -139,7 +141,7 @@ export function CMExercise({
         isLoading={isSubmitting}
         className="w-full sm:w-auto"
       >
-        Submit Answer
+        {t("exercise.CM.checkMatches")}
       </Button>
     </div>
   );

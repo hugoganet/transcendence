@@ -80,7 +80,7 @@ export function LoginPage() {
   if (requires2FA) {
     return (
       <Card>
-        <h1 className="mb-6 text-center text-xl font-bold text-gray-900 font-heading">
+        <h1 className="mb-6 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("auth.twoFactor.title")}
         </h1>
         {globalError && (
@@ -112,7 +112,7 @@ export function LoginPage() {
 
   return (
     <Card>
-      <h1 className="mb-6 text-center text-xl font-bold text-gray-900 font-heading">
+      <h1 className="mb-6 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
         {t("auth.login.title")}
       </h1>
       {globalError && (
@@ -151,16 +151,16 @@ export function LoginPage() {
         <p>
           <Link
             to="/forgot-password"
-            className="text-primary hover:text-primary/80"
+            className="text-primary hover:text-primary/80 dark:text-teal-400"
           >
             {t("auth.login.forgotPassword")}
           </Link>
         </p>
-        <p className="text-gray-500">
+        <p className="text-gray-500 dark:text-warm-400">
           {t("auth.login.noAccount")}{" "}
           <Link
             to="/register"
-            className="font-medium text-primary hover:text-primary/80"
+            className="font-medium text-primary hover:text-primary/80 dark:text-teal-400"
           >
             {t("auth.login.signUpLink")}
           </Link>

@@ -18,7 +18,7 @@ Most people are confused by blockchain, crypto, NFTs, and all that world. Existi
 - Real-time Socket.IO events (notifications, presence)
 - Shared Zod schemas and TypeScript types in `@transcendence/shared` — use them for form validation and API response typing
 - Full integration test suite (17 test files) as living documentation of API behavior
-- Certificate APIs include metadata (`nftTokenId`, `nftTxHash`, `contractAddress`) and authenticated PDF download (`GET /api/v1/certificates/me/pdf`)
+- Certificate APIs include metadata (`nftTokenId`, `nftTxHash`, `contractAddress`)
 - Docker Compose deployment with Nginx reverse proxy
 - Complete content layer: all mission text, exercise content, tooltips, and UI copy in EN + FR
 
@@ -175,7 +175,7 @@ Features mapped to Transcendence subject modules (17 points total):
 | 11 | Accessibility: Multiple languages (Minor) | 1 | French + English + 1 more |
 | 12 | Accessibility: Additional browsers (Minor) | 1 | Chrome + Firefox + Safari |
 | 13 | Data: GDPR compliance (Minor) | 1 | Data export, deletion, confirmation emails |
-| 14 | IV.9 Blockchain (Major) | 2 | Avalanche + Solidity smart contract for on-chain certificate (mint, retrieval, integrity/immutability), integrated with backend, DB fields (`nftTokenId`, `nftTxHash`, `contractAddress`) and certificate APIs/PDF |
+| 14 | IV.9 Blockchain (Major) | 2 | Avalanche + Solidity smart contract for on-chain certificate (mint, retrieval, integrity/immutability), integrated with backend, DB fields (`nftTokenId`, `nftTxHash`, `contractAddress`) and certificate APIs |
 | | **TOTAL** | **19** | |
 
 ### Blockchain Module Justification (Adapted IV.9)
@@ -183,7 +183,7 @@ Features mapped to Transcendence subject modules (17 points total):
 The project implements the spirit of IV.9 Blockchain with a domain-adapted use case: on-chain certificate issuance instead of tournament score storage.
 
 - Why this adaptation: Transcendence is an educational platform, so immutable proof of curriculum completion is a core business artifact, while tournament scores are not part of the product domain.
-- What was implemented: Solidity smart contract for certificate records, Avalanche RPC integration via ethers.js, backend minting/retrieval flows, persistence of `nftTokenId`/`nftTxHash`/`contractAddress`, and authenticated API + PDF exposure of blockchain certificate data.
+- What was implemented: Solidity smart contract for certificate records, Avalanche RPC integration via ethers.js, backend minting/retrieval flows, persistence of `nftTokenId`/`nftTxHash`/`contractAddress`, and authenticated API exposure of blockchain certificate data.
 - Technical challenges addressed: smart contract interaction from backend services, idempotent minting flow, async blockchain failure handling without breaking certificate issuance, and DB/API schema evolution.
 - Why this qualifies as Major: it introduces a full extra technical layer (smart contract + chain integration + persistence + API contract changes) with non-trivial architecture and operational complexity.
 
