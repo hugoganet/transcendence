@@ -1,3 +1,7 @@
+/**
+ * @file ExercisePage — Exercise Page — displays and handles a single exercise.
+ * FR: Page Exercice — affiche et gere un exercice individuel.
+ */
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";

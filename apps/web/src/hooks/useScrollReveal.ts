@@ -1,3 +1,7 @@
+/**
+ * @file useScrollReveal — useScrollReveal — triggers animations on scroll into viewport.
+ * FR: useScrollReveal ��� declenche les animations au scroll dans le viewport.
+ */
 import { useEffect, useRef } from "react";
 
 export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(

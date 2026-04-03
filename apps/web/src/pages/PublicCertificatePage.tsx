@@ -1,3 +1,7 @@
+/**
+ * @file PublicCertificatePage — Public Certificate — shareable certificate verification.
+ * FR: Certificat Public — verification partageable de certificat.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";

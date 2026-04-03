@@ -1,3 +1,7 @@
+/**
+ * @file useLocale — useLocale — detects and manages the active locale.
+ * FR: useLocale — detecte et gere la locale active.
+ */
 import { useTranslation } from "react-i18next";
 import { useCallback } from "react";
 

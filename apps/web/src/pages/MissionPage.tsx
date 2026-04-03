@@ -1,3 +1,7 @@
+/**
+ * @file MissionPage — Mission Page — mission detail with exercises list.
+ * FR: Page Mission — detail de mission avec liste d'exercices.
+ */
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";

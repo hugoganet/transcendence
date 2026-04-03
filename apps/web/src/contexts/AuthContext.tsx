@@ -1,3 +1,7 @@
+/**
+ * @file AuthContext — Auth Context — provides authentication state and actions.
+ * FR: Contexte Auth — fournit l'etat d'authentification et les actions.
+ */
 import {
   createContext,
   useContext,

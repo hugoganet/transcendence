@@ -1,3 +1,7 @@
+/**
+ * @file HomePage — Home Page — landing page for authenticated users.
+ * FR: Page Accueil — page d'accueil pour utilisateurs authentifies.
+ */
 import { useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";

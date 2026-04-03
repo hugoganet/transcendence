@@ -1,3 +1,7 @@
+/**
+ * @file NotificationsPage — Notifications Page — list of user notifications.
+ * FR: Page Notifications — liste des notifications utilisateur.
+ */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNotifications } from "../contexts/NotificationContext.js";

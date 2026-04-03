@@ -1,3 +1,7 @@
+/**
+ * @file exercises API — submit exercise answers and fetch results.
+ * FR: API exercises — soumettre les reponses et recuperer les resultats.
+ */
 import type {
   ExerciseSubmission,
   ExerciseResult,

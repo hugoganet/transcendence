@@ -1,3 +1,7 @@
+/**
+ * @file useResume — useResume — finds the next incomplete mission to resume.
+ * FR: useResume — trouve la prochaine mission incomplete a reprendre.
+ */
 import { useState, useEffect, useCallback } from "react";
 import type { ResumeResponse } from "@transcendence/shared";
 import { curriculumApi } from "../api/curriculum.js";

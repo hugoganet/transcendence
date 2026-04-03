@@ -1,3 +1,7 @@
+/**
+ * @file RegisterPage — Register Page — new user registration form.
+ * FR: Page Inscription — formulaire d'inscription.
+ */
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

@@ -1,3 +1,7 @@
+/**
+ * @file DashboardPage — Dashboard Page — main user hub with progress and stats.
+ * FR: Page Tableau de Bord — hub principal avec progression et statistiques.
+ */
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

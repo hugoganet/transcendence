@@ -1,3 +1,7 @@
+/**
+ * @file useMouse — useMouse — tracks mouse position for interactive effects.
+ * FR: useMouse — suit la position de la souris pour les effets interactifs.
+ */
 import { useState, useRef, useEffect } from "react";
 
 interface MousePosition {

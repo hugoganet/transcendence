@@ -1,3 +1,7 @@
+/**
+ * @file gamification API — fetch streak, achievements, and leaderboard.
+ * FR: API gamification — recuperer serie, succes et classement.
+ */
 import type {
   StreakStatus,
   AchievementStatus,

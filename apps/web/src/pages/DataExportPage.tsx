@@ -1,3 +1,7 @@
+/**
+ * @file DataExportPage — Data Export Page — GDPR data export request.
+ * FR: Page Export de Donnees — demande d'export GDPR.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { gdprApi } from "../api/gdpr.js";

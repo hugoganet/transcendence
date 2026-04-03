@@ -1,3 +1,7 @@
+/**
+ * @file i18n — i18n — internationalization setup with i18next and language detection.
+ * FR: i18n — configuration de l'internationalisation avec i18next.
+ */
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";

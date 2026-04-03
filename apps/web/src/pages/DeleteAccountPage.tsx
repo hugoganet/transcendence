@@ -1,3 +1,7 @@
+/**
+ * @file DeleteAccountPage — Delete Account Page — GDPR account deletion request.
+ * FR: Page Suppression de Compte — demande de suppression GDPR.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { gdprApi } from "../api/gdpr.js";

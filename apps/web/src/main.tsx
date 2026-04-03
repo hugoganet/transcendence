@@ -1,3 +1,7 @@
+/**
+ * @file main — Main — application entry point, renders App into the DOM.
+ * FR: Main — point d'entree, rend App dans le DOM.
+ */
 import "./i18n";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";

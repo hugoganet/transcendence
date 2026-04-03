@@ -1,3 +1,7 @@
+/**
+ * @file Landing — Landing Page — public marketing page with feature highlights.
+ * FR: Page d'Atterrissage — page marketing publique.
+ */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";

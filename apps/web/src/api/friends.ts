@@ -1,3 +1,7 @@
+/**
+ * @file friends API — manage friend requests and friend list.
+ * FR: API friends — gerer les demandes d'amis et la liste d'amis.
+ */
 import type {
   FriendListEntry,
   FriendRequestEntry,

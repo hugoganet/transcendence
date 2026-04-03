@@ -1,3 +1,7 @@
+/**
+ * @file AppLayout — App Layout — authenticated layout with sidebar, header, and navigation.
+ * FR: Layout App — layout authentifie avec sidebar, header et navigation.
+ */
 import { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";

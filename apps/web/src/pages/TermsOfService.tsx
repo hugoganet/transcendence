@@ -1,3 +1,7 @@
+/**
+ * @file TermsOfService — Terms of Service — legal terms and conditions.
+ * FR: Conditions d'Utilisation — termes et conditions legales.
+ */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";

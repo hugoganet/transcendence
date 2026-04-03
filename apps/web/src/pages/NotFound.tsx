@@ -1,3 +1,7 @@
+/**
+ * @file NotFound — Not Found — 404 error page.
+ * FR: Page 404 — page d'erreur introuvable.
+ */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";

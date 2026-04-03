@@ -1,3 +1,7 @@
+/**
+ * @file tokens API — fetch token balance and transaction history.
+ * FR: API tokens — recuperer le solde de jetons et l'historique.
+ */
 import type {
   TokenBalance,
   TokenTransaction,

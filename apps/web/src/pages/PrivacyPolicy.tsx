@@ -1,3 +1,7 @@
+/**
+ * @file PrivacyPolicy — Privacy Policy — GDPR-compliant privacy policy page.
+ * FR: Politique de Confidentialite — page conforme RGPD.
+ */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";

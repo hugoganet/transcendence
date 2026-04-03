@@ -1,3 +1,7 @@
+/**
+ * @file ProfilePage — Profile Page — view and edit user profile.
+ * FR: Page Profil — consultation et edition du profil.
+ */
 import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";

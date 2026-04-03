@@ -1,3 +1,7 @@
+/**
+ * @file CurriculumPage — Curriculum Page — browse categories, modules, and missions.
+ * FR: Page Curriculum — parcourir categories, modules et missions.
+ */
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";

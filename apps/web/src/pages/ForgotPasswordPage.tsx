@@ -1,3 +1,7 @@
+/**
+ * @file ForgotPasswordPage — Forgot Password Page — request a password reset email.
+ * FR: Page Mot de Passe Oublie — demande d'email de reinitialisation.
+ */
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";

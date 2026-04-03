@@ -1,3 +1,7 @@
+/**
+ * @file FriendsPage — Friends Page — manage friend list and requests.
+ * FR: Page Amis — gestion de la liste d'amis et des demandes.
+ */
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";

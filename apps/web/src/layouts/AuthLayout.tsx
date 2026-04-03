@@ -1,3 +1,7 @@
+/**
+ * @file AuthLayout — Auth Layout — centered layout for login and register pages.
+ * FR: Layout Auth — layout centre pour les pages de login et inscription.
+ */
 import { Outlet, Link } from "react-router-dom";
 import { LanguageSwitcher } from "../components/LanguageSwitcher.js";
 import { ThemeToggle } from "../components/ThemeToggle.js";

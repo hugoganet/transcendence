@@ -1,3 +1,7 @@
+/**
+ * @file NotificationPreferencesPage — Notification Preferences — manage email and push settings.
+ * FR: Preferences de Notifications — gerer les parametres email et push.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { NotificationPreferences } from "@transcendence/shared";

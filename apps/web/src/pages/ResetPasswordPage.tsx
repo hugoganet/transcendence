@@ -1,3 +1,7 @@
+/**
+ * @file ResetPasswordPage — Reset Password Page — set a new password via token.
+ * FR: Page Reinitialisation — definir un nouveau mot de passe via token.
+ */
 import { useState, type FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";

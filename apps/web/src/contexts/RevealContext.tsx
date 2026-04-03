@@ -1,3 +1,7 @@
+/**
+ * @file RevealContext — Reveal Context — tracks progressive UI reveal mechanics.
+ * FR: Contexte Reveal — suit les mecaniques de revelation progressive de l'UI.
+ */
 import {
   createContext,
   useContext,

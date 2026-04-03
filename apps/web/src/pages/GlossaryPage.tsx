@@ -1,3 +1,7 @@
+/**
+ * @file GlossaryPage — Glossary Page — searchable financial terms glossary.
+ * FR: Page Glossaire — glossaire consultable de termes financiers.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ChevronDown, Search } from "lucide-react";
