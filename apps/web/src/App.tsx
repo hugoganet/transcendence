@@ -24,6 +24,7 @@ import { CertificatePage } from "./pages/CertificatePage.js";
 import { DataExportPage } from "./pages/DataExportPage.js";
 import { DeleteAccountPage } from "./pages/DeleteAccountPage.js";
 import { PublicCertificatePage } from "./pages/PublicCertificatePage.js";
+import { GdprExportDownloadPage } from "./pages/GdprExportDownloadPage.js";
 import { PrivacyPolicy } from "./pages/PrivacyPolicy.js";
 import { TermsOfService } from "./pages/TermsOfService.js";
 import { Landing } from "./pages/Landing.js";
@@ -39,6 +40,7 @@ export function App() {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-of-service" element={<TermsOfService />} />
       <Route path="/certificates/:token" element={<PublicCertificatePage />} />
+      <Route path="/gdpr/export/:token" element={<GdprExportDownloadPage />} />
 
       {/* Auth routes (redirect to home if already logged in) */}
       <Route element={<GuestRoute />}>
