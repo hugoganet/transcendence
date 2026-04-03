@@ -297,6 +297,7 @@ authRouter.get(
       "google",
       (err: Error | null, user: Express.User | false) => {
         if (err || !user) {
+          console.error("[Google OAuth] callback error:", err, "user:", user);
           return res.redirect(`${FRONTEND_URL}/auth/callback?error=oauth_failed`);
         }
         req.login(user, (loginErr) => {
