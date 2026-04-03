@@ -62,3 +62,38 @@
   --radius-xl: 16px;
   --radius-full: 9999px;
 }
+
+.dark {
+  --color-background: var(--color-warm-900);
+  --color-surface: var(--color-warm-800);
+  --color-text: var(--color-warm-50);
+  --color-text-muted: var(--color-warm-400);
+  --color-border: var(--color-warm-700);
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.4)); }
+  50% { filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.8)); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out both;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}

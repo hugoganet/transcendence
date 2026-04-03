@@ -27,7 +27,7 @@ export function NotificationBell() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-1 text-gray-500 hover:text-gray-700"
+        className="relative p-1 text-gray-500 hover:text-gray-700 dark:text-warm-400 dark:hover:text-warm-200"
         aria-label={t("labels.notifications")}
       >
         <Bell className="h-5 w-5" />
@@ -39,14 +39,14 @@ export function NotificationBell() {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-gray-200 bg-white shadow-lg">
-          <div className="border-b border-gray-100 px-4 py-2">
-            <span className="text-sm font-semibold text-gray-900">
+        <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800">
+          <div className="border-b border-gray-100 dark:border-warm-700 px-4 py-2">
+            <span className="text-sm font-semibold text-gray-900 dark:text-warm-50">
               {t("labels.notifications")}
             </span>
           </div>
           {recent.length === 0 ? (
-            <p className="px-4 py-6 text-center text-sm text-gray-400">
+            <p className="px-4 py-6 text-center text-sm text-gray-400 dark:text-warm-500">
               {t("labels.noNotificationsYet")}
             </p>
           ) : (
@@ -57,17 +57,17 @@ export function NotificationBell() {
                   onClick={() => {
                     if (!notif.read) markAsRead(notif.id);
                   }}
-                  className={`block w-full px-4 py-3 text-left text-sm hover:bg-gray-50 ${
-                    !notif.read ? "bg-blue-50/50" : ""
+                  className={`block w-full px-4 py-3 text-left text-sm hover:bg-gray-50 dark:hover:bg-warm-700 ${
+                    !notif.read ? "bg-blue-50/50 dark:bg-blue-900/20" : ""
                   }`}
                 >
-                  <p className="font-medium text-gray-900">{notif.title}</p>
-                  <p className="mt-0.5 text-xs text-gray-500">{notif.body}</p>
+                  <p className="font-medium text-gray-900 dark:text-warm-50">{notif.title}</p>
+                  <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-400">{notif.body}</p>
                 </button>
               ))}
             </div>
           )}
-          <div className="border-t border-gray-100 px-4 py-2">
+          <div className="border-t border-gray-100 dark:border-warm-700 px-4 py-2">
             <Link
               to="/notifications"
               className="text-xs text-primary hover:text-primary/80"

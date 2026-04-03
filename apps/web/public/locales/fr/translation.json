@@ -428,6 +428,10 @@
     "gas_deducted": "Gas déduit",
     "system_message": "Mise à jour de Transcendence"
   },
+  "theme": {
+    "switchToLight": "Passer en mode clair",
+    "switchToDark": "Passer en mode sombre"
+  },
   "errors": {
     "networkError": "Problème de connexion. Vérifiez votre réseau et réessayez.",
     "serverError": "Une erreur est survenue côté serveur. Réessayez dans un moment.",
