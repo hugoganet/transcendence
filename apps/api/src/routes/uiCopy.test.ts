@@ -134,7 +134,7 @@ describe("UI Copy Routes", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.error.code).toBe("INVALID_LOCALE");
-      expect(res.body.error.message).toBe("Locale must be en or fr");
+      expect(res.body.error.message).toBe("Locale must be en, fr, or es");
     });
 
     it("sets Cache-Control header", async () => {
