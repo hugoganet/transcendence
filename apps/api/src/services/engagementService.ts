@@ -54,8 +54,16 @@ export async function checkReengagement(io: IO, userId: string): Promise<void> {
     prisma.chapterProgress.count({ where: { userId, status: "COMPLETED" } }),
   ]);
 
-  const title = "Welcome back!";
-  const body = `Your learning journey is still here. You've completed ${totalMissions} mission${totalMissions !== 1 ? "s" : ""} and mastered ${completedChapters} chapter${completedChapters !== 1 ? "s" : ""}. Pick up where you left off!`;
+  const locale = user.locale || "en";
+  const isFr = locale === "fr";
+  const isEs = locale === "es";
+
+  const title = isFr ? "Bon retour !" : isEs ? "¡Bienvenido de vuelta!" : "Welcome back!";
+  const body = isFr
+    ? `Votre parcours est toujours là. Vous avez terminé ${totalMissions} mission${totalMissions !== 1 ? "s" : ""} et maîtrisé ${completedChapters} chapitre${completedChapters !== 1 ? "s" : ""}. Reprenez là où vous vous êtes arrêté !`
+    : isEs
+      ? `Tu viaje de aprendizaje sigue aquí. Has completado ${totalMissions} misión${totalMissions !== 1 ? "es" : ""} y dominado ${completedChapters} capítulo${completedChapters !== 1 ? "s" : ""}. ¡Retoma donde lo dejaste!`
+      : `Your learning journey is still here. You've completed ${totalMissions} mission${totalMissions !== 1 ? "s" : ""} and mastered ${completedChapters} chapter${completedChapters !== 1 ? "s" : ""}. Pick up where you left off!`;
 
   await createAndPushNotification(io, userId, "REENGAGEMENT", title, body, {
     daysSinceLastMission,
@@ -157,8 +165,15 @@ export async function checkStreakReminders(io: IO): Promise<number> {
 
     if (sockets.length > 0) {
       // Connected user — in-app notification (existing behavior)
-      const title = "Keep your streak alive!";
-      const body = `You're on a ${user.currentStreak}-day streak. Complete a mission today to keep it going!`;
+      const loc = user.locale || "en";
+      const isFrS = loc === "fr";
+      const isEsS = loc === "es";
+      const title = isFrS ? "Maintenez votre série !" : isEsS ? "¡Mantén tu racha!" : "Keep your streak alive!";
+      const body = isFrS
+        ? `Vous êtes sur une série de ${user.currentStreak} jours. Terminez une mission aujourd'hui pour la maintenir !`
+        : isEsS
+          ? `Llevas una racha de ${user.currentStreak} días. ¡Completa una misión hoy para mantenerla!`
+          : `You're on a ${user.currentStreak}-day streak. Complete a mission today to keep it going!`;
       await createAndPushNotification(io, user.id, "STREAK_REMINDER", title, body, {
         currentStreak: user.currentStreak,
       });
