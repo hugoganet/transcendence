@@ -6,6 +6,7 @@ const LANGUAGES = [
   { code: "en", flag: "\u{1F1EC}\u{1F1E7}", labelKey: "languageSwitcher.en" },
   { code: "fr", flag: "\u{1F1EB}\u{1F1F7}", labelKey: "languageSwitcher.fr" },
   { code: "es", flag: "\u{1F1EA}\u{1F1F8}", labelKey: "languageSwitcher.es" },
+  { code: "ar", flag: "\u{1F1F8}\u{1F1E6}", labelKey: "languageSwitcher.ar" },
 ] as const;
 
 type LanguageCode = (typeof LANGUAGES)[number]["code"];

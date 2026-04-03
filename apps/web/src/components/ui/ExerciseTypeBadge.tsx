@@ -16,7 +16,7 @@ export function ExerciseTypeBadge({
 
   return (
     <span
-      className={`inline-flex items-center rounded-md bg-purple-50 px-2 py-0.5 text-xs font-medium text-purple-700 ${className}`}
+      className={`inline-flex items-center rounded-md bg-purple-50 px-2 py-0.5 text-xs font-medium text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 ${className}`}
       title={label}
     >
       {type}

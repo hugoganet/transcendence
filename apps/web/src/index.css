@@ -3,6 +3,9 @@
 
 @import "tailwindcss";
 
+/* Dark mode: use .dark class on <html> instead of prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* Colors — Teal (Primary) */
   --color-teal-50: #E6F5F5;
@@ -61,4 +64,81 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
   --radius-full: 9999px;
+}
+
+.dark {
+  --color-background: var(--color-warm-900);
+  --color-surface: var(--color-warm-800);
+  --color-text: var(--color-warm-50);
+  --color-text-muted: var(--color-warm-400);
+  --color-border: var(--color-warm-700);
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.4)); }
+  50% { filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.8)); }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out both;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Loader animation — three dots bounce */
+@keyframes loader-bounce {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* Skeleton pulse for loading placeholders */
+@keyframes skeleton-pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0.6; }
+}
+
+.animate-skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Text reveal — cinematic blur-in per character */
+@keyframes char-reveal {
+  0% { opacity: 0; filter: blur(12px); transform: translateY(40%) scale(1.1); }
+  50% { opacity: 0.7; filter: blur(4px); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+
+/* Floating particle animation */
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+  50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+}
+
+/* Staggered list fade-in */
+@keyframes stagger-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Gradient border glow for focused inputs */
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(43, 158, 158, 0.2); }
+  50% { box-shadow: 0 0 16px rgba(43, 158, 158, 0.4); }
 }

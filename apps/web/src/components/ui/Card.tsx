@@ -1,16 +1,34 @@
-import type { ReactNode } from "react";
+import { type ReactNode } from "react";
+import { useMouse } from "../../hooks/useMouse.js";
 
 interface CardProps {
   children: ReactNode;
   className?: string;
+  glow?: boolean;
 }
 
-export function Card({ children, className = "" }: CardProps) {
+export function Card({ children, className = "", glow = true }: CardProps) {
+  const { mouse, ref } = useMouse<HTMLDivElement>();
+  const showGlow = glow && mouse.x !== null && mouse.y !== null;
+
   return (
     <div
-      className={`rounded-xl border border-gray-200 bg-white p-6 shadow-sm ${className}`}
+      ref={ref}
+      className={`group relative overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg dark:border-warm-700 dark:bg-warm-800 ${className}`}
     >
-      {children}
+      {showGlow && (
+        <div
+          className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          style={{
+            width: 300,
+            height: 300,
+            left: mouse.x!,
+            top: mouse.y!,
+            background: "radial-gradient(circle, rgba(43,158,158,0.12) 0%, transparent 70%)",
+          }}
+        />
+      )}
+      <div className="relative">{children}</div>
     </div>
   );
 }
