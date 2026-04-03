@@ -42,7 +42,7 @@ db-setup:
 	@docker start transcendence-redis 2>/dev/null || \
 		docker run -d --name transcendence-redis -p 6379:6379 redis:7-alpine
 	@sleep 2
-	@test -f apps/api/.env || printf 'DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:54322/postgres\nDATABASE_POOL_SIZE=10\nSESSION_SECRET=%s\nSESSION_TTL_SECONDS=1800\n' "$$(openssl rand -hex 32)" > apps/api/.env
+	@test -f apps/api/.env || printf 'DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/postgres\nDATABASE_POOL_SIZE=10\nSESSION_SECRET=%s\nSESSION_TTL_SECONDS=1800\n' "$$(openssl rand -hex 32)" > apps/api/.env
 	pnpm --filter api db:generate
 	pnpm --filter api db:migrate
 	pnpm --filter api db:seed
