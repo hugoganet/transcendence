@@ -47,6 +47,9 @@ services:
       RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-100}
       FRONTEND_URL: https://localhost
       AVATAR_UPLOAD_DIR: /app/uploads/avatars
+      CONTRACT_ADDRESS: ${CONTRACT_ADDRESS}
+      AVALANCHE_RPC_URL: ${AVALANCHE_RPC_URL}
+      BLOCKCHAIN_PRIVATE_KEY: ${BLOCKCHAIN_PRIVATE_KEY}
     volumes:
       - avatar-data:/app/uploads
     depends_on:
