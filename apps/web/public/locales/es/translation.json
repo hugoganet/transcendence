@@ -198,7 +198,12 @@
       "instructionPrefix": "Empareja cada concepto con su descripción correcta.",
       "matchAll": "Empareja todos los pares para continuar.",
       "checkMatches": "Verificar emparejamientos",
-      "allMatched": "¡Todos emparejados!"
+      "allMatched": "¡Todos emparejados!",
+      "matched": "Emparejado ({{count}}/{{total}})",
+      "undoAriaLabel": "Deshacer emparejamiento",
+      "undoButton": "Deshacer",
+      "termsLabel": "Términos",
+      "definitionsLabel": "Definiciones"
     },
     "IP": {
       "instructionPrefix": "Arrastra cada elemento a la posición correcta.",
@@ -224,6 +229,21 @@
       "keepGoing": "Sigue adelante — tú puedes.",
       "almostThere": "Ya casi.",
       "niceWork": "Buen trabajo."
+    },
+    "gasFeeLabel": "Tarifa de gas",
+    "correctAnswerPrefix": "Respuesta correcta: ",
+    "chapterComplete": "¡Capítulo completado!",
+    "categoryMastered": "¡Categoría dominada!",
+    "overallProgress": "Progreso general",
+    "featureUnlocked": "¡Nueva función desbloqueada!",
+    "achievementPrefix": "Logro: ",
+    "certificateGenerated": "¡Felicitaciones! Tu certificado de finalización ha sido generado.",
+    "nextMission": "Siguiente misión",
+    "viewCurriculumMap": "Ver mapa del currículo",
+    "errors": {
+      "insufficientTokens": "No tienes suficientes tokens. Completa más misiones para ganar tokens.",
+      "submitFailed": "No se pudo enviar la respuesta. Por favor, inténtalo de nuevo.",
+      "unknownType": "Tipo de ejercicio desconocido"
     },
     "gasFeeNotice": "Esta acción cuesta {{amount}} Knowledge Tokens",
     "gasFeeFirstTime": "Cada intento de ejercicio cuesta 2 KT. Esto es gas — el mismo mecanismo que acabas de estudiar. Tu saldo ha sido actualizado.",
@@ -416,7 +436,8 @@
     "emailAlreadyUsed": "Ya existe una cuenta con este correo. Intenta iniciar sesión.",
     "usernameAlreadyUsed": "Ese nombre de usuario ya está en uso. Prueba con otro.",
     "invalidCredentials": "Correo o contraseña incorrectos.",
-    "tooManyRequests": "Demasiados intentos. Espera un momento e inténtalo de nuevo."
+    "tooManyRequests": "Demasiados intentos. Espera un momento e inténtalo de nuevo.",
+    "unexpectedError": "Ocurrió un error inesperado. Por favor, inténtalo de nuevo."
   },
   "languageSwitcher": {
     "label": "Idioma",

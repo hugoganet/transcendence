@@ -1,5 +1,6 @@
 import type { ExerciseResult as ExerciseResultType } from "@transcendence/shared";
 import { Check, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useReveals } from "../../contexts/RevealContext.js";
 import { Alert } from "../ui/Alert.js";
 
@@ -8,6 +9,7 @@ interface ExerciseResultProps {
 }
 
 export function ExerciseResultView({ result }: ExerciseResultProps) {
+  const { t } = useTranslation();
   const { gasRevealed } = useReveals();
 
   return (
@@ -15,7 +17,7 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
       <Alert variant={result.correct ? "success" : "error"}>
         <div className="flex items-center justify-between">
           <span className="font-medium">
-            {result.correct ? "Correct!" : "Not quite right"}
+            {result.correct ? t("labels.correct") : t("labels.incorrect")}
           </span>
           <span className="text-sm">
             {result.score}/{result.totalPoints} points
@@ -25,7 +27,7 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
 
       {gasRevealed && result.gasFee !== undefined && (
         <div className="flex items-center justify-between rounded-lg bg-amber-50 px-4 py-3 text-sm">
-          <span className="text-amber-800">Gas fee</span>
+          <span className="text-amber-800">{t("exercise.gasFeeLabel")}</span>
           <span className="font-medium text-amber-900">
             -{result.gasFee} tokens
           </span>
@@ -34,7 +36,7 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
 
       {gasRevealed && result.tokenBalance !== undefined && (
         <div className="flex items-center justify-between rounded-lg bg-gray-50 px-4 py-3 text-sm">
-          <span className="text-gray-600">Token balance</span>
+          <span className="text-gray-600">{t("gamification.tokens.tokenBalance")}</span>
           <span className="font-medium text-gray-900">
             {result.tokenBalance}
           </span>
@@ -43,7 +45,7 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
 
       {result.feedback.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-gray-900">Feedback</h3>
+          <h3 className="text-sm font-semibold text-gray-900">{t("exercise.feedback.explanationLabel")}</h3>
           {result.feedback.map((item) => (
             <div
               key={item.itemId}
@@ -69,7 +71,7 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
                   </p>
                   {item.correctAnswer && !item.correct && (
                     <p className="mt-1 text-xs text-red-600">
-                      Correct answer: {item.correctAnswer}
+                      {t("exercise.correctAnswerPrefix")}{item.correctAnswer}
                     </p>
                   )}
                 </div>

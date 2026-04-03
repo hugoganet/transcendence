@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { AuthLayout } from "./layouts/AuthLayout.js";
 import { AppLayout } from "./layouts/AppLayout.js";
+import { PublicLayout } from "./layouts/PublicLayout.js";
 import { ProtectedRoute, GuestRoute } from "./components/ProtectedRoute.js";
 import { LoginPage } from "./pages/LoginPage.js";
 import { RegisterPage } from "./pages/RegisterPage.js";
@@ -28,17 +29,20 @@ import { PrivacyPolicy } from "./pages/PrivacyPolicy.js";
 import { TermsOfService } from "./pages/TermsOfService.js";
 import { Landing } from "./pages/Landing.js";
 import { NotFound } from "./pages/NotFound.js";
+import { Settings } from "./pages/Settings.js";
 import { ErrorBoundary } from "./components/ErrorBoundary.js";
 
 export function App() {
   return (
     <ErrorBoundary>
     <Routes>
-      {/* Public routes */}
-      <Route path="/" element={<Landing />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
-      <Route path="/certificates/:token" element={<PublicCertificatePage />} />
+      {/* Public routes - with PublicLayout for language switcher */}
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Landing />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="/certificates/:token" element={<PublicCertificatePage />} />
+      </Route>
 
       {/* Auth routes (redirect to home if already logged in) */}
       <Route element={<GuestRoute />}>
@@ -70,11 +74,14 @@ export function App() {
           <Route path="/settings/delete-account" element={<DeleteAccountPage />} />
           <Route path="/glossary" element={<GlossaryPage />} />
           <Route path="/certificate" element={<CertificatePage />} />
+          <Route path="/settings" element={<Settings />} />
         </Route>
       </Route>
 
-      {/* 404 */}
-      <Route path="*" element={<NotFound />} />
+      {/* 404 with PublicLayout */}
+      <Route element={<PublicLayout />}>
+        <Route path="*" element={<NotFound />} />
+      </Route>
     </Routes>
     </ErrorBoundary>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { IPExerciseContent } from "@transcendence/shared";
 import { GripVertical } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
 interface IPExerciseProps {
@@ -19,6 +20,7 @@ export function IPExercise({
   onSubmit,
   isSubmitting,
 }: IPExerciseProps) {
+  const { t } = useTranslation();
   // Shuffle items on first render
   const [orderedItems, setOrderedItems] = useState<DraggableItem[]>(() =>
     [...content.items]
@@ -95,7 +97,7 @@ export function IPExercise({
       )}
 
       <p className="text-xs text-gray-500">
-        Drag to reorder, or tap two items to swap them.
+        {t("exercise.IP.dragItems")}
       </p>
 
       <div className="space-y-2">
@@ -129,7 +131,7 @@ export function IPExercise({
         isLoading={isSubmitting}
         className="w-full sm:w-auto"
       >
-        Submit Order
+        {t("exercise.IP.checkPlacement")}
       </Button>
     </div>
   );

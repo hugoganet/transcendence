@@ -198,7 +198,12 @@
       "instructionPrefix": "Match each concept to its correct description.",
       "matchAll": "Match all pairs to continue.",
       "checkMatches": "Check matches",
-      "allMatched": "All matched!"
+      "allMatched": "All matched!",
+      "matched": "Matched ({{count}}/{{total}})",
+      "undoAriaLabel": "Undo match",
+      "undoButton": "Undo",
+      "termsLabel": "Terms",
+      "definitionsLabel": "Definitions"
     },
     "IP": {
       "instructionPrefix": "Drag each item to the correct position.",
@@ -224,6 +229,21 @@
       "keepGoing": "Keep going — you've got this.",
       "almostThere": "Almost there.",
       "niceWork": "Nice work."
+    },
+    "gasFeeLabel": "Gas fee",
+    "correctAnswerPrefix": "Correct answer: ",
+    "chapterComplete": "Chapter completed!",
+    "categoryMastered": "Category mastered!",
+    "overallProgress": "Overall progress",
+    "featureUnlocked": "New feature unlocked!",
+    "achievementPrefix": "Achievement: ",
+    "certificateGenerated": "Congratulations! Your completion certificate has been generated.",
+    "nextMission": "Next Mission",
+    "viewCurriculumMap": "View Curriculum Map",
+    "errors": {
+      "insufficientTokens": "You don't have enough tokens. Complete more missions to earn tokens.",
+      "submitFailed": "Failed to submit answer. Please try again.",
+      "unknownType": "Unknown exercise type"
     },
     "gasFeeNotice": "This action costs {{amount}} Knowledge Tokens",
     "gasFeeFirstTime": "Each exercise attempt costs 2 KT. This is gas — the same mechanism you just studied. Your balance has been updated.",
@@ -416,7 +436,8 @@
     "emailAlreadyUsed": "An account with this email already exists. Try logging in instead.",
     "usernameAlreadyUsed": "That username is taken. Try a different one.",
     "invalidCredentials": "Email or password is incorrect.",
-    "tooManyRequests": "Too many attempts. Wait a moment, then try again."
+    "tooManyRequests": "Too many attempts. Wait a moment, then try again.",
+    "unexpectedError": "An unexpected error occurred. Please try again."
   },
   "languageSwitcher": {
     "label": "Language",

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { SIExerciseContent } from "@transcendence/shared";
+import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
 interface SIExerciseProps {
@@ -13,6 +14,7 @@ export function SIExercise({
   onSubmit,
   isSubmitting,
 }: SIExerciseProps) {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<string | null>(null);
 
   return (
@@ -50,7 +52,7 @@ export function SIExercise({
         isLoading={isSubmitting}
         className="w-full sm:w-auto"
       >
-        Submit Answer
+        {t("exercise.SI.submitAnswer")}
       </Button>
     </div>
   );

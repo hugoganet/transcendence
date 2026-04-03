@@ -7,6 +7,7 @@ import type {
   STExerciseContent,
   ExerciseSubmission,
 } from "@transcendence/shared";
+import { useTranslation } from "react-i18next";
 import { exercisesApi } from "../../api/exercises.js";
 import { ApiError } from "../../api/client.js";
 import { SIExercise } from "./SIExercise.js";
@@ -29,6 +30,7 @@ export function ExerciseContainer({
   exerciseContent,
   onComplete,
 }: ExerciseContainerProps) {
+  const { t } = useTranslation();
   const [result, setResult] = useState<ExerciseResult | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -44,11 +46,11 @@ export function ExerciseContainer({
       if (err instanceof ApiError) {
         setError(
           err.code === "TOKEN_DEBT"
-            ? "You don't have enough tokens. Complete more missions to earn tokens."
-            : "Failed to submit answer. Please try again.",
+            ? t("exercise.errors.insufficientTokens")
+            : t("exercise.errors.submitFailed"),
         );
       } else {
-        setError("Something went wrong. Please try again.");
+        setError(t("errors.serverError"));
       }
     } finally {
       setIsSubmitting(false);
@@ -112,7 +114,7 @@ export function ExerciseContainer({
     default:
       return (
         <Alert variant="error">
-          Unknown exercise type: {exerciseType}
+          {t("exercise.errors.unknownType")}{exerciseType}
         </Alert>
       );
   }

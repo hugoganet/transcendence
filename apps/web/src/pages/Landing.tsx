@@ -7,7 +7,7 @@ export function Landing() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = "Transcendence — Learn Blockchain by Doing";
+    document.title = "Transcendence";
   }, []);
 
   return (

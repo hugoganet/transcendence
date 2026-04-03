@@ -7,8 +7,8 @@ export function NotFound() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = "Page Not Found — Transcendence";
-  }, []);
+    document.title = `${t("errors.notFound")} — Transcendence`;
+  }, [t]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
