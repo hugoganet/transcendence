@@ -114,11 +114,11 @@ export function AppLayout() {
             </span>
           </Link>
 
-          {/* Spacer */}
-          <div className="flex-1" />
+          {/* Spacer — min-w ensures brand and nav never overlap */}
+          <div className="min-w-8 flex-1" />
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-5 md:flex">
+          <nav className="hidden items-center gap-4 md:flex">
             {navLinks()}
 
             {/* Streak + Tokens in nav */}
