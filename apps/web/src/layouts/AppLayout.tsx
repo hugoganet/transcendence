@@ -110,7 +110,7 @@ export function AppLayout() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-5 md:flex">
+          <nav className="hidden items-center gap-5 md:flex ml-8">
             {navLinks()}
 
             {/* Streak + Tokens in nav */}
