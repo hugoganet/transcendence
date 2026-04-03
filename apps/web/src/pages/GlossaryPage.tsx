@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ChevronDown } from "lucide-react";
 import type { TooltipResponse } from "@transcendence/shared";
 import { tooltipsApi } from "../api/tooltips.js";
@@ -8,6 +9,7 @@ import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function GlossaryPage() {
+  const { t } = useTranslation();
   const [terms, setTerms] = useState<TooltipResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -15,7 +17,7 @@ export function GlossaryPage() {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
-    document.title = "Glossary — Transcendence";
+    document.title = `${t("pages.glossary.title")} — Transcendence`;
     let cancelled = false;
     tooltipsApi.getGlossary().then(
       (data) => {
@@ -26,7 +28,7 @@ export function GlossaryPage() {
       },
       () => {
         if (!cancelled) {
-          setError("Failed to load glossary");
+          setError(t("pages.glossary.loadError"));
           setIsLoading(false);
         }
       },
@@ -37,9 +39,9 @@ export function GlossaryPage() {
   }, []);
 
   const filtered = terms.filter(
-    (t) =>
-      t.term.toLowerCase().includes(search.toLowerCase()) ||
-      t.definition.toLowerCase().includes(search.toLowerCase()),
+    (item) =>
+      item.term.toLowerCase().includes(search.toLowerCase()) ||
+      item.definition.toLowerCase().includes(search.toLowerCase()),
   );
 
   if (isLoading) {
@@ -57,11 +59,11 @@ export function GlossaryPage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Glossary
+        {t("pages.glossary.title")}
       </h1>
 
       <Input
-        placeholder="Search terms..."
+        placeholder={t("pages.glossary.searchPlaceholder")}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
@@ -69,7 +71,7 @@ export function GlossaryPage() {
       <Card>
         {filtered.length === 0 ? (
           <p className="py-8 text-center text-sm text-gray-500">
-            No terms found.
+            {t("pages.glossary.noTermsFound")}
           </p>
         ) : (
           <div className="divide-y divide-gray-100">
@@ -96,7 +98,7 @@ export function GlossaryPage() {
                   <div className="mt-3 space-y-2">
                     <div className="rounded-lg bg-blue-50 px-3 py-2">
                       <p className="text-xs font-medium text-blue-800">
-                        Analogy
+                        {t("pages.glossary.analogy")}
                       </p>
                       <p className="mt-0.5 text-sm text-blue-700">
                         {term.analogy}
@@ -104,7 +106,7 @@ export function GlossaryPage() {
                     </div>
                     {term.relatedTerms.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
-                        <span className="text-xs text-gray-400">Related:</span>
+                        <span className="text-xs text-gray-400">{t("pages.glossary.related")}:</span>
                         {term.relatedTerms.map((rt) => (
                           <span
                             key={rt}
@@ -124,7 +126,7 @@ export function GlossaryPage() {
       </Card>
 
       <p className="text-center text-xs text-gray-400">
-        {filtered.length} term{filtered.length !== 1 ? "s" : ""}
+        {t("pages.glossary.termCount", { count: filtered.length })}
       </p>
     </div>
   );

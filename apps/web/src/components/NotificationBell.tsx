@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Bell } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useNotifications } from "../contexts/NotificationContext.js";
 
 export function NotificationBell() {
+  const { t } = useTranslation();
   const { notifications, unreadCount, markAsRead } = useNotifications();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -26,7 +28,7 @@ export function NotificationBell() {
       <button
         onClick={() => setOpen(!open)}
         className="relative p-1 text-gray-500 hover:text-gray-700"
-        aria-label="Notifications"
+        aria-label={t("labels.notifications")}
       >
         <Bell className="h-5 w-5" />
         {unreadCount > 0 && (
@@ -40,12 +42,12 @@ export function NotificationBell() {
         <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-gray-200 bg-white shadow-lg">
           <div className="border-b border-gray-100 px-4 py-2">
             <span className="text-sm font-semibold text-gray-900">
-              Notifications
+              {t("labels.notifications")}
             </span>
           </div>
           {recent.length === 0 ? (
             <p className="px-4 py-6 text-center text-sm text-gray-400">
-              No notifications yet
+              {t("labels.noNotificationsYet")}
             </p>
           ) : (
             <div className="max-h-64 overflow-y-auto">
@@ -71,7 +73,7 @@ export function NotificationBell() {
               className="text-xs text-primary hover:text-primary/80"
               onClick={() => setOpen(false)}
             >
-              View all
+              {t("labels.viewAll")}
             </Link>
           </div>
         </div>

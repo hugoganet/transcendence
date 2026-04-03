@@ -1,25 +1,26 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { NotificationPreferences } from "@transcendence/shared";
 import { notificationsApi } from "../api/notifications.js";
 import { Card } from "../components/ui/Card.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
 
-const labels: Record<keyof NotificationPreferences, string> = {
-  streakReminder: "Streak Reminders",
-  reengagement: "Re-engagement Nudges",
-  moduleComplete: "Module Completion",
-  tokenThreshold: "Token Thresholds",
-  streakMilestone: "Streak Milestones",
-};
-
 export function NotificationPreferencesPage() {
+  const { t } = useTranslation();
+  const labels: Record<keyof NotificationPreferences, string> = {
+    streakReminder: t("pages.notificationPreferences.streakReminder"),
+    reengagement: t("pages.notificationPreferences.reengagement"),
+    moduleComplete: t("pages.notificationPreferences.moduleComplete"),
+    tokenThreshold: t("pages.notificationPreferences.tokenThreshold"),
+    streakMilestone: t("pages.notificationPreferences.streakMilestone"),
+  };
   const [prefs, setPrefs] = useState<NotificationPreferences | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = "Notification Settings — Transcendence";
+    document.title = `${t("pages.notificationPreferences.title")} — Transcendence`;
     let cancelled = false;
     notificationsApi.getPreferences().then(
       (data) => {
@@ -30,7 +31,7 @@ export function NotificationPreferencesPage() {
       },
       () => {
         if (!cancelled) {
-          setError("Failed to load preferences");
+          setError(t("pages.notificationPreferences.loadError"));
           setIsLoading(false);
         }
       },
@@ -61,13 +62,13 @@ export function NotificationPreferencesPage() {
   }
 
   if (error || !prefs) {
-    return <Alert variant="error">{error ?? "Failed to load"}</Alert>;
+    return <Alert variant="error">{error ?? t("pages.notificationPreferences.loadError")}</Alert>;
   }
 
   return (
     <div className="mx-auto max-w-lg space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Notification Settings
+        {t("pages.notificationPreferences.title")}
       </h1>
 
       <Card>

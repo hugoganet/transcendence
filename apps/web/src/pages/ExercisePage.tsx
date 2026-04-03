@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
 import type {
   ExerciseResult,
@@ -17,6 +18,7 @@ import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function ExercisePage() {
+  const { t } = useTranslation();
   const { missionId } = useParams<{ missionId: string }>();
   const { mission, isLoading, error, isLocked } = useMissionDetail(
     missionId ?? "",
@@ -57,7 +59,7 @@ export function ExercisePage() {
       }
     } catch (err) {
       if (err instanceof ApiError) {
-        setCompleteError("Failed to complete mission. Please try again.");
+        setCompleteError(t("pages.exercise.completeMissionError"));
       }
     } finally {
       setIsCompleting(false);
@@ -76,17 +78,17 @@ export function ExercisePage() {
     return (
       <div className="mx-auto max-w-lg py-12 text-center">
         <Alert variant="error">
-          This mission is locked. Complete the previous missions first.
+          {t("pages.exercise.lockedMessage")}
         </Alert>
         <Link to="/curriculum" className="mt-4 inline-block">
-          <Button variant="ghost">Back to Curriculum</Button>
+          <Button variant="ghost">{t("pages.mission.backToCurriculum")}</Button>
         </Link>
       </div>
     );
   }
 
   if (error || !mission) {
-    return <Alert variant="error">{error ?? "Failed to load mission"}</Alert>;
+    return <Alert variant="error">{error ?? t("pages.mission.loadError")}</Alert>;
   }
 
   // Mission already completed — show completion view
@@ -105,7 +107,7 @@ export function ExercisePage() {
         className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary"
       >
         <ChevronLeft className="h-4 w-4" />
-        Mission Details
+        {t("pages.exercise.missionDetails")}
       </Link>
 
       <Card>
@@ -131,7 +133,7 @@ export function ExercisePage() {
         <Card>
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-gray-900">
-              How confident do you feel about this topic?
+              {t("pages.exercise.confidenceQuestion")}
             </h3>
             <div className="flex items-center justify-center gap-2">
               {[1, 2, 3, 4, 5].map((rating) => (
@@ -149,7 +151,7 @@ export function ExercisePage() {
               ))}
             </div>
             <p className="text-center text-xs text-gray-400">
-              1 = Not confident &middot; 5 = Very confident
+              {t("pages.exercise.confidenceScale")}
             </p>
 
             {completeError && (
@@ -161,7 +163,7 @@ export function ExercisePage() {
               isLoading={isCompleting}
               className="w-full"
             >
-              Complete Mission
+              {t("pages.exercise.completeMission")}
             </Button>
           </div>
         </Card>

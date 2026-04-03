@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type {
   FriendListEntry,
   FriendRequestEntry,
@@ -12,6 +13,7 @@ import { Alert } from "../components/ui/Alert.js";
 import { ChatBox } from "../components/ChatBox.js";
 
 export function FriendsPage() {
+  const { t } = useTranslation();
   const [tab, setTab] = useState<"friends" | "requests">("friends");
   const [friends, setFriends] = useState<FriendListEntry[]>([]);
   const [requests, setRequests] = useState<FriendRequestEntry[]>([]);
@@ -32,14 +34,14 @@ export function FriendsPage() {
       setFriends(f);
       setRequests(r);
     } catch {
-      setError("Failed to load friends");
+      setError(t("pages.friends.loadError"));
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
-    document.title = "Friends — Transcendence";
+    document.title = `${t("social.friendsList.title")} — Transcendence`;
     loadData();
   }, [loadData]);
 
@@ -81,7 +83,7 @@ export function FriendsPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Friends
+        {t("social.friendsList.title")}
       </h1>
 
       {/* Search */}
@@ -89,19 +91,19 @@ export function FriendsPage() {
         <input
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
-          placeholder="Search users to add..."
+          placeholder={t("social.friendsList.searchPlaceholder")}
           className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
         />
         {searchResults.length > 0 && (
           <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow">
             {searchResults.map((u) => (
               <div key={u.id} className="flex items-center justify-between px-3 py-2 hover:bg-gray-50">
-                <span className="text-sm">{u.displayName ?? "Anonymous"}</span>
+                <span className="text-sm">{u.displayName ?? t("pages.publicProfile.anonymous")}</span>
                 <button
                   onClick={() => handleAddFriend(u.id)}
                   className="text-xs text-blue-500 hover:text-blue-700"
                 >
-                  Add friend
+                  {t("social.friendsList.addFriend")}
                 </button>
               </div>
             ))}
@@ -119,7 +121,7 @@ export function FriendsPage() {
               : "text-gray-500 hover:text-gray-700"
           }`}
         >
-          Friends ({friends.length})
+          {t("pages.friends.tabFriends", { count: friends.length })}
         </button>
         <button
           onClick={() => setTab("requests")}
@@ -129,7 +131,7 @@ export function FriendsPage() {
               : "text-gray-500 hover:text-gray-700"
           }`}
         >
-          Requests ({requests.length})
+          {t("pages.friends.tabRequests", { count: requests.length })}
         </button>
       </div>
 
@@ -137,7 +139,7 @@ export function FriendsPage() {
         <Card>
           {friends.length === 0 ? (
             <p className="py-8 text-center text-sm text-gray-500">
-              No friends yet. Visit other users' profiles to send requests.
+              {t("social.friendsList.noFriendsYet")}
             </p>
           ) : (
             <div className="divide-y divide-gray-100">
@@ -168,19 +170,19 @@ export function FriendsPage() {
                     to={`/users/${friend.id}`}
                     className="flex-1 text-sm font-medium text-gray-900 hover:text-primary"
                   >
-                    {friend.displayName ?? "Anonymous"}
+                    {friend.displayName ?? t("pages.publicProfile.anonymous")}
                   </Link>
                   <button
                     onClick={() => setChatWith(friend.id)}
                     className="text-xs text-gray-400 hover:text-blue-500"
                   >
-                    Message
+                    {t("pages.friends.message")}
                   </button>
                   <button
                     onClick={() => handleRemove(friend.id)}
                     className="text-xs text-gray-400 hover:text-red-500"
                   >
-                    Remove
+                    {t("social.friendsList.removeButton")}
                   </button>
                   
                 </div>
@@ -194,7 +196,7 @@ export function FriendsPage() {
         <Card>
           {requests.length === 0 ? (
             <p className="py-8 text-center text-sm text-gray-500">
-              No pending friend requests.
+              {t("pages.friends.noPendingRequests")}
             </p>
           ) : (
             <div className="divide-y divide-gray-100">
@@ -216,7 +218,7 @@ export function FriendsPage() {
                       to={`/users/${req.id}`}
                       className="text-sm font-medium text-gray-900 hover:text-primary"
                     >
-                      {req.displayName ?? "Anonymous"}
+                      {req.displayName ?? t("pages.publicProfile.anonymous")}
                     </Link>
                     <p className="text-xs text-gray-400">
                       {new Date(req.createdAt).toLocaleDateString()}
@@ -226,7 +228,7 @@ export function FriendsPage() {
                     onClick={() => handleAccept(req.id)}
                     className="text-xs"
                   >
-                    Accept
+                    {t("social.friendsList.acceptButton")}
                   </Button>
                 </div>
               ))}

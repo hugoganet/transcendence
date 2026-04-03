@@ -1,18 +1,21 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export function PrivacyPolicy() {
+  const { t } = useTranslation();
+
   useEffect(() => {
-    document.title = "Privacy Policy — Transcendence";
-  }, []);
+    document.title = `${t("pages.privacyPolicy.title")} — Transcendence`;
+  }, [t]);
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
       <Link to="/" className="mb-6 inline-block text-primary underline hover:text-primary/70">
-        &larr; Back to home
+        &larr; {t("pages.privacyPolicy.backToHome")}
       </Link>
 
-      <h1 className="mb-6 text-3xl font-bold">Privacy Policy</h1>
+      <h1 className="mb-6 text-3xl font-bold">{t("pages.privacyPolicy.title")}</h1>
       <p className="mb-8 text-sm text-gray-500">Last updated: March 7, 2026</p>
 
       <section className="mb-8">

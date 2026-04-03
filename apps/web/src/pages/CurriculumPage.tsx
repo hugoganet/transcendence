@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useCurriculum } from "../hooks/useCurriculum.js";
 import { ProgressBar } from "../components/ui/ProgressBar.js";
 import { StatusBadge } from "../components/ui/StatusBadge.js";
@@ -51,6 +52,7 @@ function ChapterSection({
   chapter: ChapterProgressOverlay;
   defaultOpen: boolean;
 }) {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(defaultOpen);
 
   const completedCount = chapter.missions.filter(
@@ -71,12 +73,12 @@ function ChapterSection({
           <div>
             <div className="flex items-center gap-2">
               <span className="text-sm font-medium text-gray-900">
-                Chapter {chapter.chapterId}
+                {t("pages.curriculum.chapterLabel", { id: chapter.chapterId })}
               </span>
               <StatusBadge status={chapter.status} />
             </div>
             <span className="text-xs text-gray-500">
-              {completedCount}/{chapter.missions.length} missions
+              {completedCount}/{chapter.missions.length} {t("labels.missions")}
             </span>
           </div>
         </div>
@@ -97,6 +99,7 @@ function ChapterSection({
 }
 
 function CategorySection({ category }: { category: CategoryProgressOverlay }) {
+  const { t } = useTranslation();
   const totalMissions = category.chapters.reduce(
     (sum, ch) => sum + ch.missions.length,
     0,
@@ -120,12 +123,12 @@ function CategorySection({ category }: { category: CategoryProgressOverlay }) {
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-base font-semibold text-gray-900">
-                Category {category.categoryId}
+                {t("pages.curriculum.categoryLabel", { id: category.categoryId })}
               </h2>
               <StatusBadge status={category.status} />
             </div>
             <span className="text-xs text-gray-500">
-              {completedMissions}/{totalMissions} missions
+              {completedMissions}/{totalMissions} {t("labels.missions")}
             </span>
           </div>
         </div>
@@ -153,11 +156,12 @@ function CategorySection({ category }: { category: CategoryProgressOverlay }) {
 }
 
 export function CurriculumPage() {
+  const { t } = useTranslation();
   const { curriculum, isLoading, error } = useCurriculum();
 
   useEffect(() => {
-    document.title = "Curriculum — Transcendence";
-  }, []);
+    document.title = `${t("labels.curriculum")} — Transcendence`;
+  }, [t]);
 
   if (isLoading) {
     return (
@@ -168,14 +172,14 @@ export function CurriculumPage() {
   }
 
   if (error || !curriculum) {
-    return <Alert variant="error">{error ?? "Failed to load curriculum"}</Alert>;
+    return <Alert variant="error">{error ?? t("pages.curriculum.loadError")}</Alert>;
   }
 
   return (
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 font-heading">
-          Curriculum
+          {t("labels.curriculum")}
         </h1>
         <div className="mt-2 flex items-center gap-4">
           <ProgressBar
@@ -185,7 +189,7 @@ export function CurriculumPage() {
             className="flex-1"
           />
           <span className="text-sm text-gray-500">
-            {curriculum.completedMissions}/{curriculum.totalMissions} missions
+            {curriculum.completedMissions}/{curriculum.totalMissions} {t("labels.missions")}
           </span>
         </div>
       </div>

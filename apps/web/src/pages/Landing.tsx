@@ -1,8 +1,11 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/Button.js";
 
 export function Landing() {
+  const { t } = useTranslation();
+
   useEffect(() => {
     document.title = "Transcendence — Learn Blockchain by Doing";
   }, []);
@@ -14,24 +17,23 @@ export function Landing() {
           Transcendence
         </h1>
         <p className="mb-8 text-lg text-gray-600">
-          Learn blockchain from zero to confident — through interactive
-          missions, not lectures.
+          {t("pages.landing.subtitle")}
         </p>
         <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Link to="/register">
-            <Button>Get Started</Button>
+            <Button>{t("pages.landing.getStarted")}</Button>
           </Link>
           <Link to="/login">
-            <Button variant="ghost">Sign In</Button>
+            <Button variant="ghost">{t("pages.landing.signIn")}</Button>
           </Link>
         </div>
       </div>
       <nav className="mt-12 flex gap-4 text-sm text-gray-400">
         <Link to="/privacy-policy" className="hover:text-primary">
-          Privacy Policy
+          {t("pages.landing.privacyPolicy")}
         </Link>
         <Link to="/terms-of-service" className="hover:text-primary">
-          Terms of Service
+          {t("pages.landing.termsOfService")}
         </Link>
       </nav>
     </div>

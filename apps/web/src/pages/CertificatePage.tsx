@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { GraduationCap } from "lucide-react";
 import type { Certificate } from "@transcendence/shared";
 import { usersApi } from "../api/users.js";
@@ -12,6 +13,7 @@ import { Alert } from "../components/ui/Alert.js";
 import { useAuth } from "../contexts/AuthContext.js";
 
 export function CertificatePage() {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [cert, setCert] = useState<Certificate | null>(null);
   const [completionPct, setCompletionPct] = useState(0);
@@ -21,7 +23,7 @@ export function CertificatePage() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    document.title = "Certificate — Transcendence";
+    document.title = `${t("pages.certificate.title")} — Transcendence`;
     let cancelled = false;
 
     usersApi.getCertificate().then(
@@ -78,16 +80,16 @@ export function CertificatePage() {
     return (
       <div className="mx-auto max-w-lg space-y-6">
         <h1 className="text-2xl font-bold text-gray-900 font-heading">
-          Certificate
+          {t("pages.certificate.title")}
         </h1>
         <Card>
           <div className="py-8 text-center">
             <GraduationCap className="mx-auto mb-4 h-16 w-16 text-gray-300" />
             <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              Certificate Not Yet Earned
+              {t("pages.certificate.notEarnedTitle")}
             </h2>
             <p className="mb-4 text-sm text-gray-500">
-              Complete all missions to earn your certificate of completion.
+              {t("pages.certificate.notEarnedBody")}
             </p>
             <div className="mx-auto max-w-xs">
               <div className="h-2 w-full rounded-full bg-gray-200">
@@ -97,7 +99,7 @@ export function CertificatePage() {
                 />
               </div>
               <p className="mt-2 text-xs text-gray-400">
-                {completionPct}% complete
+                {t("pages.certificate.completionPct", { pct: completionPct })}
               </p>
             </div>
           </div>
@@ -107,13 +109,13 @@ export function CertificatePage() {
   }
 
   if (!cert) {
-    return <Alert variant="error">Failed to load certificate</Alert>;
+    return <Alert variant="error">{t("pages.certificate.loadError")}</Alert>;
   }
 
   return (
   <div className="mx-auto max-w-2xl space-y-6 py-8">
     <h1 className="text-2xl font-bold text-gray-900 font-heading text-center mb-8">
-      Certificate
+      {t("pages.certificate.title")}
     </h1>
 
     <div className="flex justify-center">
@@ -126,7 +128,7 @@ export function CertificatePage() {
 
     <div className="text-center mt-8">
       <Button variant="secondary" onClick={handleCopy}>
-        {copied ? "Copied!" : "Copy Share Link"}
+        {copied ? t("pages.certificate.copied") : t("pages.certificate.copyShareLink")}
       </Button>
     </div>
   </div>

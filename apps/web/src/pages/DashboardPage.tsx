@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type {
   TokenBalance,
   TokenTransaction,
@@ -18,6 +19,7 @@ import { Card } from "../components/ui/Card.js";
 import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 
 export function DashboardPage() {
+  const { t } = useTranslation();
   const { dashboardRevealed } = useReveals();
   const [balance, setBalance] = useState<TokenBalance | null>(null);
   const [transactions, setTransactions] = useState<TokenTransaction[]>([]);
@@ -27,7 +29,7 @@ export function DashboardPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    document.title = "Dashboard — Transcendence";
+    document.title = `${t("pages.dashboard.title")} — Transcendence`;
     let cancelled = false;
 
     Promise.all([
@@ -54,7 +56,7 @@ export function DashboardPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [t]);
 
   if (!dashboardRevealed) {
     return <Navigate to="/home" replace />;
@@ -73,7 +75,7 @@ export function DashboardPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Wallet Dashboard
+        {t("pages.dashboard.title")}
       </h1>
 
       {/* Top stats */}
@@ -86,7 +88,7 @@ export function DashboardPage() {
       {chain && chain.blocks.length > 0 && (
         <Card>
           <h2 className="mb-3 text-sm font-semibold text-gray-900">
-            Learning Chain ({chain.totalBlocks} blocks)
+            {t("pages.dashboard.learningChain", { count: chain.totalBlocks })}
           </h2>
           <div className="flex gap-2 overflow-x-auto pb-2">
             {chain.blocks.slice(-20).map((block) => (
@@ -106,7 +108,7 @@ export function DashboardPage() {
           </div>
           {chain.totalBlocks > 20 && (
             <p className="mt-2 text-xs text-gray-400">
-              Showing last 20 of {chain.totalBlocks} blocks
+              {t("pages.dashboard.learningChainTruncated", { total: chain.totalBlocks })}
             </p>
           )}
         </Card>
@@ -116,7 +118,7 @@ export function DashboardPage() {
       {transactions.length > 0 && (
         <Card>
           <h2 className="mb-3 text-sm font-semibold text-gray-900">
-            Recent Transactions
+            {t("pages.dashboard.recentTransactions")}
           </h2>
           <div className="divide-y divide-gray-100">
             {transactions.map((tx) => (
@@ -149,13 +151,13 @@ export function DashboardPage() {
         <div>
           <div className="mb-3 flex items-center justify-between">
             <h2 className="text-sm font-semibold text-gray-900">
-              Achievements ({earnedAchievements.length}/{achievements.length})
+              {t("pages.dashboard.achievements", { earned: earnedAchievements.length, total: achievements.length })}
             </h2>
             <Link
               to="/achievements"
               className="text-xs text-primary hover:text-primary/80"
             >
-              View all
+              {t("pages.dashboard.viewAll")}
             </Link>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
