@@ -207,7 +207,7 @@ export function CertificatePage() {
 
             {cert.nftTxHash && (
               <a
-                href={`https://snowtrace.io/tx/${cert.nftTxHash}`}
+                href={`https://testnet.snowtrace.io/tx/${cert.nftTxHash}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 inline-flex items-center gap-2 text-sm text-purple-600 hover:text-purple-800 transition-colors"
