@@ -58,7 +58,6 @@ make setup
 is for local development without the full Compose app: it runs pnpm install, starts standalone Postgres and Redis containers, runs Prisma generate, migrate, and seed, then pnpm dev so the API and web dev servers run on the host.
 
 
-
 RESOURCES:
 
 official documentation and tutorials used while building this stack
@@ -110,11 +109,11 @@ Use of artificial intelligence:
 The use of artificial was used to confirm certain point that were difficult to understand and to get a much simpler explication of what we were dealing about before continuing.
 It was also used to create tests and be sure that we tested all the edges cases that we couldn't think about on top of our head.    
 
-TEAM INFORMATION
+TEAM INFORMATION:
 
 Hugo Ganet (hgannet) — Technical Lead and Developer. Owns backend architecture, Express API design, Prisma schema and migrations, integration tests, session and security middleware, and coordination of API contracts with the frontend.
 
-Arthur (agravier) — Product Owner and content owner. Defines curriculum scope, mission copy, tooltips, UI copy in English and French, QA scenarios, and alignment between pedagogy and product specs.
+Arthur (agravier) — Product Owner and content owner. Defines curriculum scope, mission copy, tooltips, UI copy in English, French and Spanish, QA scenarios, and alignment between pedagogy and product specs.
 
 JB (jbriz) — Developer, frontend. Builds the React application, routing, forms, gamification and social screens, Tailwind layout, and hooks the UI to shared Zod types and REST plus Socket.IO.
 
@@ -122,39 +121,56 @@ Kauana (kamaral) — Developer, backend and blockchain. Works on certificate flo
 
 Theo (theveste) — Project Manager and Developer. Keeps milestones and tasks visible, facilitates syncs and blockers, and contributes to the codebase (Docker, Makefile, deployment flow, and shared fixes across API and tooling).
 
-PROJECT MANAGEMENT
 
-Work is split by area: API and data, web client, content, and blockchain. Theo (theveste) tracks planning and check-ins; the team meets on a weekly rhythm for planning and blockers, uses GitHub for issues and pull requests, and discusses day-to-day questions on Discord. Mainline development targets the main branch; features land through reviewed PRs. Larger scope is tracked against the epic and story documents in the repository.
 
-TECHNICAL STACK
+PROJECT MANAGEMENT:
 
-Frontend: React 19, Vite 7, TypeScript, Tailwind 4, react-router-dom, i18next for locales, Socket.IO client. Backend: Express 5, TypeScript, Prisma 7 with PostgreSQL 17, Redis 7, Passport (local, Google, Facebook), TOTP 2FA, express-rate-limit, multer for uploads, Resend for email where configured, Sharp for images, Socket.IO for WebSockets. Blockchain: ethers.js v6 against an Avalanche-compatible JSON-RPC endpoint and a deployed certificate contract. Tooling: pnpm workspaces, Turborepo, ESLint, Prettier, Vitest, Supertest. Deployment: multi-stage Dockerfiles for api and web, docker-compose.yml, Nginx reverse proxy with TLS.
+The team organized the work beetween all the team members by what they knew what to do best, 
+Team members that knew backend were more oriented towards backend, front-end also.
+We tried to do weekly meetings, because we have some team members that don't live at paris so, we tried to mix remote and presential.
+
+We used github to have a single repository, using multiple branch for creating new functionnality.
+We also used github action to validate the CI before merging different branches into main.
+We used discord to communicates beetween the team members..
+
+
+
+TECHNICAL STACK:
+
+Frontend: React 19, Vite 7, TypeScript, Tailwind 4, react-router-dom, i18next for locales, Socket.IO client. 
+
+Backend: Express 5, Prisma 7 with PostgreSQL 17, Redis 7, Passport (local, Google, Facebook), TOTP 2FA, express-rate-limit, multer for uploads, Resend for email where configured, Sharp for images, Socket.IO for WebSockets. 
 
 PostgreSQL was chosen for strong relational modelling across users, progress, gamification, messaging, and audit-style tables, with Prisma migrations for reproducible schema changes. Express keeps the HTTP surface explicit and easy to test with Supertest.
+
+Blockchain: ethers.js v6 against an Avalanche-compatible JSON-RPC endpoint and a deployed certificate contract. Tooling: pnpm workspaces, Turborepo, ESLint, Prettier, Vitest, Supertest. Deployment: multi-stage Dockerfiles for api and web, docker-compose.yml, Nginx reverse proxy with TLS.
+
 
 DATABASE SCHEMA
 
 The full model is in apps/api/prisma/schema.prisma. At a glance: User links to OAuth accounts, password reset tokens, progress rows (missions and chapters), token ledger, streak fields, achievements and user achievements, friendships, messages, notifications and preferences, GDPR-related entities, certificates with optional NFT fields, and supporting enums and indexes. Relations use foreign keys and unique constraints (for example one row per user per mission progress, one friendship pair, one user–achievement pair). Migration history lives in apps/api/prisma/migrations. For a diagram, generate one from Prisma or refer to the Developer Guide sections on data.
 
+
+
 FEATURES LIST
 
-Authentication and account: email registration and login, hashed passwords, logout, password reset mail flow, Google and Facebook OAuth, optional TOTP 2FA — Hugo Ganet, Kauana; UI JB.
+Authentication and account: email registration and login, hashed passwords, logout, password reset mail flow, Google and Facebook OAuth, optional TOTP 2FA — Hugo Ganet; UI JB.
 
-Curriculum and learning: structure from content/structure.json, mission pages, exercises (several types), completion and progress — Arthur (content), Hugo Ganet (engine), JB (UI).
+Curriculum and learning: structure from content/structure.json, mission pages, exercises (several types), completion and progress — Arthur (content), JB (UI).
 
-Gamification: Knowledge Tokens, transactions, streaks, achievements, weekly-style leaderboard — Hugo Ganet, Kauana; UI JB.
+Gamification: Knowledge Tokens, transactions, streaks, achievements, weekly-style leaderboard — Hugo Ganet; UI JB.
 
-Social: friend requests and list, public profile, direct messages, online-style presence via sockets — Hugo Ganet, Kauana; UI JB.
+Social: friend requests and list, public profile, direct messages, online-style presence via sockets — theveste; UI JB.
 
-Notifications: REST listing and Socket.IO push for new events — Hugo Ganet; UI JB.
+Notifications: REST listing and Socket.IO push for new events — theveste; UI JB.
 
-Profile and files: profile fields, avatar upload — Hugo Ganet, Kauana; UI JB.
+Profile and files: profile fields, avatar upload — Hugo Ganet; UI JB.
 
-Legal: Privacy Policy and Terms of Service pages linked from the app — Arthur (copy), JB (pages).
+Legal: Privacy Policy and Terms of Service pages linked from the app — Arthur ().
 
-GDPR: data export and account deletion flows with confirmation — Hugo Ganet, Kauana; UI JB.
+GDPR: data export and account deletion flows with confirmation — Hugo Ganet; UI JB.
 
-Certificates: completion certificate, PDF when implemented, mint and metadata fields on chain — Kauana, Hugo Ganet; copy Arthur; UI JB.
+Certificates: completion certificate, PDF when implemented, mint and metadata fields on chain — Kauana, Hugo Ganet; UI JB.
 
 Internationalization: English and French content and UI strings; i18n wiring in the web app — Arthur, JB.
 
@@ -162,11 +178,15 @@ Infrastructure: Dockerfiles, docker-compose, Makefile (start and setup), TLS cer
 
 MODULES
 
-Point scale: Major 2 points, Minor 1 point. Total claimed: 19 points (five points of headroom above the 14 minimum).
+Point scale: Major 2 points, Minor 1 point. Total claimed: 21 points (five points of headroom above the 14 minimum).
 
-1. Web — Major — Frontend and backend frameworks (React + Express): 2 pts — Full stack in apps/web and apps/api — Hugo Ganet, JB, Kauana, Theo.
+Web — Major Frontend and backend frameworks (React + Express): 2 pts — Full stack in apps/web and apps/api — Hugo Ganet, JB, Kauana, Theo, Arthur.
 
-2. Web — Major — Real-time features (Socket.IO): 2 pts — Notifications and presence — Hugo Ganet, JB, Theo.
+Web- Minor frontend framwork : JB, Arthur, Theo 1pt
+
+Web- Minor backend framework : Hugo, Kauana 1pt
+
+Web — Major — Real-time features (Socket.IO): 2 pts — Notifications and presence — Hugo Ganet, Theo.
 
 3. Web — Major — User interaction (chat, profiles, friends): 2 pts — Messaging, profiles, friends — Hugo Ganet, JB, Theo.
 
@@ -174,15 +194,15 @@ Point scale: Major 2 points, Minor 1 point. Total claimed: 19 points (five point
 
 5. Web — Minor — Notification system: 1 pt — Creation and read paths plus real-time delivery — Hugo Ganet, JB.
 
-6. Web — Minor — Custom design system: 1 pt — Reusable UI components, palette, typography (Tailwind theme and components under apps/web) — Arthur.
+6. Web — Minor — Custom design system: 1 pt — Reusable UI components, palette, typography (Tailwind theme and components under apps/web) — Arthur, Theo.
 
 7. User management — Major — Standard user management: 2 pts — Profile, avatar, friends, status — Hugo Ganet, JB.
 
-8. User management — Minor — OAuth 2.0: 1 pt — Google and Facebook — Hugo Ganet.
+8. User management — Minor — OAuth 2.0: 1 pt — Google and Facebook — JB.
 
-9. User management — Minor — 2FA: 1 pt — TOTP enrollment and login step — Hugo Ganet, JB, Arthur.
+9. User management — Minor — 2FA: 1 pt — TOTP enrollment and login step — Hugo Ganet, JB.
 
-10. Gaming UX — Minor — Gamification: 1 pt — Tokens, streaks, achievements, leaderboard — Hugo Ganet, JB.
+10. Gaming UX — Minor — Gamification: 1 pt — Tokens, streaks, achievements, leaderboard — Hugo Ganet, JB, Kauana.
 
 11. Accessibility and i18n — Minor — Multiple languages: 1 pt — English and French across content and UI — Arthur, JB.
 
@@ -203,12 +223,5 @@ JB implemented the React SPA: auth flows, curriculum and mission views, exercise
 
 Kauana focused on certificates end to end, smart contract and Avalanche RPC usage from Node, persistence of chain fields, and co-owned backend areas such as tokens and heavy Prisma work alongside Hugo.
 
-Theo (theveste) acted as project manager for scheduling and follow-up, and contributed to Dockerfiles, docker-compose, Makefile, local and CI database seeding flow, environment and TLS setup for one-command startup, plus cross-cutting fixes so the stack runs reliably for the whole team.
+Theo acted as project manager for scheduling and follow-up, and contributed to Dockerfiles, docker-compose, Makefile, local and CI database seeding flow, environment and TLS setup for one-command startup, plus cross-cutting fixes so the stack runs reliably for the whole team.
 
-BONUS
-
-The team claims 19 module points. Any extra scope beyond 14 is documented in the module table above; no separate bonus-only module is listed beyond that headroom.
-
-LIMITATIONS
-
-Self-signed TLS on localhost produces browser warnings until a trusted certificate is installed. Blockchain features need a reachable RPC and a deployed contract matching CONTRACT_ADDRESS. Third natural language beyond English and French may be partial unless explicitly completed in i18n files.
