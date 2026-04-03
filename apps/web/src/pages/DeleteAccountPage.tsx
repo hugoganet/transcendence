@@ -33,13 +33,13 @@ export function DeleteAccountPage() {
 
   return (
     <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 font-heading">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
         {t("pages.deleteAccount.title")}
       </h1>
 
       <Card>
         <div className="space-y-4">
-          <div className="rounded-lg bg-red-50 px-4 py-3">
+          <div className="rounded-lg bg-red-50 dark:bg-red-900/20 px-4 py-3">
             <p className="text-sm font-medium text-red-800">
               {t("pages.deleteAccount.warningTitle")}
             </p>
@@ -48,7 +48,7 @@ export function DeleteAccountPage() {
             </p>
           </div>
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-warm-200">
             {t("pages.deleteAccount.confirmationEmailNote")}
           </p>
 
@@ -59,7 +59,7 @@ export function DeleteAccountPage() {
               onChange={(e) => setConfirmed(e.target.checked)}
               className="mt-0.5 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
             />
-            <span className="text-sm text-gray-700">
+            <span className="text-sm text-gray-700 dark:text-warm-200">
               {t("pages.deleteAccount.checkboxLabel")}
             </span>
           </label>

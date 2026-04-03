@@ -107,7 +107,7 @@ export function AppLayout() {
             to="/home"
             className="text-lg font-bold text-primary font-heading dark:text-teal-400"
           >
-            Transcendence
+            Unblock.chain
           </Link>
 
           {/* Desktop nav */}

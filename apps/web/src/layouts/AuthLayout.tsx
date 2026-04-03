@@ -10,7 +10,7 @@ export function AuthLayout() {
         <LanguageSwitcher variant="pill" />
       </div>
       <Link to="/" className="mb-8 text-2xl font-bold text-primary font-heading dark:text-teal-400">
-        Transcendence
+        Unblock.chain
       </Link>
       <div className="w-full max-w-md animate-fade-in-up">
         <Outlet />

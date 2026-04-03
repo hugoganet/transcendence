@@ -74,7 +74,7 @@ export function ResetPasswordPage() {
   if (success) {
     return (
       <Card>
-        <h1 className="mb-4 text-center text-xl font-bold text-gray-900 font-heading">
+        <h1 className="mb-4 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("auth.resetPassword.title")}
         </h1>
         <Alert variant="success">
@@ -94,7 +94,7 @@ export function ResetPasswordPage() {
 
   return (
     <Card>
-      <h1 className="mb-6 text-center text-xl font-bold text-gray-900 font-heading">
+      <h1 className="mb-6 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
         {t("auth.resetPassword.title")}
       </h1>
       {globalError && (

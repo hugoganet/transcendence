@@ -23,7 +23,7 @@ export function Layout() {
             to="/"
             className="font-[var(--font-heading)] text-lg font-bold text-[var(--color-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
           >
-            Transcendence
+            Unblock.chain
           </Link>
           <LanguageSwitcher variant="pill" />
         </div>

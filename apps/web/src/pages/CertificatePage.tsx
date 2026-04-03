@@ -79,26 +79,26 @@ export function CertificatePage() {
   if (noCert) {
     return (
       <div className="mx-auto max-w-lg space-y-6">
-        <h1 className="text-2xl font-bold text-gray-900 font-heading">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("pages.certificate.title")}
         </h1>
         <Card>
           <div className="py-8 text-center">
             <GraduationCap className="mx-auto mb-4 h-16 w-16 text-gray-300" />
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
+            <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
               {t("pages.certificate.notEarnedTitle")}
             </h2>
-            <p className="mb-4 text-sm text-gray-500">
+            <p className="mb-4 text-sm text-gray-500 dark:text-warm-200">
               {t("pages.certificate.notEarnedBody")}
             </p>
             <div className="mx-auto max-w-xs">
-              <div className="h-2 w-full rounded-full bg-gray-200">
+              <div className="h-2 w-full rounded-full bg-gray-200 dark:bg-warm-700">
                 <div
                   className="h-2 rounded-full bg-primary transition-all"
                   style={{ width: `${completionPct}%` }}
                 />
               </div>
-              <p className="mt-2 text-xs text-gray-400">
+              <p className="mt-2 text-xs text-gray-400 dark:text-warm-300">
                 {t("pages.certificate.completionPct", { pct: completionPct })}
               </p>
             </div>
@@ -113,24 +113,24 @@ export function CertificatePage() {
   }
 
   return (
-  <div className="mx-auto max-w-2xl space-y-6 py-8">
-    <h1 className="text-2xl font-bold text-gray-900 font-heading text-center mb-8">
-      {t("pages.certificate.title")}
-    </h1>
+    <div className="mx-auto max-w-2xl space-y-6 py-8">
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading text-center mb-8">
+        {t("pages.certificate.title")}
+      </h1>
 
-    <div className="flex justify-center">
-      <CertificateCard
-        certificate={cert}
-        userName={user?.displayName ?? user?.email ?? "Learner"}
-        shareUrl={shareUrl}
-      />
-    </div>
+      <div className="flex justify-center">
+        <CertificateCard
+          certificate={cert}
+          userName={user?.displayName ?? user?.email ?? "Learner"}
+          shareUrl={shareUrl}
+        />
+      </div>
 
-    <div className="text-center mt-8">
-      <Button variant="secondary" onClick={handleCopy}>
-        {copied ? t("pages.certificate.copied") : t("pages.certificate.copyShareLink")}
-      </Button>
+      <div className="text-center mt-8">
+        <Button variant="secondary" onClick={handleCopy}>
+          {copied ? t("pages.certificate.copied") : t("pages.certificate.copyShareLink")}
+        </Button>
+      </div>
     </div>
-  </div>
-);
+  );
 }
