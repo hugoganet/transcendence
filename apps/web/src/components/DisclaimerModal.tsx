@@ -1,12 +1,21 @@
+/**
+ * @file DisclaimerModal — gate modal requiring user acceptance before proceeding.
+ * FR: DisclaimerModal — modale de consentement obligatoire avant de continuer.
+ */
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/Button.js";
 
+/** Props for DisclaimerModal. / FR: Props pour DisclaimerModal. */
 interface DisclaimerModalProps {
   text: string;
   onAccept: () => void;
 }
 
+/**
+ * Shows a disclaimer with checkbox confirmation; blocks access until accepted.
+ * FR: Affiche un avertissement avec case à cocher ; bloque l'accès tant qu'il n'est pas accepté.
+ */
 export function DisclaimerModal({ text, onAccept }: DisclaimerModalProps) {
   const { t } = useTranslation();
   const [accepted, setAccepted] = useState(false);

@@ -1,8 +1,14 @@
+/**
+ * @file AchievementsPage — displays all user achievements with unlock status and ranks.
+ * FR: Page Succès — affiche tous les succès utilisateur avec statut et rangs.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { AchievementStatus } from "@transcendence/shared";
 import { gamificationApi } from "../api/gamification.js";
 import { AchievementCard, type AchievementRank } from "../components/AchievementCard.js";
+import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
+import { Alert } from "../components/ui/Alert.js";
 
 function getRank(index: number): AchievementRank {
   if (index < 2) return "legendary";
@@ -10,8 +16,6 @@ function getRank(index: number): AchievementRank {
   if (index < 10) return "rare";
   return "common";
 }
-import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
-import { Alert } from "../components/ui/Alert.js";
 
 export function AchievementsPage() {
   const { t } = useTranslation();

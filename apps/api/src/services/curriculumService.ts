@@ -1,8 +1,6 @@
 /**
- * @module services/curriculumService
- * @description Curriculum engine: progress overlay, mission access status,
- * mission detail with locale-aware content, mission completion (awards tokens,
- * updates streaks, checks achievements, triggers reveals), resume point, and learning chain.
+ * @file Curriculum Service — builds curriculum trees with user progress overlays.
+ * FR: Service du programme — construit les arbres de cours avec la progression utilisateur.
  */
 
 import { prisma } from "../config/database.js";

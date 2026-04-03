@@ -1,7 +1,6 @@
 /**
- * @module services/achievementService
- * @description Evaluates and awards achievements based on module completions,
- * token thresholds, and streak targets. Works within Prisma transactions.
+ * @file Achievement Service — checks and awards user achievements.
+ * FR: Service des succes — verifie et attribue les succes utilisateur.
  */
 
 import { prisma } from "../config/database.js";

@@ -1,6 +1,6 @@
 /**
- * @module services/certificatePdfService
- * @description Generates downloadable PDF certificates using jsPDF.
+ * @file Certificate PDF Service — generates PDF documents for earned certificates.
+ * FR: Service PDF de certificat — genere des documents PDF pour les certificats obtenus.
  */
 
 import { jsPDF } from "jspdf";

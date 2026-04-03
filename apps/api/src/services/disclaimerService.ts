@@ -1,7 +1,6 @@
 /**
- * @module services/disclaimerService
- * @description Serves financial disclaimers (general, onboarding, module-specific)
- * from static content and records user acceptance in the database.
+ * @file Disclaimer Service — serves and tracks acceptance of legal disclaimers.
+ * FR: Service des avertissements — fournit et suit l'acceptation des mentions legales.
  */
 
 import { prisma } from "../config/database.js";

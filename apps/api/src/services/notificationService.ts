@@ -1,7 +1,6 @@
 /**
- * @module services/notificationService
- * @description Notification CRUD: create (with optional Socket.IO push),
- * paginated listing, mark as read, and unread retrieval for Socket.IO connect.
+ * @file Notification Service — creates, pushes and manages user notifications.
+ * FR: Service de notifications — cree, envoie et gere les notifications utilisateur.
  */
 
 import { Prisma } from "../../generated/prisma/client.js";

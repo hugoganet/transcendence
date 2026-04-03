@@ -1,7 +1,6 @@
 /**
- * @module routes/tokens
- * @description Token routes: Knowledge Token balance summary
- * and paginated transaction history (earnings + gas fee deductions).
+ * @file Tokens Routes — check balance, view transaction history.
+ * FR: Routes Tokens — consulte le solde, affiche l'historique des transactions.
  */
 
 import { Router, type Request, type Response } from "express";
@@ -10,9 +9,10 @@ import { validate } from "../middleware/validate.js";
 import { tokenHistoryQuerySchema } from "@transcendence/shared";
 import { getTokenBalance, getTokenHistory } from "../services/tokenService.js";
 
+/** Tokens router — all /api/v1/tokens endpoints. / FR: Routeur tokens. */
 export const tokensRouter = Router();
 
-/** GET /api/v1/tokens/balance — Returns current token balance and earning/spending totals. */
+/** GET /balance — return token balance summary. / FR: Retourne le resume du solde de tokens. */
 tokensRouter.get(
   "/balance",
   requireAuth,
@@ -23,7 +23,7 @@ tokensRouter.get(
   },
 );
 
-/** GET /api/v1/tokens/history — Returns paginated token transaction history (earnings + gas fees). */
+/** GET /history — return paginated transaction history. / FR: Retourne l'historique des transactions pagine. */
 tokensRouter.get(
   "/history",
   requireAuth,

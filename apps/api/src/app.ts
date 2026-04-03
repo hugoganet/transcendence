@@ -1,3 +1,7 @@
+/**
+ * @file App — Express application setup with security, CORS, rate limiting, and route registration.
+ * FR: App — configuration de l'application Express avec securite, CORS, limitation de debit et enregistrement des routes.
+ */
 import "./config/env.js";
 import express, { type Express, type RequestHandler } from "express";
 import helmet from "helmet";
@@ -47,6 +51,10 @@ app.use(rateLimiter);
 // Session middleware slot — registered via registerRoutes() after session is available
 // 6. Routes, 7. 404, 8. Error handler are deferred to registerRoutes()
 
+/**
+ * Registers session, Passport, API routes, 404 catch-all, and the global error handler.
+ * FR: Enregistre la session, Passport, les routes API, le catch-all 404 et le gestionnaire d'erreurs global.
+ */
 function registerRoutes(sessionMw?: RequestHandler) {
   if (sessionMw) {
     app.use(sessionMw);

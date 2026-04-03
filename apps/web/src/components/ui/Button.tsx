@@ -1,8 +1,13 @@
+/**
+ * @file Button — reusable button with variant styles and loading state.
+ * FR: Button — bouton réutilisable avec variantes de style et état de chargement.
+ */
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { Loader2 } from "lucide-react";
 
 type ButtonVariant = "primary" | "secondary" | "danger" | "ghost";
 
+/** Props for Button. / FR: Props pour Button. */
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   isLoading?: boolean;
@@ -20,6 +25,10 @@ const variantClasses: Record<ButtonVariant, string> = {
     "bg-transparent text-gray-700 dark:text-warm-200 hover:bg-gray-100 dark:hover:bg-warm-700 focus-visible:ring-gray-300",
 };
 
+/**
+ * Styled button with primary/secondary/danger/ghost variants and optional spinner.
+ * FR: Bouton stylisé avec variantes primary/secondary/danger/ghost et spinner optionnel.
+ */
 export function Button({
   variant = "primary",
   isLoading = false,

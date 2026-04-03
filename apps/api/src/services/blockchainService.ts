@@ -1,7 +1,6 @@
 /**
- * @module services/blockchainService
- * @description Mints NFT certificates on the blockchain via ethers.js.
- * Interacts with a deployed smart contract to record completion on-chain.
+ * @file Blockchain Service — mints certificate NFTs on-chain via ethers.
+ * FR: Service blockchain — cree des NFT de certificat sur la blockchain via ethers.
  */
 
 import { ethers } from "ethers";
@@ -26,12 +25,6 @@ const CONTRACT_ABI = [
   "event CertificateMinted(address indexed recipient, uint256 indexed tokenId, string curriculumTitle, uint256 totalMissions)",
 ];
 
-/**
- * Mints an NFT certificate on the Avalanche blockchain for the given user.
- * Connects to the smart contract, calls mintCertificate, and extracts the tokenId
- * from the CertificateMinted event. If the certificate already exists on-chain,
- * fetches and returns the existing token data instead of throwing.
- */
 export async function mintCertificateNFT(
     userId: string,
     userEthereumWallet: string,

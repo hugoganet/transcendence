@@ -1,8 +1,13 @@
+/**
+ * @file STExercise — step-through exercise with sequential prompts and per-step options.
+ * FR: STExercise — exercice par étapes avec questions séquentielles et options par étape.
+ */
 import { useState } from "react";
 import type { STExerciseContent } from "@transcendence/shared";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
+/** Props for STExercise. / FR: Props pour STExercise. */
 interface STExerciseProps {
   content: STExerciseContent;
   onSubmit: (
@@ -11,6 +16,10 @@ interface STExerciseProps {
   isSubmitting: boolean;
 }
 
+/**
+ * Multi-step exercise with sequential prompts, step progress bar, and back navigation.
+ * FR: Exercice multi-étapes avec questions séquentielles, barre de progression et navigation arrière.
+ */
 export function STExercise({
   content,
   onSubmit,
@@ -47,8 +56,8 @@ export function STExercise({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg bg-gray-50 p-4">
-        <p className="text-sm text-gray-700">{content.instruction}</p>
+      <div className="rounded-lg bg-gray-50 dark:bg-warm-900 p-4">
+        <p className="text-sm text-gray-700 dark:text-warm-200">{content.instruction}</p>
       </div>
 
       {/* Step progress */}
@@ -62,7 +71,7 @@ export function STExercise({
                 ? "bg-primary"
                 : answers[step.id] !== undefined
                   ? "bg-primary/40 cursor-pointer"
-                  : "bg-gray-200"
+                  : "bg-gray-200 dark:bg-warm-700"
             }`}
             aria-label={t("exercise.ST.step", { current: idx + 1, total: content.steps.length })}
           />
@@ -70,10 +79,10 @@ export function STExercise({
       </div>
 
       <div>
-        <p className="mb-1 text-xs font-medium text-gray-400">
+        <p className="mb-1 text-xs font-medium text-gray-400 dark:text-warm-300">
           {t("exercise.ST.step", { current: currentStepIdx + 1, total: content.steps.length })}
         </p>
-        <h3 className="text-base font-semibold text-gray-900">
+        <h3 className="text-base font-semibold text-gray-900 dark:text-warm-50">
           {currentStep.prompt}
         </h3>
       </div>
@@ -87,7 +96,7 @@ export function STExercise({
             className={`w-full rounded-lg border p-4 text-left text-sm transition-colors ${
               currentAnswer === option.id
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                : "border-gray-200 bg-white hover:border-gray-300"
+                : "border-gray-200 dark:border-warm-700 bg-white dark:bg-warm-800 hover:border-gray-300 dark:hover:border-warm-600"
             }`}
           >
             {option.text}

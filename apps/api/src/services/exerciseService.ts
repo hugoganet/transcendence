@@ -1,8 +1,6 @@
 /**
- * @module services/exerciseService
- * @description Exercise submission engine: validates answers for 4 exercise types
- * (SI, CM, IP, ST), records attempts, deducts gas fees in a transaction,
- * and returns scored feedback. Also provides mission exercise status.
+ * @file Exercise Service — validates exercise submissions and records progress.
+ * FR: Service des exercices — valide les soumissions d'exercices et enregistre la progression.
  */
 
 import { Prisma } from "../../generated/prisma/client.js";

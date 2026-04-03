@@ -1,3 +1,7 @@
+/**
+ * @file ChatBox — real-time messaging component with Socket.IO.
+ * FR: ChatBox — composant de messagerie temps réel avec Socket.IO.
+ */
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getSocket } from "../api/socket.js";
@@ -16,6 +20,10 @@ type Props = {
   onClose: () => void;
 };
 
+/**
+ * Floating chat window that sends and receives messages in real time via Socket.IO.
+ * FR: Fenêtre de chat flottante qui envoie et reçoit des messages en temps réel via Socket.IO.
+ */
 export function ChatBox({ userId, onClose }: Props) {
   const { t } = useTranslation();
   const { user } = useAuth();

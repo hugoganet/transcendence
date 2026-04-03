@@ -1,7 +1,6 @@
 /**
- * @module routes/exercises
- * @description Exercise routes: submit answers (SI, CM, IP, ST types)
- * and check mission exercise status. Gas fees are deducted on each submission.
+ * @file Exercise Routes — handles exercise submission and mission exercise status.
+ * FR: Routes d'exercices — gere la soumission des exercices et le statut par mission.
  */
 
 import { Router, type Request, type Response } from "express";
@@ -13,9 +12,10 @@ import {
   getMissionExerciseStatus,
 } from "../services/exerciseService.js";
 
+/** Exercises router — all /api/v1/exercises endpoints. / FR: Routeur d'exercices. */
 export const exercisesRouter = Router();
 
-/** POST /api/v1/exercises/:exerciseId/submit — Validates answer, records attempt, deducts gas fee. */
+/** POST /:exerciseId/submit — validate answer, record attempt, deduct gas fee. / FR: Valide la reponse, enregistre la tentative, deduit les frais de gas. */
 exercisesRouter.post(
   "/:exerciseId/submit",
   requireAuth,
@@ -29,7 +29,7 @@ exercisesRouter.post(
   },
 );
 
-/** GET /api/v1/exercises/missions/:missionId/status — Returns attempt count and whether mission is completable. */
+/** GET /missions/:missionId/status — return attempt count and completability. / FR: Retourne le nombre de tentatives et si la mission est completable. */
 exercisesRouter.get(
   "/missions/:missionId/status",
   requireAuth,

@@ -1,7 +1,6 @@
 /**
- * @module routes/gdpr
- * @description GDPR compliance routes: data export and account deletion,
- * both with email-based token confirmation flows.
+ * @file GDPR Routes — data export, account deletion requests and confirmation.
+ * FR: Routes RGPD — export de donnees, demande et confirmation de suppression de compte.
  */
 
 import { Router, type Request, type Response } from "express";
@@ -18,9 +17,10 @@ import {
   confirmAccountDeletion,
 } from "../services/gdprService.js";
 
+/** GDPR router — all /api/v1/gdpr endpoints. / FR: Routeur RGPD. */
 export const gdprRouter = Router();
 
-/** POST /api/v1/gdpr/export — Initiates data export, sends download link via email. */
+/** POST /export — request a personal data export. / FR: Demande un export de donnees personnelles. */
 gdprRouter.post("/export", requireAuth, async (req: Request, res: Response) => {
   const user = req.user as { id: string; email: string };
   await requestDataExport(user.id, user.email, req.ip);
@@ -29,7 +29,7 @@ gdprRouter.post("/export", requireAuth, async (req: Request, res: Response) => {
   });
 });
 
-/** GET /api/v1/gdpr/export/:token — Downloads exported user data as JSON. No auth (token-based). */
+/** GET /export/:token — download export via token (no auth). / FR: Telecharge l'export via token (sans auth). */
 gdprRouter.get(
   "/export/:token",
   validate({ params: gdprExportTokenParamSchema }),
@@ -39,7 +39,7 @@ gdprRouter.get(
   },
 );
 
-/** POST /api/v1/gdpr/delete — Initiates account deletion, sends confirmation email. */
+/** POST /delete — request account deletion. / FR: Demande la suppression du compte. */
 gdprRouter.post(
   "/delete",
   requireAuth,
@@ -54,7 +54,7 @@ gdprRouter.post(
   },
 );
 
-/** POST /api/v1/gdpr/delete/confirm/:token — Permanently deletes user and all data. No auth (token-based). */
+/** POST /delete/confirm/:token — confirm account deletion via token. / FR: Confirme la suppression du compte via token. */
 gdprRouter.post(
   "/delete/confirm/:token",
   validate({ params: gdprDeletionTokenParamSchema }),

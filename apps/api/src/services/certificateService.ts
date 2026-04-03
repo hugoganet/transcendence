@@ -1,7 +1,6 @@
 /**
- * @module services/certificateService
- * @description Manages completion certificates: generation (with share token),
- * NFT minting, retrieval by user or share token, and shareable URL creation.
+ * @file Certificate Service — issues, verifies and manages completion certificates.
+ * FR: Service de certificats — emet, verifie et gere les certificats de completion.
  */
 
 import crypto from "node:crypto";

@@ -1,7 +1,6 @@
 /**
- * @module services/revealService
- * @description Progressive reveal mechanic: unlocks UI features (tokens, wallet,
- * gas, dashboard) as users reach specific curriculum milestones.
+ * @file Reveal Service — manages progressive UI reveal mechanics per user.
+ * FR: Service de revelation — gere les mecaniques de revelation progressive de l'interface par utilisateur.
  */
 
 import { prisma } from "../config/database.js";

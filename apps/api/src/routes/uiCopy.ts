@@ -1,7 +1,6 @@
 /**
- * @module routes/uiCopy
- * @description UI copy routes: serves localized UI strings (EN/FR/ES).
- * Public endpoint — no auth required. Cached for 1 hour.
+ * @file UI Copy Routes — serve localized UI strings by locale.
+ * FR: Routes UI Copy — fournit les chaines d'interface localisees par langue.
  */
 
 import { Router, type Request, type Response } from "express";
@@ -9,11 +8,12 @@ import { AppError } from "../utils/AppError.js";
 import { getContent } from "../utils/contentLoader.js";
 import type { UIStrings } from "@transcendence/shared";
 
+/** UI Copy router — all /api/v1/ui-copy endpoints. / FR: Routeur UI Copy. */
 export const uiCopyRouter = Router();
 
 const VALID_LOCALES = new Set(["en", "fr", "es"]);
 
-/** GET /api/v1/ui-copy/:locale — Returns all UI strings for the given locale. Cached 1h. */
+/** GET /:locale — return UI strings for the given locale. / FR: Retourne les chaines d'interface pour la langue donnee. */
 uiCopyRouter.get(
   "/:locale",
   (req: Request, res: Response) => {

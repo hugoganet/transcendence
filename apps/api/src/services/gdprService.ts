@@ -1,8 +1,6 @@
 /**
- * @module services/gdprService
- * @description GDPR compliance: data export (gathers all user data into JSON),
- * account deletion (cascading delete), both with email-based token confirmation
- * and audit logging.
+ * @file GDPR Service — processes data export and account deletion requests.
+ * FR: Service RGPD — traite les demandes d'export de donnees et de suppression de compte.
  */
 
 import { randomBytes } from "crypto";

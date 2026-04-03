@@ -1,7 +1,6 @@
 /**
- * @module services/friendService
- * @description Friendship lifecycle: send/accept/remove friend requests,
- * list accepted friends, and list pending incoming/outgoing requests.
+ * @file Friend Service — handles friend requests, acceptance and friend list queries.
+ * FR: Service d'amis — gere les demandes d'amis, acceptations et requetes de liste d'amis.
  */
 
 import { prisma } from "../config/database.js";

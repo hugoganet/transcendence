@@ -1,6 +1,6 @@
 /**
- * @module services/publicProfileService
- * @description Returns a user's public profile (display name, avatar, stats).
+ * @file Public Profile Service — builds public-facing user profiles with achievements.
+ * FR: Service de profil public — construit les profils utilisateur publics avec les succes.
  */
 
 import { prisma } from "../config/database.js";

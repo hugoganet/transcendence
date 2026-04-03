@@ -1,3 +1,7 @@
+/**
+ * @file LanguageSwitcher — accessible dropdown for switching the app language.
+ * FR: LanguageSwitcher — menu déroulant accessible pour changer la langue de l'application.
+ */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLocale } from "../hooks/useLocale";
@@ -11,6 +15,7 @@ const LANGUAGES = [
 
 type LanguageCode = (typeof LANGUAGES)[number]["code"];
 
+/** Props for LanguageSwitcher. / FR: Props pour LanguageSwitcher. */
 interface LanguageSwitcherProps {
   variant?: "pill" | "menu-item";
 }
@@ -24,6 +29,10 @@ function findLanguage(locale: string | undefined) {
   return LANGUAGES.find((l) => l.code === code) ?? LANGUAGES[0];
 }
 
+/**
+ * Renders a language picker as a pill or menu-item with keyboard navigation and ARIA support.
+ * FR: Affiche un sélecteur de langue en pastille ou élément de menu avec navigation clavier et support ARIA.
+ */
 export function LanguageSwitcher({ variant = "pill" }: LanguageSwitcherProps) {
   const { t } = useTranslation();
   const { locale, changeLocale } = useLocale();

@@ -1,7 +1,6 @@
 /**
- * @module services/messageService
- * @description Chat messaging: sends messages between users and retrieves
- * conversation history ordered by creation time.
+ * @file Message Service — sends and retrieves direct messages between users.
+ * FR: Service de messagerie — envoie et recupere les messages directs entre utilisateurs.
  */
 
 import { prisma } from "../config/database.js";

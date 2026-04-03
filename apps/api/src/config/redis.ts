@@ -1,21 +1,17 @@
 /**
- * @module redis
- * @description ioredis client for rate limiting and Socket.IO pub/sub.
- *
- * This project uses **two** Redis client libraries connecting to the same server:
- * - **ioredis** (this file) — used by `rate-limit-redis` and `@socket.io/redis-adapter`.
- * - **node-redis v5** (`config/session.ts`) — used by `connect-redis` for session storage.
- *
- * The split is required because `connect-redis` v9 dropped ioredis support (June 2024).
- * Both are stable and officially maintained.
- *
- * Uses a singleton pattern on `globalThis` to survive hot-reloads in development.
+ * @file ioredis singleton for rate limiting and Socket.IO adapter.
+ * FR: Singleton ioredis pour la limitation de debit et l'adaptateur Socket.IO.
  */
-
 import "./env.js";
 import Redis from "ioredis";
 
-/** Singleton storage to prevent multiple Redis connections during hot-reload. */
+// Two Redis Client Libraries (Epic 1, Stories 1.3-1.4)
+// This project uses TWO Redis client libraries connecting to the same REDIS_URL:
+//   - ioredis (this file): used by rate-limit-redis (Story 1.3) and @socket.io/redis-adapter (Story 1.4)
+//   - redis/node-redis v5 (config/session.ts): used by connect-redis v9 session store (Story 1.4)
+// Split required because connect-redis v9 dropped ioredis support (June 2024).
+// Both are stable and officially maintained. See config/session.ts for the other client.
+
 const globalForRedis = globalThis as typeof globalThis & {
   redisClient?: Redis;
 };
@@ -24,8 +20,8 @@ if (!globalForRedis.redisClient) {
   globalForRedis.redisClient = new Redis(
     process.env.REDIS_URL ?? "redis://localhost:6379",
     {
-      maxRetriesPerRequest: null,
-    },
+      maxRetriesPerRequest: null, // Allow retrying indefinitely for dev; don't throw MaxRetriesPerRequestError
+    }
   );
 
   globalForRedis.redisClient.on("error", (err) => {
@@ -41,13 +37,10 @@ if (!globalForRedis.redisClient) {
   });
 }
 
-/** Singleton ioredis client — used by rate limiter and Socket.IO adapter. */
+/** Shared ioredis client instance. FR: Instance partagee du client ioredis. */
 export const redisClient: Redis = globalForRedis.redisClient;
 
-/**
- * Gracefully disconnects the ioredis client.
- * Called during server shutdown to prevent dangling connections.
- */
+/** Gracefully close the ioredis connection. FR: Ferme proprement la connexion ioredis. */
 export async function disconnectRedis(): Promise<void> {
   await redisClient.quit();
   console.log("Redis disconnected.");

@@ -1,3 +1,9 @@
+/**
+ * @file Structured HTTP error class with static factory methods.
+ * FR: Classe d'erreur HTTP structuree avec methodes factory statiques.
+ */
+
+/** HTTP error with status code, machine-readable code, and optional details. FR: Erreur HTTP avec code statut, code machine et details optionnels. */
 export class AppError extends Error {
   public readonly statusCode: number;
   public readonly code: string;

@@ -1,3 +1,7 @@
+/**
+ * @file MissionComplete — success screen shown after completing a mission with progress and rewards.
+ * FR: MissionComplete — écran de succès affiché après la complétion d'une mission avec progression et récompenses.
+ */
 import { Link } from "react-router-dom";
 import type { CompleteMissionResponse } from "@transcendence/shared";
 import { Check } from "lucide-react";
@@ -6,22 +10,27 @@ import { Card } from "../ui/Card.js";
 import { Button } from "../ui/Button.js";
 import { ProgressBar } from "../ui/ProgressBar.js";
 
+/** Props for MissionComplete. / FR: Props pour MissionComplete. */
 interface MissionCompleteProps {
   data: CompleteMissionResponse;
 }
 
+/**
+ * Success screen with progress bar, achievements, reveals, and next-mission navigation.
+ * FR: Écran de succès avec barre de progression, succès, révélations et navigation vers la mission suivante.
+ */
 export function MissionComplete({ data }: MissionCompleteProps) {
   const { t } = useTranslation();
   return (
     <Card className="text-center">
       <div className="space-y-6 py-4">
         {/* Success icon */}
-        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-          <Check className="h-8 w-8 text-green-600" />
+        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100 dark:bg-green-900/20">
+          <Check className="h-8 w-8 text-green-600 dark:text-green-400" />
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-gray-900 font-heading">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
             {t("labels.missionComplete")}
           </h2>
           {data.chapterCompleted && (
@@ -43,7 +52,7 @@ export function MissionComplete({ data }: MissionCompleteProps) {
             showLabel
             className="mx-auto max-w-xs"
           />
-          <p className="mt-1 text-xs text-gray-500">{t("exercise.overallProgress")}</p>
+          <p className="mt-1 text-xs text-gray-500 dark:text-warm-200">{t("exercise.overallProgress")}</p>
         </div>
 
         {/* Progressive reveal announcement */}
@@ -52,7 +61,7 @@ export function MissionComplete({ data }: MissionCompleteProps) {
             <p className="text-sm font-medium text-secondary">
               {t("exercise.featureUnlocked")}
             </p>
-            <p className="mt-1 text-sm text-gray-700">
+            <p className="mt-1 text-sm text-gray-700 dark:text-warm-200">
               {data.progressiveReveal.description}
             </p>
           </div>
@@ -64,12 +73,12 @@ export function MissionComplete({ data }: MissionCompleteProps) {
             {data.newAchievements.map((achievement) => (
               <div
                 key={achievement.code}
-                className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3"
+                className="rounded-lg border border-amber-200 dark:border-amber-900/40 bg-amber-50 dark:bg-amber-900/20 px-4 py-3"
               >
-                <p className="text-sm font-medium text-amber-800">
+                <p className="text-sm font-medium text-amber-800 dark:text-amber-300">
                   {t("exercise.achievementPrefix")}{achievement.title}
                 </p>
-                <p className="mt-0.5 text-xs text-amber-700">
+                <p className="mt-0.5 text-xs text-amber-700 dark:text-amber-400">
                   {achievement.description}
                 </p>
               </div>
@@ -99,7 +108,7 @@ export function MissionComplete({ data }: MissionCompleteProps) {
           )}
           <Link
             to="/curriculum"
-            className="text-sm text-gray-500 hover:text-primary"
+            className="text-sm text-gray-500 dark:text-warm-200 hover:text-primary dark:hover:text-primary"
           >
             {t("exercise.viewCurriculumMap")}
           </Link>

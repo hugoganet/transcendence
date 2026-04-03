@@ -1,7 +1,6 @@
 /**
- * @module services/leaderboardService
- * @description Weekly leaderboard: ranks users by missions completed in the
- * current week. Returns paginated entries and the current user's rank.
+ * @file Leaderboard Service — computes and returns ranked leaderboard entries.
+ * FR: Service du classement — calcule et renvoie les entrees du classement.
  */
 
 import { prisma } from "../config/database.js";

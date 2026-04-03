@@ -1,3 +1,7 @@
+/**
+ * @file Curriculum API Client — missions, progress, resume, learning chains.
+ * FR: Client API Curriculum — missions, progression, resume, chaines d'apprentissage.
+ */
 import type {
   CurriculumWithProgress,
   MissionDetailResponse,

@@ -1,7 +1,6 @@
 /**
- * @module services/tooltipService
- * @description Serves blockchain jargon tooltips: single-term lookup and
- * full glossary, both locale-aware (EN/FR) from static content.
+ * @file Tooltip Service — serves localized tooltips and glossary entries.
+ * FR: Service des infobulles — fournit les infobulles et entrees de glossaire localisees.
  */
 
 import { getContent } from "../utils/contentLoader.js";

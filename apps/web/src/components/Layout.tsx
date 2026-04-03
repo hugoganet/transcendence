@@ -1,7 +1,15 @@
+/**
+ * @file Layout — app shell with desktop header, mobile bottom nav, and skip-to-content link.
+ * FR: Layout — coque de l'application avec en-tête bureau, navigation mobile et lien d'accès direct au contenu.
+ */
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
+/**
+ * Main layout wrapper providing header, bottom nav, and page outlet.
+ * FR: Wrapper de mise en page principal fournissant l'en-tête, la navigation basse et le contenu de page.
+ */
 export function Layout() {
   const { t } = useTranslation();
   const location = useLocation();

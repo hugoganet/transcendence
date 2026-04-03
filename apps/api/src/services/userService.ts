@@ -1,7 +1,6 @@
 /**
- * @module services/userService
- * @description User profile management: get/update profile, avatar upload
- * (resize + save to disk), user search, and avatar file cleanup.
+ * @file User Service — manages user profiles, avatars and account settings.
+ * FR: Service utilisateur — gere les profils, avatars et parametres de compte.
  */
 
 import fs from "node:fs/promises";

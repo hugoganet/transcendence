@@ -1,8 +1,6 @@
 /**
- * @module routes/auth
- * @description Authentication routes: register, login, logout, password reset,
- * OAuth (Google/Facebook), and 2FA (TOTP). Sensitive endpoints have dedicated
- * rate limiters stricter than the global one.
+ * @file Auth Routes — handles register, login, logout, OAuth, 2FA, password reset.
+ * FR: Routes d'authentification — gere inscription, connexion, deconnexion, OAuth, 2FA, reinitialisation mdp.
  */
 
 import { Router, type Request, type Response, type NextFunction } from "express";
@@ -31,13 +29,14 @@ import {
 } from "../services/authService.js";
 import { AppError } from "../utils/AppError.js";
 
+/** Auth router — all /api/v1/auth endpoints. / FR: Routeur d'authentification. */
 export const authRouter = Router();
 
 // Must match the cookie name used by express-session (default: "connect.sid").
 // If a custom `name` is ever set in config/session.ts, update this constant.
 const SESSION_COOKIE_NAME = "connect.sid";
 
-/** POST /api/v1/auth/register — Create account, hash password, auto-login. Returns 201. */
+/** POST /register — create account, hash password, auto-login. / FR: Cree un compte, hash le mdp, auto-login. */
 authRouter.post(
   "/register",
   validate({ body: registerSchema }),
@@ -53,7 +52,7 @@ authRouter.post(
   },
 );
 
-/** POST /api/v1/auth/login — Verify credentials via Passport Local. If 2FA enabled, sets pending2FA flag. */
+/** POST /login — verify credentials via Passport; sets pending2FA if enabled. / FR: Verifie les identifiants; active pending2FA si 2FA actif. */
 authRouter.post(
   "/login",
   validate({ body: loginSchema }),
@@ -80,7 +79,7 @@ authRouter.post(
   },
 );
 
-/** POST /api/v1/auth/logout — Destroy session in Redis and clear cookie. */
+/** POST /logout — destroy session in Redis and clear cookie. / FR: Detruit la session Redis et supprime le cookie. */
 authRouter.post(
   "/logout",
   requireAuth,
@@ -104,7 +103,7 @@ authRouter.post(
   },
 );
 
-/** GET /api/v1/auth/me — Returns current user or null if unauthenticated (no 401). */
+/** GET /me — return current user or null if unauthenticated. / FR: Retourne l'utilisateur courant ou null si non authentifie. */
 authRouter.get("/me", (req: Request, res: Response) => {
   if (!req.isAuthenticated() || !req.user) {
     return res.json({ data: null });
@@ -133,7 +132,7 @@ const forgotPasswordLimiter = rateLimit({
   },
 });
 
-/** POST /api/v1/auth/forgot-password — Sends reset email. Silent return if email not found (no enumeration). */
+/** POST /forgot-password — send reset email; silent if email not found. / FR: Envoie un email de reinitialisation; silencieux si email inconnu. */
 authRouter.post(
   "/forgot-password",
   forgotPasswordLimiter,
@@ -170,7 +169,7 @@ const resetPasswordLimiter = rateLimit({
   },
 });
 
-/** POST /api/v1/auth/reset-password — Verifies token, hashes new password, invalidates all sessions. */
+/** POST /reset-password — verify token, hash new password, invalidate sessions. / FR: Verifie le token, hash le nouveau mdp, invalide les sessions. */
 authRouter.post(
   "/reset-password",
   resetPasswordLimiter,
@@ -205,7 +204,7 @@ const twoFactorVerifyLimiter = rateLimit({
   },
 });
 
-/** POST /api/v1/auth/2fa/setup — Generates TOTP secret and QR code for initial 2FA activation. */
+/** POST /2fa/setup — generate TOTP secret and QR code. / FR: Genere le secret TOTP et le QR code. */
 authRouter.post(
   "/2fa/setup",
   requireAuth,
@@ -215,7 +214,7 @@ authRouter.post(
   },
 );
 
-/** POST /api/v1/auth/2fa/verify-setup — Confirms first TOTP code to enable 2FA. Rate limited: 3/15min. */
+/** POST /2fa/verify-setup — confirm first TOTP code to enable 2FA. / FR: Confirme le premier code TOTP pour activer le 2FA. */
 authRouter.post(
   "/2fa/verify-setup",
   requireAuth,
@@ -229,7 +228,7 @@ authRouter.post(
   },
 );
 
-/** POST /api/v1/auth/2fa/verify — Verifies TOTP code at login (pending2FA sessions only). Rate limited: 3/15min. */
+/** POST /2fa/verify — verify TOTP code at login (pending2FA only). / FR: Verifie le code TOTP a la connexion (pending2FA uniquement). */
 authRouter.post(
   "/2fa/verify",
   (req: Request, _res: Response, next: NextFunction) => {
@@ -249,7 +248,7 @@ authRouter.post(
   },
 );
 
-/** POST /api/v1/auth/2fa/disable — Disables 2FA after verifying current TOTP code. Invalidates all sessions. */
+/** POST /2fa/disable — disable 2FA after verifying current TOTP code. / FR: Desactive le 2FA apres verification du code TOTP. */
 authRouter.post(
   "/2fa/disable",
   requireAuth,
@@ -269,7 +268,7 @@ function isStrategyConfigured(name: string): boolean {
   return configuredStrategies.has(name);
 }
 
-/** GET /api/v1/auth/google — Redirects to Google consent screen. 503 if not configured. */
+/** GET /google — redirect to Google consent screen. / FR: Redirige vers l'ecran de consentement Google. */
 authRouter.get(
   "/google",
   (req: Request, res: Response, next: NextFunction) => {
@@ -281,7 +280,7 @@ authRouter.get(
   },
 );
 
-/** GET /api/v1/auth/google/callback — Exchanges code for token, creates/links user, redirects to frontend. */
+/** GET /google/callback — exchange code for token, create/link user, redirect. / FR: Echange le code contre un token, cree/lie l'utilisateur, redirige. */
 authRouter.get(
   "/google/callback",
   (req: Request, res: Response, next: NextFunction) => {
@@ -306,7 +305,7 @@ authRouter.get(
   },
 );
 
-/** GET /api/v1/auth/facebook — Redirects to Facebook consent screen. 503 if not configured. */
+/** GET /facebook — redirect to Facebook consent screen. / FR: Redirige vers l'ecran de consentement Facebook. */
 authRouter.get(
   "/facebook",
   (req: Request, res: Response, next: NextFunction) => {
@@ -318,7 +317,7 @@ authRouter.get(
   },
 );
 
-/** GET /api/v1/auth/facebook/callback — Exchanges code for token, creates/links user, redirects to frontend. */
+/** GET /facebook/callback — exchange code for token, create/link user, redirect. / FR: Echange le code contre un token, cree/lie l'utilisateur, redirige. */
 authRouter.get(
   "/facebook/callback",
   (req: Request, res: Response, next: NextFunction) => {

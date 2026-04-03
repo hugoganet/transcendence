@@ -1,32 +1,13 @@
 /**
- * @module session
- * @description Express session middleware backed by Redis via connect-redis.
- *
- * Uses **node-redis v5** (not ioredis) because connect-redis v9 requires it.
- * The ioredis client in `config/redis.ts` handles rate limiting and Socket.IO.
- *
- * Session flow:
- * 1. Browser sends cookie `connect.sid` with each request.
- * 2. express-session reads the cookie, loads session data from Redis.
- * 3. Passport reads `session.passport.user` to deserialize the user.
- *
- * Security:
- * - `httpOnly: true` — cookie inaccessible to JavaScript (XSS protection).
- * - `secure: true` in production — cookie only sent over HTTPS.
- * - `sameSite: "lax"` — cookie not sent on cross-site requests (CSRF protection).
- * - `rolling: true` — session expiry resets on each request (active users stay logged in).
+ * @file Session Config — Redis-backed session middleware with secure cookie settings.
+ * FR: Config Session — middleware de session Redis avec cookies securises.
  */
-
 import "./env.js";
 import { createClient } from "redis";
 import session from "express-session";
 import { RedisStore } from "connect-redis";
 
-/**
- * Augments express-session's SessionData with app-specific fields.
- * - `userId` — the authenticated user's ID.
- * - `pending2FA` — true if the user passed password check but still needs TOTP verification.
- */
+// Augment session data with userId for future auth stories
 declare module "express-session" {
   interface SessionData {
     userId: string;
@@ -35,9 +16,8 @@ declare module "express-session" {
 }
 
 /**
- * Node-redis client dedicated to session storage.
- * Separate from the ioredis client in `config/redis.ts` because
- * connect-redis v9 dropped ioredis support.
+ * Redis client dedicated to the session store (node-redis, separate from ioredis).
+ * FR: Client Redis dedie au store de session (node-redis, distinct de ioredis).
  */
 export const sessionRedisClient = createClient({
   url: process.env.REDIS_URL ?? "redis://localhost:6379",
@@ -52,15 +32,15 @@ sessionRedisClient.on("ready", () => {
 });
 
 /**
- * Gracefully disconnects the session Redis client.
- * Called during server shutdown.
+ * Gracefully close the session Redis connection.
+ * FR: Ferme proprement la connexion Redis de session.
  */
 export async function disconnectSessionRedis(): Promise<void> {
   await sessionRedisClient.quit();
   console.log("Session Redis disconnected.");
 }
 
-/** Validate SESSION_SECRET — required, must not be default in production. */
+// Validate SESSION_SECRET
 const sessionSecret = process.env.SESSION_SECRET;
 if (!sessionSecret) {
   throw new Error("SESSION_SECRET environment variable is required");
@@ -69,7 +49,6 @@ if (process.env.NODE_ENV === "production" && sessionSecret === "change-me-in-pro
   throw new Error("SESSION_SECRET must be changed from default in production");
 }
 
-/** Session TTL in seconds (default 1800 = 30 min, range: 900–7200). */
 const ttlSeconds = parseInt(process.env.SESSION_TTL_SECONDS ?? "1800", 10);
 if (isNaN(ttlSeconds) || ttlSeconds < 900 || ttlSeconds > 7200) {
   throw new Error(
@@ -82,8 +61,8 @@ const store = new RedisStore({
 });
 
 /**
- * Configured express-session middleware.
- * Register via `app.use(sessionMiddleware)` in app.ts.
+ * Express session middleware configured with Redis store and secure cookies.
+ * FR: Middleware de session Express configure avec un store Redis et cookies securises.
  */
 export const sessionMiddleware = session({
   store,
@@ -91,6 +70,7 @@ export const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   rolling: true,
+  // only that.. after 2 hours .....
   proxy: true,
   cookie: {
     httpOnly: true,

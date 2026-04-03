@@ -1,3 +1,7 @@
+/**
+ * @file Auth API Client — login, register, OAuth, password reset requests.
+ * FR: Client API Auth — requetes de login, inscription, OAuth, reinitialisation.
+ */
 import type {
   RegisterInput,
   LoginInput,

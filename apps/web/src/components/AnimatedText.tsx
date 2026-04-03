@@ -1,3 +1,8 @@
+/**
+ * @file AnimatedText — reveals text character by character with staggered animation.
+ * FR: AnimatedText — révèle le texte caractère par caractère avec une animation décalée.
+ */
+/** Props for AnimatedText. / FR: Props pour AnimatedText. */
 interface AnimatedTextProps {
   text: string;
   className?: string;
@@ -5,6 +10,10 @@ interface AnimatedTextProps {
   delayMs?: number;
 }
 
+/**
+ * Renders text with a per-character reveal animation and configurable delay.
+ * FR: Affiche du texte avec une animation de révélation par caractère et un délai configurable.
+ */
 export function AnimatedText({
   text,
   className = "",

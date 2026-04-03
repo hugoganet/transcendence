@@ -1,28 +1,14 @@
 /**
- * @module rateLimiter
- * @description Global rate limiting middleware to prevent brute-force and DoS attacks.
- *
- * Limits each IP address to a configurable number of requests per time window.
- * Counters are stored in Redis (via ioredis) so they persist across server
- * restarts and are shared across multiple instances.
- *
- * This is the **global** rate limiter applied to all routes. Sensitive endpoints
- * (login, password reset, 2FA) have additional stricter limits defined in their
- * route files.
+ * @file Rate Limiter — Redis-backed request rate limiting middleware.
+ * FR: Limiteur de debit — middleware de limitation de requetes adosse a Redis.
  */
-
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
 import { redisClient } from "../config/redis.js";
 
 /**
- * Global rate limiter middleware.
- *
- * - `windowMs` — Time window in ms (default: 900000 = 15 minutes).
- * - `limit` — Max requests per IP per window (default: 100).
- * - `standardHeaders: "draft-7"` — Returns `RateLimit-*` headers per IETF draft-7.
- * - `store` — Redis-backed store so counters survive restarts and scale horizontally.
- * - `handler` — Custom 429 response matching the app's error format.
+ * Express rate limiter backed by Redis, returns 429 when the limit is exceeded.
+ * FR: Limiteur de debit Express adosse a Redis, renvoie 429 en cas de depassement.
  */
 export const rateLimiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS ?? "900000", 10),

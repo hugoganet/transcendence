@@ -1,7 +1,15 @@
+/**
+ * @file ThemeToggle — button to switch between light and dark mode.
+ * FR: ThemeToggle — bouton pour basculer entre le mode clair et le mode sombre.
+ */
 import { Sun, Moon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../contexts/ThemeContext.js";
 
+/**
+ * Toggle button that switches the app between light and dark themes.
+ * FR: Bouton bascule qui alterne l'application entre thème clair et sombre.
+ */
 export function ThemeToggle() {
   const { t } = useTranslation();
   const { theme, toggleTheme } = useTheme();

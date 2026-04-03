@@ -1,7 +1,6 @@
 /**
- * @module routes/certificates
- * @description Certificate routes: retrieve user certificate, download PDF,
- * and public viewing via share token (no auth required).
+ * @file Certificate Routes — serves certificate data, PDF download, and public share links.
+ * FR: Routes de certificats — sert les donnees, telechargement PDF et liens de partage publics.
  */
 
 import { Router, type Request, type Response } from "express";
@@ -13,9 +12,10 @@ import { generateCertificatePdf } from "../services/certificatePdfService.js";
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";
 
+/** Certificates router — all /api/v1/certificates endpoints. / FR: Routeur de certificats. */
 export const certificatesRouter = Router();
 
-/** GET /api/v1/certificates/me — Returns the authenticated user's certificate data. */
+/** GET /me — return authenticated user's certificate data. / FR: Retourne les donnees du certificat de l'utilisateur. */
 certificatesRouter.get("/me", requireAuth, async (req: Request, res: Response) => {
   if (!req.user || !req.user.id) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -25,7 +25,7 @@ certificatesRouter.get("/me", requireAuth, async (req: Request, res: Response) =
   res.json({ data: cert });
 });
 
-/** GET /api/v1/certificates/me/pdf — Downloads certificate as PDF. */
+/** GET /me/pdf — download certificate as PDF. / FR: Telecharge le certificat en PDF. */
 certificatesRouter.get("/me/pdf", requireAuth, async (req: Request, res: Response) => {
   if (!req.user || !req.user.id) {
     return res.status(401).json({ error: "Unauthorized" });
@@ -47,7 +47,7 @@ certificatesRouter.get("/me/pdf", requireAuth, async (req: Request, res: Respons
   res.send(pdfBuffer);
 });
 
-/** GET /api/v1/certificates/:shareToken — Public certificate view (no auth required). */
+/** GET /:shareToken — public certificate view, no auth required. / FR: Vue publique du certificat, sans authentification. */
 certificatesRouter.get(
   "/:shareToken",
   validate({ params: shareTokenParamSchema }),

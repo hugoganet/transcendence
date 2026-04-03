@@ -1,7 +1,6 @@
 /**
- * @module services/emailService
- * @description Sends transactional emails via the Resend API: welcome, password reset,
- * GDPR export/deletion, re-engagement, streak reminders, achievements, and completion.
+ * @file Email Service — sends transactional emails via Resend (welcome, reset, GDPR, etc.).
+ * FR: Service email — envoie les emails transactionnels via Resend (bienvenue, reinitialisation, RGPD, etc.).
  */
 
 import { Resend } from "resend";

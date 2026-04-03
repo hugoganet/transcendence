@@ -1,13 +1,22 @@
+/**
+ * @file StreakWidget — displays the user's current learning streak with flame icon.
+ * FR: StreakWidget — affiche la série d'apprentissage en cours de l'utilisateur avec une icône flamme.
+ */
 import type { StreakStatus } from "@transcendence/shared";
 import { Flame } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { AnimatedCounter } from "./AnimatedCounter.js";
 
+/** Props for StreakWidget. / FR: Props pour StreakWidget. */
 interface StreakWidgetProps {
   streak: StreakStatus;
   compact?: boolean;
 }
 
+/**
+ * Shows the current streak count, best streak, and stats in compact or full mode.
+ * FR: Affiche le nombre de jours consécutifs, le meilleur record et les stats en mode compact ou complet.
+ */
 export function StreakWidget({ streak, compact = false }: StreakWidgetProps) {
   const { t } = useTranslation();
 

@@ -1,8 +1,6 @@
 /**
- * @module services/tokenService
- * @description Knowledge Token economy: credit tokens on mission completion,
- * deduct gas fees on exercise submission (both transaction-safe), check debt,
- * and query balance/history.
+ * @file Token Service — credits, debits and queries in-app token balances.
+ * FR: Service de jetons — credite, debite et consulte les soldes de jetons in-app.
  */
 
 import { prisma } from "../config/database.js";

@@ -1,7 +1,6 @@
 /**
- * @module routes/tooltips
- * @description Tooltip routes: full glossary and single-term lookup.
- * Content is locale-aware (EN/FR) based on the user's locale setting.
+ * @file Tooltips Routes — glossary lookup and single-term tooltip.
+ * FR: Routes Infobulles — consultation du glossaire et infobulle par terme.
  */
 
 import { Router, type Request, type Response } from "express";
@@ -10,9 +9,10 @@ import { validate } from "../middleware/validate.js";
 import { termParamSchema } from "@transcendence/shared";
 import { getTooltip, getGlossary } from "../services/tooltipService.js";
 
+/** Tooltips router — all /api/v1/tooltips endpoints. / FR: Routeur infobulles. */
 export const tooltipsRouter = Router();
 
-/** GET /api/v1/tooltips — Returns full glossary sorted alphabetically for user's locale. */
+/** GET / — return full glossary sorted alphabetically. / FR: Retourne le glossaire complet tri par ordre alphabetique. */
 tooltipsRouter.get(
   "/",
   requireAuth,
@@ -24,7 +24,7 @@ tooltipsRouter.get(
   },
 );
 
-/** GET /api/v1/tooltips/:term — Returns a single tooltip definition for the given term. */
+/** GET /:term — return a single tooltip by term. / FR: Retourne une infobulle par terme. */
 tooltipsRouter.get(
   "/:term",
   requireAuth,

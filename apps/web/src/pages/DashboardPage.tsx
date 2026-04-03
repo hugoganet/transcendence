@@ -46,9 +46,9 @@ export function DashboardPage() {
       ([bal, hist, str, ach, ch]) => {
         if (cancelled) return;
         setBalance(bal);
-        setTransactions(hist.transactions);
+        setTransactions(hist.transactions ?? []);
         setStreak(str);
-        setAchievements(ach);
+        setAchievements(ach ?? []);
         setChain(ch);
         setIsLoading(false);
       },

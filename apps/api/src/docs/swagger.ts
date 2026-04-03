@@ -1,3 +1,7 @@
+/**
+ * @file Swagger — serves the OpenAPI spec via swagger-ui-express.
+ * FR: Swagger — sert la spec OpenAPI via swagger-ui-express.
+ */
 import { Router } from "express";
 import fs from "node:fs";
 import path from "node:path";

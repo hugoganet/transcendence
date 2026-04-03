@@ -1,7 +1,6 @@
 /**
- * @module services/streakService
- * @description Daily streak logic: updates current/longest streak on mission
- * completion and returns streak data with cumulative progress stats.
+ * @file Streak Service — tracks and updates daily login/activity streaks.
+ * FR: Service des series — suit et met a jour les series quotidiennes de connexion/activite.
  */
 
 import { prisma } from "../config/database.js";
