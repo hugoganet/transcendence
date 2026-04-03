@@ -81,11 +81,6 @@ Transcendence is a gamified blockchain learning platform — Duolingo-style, bui
 - Added `nftTokenId`, `nftTxHash`, and `contractAddress` to `Certificate`
 - Added corresponding Prisma migrations and API response fields
 
-**API and certificate delivery**
-- Added authenticated certificate endpoints with on-chain data: `GET /api/v1/certificates/me`
-- Added certificate PDF download endpoint: `GET /api/v1/certificates/me/pdf`
-- PDF output now includes blockchain metadata when available (token ID, tx hash)
-
 **CI and environment hardening**
 - Added blockchain env vars to Turborepo global env and CI workflow with safe placeholder values
 - Ensured YAML-safe quoting for hex private key placeholders in GitHub Actions
