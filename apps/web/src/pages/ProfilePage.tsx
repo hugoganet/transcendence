@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth, ApiError } from "../contexts/AuthContext.js";
 import { usersApi } from "../api/users.js";
 import { Card } from "../components/ui/Card.js";
@@ -9,6 +10,7 @@ import { FormField } from "../components/ui/FormField.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function ProfilePage() {
+  const { t } = useTranslation();
   const { user, refreshUser } = useAuth();
   const [displayName, setDisplayName] = useState(user?.displayName ?? "");
   const [ethereumWallet, setEthereumWallet] = useState(user?.ethereumWallet ?? "",);
@@ -19,7 +21,7 @@ export function ProfilePage() {
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    document.title = "Profile — Transcendence";
+    document.title = `${t("labels.profile")} — Transcendence`;
   }, []);
 
   useEffect(() => {
@@ -41,12 +43,12 @@ export function ProfilePage() {
           trimmedWallet === "" ? null : trimmedWallet,
       });
       await refreshUser();
-      setSuccess("Profile updated");
+      setSuccess(t("pages.profile.updateSuccess"));
     } catch (err) {
       if (err instanceof ApiError && err.details) {
         setErrors(err.details);
       } else {
-        setErrors({ form: "Failed to update profile" });
+        setErrors({ form: t("pages.profile.updateError") });
       }
     } finally {
       setIsSaving(false);
@@ -62,16 +64,16 @@ export function ProfilePage() {
     try {
       await usersApi.uploadAvatar(file);
       await refreshUser();
-      setSuccess("Avatar updated");
+      setSuccess(t("pages.profile.avatarUpdated"));
     } catch (err) {
       if (err instanceof ApiError) {
         setErrors({
           avatar:
             err.code === "FILE_TOO_LARGE"
-              ? "Avatar must be under 2MB"
+              ? t("pages.profile.avatarTooLarge")
               : err.code === "INVALID_FILE_TYPE"
-                ? "Only JPEG, PNG, and WebP are accepted"
-                : "Failed to upload avatar",
+                ? t("pages.profile.avatarInvalidType")
+                : t("pages.profile.avatarUploadError"),
         });
       }
     } finally {
@@ -82,7 +84,7 @@ export function ProfilePage() {
   return (
     <div className="mx-auto max-w-lg space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Profile
+        {t("labels.profile")}
       </h1>
 
       {/* Avatar */}
@@ -102,7 +104,7 @@ export function ProfilePage() {
           <div>
             <label className="cursor-pointer">
               <span className="text-sm font-medium text-primary hover:text-primary/80">
-                {isUploading ? "Uploading..." : "Change avatar"}
+                {isUploading ? t("pages.profile.uploading") : t("pages.profile.changeAvatar")}
               </span>
               <input
                 type="file"
@@ -112,7 +114,7 @@ export function ProfilePage() {
                 disabled={isUploading}
               />
             </label>
-            <p className="text-xs text-gray-400">JPEG, PNG, or WebP. Max 2MB.</p>
+            <p className="text-xs text-gray-400">{t("pages.profile.avatarHint")}</p>
             {errors.avatar && (
               <p className="text-xs text-red-600">{errors.avatar}</p>
             )}
@@ -133,11 +135,11 @@ export function ProfilePage() {
           </Alert>
         )}
         <form onSubmit={handleSave} className="space-y-4">
-          <FormField label="Email" htmlFor="email">
+          <FormField label={t("pages.profile.emailLabel")} htmlFor="email">
             <Input id="email" value={user?.email ?? ""} disabled />
           </FormField>
           <FormField
-            label="Display Name"
+            label={t("pages.profile.displayNameLabel")}
             error={errors.displayName}
             htmlFor="displayName"
           >
@@ -146,12 +148,12 @@ export function ProfilePage() {
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               maxLength={50}
-              placeholder="Your display name"
+              placeholder={t("pages.profile.displayNamePlaceholder")}
               error={errors.displayName}
             />
           </FormField>
           <FormField
-            label="Wallet Address"
+            label={t("pages.profile.walletLabel")}
             error={errors.ethereumWallet}
             htmlFor="ethereumWallet"
           >
@@ -164,39 +166,39 @@ export function ProfilePage() {
               error={errors.ethereumWallet}
             />
           </FormField>
-          <FormField label="Bio" error={errors.bio} htmlFor="bio">
+          <FormField label={t("pages.profile.bioLabel")} error={errors.bio} htmlFor="bio">
             <textarea
               id="bio"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               maxLength={300}
               rows={3}
-              placeholder="Tell us about yourself"
+              placeholder={t("pages.profile.bioPlaceholder")}
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm transition-colors placeholder:text-gray-400 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </FormField>
           <Button type="submit" isLoading={isSaving}>
-            Save Changes
+            {t("pages.profile.saveChanges")}
           </Button>
         </form>
       </Card>
 
       {/* Account info */}
       <Card>
-        <h2 className="mb-3 text-sm font-semibold text-gray-900">Account</h2>
+        <h2 className="mb-3 text-sm font-semibold text-gray-900">{t("pages.profile.accountSection")}</h2>
         <div className="space-y-2 text-sm text-gray-500">
           <p>
-            2FA:{" "}
+            {t("pages.profile.twoFa")}:{" "}
             <span
               className={
                 user?.twoFactorEnabled ? "text-green-600" : "text-gray-400"
               }
             >
-              {user?.twoFactorEnabled ? "Enabled" : "Disabled"}
+              {user?.twoFactorEnabled ? t("pages.profile.twoFaEnabled") : t("pages.profile.twoFaDisabled")}
             </span>
           </p>
           <p>
-            Member since:{" "}
+            {t("pages.profile.memberSince")}:{" "}
             {user?.createdAt
               ? new Date(user.createdAt).toLocaleDateString()
               : "—"}
@@ -206,31 +208,31 @@ export function ProfilePage() {
 
       {/* Settings links */}
       <Card>
-        <h2 className="mb-3 text-sm font-semibold text-gray-900">Settings</h2>
+        <h2 className="mb-3 text-sm font-semibold text-gray-900">{t("labels.settings")}</h2>
         <div className="space-y-1">
           <Link
             to="/settings/notifications"
             className="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-50"
           >
-            Notification Preferences
+            {t("pages.profile.notificationPreferences")}
           </Link>
           <Link
             to="/certificate"
             className="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-50"
           >
-            Certificate
+            {t("pages.profile.certificate")}
           </Link>
           <Link
             to="/settings/data-export"
             className="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-50"
           >
-            Export My Data
+            {t("pages.profile.exportData")}
           </Link>
           <Link
             to="/settings/delete-account"
             className="block rounded-lg px-3 py-2 text-sm text-red-600 hover:bg-red-50"
           >
-            Delete Account
+            {t("pages.profile.deleteAccount")}
           </Link>
         </div>
       </Card>

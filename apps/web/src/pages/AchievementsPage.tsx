@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import type { AchievementStatus } from "@transcendence/shared";
 import { gamificationApi } from "../api/gamification.js";
 import { AchievementCard } from "../components/AchievementCard.js";
@@ -6,12 +7,13 @@ import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function AchievementsPage() {
+  const { t } = useTranslation();
   const [achievements, setAchievements] = useState<AchievementStatus[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    document.title = "Achievements — Transcendence";
+    document.title = `${t("pages.achievements.title")} — Transcendence`;
     let cancelled = false;
     gamificationApi.getAchievements().then(
       (data) => {
@@ -22,7 +24,7 @@ export function AchievementsPage() {
       },
       () => {
         if (!cancelled) {
-          setError("Failed to load achievements");
+          setError(t("pages.achievements.loadError"));
           setIsLoading(false);
         }
       },
@@ -50,10 +52,10 @@ export function AchievementsPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 font-heading">
-          Achievements
+          {t("pages.achievements.title")}
         </h1>
         <p className="mt-1 text-sm text-gray-500">
-          {earned.length} of {achievements.length} earned
+          {t("pages.achievements.earnedCount", { earned: earned.length, total: achievements.length })}
         </p>
       </div>
 

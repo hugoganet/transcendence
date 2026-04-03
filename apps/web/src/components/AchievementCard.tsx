@@ -1,11 +1,13 @@
 import type { AchievementStatus } from "@transcendence/shared";
 import { Award, Lock } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface AchievementCardProps {
   achievement: AchievementStatus;
 }
 
 export function AchievementCard({ achievement }: AchievementCardProps) {
+  const { t } = useTranslation();
   const isEarned = achievement.earnedAt !== null;
 
   return (
@@ -39,7 +41,7 @@ export function AchievementCard({ achievement }: AchievementCardProps) {
           </p>
           {isEarned && achievement.earnedAt && (
             <p className="mt-1 text-xs text-amber-600">
-              Earned{" "}
+              {t("labels.earnedDate")}{" "}
               {new Date(achievement.earnedAt).toLocaleDateString()}
             </p>
           )}

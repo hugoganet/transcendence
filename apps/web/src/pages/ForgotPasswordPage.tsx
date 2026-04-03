@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { passwordResetRequestSchema } from "@transcendence/shared";
 import { authApi } from "../api/auth.js";
 import { Card } from "../components/ui/Card.js";
@@ -9,6 +10,7 @@ import { FormField } from "../components/ui/FormField.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function ForgotPasswordPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
@@ -39,18 +41,17 @@ export function ForgotPasswordPage() {
     return (
       <Card>
         <h1 className="mb-4 text-center text-xl font-bold text-gray-900 font-heading">
-          Check Your Email
+          {t("auth.forgotPassword.emailSent")}
         </h1>
         <Alert variant="info">
-          If an account with that email exists, we've sent a password reset
-          link. Check your inbox.
+          {t("auth.forgotPassword.emailSentSubtitle")}
         </Alert>
         <p className="mt-4 text-center">
           <Link
             to="/login"
             className="text-sm text-primary hover:text-primary/80"
           >
-            Back to Sign In
+            {t("auth.forgotPassword.backToLogin")}
           </Link>
         </p>
       </Card>
@@ -60,13 +61,13 @@ export function ForgotPasswordPage() {
   return (
     <Card>
       <h1 className="mb-2 text-center text-xl font-bold text-gray-900 font-heading">
-        Reset Password
+        {t("auth.forgotPassword.title")}
       </h1>
       <p className="mb-6 text-center text-sm text-gray-500">
-        Enter your email and we'll send you a reset link.
+        {t("auth.forgotPassword.subtitle")}
       </p>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <FormField label="Email" error={error} htmlFor="forgot-email">
+        <FormField label={t("auth.forgotPassword.emailLabel")} error={error} htmlFor="forgot-email">
           <Input
             id="forgot-email"
             type="email"
@@ -78,7 +79,7 @@ export function ForgotPasswordPage() {
           />
         </FormField>
         <Button type="submit" isLoading={isSubmitting} className="w-full">
-          Send Reset Link
+          {t("auth.forgotPassword.submitButton")}
         </Button>
       </form>
       <p className="mt-4 text-center">
@@ -86,7 +87,7 @@ export function ForgotPasswordPage() {
           to="/login"
           className="text-sm text-primary hover:text-primary/80"
         >
-          Back to Sign In
+          {t("auth.forgotPassword.backToLogin")}
         </Link>
       </p>
     </Card>

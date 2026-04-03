@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext.js";
 import { useReveals } from "../contexts/RevealContext.js";
 import { StreakWidget } from "../components/StreakWidget.js";
@@ -12,6 +13,7 @@ import { NotificationBell } from "../components/NotificationBell.js";
 import { LanguageSwitcher } from "../components/LanguageSwitcher.js";
 
 export function AppLayout() {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { tokensRevealed, dashboardRevealed } = useReveals();
   const navigate = useNavigate();
@@ -46,28 +48,28 @@ export function AppLayout() {
         className="text-sm font-medium text-gray-600 hover:text-primary"
         onClick={onClick}
       >
-        Home
+        {t("labels.home")}
       </Link>
       <Link
         to="/curriculum"
         className="text-sm font-medium text-gray-600 hover:text-primary"
         onClick={onClick}
       >
-        Curriculum
+        {t("labels.curriculum")}
       </Link>
       <Link
         to="/leaderboard"
         className="text-sm font-medium text-gray-600 hover:text-primary"
         onClick={onClick}
       >
-        Leaderboard
+        {t("labels.leaderboard")}
       </Link>
       <Link
         to="/achievements"
         className="text-sm font-medium text-gray-600 hover:text-primary"
         onClick={onClick}
       >
-        Achievements
+        {t("labels.achievements")}
       </Link>
       {dashboardRevealed && (
         <Link
@@ -75,7 +77,7 @@ export function AppLayout() {
           className="text-sm font-medium text-gray-600 hover:text-primary"
           onClick={onClick}
         >
-          Dashboard
+          {t("labels.dashboard")}
         </Link>
       )}
       <Link
@@ -83,14 +85,14 @@ export function AppLayout() {
         className="text-sm font-medium text-gray-600 hover:text-primary"
         onClick={onClick}
       >
-        Friends
+        {t("labels.friends")}
       </Link>
       <Link
         to="/glossary"
         className="text-sm font-medium text-gray-600 hover:text-primary"
         onClick={onClick}
       >
-        Glossary
+        {t("labels.glossary")}
       </Link>
     </>
   );
@@ -130,7 +132,7 @@ export function AppLayout() {
                 onClick={handleLogout}
                 className="text-sm text-gray-500 hover:text-red-600"
               >
-                Logout
+                {t("labels.logout")}
               </button>
             </div>
           </nav>
@@ -143,7 +145,7 @@ export function AppLayout() {
             <button
               className="p-2"
               onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle menu"
+              aria-label={t("labels.toggleMenu")}
             >
               {menuOpen ? (
                 <X className="h-6 w-6 text-gray-600" />
@@ -164,7 +166,7 @@ export function AppLayout() {
                 className="text-sm font-medium text-gray-600 hover:text-primary"
                 onClick={() => setMenuOpen(false)}
               >
-                Profile
+                {t("labels.profile")}
               </Link>
               <div className="border-t border-gray-100 pt-3">
                 <LanguageSwitcher variant="menu-item" />
@@ -173,7 +175,7 @@ export function AppLayout() {
                 onClick={handleLogout}
                 className="text-left text-sm text-red-600"
               >
-                Logout
+                {t("labels.logout")}
               </button>
             </div>
           </nav>

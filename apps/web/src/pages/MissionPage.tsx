@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Lock, ChevronLeft, Clock } from "lucide-react";
 import { useMissionDetail } from "../hooks/useMissionDetail.js";
 import { disclaimersApi } from "../api/disclaimers.js";
@@ -15,6 +16,7 @@ import type { MissionStatusValue } from "@transcendence/shared";
 const DISCLAIMER_MODULES = ["2.3", "6.1", "6.2"];
 
 export function MissionPage() {
+  const { t } = useTranslation();
   const { missionId } = useParams<{ missionId: string }>();
   const { mission, isLoading, error, isLocked } = useMissionDetail(
     missionId ?? "",
@@ -27,9 +29,9 @@ export function MissionPage() {
     if (mission) {
       document.title = `${mission.title} — Transcendence`;
     } else {
-      document.title = "Mission — Transcendence";
+      document.title = `${t("labels.mission")} — Transcendence`;
     }
-  }, [mission]);
+  }, [mission, t]);
 
   // Check for module disclaimer
   useEffect(() => {
@@ -66,13 +68,13 @@ export function MissionPage() {
           <div className="py-6">
             <Lock className="mx-auto mb-4 h-12 w-12 text-gray-300" />
             <h2 className="mb-2 text-lg font-semibold text-gray-900">
-              Mission Locked
+              {t("pages.mission.lockedTitle")}
             </h2>
             <p className="mb-6 text-sm text-gray-500">
-              Complete the previous missions to unlock this one.
+              {t("pages.mission.lockedBody")}
             </p>
             <Link to="/curriculum">
-              <Button variant="ghost">Back to Curriculum</Button>
+              <Button variant="ghost">{t("pages.mission.backToCurriculum")}</Button>
             </Link>
           </div>
         </Card>
@@ -81,7 +83,7 @@ export function MissionPage() {
   }
 
   if (error || !mission) {
-    return <Alert variant="error">{error ?? "Failed to load mission"}</Alert>;
+    return <Alert variant="error">{error ?? t("pages.mission.loadError")}</Alert>;
   }
 
   const canStart =
@@ -104,7 +106,7 @@ export function MissionPage() {
         className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary"
       >
         <ChevronLeft className="h-4 w-4" />
-        Curriculum
+        {t("labels.curriculum")}
       </Link>
 
       <Card>
@@ -127,7 +129,7 @@ export function MissionPage() {
 
           <div className="rounded-lg bg-blue-50 px-4 py-3">
             <p className="text-sm font-medium text-blue-800">
-              Learning Objective
+              {t("labels.learningObjective")}
             </p>
             <p className="mt-1 text-sm text-blue-700">
               {mission.learningObjective}
@@ -137,7 +139,7 @@ export function MissionPage() {
           <div className="flex items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
-              ~{mission.estimatedMinutes} min
+              ~{mission.estimatedMinutes} {t("labels.minutes")}
             </span>
           </div>
 
@@ -146,8 +148,8 @@ export function MissionPage() {
               <Link to={`/missions/${mission.id}/exercise`}>
                 <Button className="w-full sm:w-auto">
                   {mission.status === "inProgress"
-                    ? "Continue Exercise"
-                    : "Start Exercise"}
+                    ? t("pages.mission.continueExercise")
+                    : t("pages.mission.startExercise")}
                 </Button>
               </Link>
             </div>
@@ -155,7 +157,7 @@ export function MissionPage() {
 
           {mission.status === "completed" && (
             <Alert variant="success">
-              You've already completed this mission.
+              {t("pages.mission.alreadyCompleted")}
             </Alert>
           )}
         </div>
@@ -164,7 +166,7 @@ export function MissionPage() {
       {mission.tooltipTerms && mission.tooltipTerms.length > 0 && (
         <Card>
           <h2 className="mb-3 text-sm font-semibold text-gray-900">
-            Key Terms
+            {t("pages.mission.keyTerms")}
           </h2>
           <div className="flex flex-wrap gap-2">
             {mission.tooltipTerms.map((term) => (

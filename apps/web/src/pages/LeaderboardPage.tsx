@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import type {
   LeaderboardEntry,
   LeaderboardCurrentUser,
@@ -12,6 +13,7 @@ import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 import { Alert } from "../components/ui/Alert.js";
 
 export function LeaderboardPage() {
+  const { t } = useTranslation();
   const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
   const [currentUser, setCurrentUser] =
     useState<LeaderboardCurrentUser | null>(null);
@@ -28,14 +30,14 @@ export function LeaderboardPage() {
       setCurrentUser(data.currentUser);
       setMeta(data.meta);
     } catch {
-      setError("Failed to load leaderboard");
+      setError(t("pages.leaderboard.loadError"));
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [t]);
 
   useEffect(() => {
-    document.title = "Leaderboard — Transcendence";
+    document.title = `${t("gamification.leaderboard.title")} — Transcendence`;
     loadPage(1);
   }, [loadPage]);
 
@@ -57,7 +59,7 @@ export function LeaderboardPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-gray-900 font-heading">
-        Weekly Leaderboard
+        {t("pages.leaderboard.weeklyTitle")}
       </h1>
 
       {/* Current user position */}
@@ -69,10 +71,10 @@ export function LeaderboardPage() {
             </span>
             <div className="flex-1">
               <p className="text-sm font-medium text-gray-900">
-                {currentUser.displayName ?? "You"}
+                {currentUser.displayName ?? t("pages.leaderboard.you")}
               </p>
               <p className="text-xs text-gray-500">
-                {currentUser.missionsCompleted} missions this week
+                {t("pages.leaderboard.missionsThisWeek", { count: currentUser.missionsCompleted })}
               </p>
             </div>
           </div>
@@ -83,7 +85,7 @@ export function LeaderboardPage() {
       <Card>
         {entries.length === 0 ? (
           <p className="py-8 text-center text-sm text-gray-500">
-            No entries yet this week. Complete missions to climb the ranks!
+            {t("pages.leaderboard.noEntries")}
           </p>
         ) : (
           <div className="divide-y divide-gray-100">
@@ -121,7 +123,7 @@ export function LeaderboardPage() {
                     </div>
                   )}
                   <span className="truncate text-sm font-medium text-gray-900">
-                    {entry.displayName ?? "Anonymous"}
+                    {entry.displayName ?? t("pages.leaderboard.anonymous")}
                   </span>
                 </Link>
                 <span className="text-sm font-medium text-gray-600">
@@ -140,7 +142,7 @@ export function LeaderboardPage() {
               disabled={currentPage <= 1 || isLoading}
               onClick={() => loadPage(currentPage - 1)}
             >
-              Previous
+              {t("labels.previous")}
             </Button>
             <span className="text-sm text-gray-500">
               {currentPage} / {totalPages}
@@ -150,7 +152,7 @@ export function LeaderboardPage() {
               disabled={currentPage >= totalPages || isLoading}
               onClick={() => loadPage(currentPage + 1)}
             >
-              Next
+              {t("labels.next")}
             </Button>
           </div>
         )}
