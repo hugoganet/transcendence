@@ -111,7 +111,7 @@ export function AppLayout() {
             to="/home"
             className="flex shrink-0 items-center gap-2 text-lg font-bold font-heading"
           >
-            <img src="/blocky-logo.png" alt="" className="h-8 w-8 rounded" />
+            <img src="/blocky-logo.svg" alt="" className="h-8 w-8 rounded" />
             <span>
               <span className="text-primary dark:text-teal-400">Unblock</span>
               <span className="text-amber-500">.chain</span>

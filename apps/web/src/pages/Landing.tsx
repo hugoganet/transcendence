@@ -87,7 +87,7 @@ export function Landing() {
       <section className="flex min-h-screen flex-col items-center justify-center px-4">
         <div className="relative max-w-lg text-center">
           <div className="mb-4 flex flex-col items-center gap-4">
-            <img src="/blocky-logo.png" alt="Blocky mascot" className="h-20 w-20 rounded-xl" />
+            <img src="/blocky-logo.svg" alt="Blocky mascot" className="h-20 w-20 rounded-xl" />
             <h1 className="text-5xl font-bold tracking-tight font-heading">
               <span className="text-primary dark:text-teal-400">Unblock</span>
               <span className="text-amber-500">.chain</span>
