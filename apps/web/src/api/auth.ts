@@ -1,3 +1,7 @@
+/**
+ * @file Auth API Client — login, register, OAuth, password reset requests.
+ * FR: Client API Auth — requetes de login, inscription, OAuth, reinitialisation.
+ */
 import type {
   RegisterInput,
   LoginInput,
@@ -35,4 +39,15 @@ export const authApi = {
 
   verify2FA: (code: string) =>
     api.post<UserProfile>("/api/v1/auth/2fa/verify", { code }),
+
+  setup2FA: () =>
+    api.post<{ qrCodeDataUri: string; manualKey: string; otpauthUri: string }>(
+      "/api/v1/auth/2fa/setup"
+    ),
+
+  verifyAndEnable2FA: (code: string) =>
+    api.post<MessageResponse>("/api/v1/auth/2fa/verify-setup", { code }),
+
+  disable2FA: (code: string) =>
+    api.post<MessageResponse>("/api/v1/auth/2fa/disable", { code }),
 };

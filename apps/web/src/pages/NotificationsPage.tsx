@@ -1,3 +1,7 @@
+/**
+ * @file NotificationsPage — Notifications Page — list of user notifications.
+ * FR: Page Notifications — liste des notifications utilisateur.
+ */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNotifications } from "../contexts/NotificationContext.js";
@@ -19,7 +23,7 @@ export function NotificationsPage() {
     useNotifications();
 
   useEffect(() => {
-    document.title = `${t("labels.notifications")} — Transcendence`;
+    document.title = `${t("labels.notifications")} — Unblock.chain`;
   }, []);
 
   if (isLoading && notifications.length === 0) {
@@ -32,39 +36,39 @@ export function NotificationsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("labels.notifications")}
       </h1>
 
       <Card>
         {notifications.length === 0 ? (
-          <p className="py-8 text-center text-sm text-gray-500">
+          <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
             {t("emptyStates.noNotifications")}
           </p>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-gray-100 dark:divide-warm-700">
             {notifications.map((notif) => (
               <button
                 key={notif.id}
                 onClick={() => {
                   if (!notif.read) markAsRead(notif.id);
                 }}
-                className={`block w-full px-4 py-4 text-left transition-colors hover:bg-gray-50 ${
-                  !notif.read ? "bg-blue-50/30" : ""
+                className={`block w-full px-4 py-4 text-left transition-colors hover:bg-gray-50 dark:hover:bg-warm-700 ${
+                  !notif.read ? "bg-blue-50/30 dark:bg-blue-900/20" : ""
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <span className="mt-0.5 rounded bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
+                  <span className="mt-0.5 rounded bg-[var(--color-border)] px-2 py-0.5 text-xs font-medium text-[var(--color-text-muted)]">
                     {typeLabels[notif.type] ?? notif.type}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-[var(--color-text)]">
                       {notif.title}
                     </p>
-                    <p className="mt-0.5 text-sm text-gray-500">
+                    <p className="mt-0.5 text-sm text-[var(--color-text-muted)]">
                       {notif.body}
                     </p>
-                    <p className="mt-1 text-xs text-gray-400">
+                    <p className="mt-1 text-xs text-[var(--color-text-muted)]">
                       {new Date(notif.createdAt).toLocaleString()}
                     </p>
                   </div>
@@ -78,7 +82,7 @@ export function NotificationsPage() {
         )}
 
         {hasMore && (
-          <div className="border-t border-gray-100 pt-4 text-center">
+          <div className="border-t border-gray-100 dark:border-warm-700 pt-4 text-center">
             <Button variant="ghost" onClick={loadMore}>
               {t("pages.notifications.loadMore")}
             </Button>

@@ -1,14 +1,23 @@
+/**
+ * @file SIExercise — single-input multiple-choice exercise with scenario and question.
+ * FR: SIExercise — exercice à choix unique avec scénario et question.
+ */
 import { useState } from "react";
 import type { SIExerciseContent } from "@transcendence/shared";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
+/** Props for SIExercise. / FR: Props pour SIExercise. */
 interface SIExerciseProps {
   content: SIExerciseContent;
   onSubmit: (selectedOptionId: string) => void;
   isSubmitting: boolean;
 }
 
+/**
+ * Single-choice question with scenario context and selectable option cards.
+ * FR: Question à choix unique avec contexte scénario et cartes d'options sélectionnables.
+ */
 export function SIExercise({
   content,
   onSubmit,
@@ -19,13 +28,13 @@ export function SIExercise({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg bg-gray-50 p-4">
-        <p className="text-sm leading-relaxed text-gray-700">
+      <div className="rounded-lg bg-[var(--color-background)] p-4">
+        <p className="text-sm leading-relaxed text-[var(--color-text)]">
           {content.scenario}
         </p>
       </div>
 
-      <h3 className="text-base font-semibold text-gray-900">
+      <h3 className="text-base font-semibold text-[var(--color-text)]">
         {content.question}
       </h3>
 
@@ -35,10 +44,10 @@ export function SIExercise({
             key={option.id}
             type="button"
             onClick={() => setSelected(option.id)}
-            className={`w-full rounded-lg border p-4 text-left text-sm transition-colors ${
+            className={`w-full rounded-lg border p-4 text-left text-sm text-[var(--color-text)] transition-colors ${
               selected === option.id
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                : "border-gray-200 bg-white hover:border-gray-300"
+                : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"
             }`}
           >
             {option.text}

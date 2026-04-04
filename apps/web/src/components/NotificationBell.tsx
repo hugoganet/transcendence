@@ -1,9 +1,17 @@
+/**
+ * @file NotificationBell — bell icon with badge and dropdown listing recent notifications.
+ * FR: NotificationBell — icône cloche avec badge et menu déroulant listant les notifications récentes.
+ */
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Bell } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNotifications } from "../contexts/NotificationContext.js";
 
+/**
+ * Renders a notification bell with unread count badge and a dropdown of recent notifications.
+ * FR: Affiche une cloche de notifications avec un badge de non-lus et un dropdown des notifications récentes.
+ */
 export function NotificationBell() {
   const { t } = useTranslation();
   const { notifications, unreadCount, markAsRead } = useNotifications();
@@ -27,7 +35,7 @@ export function NotificationBell() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-1 text-gray-500 hover:text-gray-700 dark:text-warm-400 dark:hover:text-warm-200"
+        className="relative p-1 text-gray-500 hover:text-[var(--color-text)] dark:hover:text-warm-200"
         aria-label={t("labels.notifications")}
       >
         <Bell className="h-5 w-5" />
@@ -41,12 +49,12 @@ export function NotificationBell() {
       {open && (
         <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800">
           <div className="border-b border-gray-100 dark:border-warm-700 px-4 py-2">
-            <span className="text-sm font-semibold text-gray-900 dark:text-warm-50">
+            <span className="text-sm font-semibold text-[var(--color-text)]">
               {t("labels.notifications")}
             </span>
           </div>
           {recent.length === 0 ? (
-            <p className="px-4 py-6 text-center text-sm text-gray-400 dark:text-warm-500">
+            <p className="px-4 py-6 text-center text-sm text-gray-400 dark:text-warm-200">
               {t("labels.noNotificationsYet")}
             </p>
           ) : (
@@ -61,8 +69,8 @@ export function NotificationBell() {
                     !notif.read ? "bg-blue-50/50 dark:bg-blue-900/20" : ""
                   }`}
                 >
-                  <p className="font-medium text-gray-900 dark:text-warm-50">{notif.title}</p>
-                  <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-400">{notif.body}</p>
+                  <p className="font-medium text-[var(--color-text)]">{notif.title}</p>
+                  <p className="mt-0.5 text-xs text-[var(--color-text-muted)]">{notif.body}</p>
                 </button>
               ))}
             </div>

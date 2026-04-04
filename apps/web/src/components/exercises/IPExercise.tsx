@@ -1,9 +1,14 @@
+/**
+ * @file IPExercise — drag-and-drop ordering exercise for item positioning.
+ * FR: IPExercise — exercice de positionnement par glisser-déposer pour ordonner des éléments.
+ */
 import { useState } from "react";
 import type { IPExerciseContent } from "@transcendence/shared";
 import { GripVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
+/** Props for IPExercise. / FR: Props pour IPExercise. */
 interface IPExerciseProps {
   content: IPExerciseContent;
   onSubmit: (positions: Array<{ itemId: string; position: number }>) => void;
@@ -15,6 +20,10 @@ interface DraggableItem {
   label: string;
 }
 
+/**
+ * Drag-and-drop ordering interface with mobile tap-to-swap support.
+ * FR: Interface de tri par glisser-déposer avec support tap-pour-échanger sur mobile.
+ */
 export function IPExercise({
   content,
   onSubmit,
@@ -79,8 +88,8 @@ export function IPExercise({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg bg-gray-50 p-4">
-        <p className="text-sm text-gray-700">{content.instruction}</p>
+      <div className="rounded-lg bg-[var(--color-background)] p-4">
+        <p className="text-sm text-[var(--color-text)]">{content.instruction}</p>
       </div>
 
       {content.zones && content.zones.length > 0 && (
@@ -88,7 +97,7 @@ export function IPExercise({
           {content.zones.map((zone, idx) => (
             <span
               key={zone.id}
-              className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
+              className="rounded-full bg-blue-50 dark:bg-blue-900/20 px-3 py-1 text-xs font-medium text-blue-700 dark:text-blue-300"
             >
               {idx + 1}. {zone.label}
             </span>
@@ -96,7 +105,7 @@ export function IPExercise({
         </div>
       )}
 
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-[var(--color-text-muted)]">
         {t("exercise.IP.dragItems")}
       </p>
 
@@ -109,19 +118,19 @@ export function IPExercise({
             onDragOver={(e) => handleDragOver(e, idx)}
             onDragEnd={handleDragEnd}
             onClick={() => handleTap(idx)}
-            className={`flex cursor-grab items-center gap-3 rounded-lg border p-3 text-sm transition-colors active:cursor-grabbing ${
+            className={`flex cursor-grab items-center gap-3 rounded-lg border p-3 text-sm text-[var(--color-text)] transition-colors active:cursor-grabbing ${
               selectedIdx === idx
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
                 : draggedIdx === idx
                   ? "border-primary/40 bg-primary/5 opacity-70"
-                  : "border-gray-200 bg-white hover:border-gray-300"
+                  : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"
             }`}
           >
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-100 text-xs font-medium text-gray-500">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-border)] text-xs font-medium text-[var(--color-text-muted)]">
               {idx + 1}
             </span>
-            <span className="text-gray-900">{item.label}</span>
-            <GripVertical className="ml-auto h-4 w-4 shrink-0 text-gray-300" />
+            <span className="text-[var(--color-text)]">{item.label}</span>
+            <GripVertical className="ml-auto h-4 w-4 shrink-0 text-[var(--color-text-muted)]" />
           </div>
         ))}
       </div>

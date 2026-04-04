@@ -1,3 +1,7 @@
+/**
+ * @file Passport strategies (local, Google, Facebook) and session serialization.
+ * FR: Strategies Passport (locale, Google, Facebook) et serialisation de session.
+ */
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
@@ -6,7 +10,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "./database.js";
 import { findOrCreateOAuthUser } from "../services/authService.js";
 
-/** Tracks which OAuth strategies are configured (env vars present). */
+/** Tracks which OAuth strategies have env vars set. FR: Suit les strategies OAuth configurees. */
 export const configuredStrategies = new Set<string>();
 
 declare global {
@@ -33,7 +37,6 @@ declare global {
       revealTokens: boolean;
       revealWallet: boolean;
       revealGas: boolean;
-      revealDashboard: boolean;
       notificationPreferences: unknown;
       createdAt: Date;
       updatedAt: Date;

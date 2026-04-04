@@ -1,15 +1,24 @@
+/**
+ * @file CMExercise — concept-matching exercise where users pair terms with definitions.
+ * FR: CMExercise — exercice d'association de concepts où l'utilisateur relie termes et définitions.
+ */
 import { useState } from "react";
 import type { CMExerciseContent } from "@transcendence/shared";
 import { ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Button } from "../ui/Button.js";
 
+/** Props for CMExercise. / FR: Props pour CMExercise. */
 interface CMExerciseProps {
   content: CMExerciseContent;
   onSubmit: (matches: Array<{ termId: string; definitionId: string }>) => void;
   isSubmitting: boolean;
 }
 
+/**
+ * Interactive term-definition matching UI with undo support and shuffled definitions.
+ * FR: Interface interactive d'association terme-définition avec annulation et définitions mélangées.
+ */
 export function CMExercise({
   content,
   onSubmit,
@@ -55,14 +64,14 @@ export function CMExercise({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg bg-gray-50 p-4">
-        <p className="text-sm text-gray-700">{content.instruction}</p>
+      <div className="rounded-lg bg-[var(--color-background)] p-4">
+        <p className="text-sm text-[var(--color-text)]">{content.instruction}</p>
       </div>
 
       {/* Matched pairs display */}
       {matches.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs font-medium text-gray-500">
+          <p className="text-xs font-medium text-[var(--color-text-muted)]">
             {t("exercise.CM.matched", { count: matches.length, total: content.pairs.length })}
           </p>
           {matches.map((match) => {
@@ -71,16 +80,16 @@ export function CMExercise({
             return (
               <div
                 key={match.termId}
-                className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-3 text-sm"
+                className="flex items-center gap-2 rounded-lg border border-green-200 dark:border-green-900/40 bg-green-50 dark:bg-green-900/20 p-3 text-sm"
               >
-                <span className="flex-1 font-medium text-gray-900">
+                <span className="flex-1 font-medium text-[var(--color-text)]">
                   {term?.term}
                 </span>
-                <ArrowRight className="h-4 w-4 shrink-0 text-green-500" />
-                <span className="flex-1 text-gray-700">{def?.definition}</span>
+                <ArrowRight className="h-4 w-4 shrink-0 text-green-500 dark:text-green-400" />
+                <span className="flex-1 text-[var(--color-text)]">{def?.definition}</span>
                 <button
                   onClick={() => handleUndo(match.termId)}
-                  className="ml-2 text-xs text-gray-400 hover:text-red-500"
+                  className="ml-2 text-xs text-[var(--color-text-muted)] hover:text-red-500 dark:hover:text-red-400"
                   aria-label={t("exercise.CM.undoAriaLabel")}
                 >
                   {t("exercise.CM.undoButton")}
@@ -95,7 +104,7 @@ export function CMExercise({
       {!allMatched && (
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
-            <p className="text-xs font-medium text-gray-500">{t("exercise.CM.termsLabel")}</p>
+            <p className="text-xs font-medium text-[var(--color-text-muted)]">{t("exercise.CM.termsLabel")}</p>
             {content.pairs
               .filter((p) => !matchedTermIds.has(p.id))
               .map((pair) => (
@@ -103,10 +112,10 @@ export function CMExercise({
                   key={pair.id}
                   type="button"
                   onClick={() => handleTermClick(pair.id)}
-                  className={`w-full rounded-lg border p-3 text-left text-sm transition-colors ${
+                  className={`w-full rounded-lg border p-3 text-left text-sm text-[var(--color-text)] transition-colors ${
                     selectedTerm === pair.id
                       ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                      : "border-gray-200 bg-white hover:border-gray-300"
+                      : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"
                   }`}
                 >
                   {pair.term}
@@ -114,7 +123,7 @@ export function CMExercise({
               ))}
           </div>
           <div className="space-y-2">
-            <p className="text-xs font-medium text-gray-500">{t("exercise.CM.definitionsLabel")}</p>
+            <p className="text-xs font-medium text-[var(--color-text-muted)]">{t("exercise.CM.definitionsLabel")}</p>
             {shuffledDefs
               .filter((d) => !matchedDefIds.has(d.id))
               .map((def) => (
@@ -122,10 +131,10 @@ export function CMExercise({
                   key={def.id}
                   type="button"
                   onClick={() => handleDefClick(def.id)}
-                  className={`w-full rounded-lg border p-3 text-left text-sm transition-colors ${
+                  className={`w-full rounded-lg border p-3 text-left text-sm text-[var(--color-text)] transition-colors ${
                     selectedTerm
-                      ? "border-gray-200 bg-white hover:border-primary/40"
-                      : "cursor-default border-gray-200 bg-white"
+                      ? "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-primary/40"
+                      : "cursor-default border-[var(--color-border)] bg-[var(--color-surface)]"
                   }`}
                 >
                   {def.definition}

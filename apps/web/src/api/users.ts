@@ -1,3 +1,7 @@
+/**
+ * @file users API — manage user profiles, avatars, and settings.
+ * FR: API users — gerer profils, avatars et parametres utilisateur.
+ */
 import type {
   UserProfile,
   PublicProfile,

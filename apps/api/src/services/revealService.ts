@@ -1,3 +1,8 @@
+/**
+ * @file Reveal Service — manages progressive UI reveal mechanics per user.
+ * FR: Service de revelation — gere les mecaniques de revelation progressive de l'interface par utilisateur.
+ */
+
 import { prisma } from "../config/database.js";
 import type { RevealStatus } from "@transcendence/shared";
 
@@ -7,12 +12,11 @@ export type DbClient = Pick<typeof prisma, "user">;
 /** Maps API mechanic names to DB column names on the User model. */
 const MECHANIC_TO_FIELD: Record<
   string,
-  "revealTokens" | "revealWallet" | "revealGas" | "revealDashboard"
+  "revealTokens" | "revealWallet" | "revealGas"
 > = {
   tokensRevealed: "revealTokens",
   walletRevealed: "revealWallet",
   gasRevealed: "revealGas",
-  dashboardRevealed: "revealDashboard",
 };
 
 /**
@@ -62,7 +66,6 @@ export async function getReveals(userId: string): Promise<RevealStatus> {
       revealTokens: true,
       revealWallet: true,
       revealGas: true,
-      revealDashboard: true,
     },
   });
 
@@ -70,6 +73,5 @@ export async function getReveals(userId: string): Promise<RevealStatus> {
     tokensRevealed: user.revealTokens,
     walletRevealed: user.revealWallet,
     gasRevealed: user.revealGas,
-    dashboardRevealed: user.revealDashboard,
   };
 }

@@ -1,3 +1,7 @@
+/**
+ * @file LoginPage — Login Page — user authentication form.
+ * FR: Page Connexion — formulaire d'authentification.
+ */
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -81,7 +85,7 @@ export function LoginPage() {
   if (requires2FA) {
     return (
       <Card>
-        <h1 className="mb-6 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+        <h1 className="mb-6 text-center text-xl font-bold text-[var(--color-text)] font-heading">
           {t("auth.twoFactor.title")}
         </h1>
         {globalError && (
@@ -113,7 +117,7 @@ export function LoginPage() {
 
   return (
     <Card>
-      <h1 className="mb-6 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="mb-6 text-center text-xl font-bold text-[var(--color-text)] font-heading">
         {t("auth.login.title")}
       </h1>
       {globalError && (
@@ -158,7 +162,7 @@ export function LoginPage() {
             {t("auth.login.forgotPassword")}
           </Link>
         </p>
-        <p className="text-gray-500 dark:text-warm-400">
+        <p className="text-[var(--color-text-muted)]">
           {t("auth.login.noAccount")}{" "}
           <Link
             to="/register"

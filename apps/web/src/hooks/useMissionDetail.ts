@@ -1,4 +1,9 @@
+/**
+ * @file useMissionDetail — useMissionDetail — fetches mission details and exercises.
+ * FR: useMissionDetail ��� recupere les details de mission et exercices.
+ */
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import type { MissionDetailResponse } from "@transcendence/shared";
 import { curriculumApi } from "../api/curriculum.js";
 import { ApiError } from "../api/client.js";
@@ -12,6 +17,7 @@ interface UseMissionDetailResult {
 }
 
 export function useMissionDetail(missionId: string): UseMissionDetailResult {
+  const { i18n } = useTranslation();
   const [mission, setMission] = useState<MissionDetailResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -37,7 +43,7 @@ export function useMissionDetail(missionId: string): UseMissionDetailResult {
 
   useEffect(() => {
     refresh();
-  }, [refresh]);
+  }, [refresh, i18n.language]);
 
   return { mission, isLoading, error, isLocked, refresh };
 }

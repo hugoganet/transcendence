@@ -908,10 +908,7 @@
             "exerciseType": "ST",
             "estimatedMinutes": 3,
             "lastReviewedDate": "2026-03-09",
-            "progressiveReveal": {
-              "mechanic": "dashboardRevealed",
-              "description": "Complete stats and certificate unlocked"
-            }
+            "progressiveReveal": null
           }
         ]
       }

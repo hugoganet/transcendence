@@ -1,3 +1,8 @@
+/**
+ * @file Disclaimer Routes — serves general, onboarding, and module-specific disclaimers.
+ * FR: Routes de disclaimers — sert les avertissements generaux, d'onboarding et par module.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -9,9 +14,10 @@ import {
   acceptDisclaimer,
 } from "../services/disclaimerService.js";
 
+/** Disclaimers router — all /api/v1/disclaimers endpoints. / FR: Routeur des avertissements. */
 export const disclaimersRouter = Router();
 
-// GET /api/v1/disclaimers — public, returns general disclaimer
+/** GET / — return general financial disclaimer (public). / FR: Retourne l'avertissement financier general (public). */
 disclaimersRouter.get(
   "/",
   async (_req: Request, res: Response) => {
@@ -20,7 +26,7 @@ disclaimersRouter.get(
   },
 );
 
-// GET /api/v1/disclaimers/onboarding — authenticated, returns onboarding disclaimer
+/** GET /onboarding — return onboarding disclaimer. / FR: Retourne l'avertissement d'onboarding. */
 disclaimersRouter.get(
   "/onboarding",
   requireAuth,
@@ -30,7 +36,7 @@ disclaimersRouter.get(
   },
 );
 
-// GET /api/v1/disclaimers/module/:moduleId — authenticated, returns module-specific disclaimer
+/** GET /module/:moduleId — return module-specific disclaimer. / FR: Retourne l'avertissement specifique au module. */
 disclaimersRouter.get(
   "/module/:moduleId",
   requireAuth,
@@ -41,7 +47,7 @@ disclaimersRouter.get(
   },
 );
 
-// POST /api/v1/disclaimers/accept — authenticated, records disclaimer acceptance
+/** POST /accept — record disclaimer acceptance. / FR: Enregistre l'acceptation de l'avertissement. */
 disclaimersRouter.post(
   "/accept",
   requireAuth,

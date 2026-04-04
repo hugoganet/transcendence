@@ -1,3 +1,8 @@
+/**
+ * @file Tooltip Service — serves localized tooltips and glossary entries.
+ * FR: Service des infobulles — fournit les infobulles et entrees de glossaire localisees.
+ */
+
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";
 import type { TooltipCollection, TooltipResponse, GlossaryResponse } from "@transcendence/shared";

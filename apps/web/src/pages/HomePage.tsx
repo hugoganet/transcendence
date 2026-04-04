@@ -1,6 +1,21 @@
-import { useEffect } from "react";
+/**
+ * @file HomePage — Home Page — landing page for authenticated users.
+ * FR: Page Accueil — page d'accueil pour utilisateurs authentifies.
+ */
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+
+const quotes = [
+  { text: "The blockchain is an incorruptible digital ledger.", author: "Don & Alex Tapscott" },
+  { text: "Bitcoin is a technological tour de force.", author: "Bill Gates" },
+  { text: "Blockchain will do to finance what the internet did to media.", author: "Unknown" },
+  { text: "Code is law.", author: "Lawrence Lessig" },
+  { text: "In cryptography we trust.", author: "Unknown" },
+  { text: "Not your keys, not your coins.", author: "Andreas Antonopoulos" },
+  { text: "The best time to learn blockchain was yesterday. The second best time is now.", author: "Unknown" },
+  { text: "Trust, but verify — that is the essence of blockchain.", author: "Unknown" },
+];
 import { useAuth } from "../contexts/AuthContext.js";
 import { useResume } from "../hooks/useResume.js";
 import { Card } from "../components/ui/Card.js";
@@ -12,19 +27,30 @@ export function HomePage() {
   const { t } = useTranslation();
   const { user } = useAuth();
   const { resume, isLoading } = useResume();
+  const [quote] = useState(() => quotes[Math.floor(Math.random() * quotes.length)]);
 
   useEffect(() => {
-    document.title = `${t("labels.home")} — Transcendence`;
+    document.title = `${t("labels.home")} — Unblock.chain`;
   }, [t]);
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+        <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
           {user?.displayName ? t("pages.home.welcomeNamed", { name: user.displayName }) : t("pages.home.welcome")}
         </h1>
-        <p className="mt-1 text-gray-500 dark:text-warm-400">
+        <p className="mt-1 text-[var(--color-text-muted)]">
           {t("pages.home.subtitle")}
+        </p>
+      </div>
+
+      {/* Motivational quote */}
+      <div className="rounded-xl border border-primary/10 bg-gradient-to-r from-primary/5 to-transparent p-4 dark:border-primary/20 dark:from-primary/10">
+        <p className="text-sm italic text-[var(--color-text-muted)]">
+          &ldquo;{quote.text}&rdquo;
+        </p>
+        <p className="mt-1 text-xs text-[var(--color-text-muted)]">
+          — {quote.author}
         </p>
       </div>
 
@@ -36,14 +62,14 @@ export function HomePage() {
         <Card>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-400 dark:text-warm-500">
+              <span className="text-xs font-medium text-gray-400 dark:text-warm-200">
                 {t("pages.home.nextMission")}
               </span>
-              <span className="text-xs text-gray-500 dark:text-warm-400">
+              <span className="text-xs text-[var(--color-text-muted)]">
                 {resume.chapterTitle}
               </span>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-warm-50">
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">
               {resume.missionTitle}
             </h2>
             <ProgressBar
@@ -66,10 +92,10 @@ export function HomePage() {
       ) : (
         <Card>
           <div className="py-8 text-center">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
+            <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">
               {t("pages.home.startLearning")}
             </h2>
-            <p className="mb-6 text-sm text-gray-500 dark:text-warm-400">
+            <p className="mb-6 text-sm text-[var(--color-text-muted)]">
               {t("pages.home.startLearningSubtitle")}
             </p>
             <Link to="/curriculum">

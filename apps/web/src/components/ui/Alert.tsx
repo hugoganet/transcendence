@@ -1,7 +1,12 @@
+/**
+ * @file Alert — themed alert banner for success, error, and info messages.
+ * FR: Alert — bannière d'alerte thématique pour les messages de succès, erreur et information.
+ */
 import type { ReactNode } from "react";
 
 type AlertVariant = "success" | "error" | "info";
 
+/** Props for Alert. / FR: Props pour Alert. */
 interface AlertProps {
   variant: AlertVariant;
   children: ReactNode;
@@ -14,6 +19,10 @@ const variantClasses: Record<AlertVariant, string> = {
   info: "bg-blue-50 text-blue-800 border-blue-200 dark:bg-blue-900/20 dark:text-blue-300 dark:border-blue-800",
 };
 
+/**
+ * Renders a styled alert box with variant-based colors (success, error, info).
+ * FR: Affiche une boîte d'alerte stylisée avec des couleurs selon la variante (succès, erreur, info).
+ */
 export function Alert({ variant, children, className = "" }: AlertProps) {
   return (
     <div

@@ -1,3 +1,8 @@
+/**
+ * @file Gamification Routes — streaks, achievements, leaderboard.
+ * FR: Routes Gamification — series, succes, classement.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -6,9 +11,10 @@ import { getStreak } from "../services/streakService.js";
 import { getAchievements } from "../services/achievementService.js";
 import { getLeaderboard } from "../services/leaderboardService.js";
 
+/** Gamification router — all /api/v1/gamification endpoints. / FR: Routeur gamification. */
 export const gamificationRouter = Router();
 
-// GET /api/v1/gamification/streak — authenticated, returns streak + cumulative progress
+/** GET /streak — return current streak and cumulative progress. / FR: Retourne la serie en cours et la progression cumulee. */
 gamificationRouter.get(
   "/streak",
   requireAuth,
@@ -19,7 +25,7 @@ gamificationRouter.get(
   },
 );
 
-// GET /api/v1/gamification/achievements — authenticated, returns all achievements with earned status
+/** GET /achievements — return all achievements with earned status. / FR: Retourne tous les succes avec leur statut d'obtention. */
 gamificationRouter.get(
   "/achievements",
   requireAuth,
@@ -30,7 +36,7 @@ gamificationRouter.get(
   },
 );
 
-// GET /api/v1/gamification/leaderboard — authenticated, returns paginated weekly leaderboard
+/** GET /leaderboard — return paginated weekly leaderboard. / FR: Retourne le classement hebdomadaire pagine. */
 gamificationRouter.get(
   "/leaderboard",
   requireAuth,

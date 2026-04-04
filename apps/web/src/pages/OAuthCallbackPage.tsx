@@ -1,3 +1,7 @@
+/**
+ * @file OAuthCallbackPage — OAuth Callback — handles OAuth provider redirect.
+ * FR: Callback OAuth — gere la redirection du fournisseur OAuth.
+ */
 import { useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";

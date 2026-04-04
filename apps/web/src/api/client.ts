@@ -1,3 +1,7 @@
+/**
+ * @file HTTP API Client — base fetch wrapper, error handling, auth headers.
+ * FR: Client HTTP — wrapper fetch, gestion d'erreurs, headers d'authentification.
+ */
 const BASE_URL = import.meta.env.VITE_API_URL ?? "";
 
 interface ApiErrorBody {

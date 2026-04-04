@@ -1,3 +1,7 @@
+/**
+ * @file NotificationContext — Notification Context — manages real-time notification state.
+ * FR: Contexte Notifications — gere l'etat des notifications en temps reel.
+ */
 import {
   createContext,
   useContext,

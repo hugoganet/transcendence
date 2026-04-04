@@ -1,3 +1,8 @@
+/**
+ * @file Streak Service — tracks and updates daily login/activity streaks.
+ * FR: Service des series — suit et met a jour les series quotidiennes de connexion/activite.
+ */
+
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import type { StreakStatus } from "@transcendence/shared";

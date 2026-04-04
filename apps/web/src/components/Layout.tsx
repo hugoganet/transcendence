@@ -1,7 +1,15 @@
+/**
+ * @file Layout — app shell with desktop header, mobile bottom nav, and skip-to-content link.
+ * FR: Layout — coque de l'application avec en-tête bureau, navigation mobile et lien d'accès direct au contenu.
+ */
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
+/**
+ * Main layout wrapper providing header, bottom nav, and page outlet.
+ * FR: Wrapper de mise en page principal fournissant l'en-tête, la navigation basse et le contenu de page.
+ */
 export function Layout() {
   const { t } = useTranslation();
   const location = useLocation();
@@ -23,7 +31,7 @@ export function Layout() {
             to="/"
             className="font-[var(--font-heading)] text-lg font-bold text-[var(--color-primary)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
           >
-            Transcendence
+            Unblock.chain
           </Link>
           <LanguageSwitcher variant="pill" />
         </div>

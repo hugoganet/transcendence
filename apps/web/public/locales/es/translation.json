@@ -103,7 +103,7 @@
     "skipToContent": "Ir al contenido",
     "bottomNav": "Navegación",
     "achievements": "Logros",
-    "dashboard": "Panel",
+    "wallet": "Wallet",
     "glossary": "Glosario",
     "toggleMenu": "Abrir menú",
     "currentStreak": "Racha actual",
@@ -371,11 +371,6 @@
       "headline": "Gas fees: ahora es personal.",
       "body": "A partir de ahora, cada intento de ejercicio cuesta 2 KT. Eso es gas — el mismo mecanismo que impulsa cada transacción real en blockchain. Completa misiones para mantener tu saldo.",
       "ctaLabel": "Entendido"
-    },
-    "dashboardRevealed": {
-      "headline": "Tu panel está listo.",
-      "body": "Sigue tu racha, tu saldo de tokens, tu posición en la clasificación y cada logro que has desbloqueado — todo en un solo lugar.",
-      "ctaLabel": "Explorar panel"
     }
   },
   "disclaimer": {
@@ -428,6 +423,10 @@
     "gas_deducted": "Gas descontado",
     "system_message": "Actualización de Transcendence"
   },
+  "theme": {
+    "switchToLight": "Cambiar a modo claro",
+    "switchToDark": "Cambiar a modo oscuro"
+  },
   "errors": {
     "networkError": "No se puede conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.",
     "serverError": "Algo salió mal de nuestro lado. Inténtalo de nuevo en un momento.",
@@ -445,7 +444,8 @@
     "label": "Idioma",
     "en": "English",
     "fr": "Français",
-    "es": "Español"
+    "es": "Español",
+    "ar": "العربية"
   },
   "chat": {
     "title": "Chat",
@@ -454,7 +454,36 @@
   "settings": {
     "title": "Ajustes",
     "language": "Idioma",
-    "languageDescription": "Elige tu idioma preferido"
+    "languageDescription": "Elige tu idioma preferido",
+    "twoFactor": {
+      "title": "Autenticación de dos factores",
+      "description": "Añade una capa extra de seguridad a tu cuenta.",
+      "status": "Estado",
+      "enabled": "Activado",
+      "disabled": "Desactivado",
+      "enableButton": "Activar 2FA",
+      "disableButton": "Desactivar 2FA",
+      "setup": {
+        "modalTitle": "Activar la autenticación de dos factores",
+        "step1": "Escanea este código QR con tu aplicación de autenticación",
+        "step2": "O introduce esta clave manualmente",
+        "step3": "Introduce el código de 6 dígitos para confirmar",
+        "copyButton": "Copiar",
+        "copied": "¡Copiado!",
+        "verifyButton": "Verificar y activar",
+        "successTitle": "2FA activado",
+        "successMessage": "La autenticación de dos factores ya está activa en tu cuenta."
+      },
+      "disable": {
+        "modalTitle": "Desactivar la autenticación de dos factores",
+        "description": "Introduce tu código de autenticación actual para confirmar.",
+        "confirmButton": "Confirmar desactivación",
+        "successMessage": "La autenticación de dos factores ha sido desactivada."
+      },
+      "codeLabel": "Código de verificación",
+      "invalidCode": "Código inválido. Por favor, inténtalo de nuevo.",
+      "rateLimited": "Demasiados intentos. Espera un momento e inténtalo de nuevo."
+    }
   },
   "emptyStates": {
     "noFriends": "Aún no has agregado amigos. Busca por nombre de usuario para encontrar a alguien con quien aprender.",
@@ -573,6 +602,8 @@
       "moduleComplete": "Finalización de módulo",
       "tokenThreshold": "Umbrales de tokens",
       "streakMilestone": "Hitos de racha",
+      "friendRequest": "Solicitudes de amistad",
+      "messageReceived": "Nuevos mensajes",
       "loadError": "No se pudieron cargar las preferencias"
     },
     "certificate": {
@@ -603,7 +634,16 @@
       "getStarted": "Comenzar",
       "signIn": "Iniciar sesión",
       "privacyPolicy": "Política de privacidad",
-      "termsOfService": "Términos de servicio"
+      "termsOfService": "Términos de servicio",
+      "featureLearnTitle": "Aprender",
+      "featureLearnDesc": "Misiones cortas que explican conceptos blockchain con analogias del mundo real.",
+      "featurePracticeTitle": "Practicar",
+      "featurePracticeDesc": "Ejercicios interactivos para simular y verificar logica on-chain.",
+      "featureEarnTitle": "Ganar",
+      "featureEarnDesc": "Colecciona tokens, desbloquea logros y obtiene tu certificado on-chain.",
+      "statMissions": "Misiones",
+      "statExerciseTypes": "Tipos de ejercicio",
+      "statFree": "Gratis"
     },
     "notFound": {
       "body": "La página que buscas no existe.",
@@ -627,11 +667,78 @@
     },
     "privacyPolicy": {
       "title": "Política de privacidad",
-      "backToHome": "Volver al inicio"
+      "backToHome": "Volver al inicio",
+      "lastUpdated": "Última actualización: 7 de marzo de 2026",
+      "s1Title": "1. Introducción",
+      "s1Body": "Bienvenido a Transcendence. Nos comprometemos a proteger tus datos personales y tu derecho a la privacidad. Esta Política de privacidad explica cómo recopilamos, usamos, almacenamos y compartimos tu información cuando utilizas nuestra plataforma de educación blockchain.",
+      "s2Title": "2. Datos que recopilamos",
+      "s2Intro": "Recopilamos los siguientes tipos de información:",
+      "s2Item1": "Información de cuenta: correo electrónico, nombre de usuario y contraseña (cifrada).",
+      "s2Item2": "Progreso de aprendizaje: misiones completadas, intentos de ejercicios, XP ganado y saldos de tokens de conocimiento.",
+      "s2Item3": "Datos de uso: páginas visitadas, duración de sesiones e interacciones con funcionalidades.",
+      "s2Item4": "Datos técnicos: tipo de navegador, información del dispositivo y dirección IP.",
+      "s3Title": "3. Cómo usamos tus datos",
+      "s3Intro": "Usamos tus datos para:",
+      "s3Item1": "Proporcionar y mantener nuestro servicio de educación blockchain.",
+      "s3Item2": "Seguir tu progreso de aprendizaje y personalizar tu experiencia.",
+      "s3Item3": "Gestionar tu cuenta y autenticar tus sesiones.",
+      "s3Item4": "Enviar notificaciones sobre tus rachas de aprendizaje y logros.",
+      "s3Item5": "Mejorar nuestra plataforma basándonos en patrones de uso.",
+      "s4Title": "4. Almacenamiento y seguridad de datos",
+      "s4Body": "Tus datos se almacenan en bases de datos PostgreSQL seguras. Las sesiones se gestionan mediante Redis con almacenamiento del lado del servidor. Todas las comunicaciones están cifradas mediante HTTPS/TLS. Implementamos medidas de seguridad estándar de la industria, incluyendo limitación de velocidad, protección CSRF y manejo seguro de cookies.",
+      "s5Title": "5. Cookies y sesiones",
+      "s5Body": "Transcendence utiliza cookies de sesión para mantener tu estado de autenticación. Estas cookies son esenciales para el funcionamiento de la plataforma y no se utilizan con fines publicitarios o de seguimiento. Los datos de sesión se almacenan del lado del servidor en Redis y se eliminan automáticamente cuando tu sesión expira.",
+      "s6Title": "6. Compartir con terceros",
+      "s6Intro": "No vendemos, intercambiamos ni compartimos tus datos personales con terceros, excepto:",
+      "s6Item1": "Cuando lo exija la ley o un proceso legal.",
+      "s6Item2": "Con proveedores de servicios que nos ayudan a operar nuestra plataforma (por ejemplo, envío de correos), bajo estrictos acuerdos de procesamiento de datos.",
+      "s7Title": "7. Tus derechos (RGPD)",
+      "s7Intro": "Bajo el Reglamento General de Protección de Datos (RGPD), tienes derecho a:",
+      "s7Item1": "Acceso: Solicitar una copia de los datos personales que tenemos sobre ti.",
+      "s7Item2": "Exportación: Descargar tus datos en un formato portable.",
+      "s7Item3": "Rectificación: Solicitar la corrección de datos inexactos.",
+      "s7Item4": "Eliminación: Solicitar la eliminación permanente de tu cuenta y todos los datos asociados.",
+      "s7Item5": "Restricción: Solicitar que limitemos cómo procesamos tus datos.",
+      "s7Item6": "Oposición: Oponerte a ciertos tipos de procesamiento de datos.",
+      "s7Outro": "Para ejercer cualquiera de estos derechos, utiliza los ajustes de tu cuenta en la plataforma o contáctanos en la dirección indicada a continuación.",
+      "s8Title": "8. Retención de datos",
+      "s8Body": "Conservamos tus datos personales mientras tu cuenta esté activa. Si solicitas la eliminación de tu cuenta, todos los datos personales se eliminarán permanentemente en un plazo de 30 días. Las estadísticas de uso anonimizadas pueden conservarse para mejorar la plataforma.",
+      "s9Title": "9. Información de contacto",
+      "s9Body": "Si tienes preguntas sobre esta Política de privacidad o deseas ejercer tus derechos, contáctanos en:"
     },
     "termsOfService": {
       "title": "Términos de servicio",
-      "backToHome": "Volver al inicio"
+      "backToHome": "Volver al inicio",
+      "lastUpdated": "Última actualización: 7 de marzo de 2026",
+      "s1Title": "1. Aceptación de los términos",
+      "s1Body": "Al acceder o usar Transcendence, aceptas estar sujeto a estos Términos de servicio. Si no estás de acuerdo con estos términos, no puedes usar la plataforma.",
+      "s2Title": "2. Descripción del servicio",
+      "s2Body": "Transcendence es una plataforma educativa diseñada para enseñar conceptos de blockchain a adultos no técnicos a través de lecciones gamificadas y breves. La plataforma utiliza tokens simulados, tarifas de gas y wallets con fines exclusivamente educativos. No se involucra ninguna criptomoneda real, token o activo digital con valor monetario.",
+      "s3Title": "3. Cuentas de usuario",
+      "s3Body": "Para usar Transcendence, debes crear una cuenta. Debes tener al menos 16 años para crear una cuenta. Eres responsable de mantener la confidencialidad de tus credenciales y de todas las actividades que ocurran bajo tu cuenta.",
+      "s4Title": "4. Uso aceptable",
+      "s4Intro": "Aceptas usar Transcendence solo para sus fines educativos previstos. No puedes:",
+      "s4Item1": "Intentar obtener acceso no autorizado a otras cuentas o sistemas de la plataforma.",
+      "s4Item2": "Usar la plataforma para distribuir contenido dañino, ofensivo o ilegal.",
+      "s4Item3": "Interferir con el funcionamiento de la plataforma o su infraestructura.",
+      "s4Item4": "Usar herramientas automatizadas para acceder a la plataforma sin permiso.",
+      "s4Item5": "Suplantar la identidad de otro usuario.",
+      "s5Title": "5. Aviso sobre contenido educativo",
+      "s5Body": "Todo el contenido de Transcendence se proporciona con fines exclusivamente educativos y no constituye asesoramiento financiero, de inversión o legal. Los tokens simulados, las tarifas de gas y los mecanismos de wallet en esta plataforma son herramientas de aprendizaje y no tienen valor monetario real. Consulta siempre a un profesional cualificado antes de tomar decisiones financieras relacionadas con blockchain o criptomonedas.",
+      "s6Title": "6. Propiedad intelectual",
+      "s6Body": "Todo el contenido, diseño, código y materiales educativos de Transcendence son propiedad del equipo de Transcendence o sus licenciantes. No puedes reproducir, distribuir ni crear obras derivadas de nuestro contenido sin permiso explícito.",
+      "s7Title": "7. Limitación de responsabilidad",
+      "s7Body": "Transcendence se proporciona \"tal cual\" sin garantías de ningún tipo. No somos responsables de ningún daño indirecto, incidental o consecuente derivado de tu uso de la plataforma. Nuestra responsabilidad total no excederá el monto que hayas pagado por usar el servicio, si lo hubiera.",
+      "s8Title": "8. Terminación",
+      "s8Body": "Nos reservamos el derecho de suspender o cancelar tu cuenta si violas estos Términos de servicio. Puedes eliminar tu cuenta en cualquier momento a través de los ajustes de la plataforma. Al eliminar tu cuenta, tus datos personales se manejarán de acuerdo con nuestra Política de privacidad.",
+      "s9Title": "9. Ley aplicable",
+      "s9Body": "Estos Términos de servicio se rigen e interpretan de acuerdo con las leyes de la Unión Europea. Cualquier disputa que surja bajo estos términos estará sujeta a la jurisdicción exclusiva de los tribunales competentes.",
+      "s10Title": "10. Cambios en los términos",
+      "s10Body": "Podemos actualizar estos Términos de servicio de vez en cuando. Notificaremos a los usuarios registrados sobre cambios significativos por correo electrónico o notificación en la plataforma. El uso continuado de la plataforma después de los cambios constituye la aceptación de los términos actualizados."
     }
+  },
+  "footer": {
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio"
   }
 }

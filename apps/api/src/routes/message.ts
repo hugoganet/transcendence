@@ -1,10 +1,19 @@
+/**
+ * @file Message Routes — send direct messages, fetch conversation history.
+ * FR: Routes Messages — envoie des messages directs, recupere l'historique de conversation.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { sendMessage, getConversation } from "../services/messageService.js";
+import { createAndPushNotification } from "../services/notificationService.js";
+import { shouldSendNotification } from "../services/engagementService.js";
 import { getIO } from "../socket/index.js";
 
+/** Message router — all /api/v1/messages endpoints. / FR: Routeur messages. */
 export const messageRouter = Router()
 
+/** POST / — send a direct message and notify via WebSocket. / FR: Envoie un message direct et notifie via WebSocket. */
 messageRouter.post("/", requireAuth, async (req: Request, res: Response) => {
     const user = req.user as Express.User;
     const { receiverId, content } = req.body;
@@ -22,12 +31,32 @@ messageRouter.post("/", requireAuth, async (req: Request, res: Response) => {
       content: data.content,
       createdAt: data.createdAt.toISOString(),
     };
-    getIO().to(`user:${receiverId}`).emit("message:new", payload);
-    getIO().to(`user:${user.id}`).emit("message:new", payload);
+    const io = getIO();
+    io.to(`user:${receiverId}`).emit("message:new", payload);
+    io.to(`user:${user.id}`).emit("message:new", payload);
+
+    // Notify receiver about the new message (best-effort)
+    try {
+      if (await shouldSendNotification(receiverId, "messageReceived")) {
+        const truncated = content.length > 50 ? content.slice(0, 50) + "…" : content;
+        await createAndPushNotification(
+          io,
+          receiverId,
+          "MESSAGE_RECEIVED",
+          "New message",
+          `${(user as { displayName?: string }).displayName ?? "Someone"}: ${truncated}`,
+          { senderId: user.id, messageId: data.id },
+        );
+      }
+    } catch {
+      // Notification failure must not break message delivery
+    }
+
     res.status(201).json({ data });
 });
 
 
+/** GET /:userId — fetch conversation history with a user. / FR: Recupere l'historique de conversation avec un utilisateur. */
 messageRouter.get("/:userId", requireAuth, async (req: Request, res: Response) => {
     const user = req.user as Express.User;
     const data = await getConversation(user.id, String(req.params.userId));

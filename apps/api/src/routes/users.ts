@@ -1,3 +1,8 @@
+/**
+ * @file Users Routes — profile CRUD, avatar upload, reveals, certificates, public profiles.
+ * FR: Routes Utilisateurs — CRUD profil, upload avatar, revelations, certificats, profils publics.
+ */
+
 import { Router, type Request, type Response } from "express";
 import express from "express";
 import multer, { MulterError } from "multer";
@@ -38,12 +43,13 @@ const avatarUpload = multer({
   },
 });
 
+/** Users router — all /api/v1/users endpoints. / FR: Routeur utilisateurs. */
 export const usersRouter = Router();
 
 // Serve avatar files as static assets
 usersRouter.use("/avatars", express.static(AVATAR_UPLOAD_DIR));
 
-// GET /api/v1/users/search?q=... — search users by display name
+/** GET /search — search users by display name. / FR: Recherche des utilisateurs par nom d'affichage. */
 usersRouter.get(
   "/search",
   requireAuth,
@@ -55,7 +61,7 @@ usersRouter.get(
   },
 );
 
-// GET /api/v1/users/me — return authenticated user profile
+/** GET /me — return authenticated user profile. / FR: Retourne le profil de l'utilisateur authentifie. */
 usersRouter.get(
   "/me",
   requireAuth,
@@ -65,7 +71,7 @@ usersRouter.get(
   },
 );
 
-// PATCH /api/v1/users/me — update profile fields
+/** PATCH /me — update profile fields. / FR: Met a jour les champs du profil. */
 usersRouter.patch(
   "/me",
   requireAuth,
@@ -79,7 +85,7 @@ usersRouter.patch(
   },
 );
 
-// GET /api/v1/users/me/reveals — return progressive reveal status
+/** GET /me/reveals — return progressive reveal status. / FR: Retourne le statut des revelations progressives. */
 usersRouter.get(
   "/me/reveals",
   requireAuth,
@@ -89,7 +95,7 @@ usersRouter.get(
   },
 );
 
-// POST /api/v1/users/me/avatar — upload avatar image
+/** POST /me/avatar — upload avatar image. / FR: Upload une image d'avatar. */
 usersRouter.post(
   "/me/avatar",
   requireAuth,
@@ -128,7 +134,7 @@ usersRouter.post(
   },
 );
 
-// GET /api/v1/users/me/certificate — return authenticated user's certificate
+/** GET /me/certificate — return authenticated user's certificate. / FR: Retourne le certificat de l'utilisateur authentifie. */
 usersRouter.get(
   "/me/certificate",
   requireAuth,
@@ -138,7 +144,7 @@ usersRouter.get(
   },
 );
 
-// GET /api/v1/users/me/certificate/share — return shareable certificate URL
+/** GET /me/certificate/share — return shareable certificate URL. / FR: Retourne l'URL de partage du certificat. */
 usersRouter.get(
   "/me/certificate/share",
   requireAuth,
@@ -148,7 +154,7 @@ usersRouter.get(
   },
 );
 
-// GET /api/v1/users/:userId/profile — return public profile
+/** GET /:userId/profile — return public profile. / FR: Retourne le profil public. */
 usersRouter.get(
   "/:userId/profile",
   requireAuth,

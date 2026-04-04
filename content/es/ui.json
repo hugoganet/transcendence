@@ -401,11 +401,6 @@
       "headline": "Gas fees: ahora es personal.",
       "body": "A partir de ahora, cada intento de ejercicio cuesta 2 KT. Eso es gas — el mismo mecanismo que impulsa cada transacción real en blockchain. Completa misiones para mantener tu saldo.",
       "ctaLabel": "Entendido"
-    },
-    "dashboardRevealed": {
-      "headline": "Tu panel está listo.",
-      "body": "Sigue tu racha, tu saldo de tokens, tu posición en la clasificación y cada logro que has desbloqueado — todo en un solo lugar.",
-      "ctaLabel": "Explorar panel"
     }
   },
   "disclaimer": {

@@ -1,3 +1,7 @@
+/**
+ * @file AuthContext — Auth Context — provides authentication state and actions.
+ * FR: Contexte Auth — fournit l'etat d'authentification et les actions.
+ */
 import {
   createContext,
   useContext,
@@ -13,6 +17,8 @@ import type {
 } from "@transcendence/shared";
 import { authApi } from "../api/auth.js";
 import { ApiError } from "../api/client.js";
+import { usersApi } from "../api/users.js";
+import i18n from "../i18n.js";
 
 interface AuthState {
   user: UserProfile | null;
@@ -29,6 +35,29 @@ interface AuthContextValue extends AuthState {
   refreshUser: () => Promise<void>;
 }
 
+// Locales accepted by the API (ar is frontend-only, not persisted server-side)
+const API_LOCALES: ReadonlySet<string> = new Set(["en", "fr", "es"]);
+
+/**
+ * After login, prefer the user's local language choice (localStorage) over the
+ * server locale. If they differ, keep the local language and sync it to the
+ * server. If they match (or there is no valid local preference), apply the
+ * server locale as before.
+ */
+function syncLocaleOnLogin(serverLocale: string | undefined): void {
+  const localLocale = i18n.language;
+
+  if (API_LOCALES.has(localLocale) && localLocale !== serverLocale) {
+    // User chose a language while logged out — persist it to the server.
+    usersApi.updateProfile({ locale: localLocale as "en" | "fr" | "es" }).catch(() => {
+      // Fire-and-forget: localStorage is source of truth if this fails.
+    });
+    // i18next already has localLocale active — no need to call changeLanguage.
+  } else if (serverLocale && API_LOCALES.has(serverLocale)) {
+    i18n.changeLanguage(serverLocale);
+  }
+}
+
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -42,6 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const refreshUser = useCallback(async () => {
     try {
       const user = await authApi.getMe();
+      if (user) syncLocaleOnLogin(user.locale);
       setState({
         user: user ?? null,
         isLoading: false,
@@ -63,6 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authApi.getMe().then(
       (user) => {
         if (!cancelled) {
+          syncLocaleOnLogin(user?.locale);
           setState({
             user: user ?? null,
             isLoading: false,
@@ -93,8 +124,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setState((prev) => ({ ...prev, requires2FA: true }));
       return;
     }
+    const profile = result as UserProfile;
+    syncLocaleOnLogin(profile.locale);
     setState({
-      user: result as UserProfile,
+      user: profile,
       isLoading: false,
       isAuthenticated: true,
       requires2FA: false,
@@ -103,6 +136,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = useCallback(async (data: RegisterInput) => {
     const user = await authApi.register(data);
+    syncLocaleOnLogin(user.locale);
     setState({
       user,
       isLoading: false,
@@ -123,6 +157,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const verify2FA = useCallback(async (code: string) => {
     const user = await authApi.verify2FA(code);
+    syncLocaleOnLogin(user?.locale);
     setState({
       user,
       isLoading: false,

@@ -1,11 +1,12 @@
+/**
+ * @file ExercisePage — Exercise Page — displays and handles a single exercise.
+ * FR: Page Exercice — affiche et gere un exercice individuel.
+ */
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
-import type {
-  ExerciseResult,
-  CompleteMissionResponse,
-} from "@transcendence/shared";
+import type { ExerciseResult, CompleteMissionResponse } from "@transcendence/shared";
 import { useMissionDetail } from "../hooks/useMissionDetail.js";
 import { useReveals } from "../contexts/RevealContext.js";
 import { curriculumApi } from "../api/curriculum.js";
@@ -20,23 +21,18 @@ import { Alert } from "../components/ui/Alert.js";
 export function ExercisePage() {
   const { t } = useTranslation();
   const { missionId } = useParams<{ missionId: string }>();
-  const { mission, isLoading, error, isLocked } = useMissionDetail(
-    missionId ?? "",
-  );
+  const { mission, isLoading, error, isLocked } = useMissionDetail(missionId ?? "");
   const { refresh: refreshReveals } = useReveals();
 
-  const [exerciseResult, setExerciseResult] = useState<ExerciseResult | null>(
-    null,
-  );
-  const [completionData, setCompletionData] =
-    useState<CompleteMissionResponse | null>(null);
+  const [exerciseResult, setExerciseResult] = useState<ExerciseResult | null>(null);
+  const [completionData, setCompletionData] = useState<CompleteMissionResponse | null>(null);
   const [isCompleting, setIsCompleting] = useState(false);
   const [completeError, setCompleteError] = useState("");
   const [confidenceRating, setConfidenceRating] = useState<number>(3);
 
   useEffect(() => {
     if (mission) {
-      document.title = `${mission.title} — Exercise — Transcendence`;
+      document.title = `${mission.title} — Exercise — Unblock.chain`;
     }
   }, [mission]);
 
@@ -45,21 +41,23 @@ export function ExercisePage() {
   };
 
   const handleCompleteMission = async () => {
-    if (!missionId) return;
+    if (!missionId || isCompleting) return;
     setIsCompleting(true);
     setCompleteError("");
     try {
-      const data = await curriculumApi.completeMission(
-        missionId,
-        confidenceRating,
-      );
+      const data = await curriculumApi.completeMission(missionId, confidenceRating);
       setCompletionData(data);
       if (data.revealTriggered) {
         await refreshReveals();
       }
     } catch (err) {
       if (err instanceof ApiError) {
-        setCompleteError(t("pages.exercise.completeMissionError"));
+        // Handle 409 Conflict specifically (mission already completed)
+        if (err.status === 409) {
+          setCompleteError(t("pages.mission.alreadyCompleted"));
+        } else {
+          setCompleteError(t("pages.exercise.completeMissionError"));
+        }
       }
     } finally {
       setIsCompleting(false);
@@ -77,9 +75,7 @@ export function ExercisePage() {
   if (isLocked) {
     return (
       <div className="mx-auto max-w-lg py-12 text-center">
-        <Alert variant="error">
-          {t("pages.exercise.lockedMessage")}
-        </Alert>
+        <Alert variant="error">{t("pages.exercise.lockedMessage")}</Alert>
         <Link to="/curriculum" className="mt-4 inline-block">
           <Button variant="ghost">{t("pages.mission.backToCurriculum")}</Button>
         </Link>
@@ -91,7 +87,7 @@ export function ExercisePage() {
     return <Alert variant="error">{error ?? t("pages.mission.loadError")}</Alert>;
   }
 
-  // Mission already completed — show completion view
+  // Mission already completed — show completion view or redirect message
   if (completionData) {
     return (
       <div className="mx-auto max-w-2xl space-y-6">
@@ -100,11 +96,23 @@ export function ExercisePage() {
     );
   }
 
+  // Mission was already completed before this session — prevent re-completion
+  if (mission.status === "completed") {
+    return (
+      <div className="mx-auto max-w-lg py-12 text-center">
+        <Alert variant="success">{t("pages.mission.alreadyCompleted")}</Alert>
+        <Link to="/curriculum" className="mt-4 inline-block">
+          <Button variant="ghost">{t("pages.mission.backToCurriculum")}</Button>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <Link
         to={`/missions/${mission.id}`}
-        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary"
+        className="inline-flex items-center gap-1 text-sm text-[var(--color-text-muted)] hover:text-primary"
       >
         <ChevronLeft className="h-4 w-4" />
         {t("pages.exercise.missionDetails")}
@@ -112,10 +120,8 @@ export function ExercisePage() {
 
       <Card>
         <div className="mb-4">
-          <span className="text-xs font-medium text-gray-400">
-            {mission.id}
-          </span>
-          <h1 className="text-lg font-bold text-gray-900 font-heading">
+          <span className="text-xs font-medium text-[var(--color-text-muted)]">{mission.id}</span>
+          <h1 className="text-lg font-bold text-[var(--color-text)] font-heading">
             {mission.title}
           </h1>
         </div>
@@ -132,7 +138,7 @@ export function ExercisePage() {
       {exerciseResult && !completionData && (
         <Card>
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-900">
+            <h3 className="text-sm font-semibold text-[var(--color-text)]">
               {t("pages.exercise.confidenceQuestion")}
             </h3>
             <div className="flex items-center justify-center gap-2">
@@ -143,26 +149,20 @@ export function ExercisePage() {
                   className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium transition-colors ${
                     confidenceRating === rating
                       ? "bg-primary text-white"
-                      : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                      : "bg-[var(--color-border)] text-[var(--color-text-muted)] hover:bg-gray-200 dark:hover:bg-warm-700"
                   }`}
                 >
                   {rating}
                 </button>
               ))}
             </div>
-            <p className="text-center text-xs text-gray-400">
+            <p className="text-center text-xs text-[var(--color-text-muted)]">
               {t("pages.exercise.confidenceScale")}
             </p>
 
-            {completeError && (
-              <Alert variant="error">{completeError}</Alert>
-            )}
+            {completeError && <Alert variant="error">{completeError}</Alert>}
 
-            <Button
-              onClick={handleCompleteMission}
-              isLoading={isCompleting}
-              className="w-full"
-            >
+            <Button onClick={handleCompleteMission} isLoading={isCompleting} className="w-full">
               {t("pages.exercise.completeMission")}
             </Button>
           </div>

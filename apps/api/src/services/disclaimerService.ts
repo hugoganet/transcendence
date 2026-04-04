@@ -1,3 +1,8 @@
+/**
+ * @file Disclaimer Service — serves and tracks acceptance of legal disclaimers.
+ * FR: Service des avertissements — fournit et suit l'acceptation des mentions legales.
+ */
+
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";
 import { getGeneralDisclaimer, getModuleDisclaimer } from "../content/disclaimers.js";

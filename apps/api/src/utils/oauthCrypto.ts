@@ -1,3 +1,7 @@
+/**
+ * @file AES-256-GCM encryption/decryption for OAuth tokens at rest.
+ * FR: Chiffrement/dechiffrement AES-256-GCM des tokens OAuth au repos.
+ */
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 
 const ALGORITHM = "aes-256-gcm";
@@ -21,6 +25,7 @@ function getKey(): Buffer {
   return key;
 }
 
+/** Encrypt an OAuth token for storage. FR: Chiffre un token OAuth pour le stockage. */
 export function encryptOAuthToken(plaintext: string): string {
   const key = getKey();
   const iv = randomBytes(IV_LENGTH);
@@ -34,6 +39,7 @@ export function encryptOAuthToken(plaintext: string): string {
   return Buffer.concat([iv, authTag, encrypted]).toString("hex");
 }
 
+/** Decrypt a stored OAuth token. FR: Dechiffre un token OAuth stocke. */
 export function decryptOAuthToken(stored: string): string {
   const key = getKey();
   const data = Buffer.from(stored, "hex");

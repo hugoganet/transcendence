@@ -1,3 +1,8 @@
+/**
+ * @file Notification Routes — handles notification listing, read status, and preferences.
+ * FR: Routes de notifications — gere la liste, le statut de lecture et les preferences.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
@@ -12,9 +17,10 @@ import {
   updateNotificationPreferences,
 } from "../services/engagementService.js";
 
+/** Notifications router — all /api/v1/notifications endpoints. / FR: Routeur de notifications. */
 export const notificationsRouter = Router();
 
-// GET /api/v1/notifications
+/** GET / — return paginated notification list. / FR: Retourne la liste paginee des notifications. */
 notificationsRouter.get(
   "/",
   requireAuth,
@@ -27,7 +33,7 @@ notificationsRouter.get(
   },
 );
 
-// GET /api/v1/notifications/preferences
+/** GET /preferences — return user's notification preference flags. / FR: Retourne les preferences de notification de l'utilisateur. */
 notificationsRouter.get(
   "/preferences",
   requireAuth,
@@ -38,7 +44,7 @@ notificationsRouter.get(
   },
 );
 
-// PATCH /api/v1/notifications/preferences
+/** PATCH /preferences — update notification preference flags. / FR: Met a jour les preferences de notification. */
 notificationsRouter.patch(
   "/preferences",
   requireAuth,
@@ -50,7 +56,7 @@ notificationsRouter.patch(
   },
 );
 
-// PATCH /api/v1/notifications/:id/read
+/** PATCH /:id/read — mark a single notification as read. / FR: Marque une notification comme lue. */
 notificationsRouter.patch(
   "/:id/read",
   requireAuth,

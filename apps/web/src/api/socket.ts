@@ -1,3 +1,7 @@
+/**
+ * @file socket API — Socket.IO client connection management.
+ * FR: API socket — gestion de la connexion client Socket.IO.
+ */
 import { io, type Socket } from "socket.io-client";
 import type { NotificationPushPayload } from "@transcendence/shared";
 

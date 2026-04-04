@@ -1,3 +1,8 @@
+/**
+ * @file User Service — manages user profiles, avatars and account settings.
+ * FR: Service utilisateur — gere les profils, avatars et parametres de compte.
+ */
+
 import fs from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";

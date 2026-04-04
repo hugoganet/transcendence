@@ -1,3 +1,8 @@
+/**
+ * @file Engagement Service — manages re-engagement emails, streak reminders and notification preferences.
+ * FR: Service d'engagement — gere les emails de relance, rappels de serie et preferences de notification.
+ */
+
 import { prisma } from "../config/database.js";
 import { createAndPushNotification } from "./notificationService.js";
 import { sendReEngagementEmail, sendStreakReminderEmail } from "./emailService.js";
@@ -11,6 +16,8 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   moduleComplete: true,
   tokenThreshold: true,
   streakMilestone: true,
+  friendRequest: true,
+  messageReceived: true,
 };
 
 const REENGAGEMENT_THRESHOLD_DAYS = 7;
@@ -25,6 +32,7 @@ export async function checkReengagement(io: IO, userId: string): Promise<void> {
       lastMissionCompletedAt: true,
       displayName: true,
       email: true,
+      locale: true,
     },
   });
 
@@ -73,7 +81,7 @@ export async function checkReengagement(io: IO, userId: string): Promise<void> {
       totalMissions,
       totalChapters: completedChapters,
       daysSinceLastMission,
-    }, resumeLink);
+    }, resumeLink, user.locale || "en");
   }
 }
 
@@ -123,6 +131,7 @@ export async function checkStreakReminders(io: IO): Promise<number> {
       currentStreak: true,
       displayName: true,
       email: true,
+      locale: true,
       notificationPreferences: true,
     },
   });
@@ -164,7 +173,7 @@ export async function checkStreakReminders(io: IO): Promise<number> {
       // Offline user — send email reminder
       const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
       const resumeLink = `${frontendUrl}/curriculum`;
-      sendStreakReminderEmail(user.email, "en", user.displayName, user.currentStreak, resumeLink).catch(() => {});
+      sendStreakReminderEmail(user.email, user.locale || "en", user.displayName, user.currentStreak, resumeLink).catch(() => {});
     }
 
     sentCount++;

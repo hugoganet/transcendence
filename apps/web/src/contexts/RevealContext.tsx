@@ -1,3 +1,7 @@
+/**
+ * @file RevealContext — Reveal Context — tracks progressive UI reveal mechanics.
+ * FR: Contexte Reveal — suit les mecaniques de revelation progressive de l'UI.
+ */
 import {
   createContext,
   useContext,
@@ -14,7 +18,6 @@ const defaultReveals: RevealStatus = {
   tokensRevealed: false,
   walletRevealed: false,
   gasRevealed: false,
-  dashboardRevealed: false,
 };
 
 interface RevealContextValue extends RevealStatus {

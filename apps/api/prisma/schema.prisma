@@ -50,12 +50,11 @@ model User {
   revealTokens           Boolean   @default(false)
   revealWallet           Boolean   @default(false)
   revealGas              Boolean   @default(false)
-  revealDashboard        Boolean   @default(false)
   sentFriendRequests     Friendship[] @relation("FriendshipRequester")
   receivedFriendRequests Friendship[] @relation("FriendshipAddressee")
   certificate            Certificate?
   notifications          Notification[]
-  notificationPreferences Json @default("{\"streakReminder\":true,\"reengagement\":true,\"moduleComplete\":true,\"tokenThreshold\":true,\"streakMilestone\":true}")
+  notificationPreferences Json @default("{\"streakReminder\":true,\"reengagement\":true,\"moduleComplete\":true,\"tokenThreshold\":true,\"streakMilestone\":true,\"friendRequest\":true,\"messageReceived\":true}")
 
   @@index([createdAt])
 }
