@@ -99,7 +99,7 @@ export function AppLayout() {
     <div className="flex min-h-screen flex-col bg-[var(--color-background)]">
       {/* Top nav */}
       <header className="sticky top-0 z-50 border-b border-gray-200/50 bg-white/80 backdrop-blur-md dark:border-warm-700/50 dark:bg-warm-900/80">
-        <div className="mx-auto flex h-14 max-w-5xl items-center px-4">
+        <div className="mx-auto flex h-14 max-w-6xl items-center px-4">
           <Link
             to="/home"
             className="flex shrink-0 items-center gap-2 text-lg font-bold font-heading"
@@ -192,7 +192,7 @@ export function AppLayout() {
       </header>
 
       {/* Main content */}
-      <main className="mx-auto max-w-5xl flex-1 px-4 py-6 animate-fade-in-up">
+      <main className="mx-auto max-w-6xl flex-1 px-4 py-6 animate-fade-in-up">
         <Outlet />
       </main>
 
