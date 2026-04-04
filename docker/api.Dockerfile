@@ -57,6 +57,9 @@ COPY --from=builder /app/apps/api/prisma/ apps/api/prisma/
 COPY --from=builder /app/apps/api/prisma.config.ts apps/api/
 COPY --from=builder /app/apps/api/generated/ apps/api/generated/
 
+# Create uploads directory for avatars
+RUN mkdir -p /app/uploads/avatars
+
 # Set ownership
 RUN chown -R appuser:appgroup /app
 
