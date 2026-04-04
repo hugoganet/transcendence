@@ -61,6 +61,7 @@ services:
       BASE_URL: ${BASE_URL}
       RESEND_API_KEY: ${RESEND_API_KEY}
       RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL}
+      TOTP_ENCRYPTION_KEY: ${TOTP_ENCRYPTION_KEY}
     volumes:
       - avatar-data:/app/uploads
     depends_on:

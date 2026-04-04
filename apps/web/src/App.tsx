@@ -35,7 +35,6 @@ import { PrivacyPolicy } from "./pages/PrivacyPolicy.js";
 import { TermsOfService } from "./pages/TermsOfService.js";
 import { Landing } from "./pages/Landing.js";
 import { NotFound } from "./pages/NotFound.js";
-import { Settings } from "./pages/Settings.js";
 import { ErrorBoundary } from "./components/ErrorBoundary.js";
 
 export function App() {
@@ -82,7 +81,6 @@ export function App() {
           <Route path="/settings/delete-account" element={<DeleteAccountPage />} />
           <Route path="/glossary" element={<GlossaryPage />} />
           <Route path="/certificate" element={<CertificatePage />} />
-          <Route path="/settings" element={<Settings />} />
         </Route>
       </Route>
 
