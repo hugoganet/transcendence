@@ -7,6 +7,8 @@ export const notificationTypeSchema = z.enum([
   "TOKEN_THRESHOLD",
   "STREAK_MILESTONE",
   "REENGAGEMENT",
+  "FRIEND_REQUEST",
+  "MESSAGE_RECEIVED",
 ]);
 
 export const notificationSchema = z.object({
@@ -42,6 +44,8 @@ export const notificationPreferencesSchema = z.object({
   moduleComplete: z.boolean(),
   tokenThreshold: z.boolean(),
   streakMilestone: z.boolean(),
+  friendRequest: z.boolean(),
+  messageReceived: z.boolean(),
 });
 
 export const updateNotificationPreferencesSchema = notificationPreferencesSchema.partial();

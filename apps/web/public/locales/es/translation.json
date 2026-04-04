@@ -573,6 +573,8 @@
       "moduleComplete": "Finalización de módulo",
       "tokenThreshold": "Umbrales de tokens",
       "streakMilestone": "Hitos de racha",
+      "friendRequest": "Solicitudes de amistad",
+      "messageReceived": "Nuevos mensajes",
       "loadError": "No se pudieron cargar las preferencias"
     },
     "certificate": {

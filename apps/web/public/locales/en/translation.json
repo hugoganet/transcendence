@@ -573,6 +573,8 @@
       "moduleComplete": "Module Completion",
       "tokenThreshold": "Token Thresholds",
       "streakMilestone": "Streak Milestones",
+      "friendRequest": "Friend Requests",
+      "messageReceived": "New Messages",
       "loadError": "Failed to load preferences"
     },
     "certificate": {

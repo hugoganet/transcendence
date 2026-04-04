@@ -573,6 +573,8 @@
       "moduleComplete": "Fin de module",
       "tokenThreshold": "Seuils de jetons",
       "streakMilestone": "Jalons de série",
+      "friendRequest": "Demandes d'amis",
+      "messageReceived": "Nouveaux messages",
       "loadError": "Impossible de charger les préférences"
     },
     "certificate": {

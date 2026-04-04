@@ -16,6 +16,8 @@ const DEFAULT_PREFERENCES: NotificationPreferences = {
   moduleComplete: true,
   tokenThreshold: true,
   streakMilestone: true,
+  friendRequest: true,
+  messageReceived: true,
 };
 
 const REENGAGEMENT_THRESHOLD_DAYS = 7;
