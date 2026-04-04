@@ -603,7 +603,16 @@
       "getStarted": "Commencer",
       "signIn": "Se connecter",
       "privacyPolicy": "Politique de confidentialité",
-      "termsOfService": "Conditions d'utilisation"
+      "termsOfService": "Conditions d'utilisation",
+      "featureLearnTitle": "Apprendre",
+      "featureLearnDesc": "Des missions courtes qui expliquent la blockchain avec des analogies du quotidien.",
+      "featurePracticeTitle": "Pratiquer",
+      "featurePracticeDesc": "Des exercices interactifs pour simuler et verifier la logique on-chain.",
+      "featureEarnTitle": "Gagner",
+      "featureEarnDesc": "Collecte des tokens, debloque des succes et obtiens ton certificat on-chain.",
+      "statMissions": "Missions",
+      "statExerciseTypes": "Types d'exercices",
+      "statFree": "Gratuit"
     },
     "notFound": {
       "body": "La page que vous recherchez n'existe pas.",
