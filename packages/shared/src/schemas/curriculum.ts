@@ -6,7 +6,6 @@ export const progressiveRevealMechanicSchema = z.enum([
   "tokensRevealed",
   "walletRevealed",
   "gasRevealed",
-  "dashboardRevealed",
 ]);
 
 export const progressiveRevealSchema = z.object({

@@ -26,7 +26,6 @@ export const revealStatusSchema = z.object({
   tokensRevealed: z.boolean(),
   walletRevealed: z.boolean(),
   gasRevealed: z.boolean(),
-  dashboardRevealed: z.boolean(),
 });
 
 export const leaderboardEntrySchema = z.object({

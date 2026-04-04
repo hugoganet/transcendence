@@ -80,7 +80,6 @@ const mockUser = {
   revealTokens: false,
   revealWallet: false,
   revealGas: false,
-  revealDashboard: false,
   notificationPreferences: {},
 };
 

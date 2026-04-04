@@ -91,7 +91,6 @@ describe("Public Profile Integration", () => {
       expect(profile).not.toHaveProperty("revealTokens");
       expect(profile).not.toHaveProperty("revealWallet");
       expect(profile).not.toHaveProperty("revealGas");
-      expect(profile).not.toHaveProperty("revealDashboard");
     });
   });
 

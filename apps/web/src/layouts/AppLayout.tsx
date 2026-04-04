@@ -20,7 +20,7 @@ import { ThemeToggle } from "../components/ThemeToggle.js";
 export function AppLayout() {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
-  const { tokensRevealed, dashboardRevealed } = useReveals();
+  const { tokensRevealed, walletRevealed } = useReveals();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
@@ -76,13 +76,13 @@ export function AppLayout() {
       >
         {t("labels.achievements")}
       </Link>
-      {dashboardRevealed && (
+      {walletRevealed && (
         <Link
           to="/dashboard"
           className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
           onClick={onClick}
         >
-          {t("labels.dashboard")}
+          {t("labels.wallet")}
         </Link>
       )}
       <Link

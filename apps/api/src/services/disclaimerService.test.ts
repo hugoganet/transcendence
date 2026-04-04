@@ -58,7 +58,6 @@ const mockUser = {
   revealTokens: false,
   revealWallet: false,
   revealGas: false,
-  revealDashboard: false,
   notificationPreferences: JSON.parse('{"streakReminder":true,"reengagement":true,"moduleComplete":true,"tokenThreshold":true,"streakMilestone":true}'),
 };
 
