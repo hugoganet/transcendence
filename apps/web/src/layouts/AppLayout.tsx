@@ -196,10 +196,10 @@ export function AppLayout() {
         <Outlet />
       </main>
 
-      <footer className="border-t border-gray-200 dark:border-warm-700 py-4 text-center text-xs text-gray-400 dark:text-warm-300">
-        <Link to="/privacy-policy" className="transition-colors hover:text-primary">{t("footer.privacy")}</Link>
-        {" · "}
-        <Link to="/terms-of-service" className="transition-colors hover:text-primary">{t("footer.terms")}</Link>
+      <footer className="border-t border-[var(--color-border)] py-4 text-center text-xs text-[var(--color-text-muted)]">
+        <Link to="/privacy-policy" className="underline decoration-[var(--color-border)] underline-offset-2 transition-colors hover:text-[var(--color-primary)]">{t("footer.privacy")}</Link>
+        <span className="mx-2">·</span>
+        <Link to="/terms-of-service" className="underline decoration-[var(--color-border)] underline-offset-2 transition-colors hover:text-[var(--color-primary)]">{t("footer.terms")}</Link>
       </footer>
     </div>
   );
