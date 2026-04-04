@@ -35,7 +35,7 @@ export function NotificationBell() {
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen(!open)}
-        className="relative p-1 text-gray-500 hover:text-gray-700 dark:text-warm-200 dark:hover:text-warm-200"
+        className="relative p-1 text-gray-500 hover:text-[var(--color-text)] dark:hover:text-warm-200"
         aria-label={t("labels.notifications")}
       >
         <Bell className="h-5 w-5" />
@@ -49,7 +49,7 @@ export function NotificationBell() {
       {open && (
         <div className="absolute right-0 top-full z-50 mt-2 w-72 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800">
           <div className="border-b border-gray-100 dark:border-warm-700 px-4 py-2">
-            <span className="text-sm font-semibold text-gray-900 dark:text-warm-50">
+            <span className="text-sm font-semibold text-[var(--color-text)]">
               {t("labels.notifications")}
             </span>
           </div>
@@ -69,8 +69,8 @@ export function NotificationBell() {
                     !notif.read ? "bg-blue-50/50 dark:bg-blue-900/20" : ""
                   }`}
                 >
-                  <p className="font-medium text-gray-900 dark:text-warm-50">{notif.title}</p>
-                  <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-200">{notif.body}</p>
+                  <p className="font-medium text-[var(--color-text)]">{notif.title}</p>
+                  <p className="mt-0.5 text-xs text-[var(--color-text-muted)]">{notif.body}</p>
                 </button>
               ))}
             </div>

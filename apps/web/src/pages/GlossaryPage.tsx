@@ -61,7 +61,7 @@ export function GlossaryPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("pages.glossary.title")}
       </h1>
 
@@ -96,7 +96,7 @@ export function GlossaryPage() {
                 }}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-gray-900 dark:text-warm-50">
+                  <span className="text-sm font-semibold text-[var(--color-text)]">
                     {term.term}
                   </span>
                   <ChevronDown
@@ -105,7 +105,7 @@ export function GlossaryPage() {
                     }`}
                   />
                 </div>
-                <p className="mt-1 text-sm text-gray-600 dark:text-warm-200">
+                <p className="mt-1 text-sm text-[var(--color-text-muted)]">
                   {term.definition}
                 </p>
                 {expanded === term.term && (
@@ -141,7 +141,7 @@ export function GlossaryPage() {
         )}
       </Card>
 
-      <p className="text-center text-xs text-gray-400 dark:text-warm-300">
+      <p className="text-center text-xs text-[var(--color-text-muted)]">
         {t("pages.glossary.termCount", { count: filtered.length })}
       </p>
     </div>

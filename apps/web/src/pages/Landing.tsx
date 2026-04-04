@@ -87,7 +87,7 @@ export function Landing() {
             </h1>
           </div>
           <p
-            className="mb-8 text-lg text-gray-600 dark:text-warm-200"
+            className="mb-8 text-lg text-[var(--color-text-muted)]"
             style={{ animation: "fade-in-up 0.6s ease-out 0.8s both" }}
           >
             {t("pages.landing.subtitle")}
@@ -134,10 +134,10 @@ export function Landing() {
                 <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${feat.bg}`}>
                   <feat.icon className={`h-6 w-6 ${feat.color}`} />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
+                <h3 className="mb-2 text-lg font-semibold text-[var(--color-text)]">
                   {feat.title}
                 </h3>
-                <p className="text-sm leading-relaxed text-gray-600 dark:text-warm-200">
+                <p className="text-sm leading-relaxed text-[var(--color-text-muted)]">
                   {feat.desc}
                 </p>
               </div>
@@ -154,7 +154,7 @@ export function Landing() {
               <div className="text-3xl font-bold text-primary dark:text-teal-400">
                 <AnimatedCounter target={50} suffix="+" />
               </div>
-              <div className="mt-1 text-sm text-gray-500 dark:text-warm-200">
+              <div className="mt-1 text-sm text-[var(--color-text-muted)]">
                 {t("pages.landing.statMissions")}
               </div>
             </div>
@@ -162,7 +162,7 @@ export function Landing() {
               <div className="text-3xl font-bold text-amber-500 dark:text-amber-400">
                 <AnimatedCounter target={4} />
               </div>
-              <div className="mt-1 text-sm text-gray-500 dark:text-warm-200">
+              <div className="mt-1 text-sm text-[var(--color-text-muted)]">
                 {t("pages.landing.statExerciseTypes")}
               </div>
             </div>
@@ -170,7 +170,7 @@ export function Landing() {
               <div className="text-3xl font-bold text-green-500 dark:text-green-400">
                 <AnimatedCounter target={100} suffix="%" />
               </div>
-              <div className="mt-1 text-sm text-gray-500 dark:text-warm-200">
+              <div className="mt-1 text-sm text-[var(--color-text-muted)]">
                 {t("pages.landing.statFree")}
               </div>
             </div>

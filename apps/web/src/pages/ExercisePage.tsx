@@ -112,7 +112,7 @@ export function ExercisePage() {
     <div className="mx-auto max-w-2xl space-y-6">
       <Link
         to={`/missions/${mission.id}`}
-        className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-warm-200 hover:text-primary"
+        className="inline-flex items-center gap-1 text-sm text-[var(--color-text-muted)] hover:text-primary"
       >
         <ChevronLeft className="h-4 w-4" />
         {t("pages.exercise.missionDetails")}
@@ -120,8 +120,8 @@ export function ExercisePage() {
 
       <Card>
         <div className="mb-4">
-          <span className="text-xs font-medium text-gray-400 dark:text-warm-300">{mission.id}</span>
-          <h1 className="text-lg font-bold text-gray-900 dark:text-warm-50 font-heading">
+          <span className="text-xs font-medium text-[var(--color-text-muted)]">{mission.id}</span>
+          <h1 className="text-lg font-bold text-[var(--color-text)] font-heading">
             {mission.title}
           </h1>
         </div>
@@ -138,7 +138,7 @@ export function ExercisePage() {
       {exerciseResult && !completionData && (
         <Card>
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-warm-50">
+            <h3 className="text-sm font-semibold text-[var(--color-text)]">
               {t("pages.exercise.confidenceQuestion")}
             </h3>
             <div className="flex items-center justify-center gap-2">
@@ -149,14 +149,14 @@ export function ExercisePage() {
                   className={`flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium transition-colors ${
                     confidenceRating === rating
                       ? "bg-primary text-white"
-                      : "bg-gray-100 dark:bg-warm-700 text-gray-600 dark:text-warm-200 hover:bg-gray-200 dark:hover:bg-warm-700"
+                      : "bg-[var(--color-border)] text-[var(--color-text-muted)] hover:bg-gray-200 dark:hover:bg-warm-700"
                   }`}
                 >
                   {rating}
                 </button>
               ))}
             </div>
-            <p className="text-center text-xs text-gray-400 dark:text-warm-300">
+            <p className="text-center text-xs text-[var(--color-text-muted)]">
               {t("pages.exercise.confidenceScale")}
             </p>
 

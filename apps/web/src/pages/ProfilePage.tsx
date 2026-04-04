@@ -87,7 +87,7 @@ export function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("labels.profile")}
       </h1>
 
@@ -101,7 +101,7 @@ export function ProfilePage() {
               className="h-16 w-16 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-xl font-bold text-gray-400 dark:text-warm-200">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-border)] text-xl font-bold text-gray-400 dark:text-warm-200">
               {(user?.displayName ?? user?.email ?? "?")[0].toUpperCase()}
             </div>
           )}

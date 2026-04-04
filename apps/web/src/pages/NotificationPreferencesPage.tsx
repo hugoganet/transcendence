@@ -73,7 +73,7 @@ export function NotificationPreferencesPage() {
 
   return (
     <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("pages.notificationPreferences.title")}
       </h1>
 
@@ -85,11 +85,11 @@ export function NotificationPreferencesPage() {
                 key={key}
                 className="flex items-center justify-between py-3"
               >
-                <span className="text-sm text-gray-700 dark:text-warm-200">{labels[key]}</span>
+                <span className="text-sm text-[var(--color-text)]">{labels[key]}</span>
                 <button
                   onClick={() => handleToggle(key)}
                   className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors ${
-                    prefs[key] ? "bg-primary" : "bg-gray-200 dark:bg-warm-700"
+                    prefs[key] ? "bg-primary" : "bg-[var(--color-border)]"
                   }`}
                   role="switch"
                   aria-checked={prefs[key]}

@@ -36,13 +36,13 @@ export function NotificationsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("labels.notifications")}
       </h1>
 
       <Card>
         {notifications.length === 0 ? (
-          <p className="py-8 text-center text-sm text-gray-500 dark:text-warm-200">
+          <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
             {t("emptyStates.noNotifications")}
           </p>
         ) : (
@@ -58,17 +58,17 @@ export function NotificationsPage() {
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <span className="mt-0.5 rounded bg-gray-100 dark:bg-warm-700 px-2 py-0.5 text-xs font-medium text-gray-500 dark:text-warm-200">
+                  <span className="mt-0.5 rounded bg-[var(--color-border)] px-2 py-0.5 text-xs font-medium text-[var(--color-text-muted)]">
                     {typeLabels[notif.type] ?? notif.type}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 dark:text-warm-50">
+                    <p className="text-sm font-medium text-[var(--color-text)]">
                       {notif.title}
                     </p>
-                    <p className="mt-0.5 text-sm text-gray-500 dark:text-warm-200">
+                    <p className="mt-0.5 text-sm text-[var(--color-text-muted)]">
                       {notif.body}
                     </p>
-                    <p className="mt-1 text-xs text-gray-400 dark:text-warm-300">
+                    <p className="mt-1 text-xs text-[var(--color-text-muted)]">
                       {new Date(notif.createdAt).toLocaleString()}
                     </p>
                   </div>

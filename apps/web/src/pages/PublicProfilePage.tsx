@@ -110,23 +110,23 @@ export function PublicProfilePage() {
               className="h-20 w-20 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-2xl font-bold text-gray-400 dark:text-warm-300">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-border)] text-2xl font-bold text-[var(--color-text-muted)]">
               {(profile.displayName ?? "?")[0].toUpperCase()}
             </div>
           )}
-          <h1 className="mt-3 text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+          <h1 className="mt-3 text-xl font-bold text-[var(--color-text)] font-heading">
             {profile.displayName ?? t("pages.publicProfile.anonymous")}
           </h1>
 
-          <div className="mt-3 flex gap-6 text-sm text-gray-500 dark:text-warm-200">
+          <div className="mt-3 flex gap-6 text-sm text-[var(--color-text-muted)]">
             <div>
-              <span className="block text-lg font-bold text-gray-900 dark:text-warm-50">
+              <span className="block text-lg font-bold text-[var(--color-text)]">
                 {profile.xp}
               </span>
               {t("pages.publicProfile.xp")}
             </div>
             <div>
-              <span className="block text-lg font-bold text-gray-900 dark:text-warm-50">
+              <span className="block text-lg font-bold text-[var(--color-text)]">
                 {profile.currentStreak}
               </span>
               {t("social.publicProfile.streak")}
@@ -149,7 +149,7 @@ export function PublicProfilePage() {
             </Button>
           )}
           {friendStatus === "pending" && (
-            <p className="mt-4 text-sm text-gray-500 dark:text-warm-200">{t("pages.publicProfile.requestPending")}</p>
+            <p className="mt-4 text-sm text-[var(--color-text-muted)]">{t("pages.publicProfile.requestPending")}</p>
           )}
           {friendStatus === "friends" && (
             <p className="mt-4 text-sm text-green-600 dark:text-green-400">{t("pages.publicProfile.alreadyFriends")}</p>
@@ -159,7 +159,7 @@ export function PublicProfilePage() {
 
       {profile.achievements.length > 0 && (
         <Card>
-          <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
+          <h2 className="mb-3 text-sm font-semibold text-[var(--color-text)]">
             {t("pages.publicProfile.achievementsHeading", { count: profile.achievements.length })}
           </h2>
           <div className="space-y-2">

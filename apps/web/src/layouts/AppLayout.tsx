@@ -96,7 +96,7 @@ export function AppLayout() {
   );
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-warm-900">
+    <div className="flex min-h-screen flex-col bg-[var(--color-background)]">
       {/* Top nav */}
       <header className="sticky top-0 z-50 border-b border-gray-200/50 bg-white/80 backdrop-blur-md dark:border-warm-700/50 dark:bg-warm-900/80">
         <div className="mx-auto flex h-14 max-w-5xl items-center px-4">
@@ -115,7 +115,7 @@ export function AppLayout() {
           <div className="min-w-8 flex-1" />
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-2 min-[1200px]:flex">
+          <nav className="hidden items-center gap-2 lg:flex">
             {navLinks()}
 
             {/* Streak + Tokens in nav */}
@@ -144,7 +144,7 @@ export function AppLayout() {
           </nav>
 
           {/* Mobile: streak + tokens + hamburger */}
-          <div className="flex items-center gap-2 min-[1200px]:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <div className="hidden items-center gap-2 sm:flex">
               {streak && <StreakWidget streak={streak} compact />}
               {balance && <TokenBalanceDisplay balance={balance} compact />}
@@ -156,9 +156,9 @@ export function AppLayout() {
               aria-label={t("labels.toggleMenu")}
             >
               {menuOpen ? (
-                <X className="h-6 w-6 text-gray-600 dark:text-warm-200" />
+                <X className="h-6 w-6 text-[var(--color-text-muted)]" />
               ) : (
-                <Menu className="h-6 w-6 text-gray-600 dark:text-warm-200" />
+                <Menu className="h-6 w-6 text-[var(--color-text-muted)]" />
               )}
             </button>
           </div>
@@ -166,7 +166,7 @@ export function AppLayout() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <nav className="animate-fade-in-up border-t border-gray-100 bg-white px-4 py-3 min-[1200px]:hidden dark:border-warm-700 dark:bg-warm-900">
+          <nav className="animate-fade-in-up border-t border-gray-100 bg-white px-4 py-3 lg:hidden dark:border-warm-700 dark:bg-warm-900">
             <div className="flex flex-col gap-3">
               {navLinks(() => setMenuOpen(false))}
               <Link

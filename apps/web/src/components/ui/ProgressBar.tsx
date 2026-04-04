@@ -24,7 +24,7 @@ export function ProgressBar({
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className="h-2 flex-1 overflow-hidden rounded-full bg-gray-200 dark:bg-warm-700">
+      <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--color-border)]">
         <div
           className="relative h-full overflow-hidden rounded-full bg-gradient-to-r from-teal-400 to-teal-600 transition-all duration-500"
           style={{ width: `${percentage}%` }}
@@ -37,7 +37,7 @@ export function ProgressBar({
         </div>
       </div>
       {showLabel && (
-        <span className="text-xs font-medium text-gray-500 dark:text-warm-200">{percentage}%</span>
+        <span className="text-xs font-medium text-[var(--color-text-muted)]">{percentage}%</span>
       )}
     </div>
   );

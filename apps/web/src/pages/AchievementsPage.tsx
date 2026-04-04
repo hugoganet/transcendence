@@ -62,10 +62,10 @@ export function AchievementsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+        <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
           {t("pages.achievements.title")}
         </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-warm-200">
+        <p className="mt-1 text-sm text-[var(--color-text-muted)]">
           {t("pages.achievements.earnedCount", { earned: earned.length, total: achievements.length })}
         </p>
       </div>

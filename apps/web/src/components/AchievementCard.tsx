@@ -31,9 +31,9 @@ const rankStyles: Record<AchievementRank, { border: string; bg: string; icon: st
     ping: "bg-amber-400",
   },
   common: {
-    border: "border-gray-200 dark:border-warm-700",
-    bg: "bg-white dark:bg-warm-800",
-    icon: "bg-gray-100 dark:bg-warm-700",
+    border: "border-[var(--color-border)]",
+    bg: "bg-[var(--color-surface)]",
+    icon: "bg-[var(--color-border)]",
     badge: "text-gray-500 dark:text-warm-300",
     ping: "bg-gray-400",
   },
@@ -70,7 +70,7 @@ export function AchievementCard({ achievement, rank = "common" }: AchievementCar
       <div className="flex items-start gap-3">
         <div
           className={`relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg ${
-            isEarned ? style.icon : "bg-gray-200 dark:bg-warm-700"
+            isEarned ? style.icon : "bg-[var(--color-border)]"
           }`}
         >
           {isEarned ? (
@@ -87,11 +87,11 @@ export function AchievementCard({ achievement, rank = "common" }: AchievementCar
         </div>
         <div className="min-w-0">
           <h3
-            className={`text-sm font-semibold ${isEarned ? "text-gray-900 dark:text-warm-50" : "text-gray-500 dark:text-warm-200"}`}
+            className={`text-sm font-semibold ${isEarned ? "text-[var(--color-text)]" : "text-[var(--color-text-muted)]"}`}
           >
             {achievement.title}
           </h3>
-          <p className="mt-0.5 text-xs text-gray-500 dark:text-warm-200">
+          <p className="mt-0.5 text-xs text-[var(--color-text-muted)]">
             {achievement.description}
           </p>
           {isEarned && achievement.earnedAt && (

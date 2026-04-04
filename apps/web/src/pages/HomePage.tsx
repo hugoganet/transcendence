@@ -36,20 +36,20 @@ export function HomePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+        <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
           {user?.displayName ? t("pages.home.welcomeNamed", { name: user.displayName }) : t("pages.home.welcome")}
         </h1>
-        <p className="mt-1 text-gray-500 dark:text-warm-200">
+        <p className="mt-1 text-[var(--color-text-muted)]">
           {t("pages.home.subtitle")}
         </p>
       </div>
 
       {/* Motivational quote */}
       <div className="rounded-xl border border-primary/10 bg-gradient-to-r from-primary/5 to-transparent p-4 dark:border-primary/20 dark:from-primary/10">
-        <p className="text-sm italic text-gray-600 dark:text-warm-200">
+        <p className="text-sm italic text-[var(--color-text-muted)]">
           &ldquo;{quote.text}&rdquo;
         </p>
-        <p className="mt-1 text-xs text-gray-400 dark:text-warm-300">
+        <p className="mt-1 text-xs text-[var(--color-text-muted)]">
           — {quote.author}
         </p>
       </div>
@@ -65,11 +65,11 @@ export function HomePage() {
               <span className="text-xs font-medium text-gray-400 dark:text-warm-200">
                 {t("pages.home.nextMission")}
               </span>
-              <span className="text-xs text-gray-500 dark:text-warm-200">
+              <span className="text-xs text-[var(--color-text-muted)]">
                 {resume.chapterTitle}
               </span>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-warm-50">
+            <h2 className="text-lg font-semibold text-[var(--color-text)]">
               {resume.missionTitle}
             </h2>
             <ProgressBar
@@ -92,10 +92,10 @@ export function HomePage() {
       ) : (
         <Card>
           <div className="py-8 text-center">
-            <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
+            <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">
               {t("pages.home.startLearning")}
             </h2>
-            <p className="mb-6 text-sm text-gray-500 dark:text-warm-200">
+            <p className="mb-6 text-sm text-[var(--color-text-muted)]">
               {t("pages.home.startLearningSubtitle")}
             </p>
             <Link to="/curriculum">

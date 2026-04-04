@@ -30,7 +30,7 @@ export function MissionComplete({ data }: MissionCompleteProps) {
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+          <h2 className="text-xl font-bold text-[var(--color-text)] font-heading">
             {t("labels.missionComplete")}
           </h2>
           {data.chapterCompleted && (
@@ -52,7 +52,7 @@ export function MissionComplete({ data }: MissionCompleteProps) {
             showLabel
             className="mx-auto max-w-xs"
           />
-          <p className="mt-1 text-xs text-gray-500 dark:text-warm-200">{t("exercise.overallProgress")}</p>
+          <p className="mt-1 text-xs text-[var(--color-text-muted)]">{t("exercise.overallProgress")}</p>
         </div>
 
         {/* Progressive reveal announcement */}
@@ -61,7 +61,7 @@ export function MissionComplete({ data }: MissionCompleteProps) {
             <p className="text-sm font-medium text-secondary">
               {t("exercise.featureUnlocked")}
             </p>
-            <p className="mt-1 text-sm text-gray-700 dark:text-warm-200">
+            <p className="mt-1 text-sm text-[var(--color-text)]">
               {data.progressiveReveal.description}
             </p>
           </div>
@@ -108,7 +108,7 @@ export function MissionComplete({ data }: MissionCompleteProps) {
           )}
           <Link
             to="/curriculum"
-            className="text-sm text-gray-500 dark:text-warm-200 hover:text-primary dark:hover:text-primary"
+            className="text-sm text-[var(--color-text-muted)] hover:text-primary dark:hover:text-primary"
           >
             {t("exercise.viewCurriculumMap")}
           </Link>

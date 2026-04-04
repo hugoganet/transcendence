@@ -34,7 +34,7 @@ export function TokenBalanceDisplay({
         title={t("gamification.tokens.tokenBalance")}
       >
         <Coins className="h-4 w-4 text-secondary" />
-        <span className="font-medium text-gray-700 dark:text-warm-200">
+        <span className="font-medium text-[var(--color-text)]">
           {balance.tokenBalance}
         </span>
       </div>
@@ -48,10 +48,10 @@ export function TokenBalanceDisplay({
           <Coins className="h-5 w-5 text-secondary" />
         </div>
         <div>
-          <p className="text-2xl font-bold text-gray-900 dark:text-warm-50">
+          <p className="text-2xl font-bold text-[var(--color-text)]">
             <AnimatedCounter target={balance.tokenBalance} />
           </p>
-          <p className="text-xs text-gray-500 dark:text-warm-200">{t("gamification.tokens.tokenBalance")}</p>
+          <p className="text-xs text-[var(--color-text-muted)]">{t("gamification.tokens.tokenBalance")}</p>
         </div>
       </div>
       <div className="mt-3 flex gap-4 border-t border-gray-100 dark:border-warm-700 pt-3 text-xs text-gray-400 dark:text-warm-200">

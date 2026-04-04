@@ -44,9 +44,9 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
       )}
 
       {gasRevealed && result.tokenBalance !== undefined && (
-        <div className="flex items-center justify-between rounded-lg bg-gray-50 dark:bg-warm-900 px-4 py-3 text-sm">
-          <span className="text-gray-600 dark:text-warm-200">{t("gamification.tokens.tokenBalance")}</span>
-          <span className="font-medium text-gray-900 dark:text-warm-50">
+        <div className="flex items-center justify-between rounded-lg bg-[var(--color-background)] px-4 py-3 text-sm">
+          <span className="text-[var(--color-text-muted)]">{t("gamification.tokens.tokenBalance")}</span>
+          <span className="font-medium text-[var(--color-text)]">
             {result.tokenBalance}
           </span>
         </div>
@@ -54,7 +54,7 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
 
       {result.feedback.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-warm-50">{t("exercise.feedback.explanationLabel")}</h3>
+          <h3 className="text-sm font-semibold text-[var(--color-text)]">{t("exercise.feedback.explanationLabel")}</h3>
           {result.feedback.map((item) => (
             <div
               key={item.itemId}

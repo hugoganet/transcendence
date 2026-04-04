@@ -60,7 +60,7 @@ export function RegisterPage() {
 
   return (
     <Card>
-      <h1 className="mb-6 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="mb-6 text-center text-xl font-bold text-[var(--color-text)] font-heading">
         {t("auth.signup.title")}
       </h1>
       {globalError && (
@@ -103,7 +103,7 @@ export function RegisterPage() {
             onChange={(e) => setAgeConfirmed(e.target.checked)}
             className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-warm-600"
           />
-          <label htmlFor="age-confirm" className="text-sm text-gray-600 dark:text-warm-200">
+          <label htmlFor="age-confirm" className="text-sm text-[var(--color-text-muted)]">
             {t("auth.signup.ageConfirm")}
           </label>
         </div>
@@ -115,7 +115,7 @@ export function RegisterPage() {
         </Button>
       </form>
       <OAuthButtons />
-      <p className="mt-4 text-center text-sm text-gray-500 dark:text-warm-200">
+      <p className="mt-4 text-center text-sm text-[var(--color-text-muted)]">
         {t("auth.signup.hasAccount")}{" "}
         <Link
           to="/login"

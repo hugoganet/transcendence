@@ -44,10 +44,10 @@ export function StreakWidget({ streak, compact = false }: StreakWidgetProps) {
       </div>
       <div>
         <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-gray-900 dark:text-warm-50">
+          <span className="text-2xl font-bold text-[var(--color-text)]">
             <AnimatedCounter target={streak.currentStreak} duration={1000} />
           </span>
-          <span className="text-sm text-gray-500 dark:text-warm-200">{t("labels.dayStreak")}</span>
+          <span className="text-sm text-[var(--color-text-muted)]">{t("labels.dayStreak")}</span>
         </div>
         <div className="mt-0.5 flex gap-3 text-xs text-gray-400 dark:text-warm-200">
           <span>{t("labels.best")} {streak.longestStreak}</span>

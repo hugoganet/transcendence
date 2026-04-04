@@ -86,7 +86,7 @@ export function FriendsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("social.friendsList.title")}
       </h1>
 
@@ -96,13 +96,13 @@ export function FriendsPage() {
           value={search}
           onChange={(e) => handleSearch(e.target.value)}
           placeholder={t("social.friendsList.searchPlaceholder")}
-          className="w-full rounded-lg border border-gray-200 dark:border-warm-700 px-3 py-2 text-sm bg-white dark:bg-warm-800 text-gray-900 dark:text-warm-50"
+          className="w-full rounded-lg border border-[var(--color-border)] px-3 py-2 text-sm bg-[var(--color-surface)] text-[var(--color-text)]"
         />
         {searchResults.length > 0 && (
-          <div className="absolute z-10 mt-1 w-full rounded-lg border border-gray-200 dark:border-warm-700 bg-white dark:bg-warm-800 shadow">
+          <div className="absolute z-10 mt-1 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] shadow">
             {searchResults.map((u) => (
               <div key={u.id} className="flex items-center justify-between px-3 py-2 hover:bg-gray-50 dark:hover:bg-warm-700">
-                <span className="text-sm text-gray-900 dark:text-warm-50">{u.displayName ?? t("pages.publicProfile.anonymous")}</span>
+                <span className="text-sm text-[var(--color-text)]">{u.displayName ?? t("pages.publicProfile.anonymous")}</span>
                 <button
                   onClick={() => handleAddFriend(u.id)}
                   className="text-xs text-blue-500 hover:text-blue-700 dark:text-blue-300"
@@ -116,13 +116,13 @@ export function FriendsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 rounded-lg bg-gray-100 dark:bg-warm-700 p-1">
+      <div className="flex gap-1 rounded-lg bg-[var(--color-border)] p-1">
         <button
           onClick={() => setTab("friends")}
           className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             tab === "friends"
-              ? "bg-white dark:bg-warm-800 text-gray-900 dark:text-warm-50 shadow-sm"
-              : "text-gray-500 dark:text-warm-200 hover:text-gray-700 dark:hover:text-warm-50"
+              ? "bg-[var(--color-surface)] text-[var(--color-text)] shadow-sm"
+              : "text-[var(--color-text-muted)] hover:text-gray-700 dark:hover:text-warm-50"
           }`}
         >
           {t("pages.friends.tabFriends", { count: friends.length })}
@@ -131,8 +131,8 @@ export function FriendsPage() {
           onClick={() => setTab("requests")}
           className={`flex-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             tab === "requests"
-              ? "bg-white dark:bg-warm-800 text-gray-900 dark:text-warm-50 shadow-sm"
-              : "text-gray-500 dark:text-warm-200 hover:text-gray-700 dark:hover:text-warm-50"
+              ? "bg-[var(--color-surface)] text-[var(--color-text)] shadow-sm"
+              : "text-[var(--color-text-muted)] hover:text-gray-700 dark:hover:text-warm-50"
           }`}
         >
           {t("pages.friends.tabRequests", { count: requests.length })}
@@ -142,7 +142,7 @@ export function FriendsPage() {
       {tab === "friends" && (
         <Card>
           {friends.length === 0 ? (
-            <p className="py-8 text-center text-sm text-gray-500 dark:text-warm-200">
+            <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
               {t("social.friendsList.noFriendsYet")}
             </p>
           ) : (
@@ -160,7 +160,7 @@ export function FriendsPage() {
                         className="h-10 w-10 rounded-full object-cover"
                       />
                     ) : (
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-sm font-medium text-gray-500 dark:text-warm-200">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-border)] text-sm font-medium text-[var(--color-text-muted)]">
                         {(friend.displayName ?? "?")[0].toUpperCase()}
                       </div>
                     )}
@@ -172,19 +172,19 @@ export function FriendsPage() {
                   </div>
                   <Link
                     to={`/users/${friend.id}`}
-                    className="flex-1 text-sm font-medium text-gray-900 dark:text-warm-50 hover:text-primary"
+                    className="flex-1 text-sm font-medium text-[var(--color-text)] hover:text-primary"
                   >
                     {friend.displayName ?? t("pages.publicProfile.anonymous")}
                   </Link>
                   <button
                     onClick={() => setChatWith(friend.id)}
-                    className="text-xs text-gray-400 dark:text-warm-300 hover:text-blue-500"
+                    className="text-xs text-[var(--color-text-muted)] hover:text-blue-500"
                   >
                     {t("pages.friends.message")}
                   </button>
                   <button
                     onClick={() => handleRemove(friend.id)}
-                    className="text-xs text-gray-400 dark:text-warm-300 hover:text-red-500"
+                    className="text-xs text-[var(--color-text-muted)] hover:text-red-500"
                   >
                     {t("social.friendsList.removeButton")}
                   </button>
@@ -199,7 +199,7 @@ export function FriendsPage() {
       {tab === "requests" && (
         <Card>
           {requests.length === 0 ? (
-            <p className="py-8 text-center text-sm text-gray-500 dark:text-warm-200">
+            <p className="py-8 text-center text-sm text-[var(--color-text-muted)]">
               {t("pages.friends.noPendingRequests")}
             </p>
           ) : (
@@ -213,18 +213,18 @@ export function FriendsPage() {
                       className="h-10 w-10 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-sm font-medium text-gray-500 dark:text-warm-200">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-border)] text-sm font-medium text-[var(--color-text-muted)]">
                       {(req.displayName ?? "?")[0].toUpperCase()}
                     </div>
                   )}
                   <div className="flex-1">
                     <Link
                       to={`/users/${req.id}`}
-                      className="text-sm font-medium text-gray-900 dark:text-warm-50 hover:text-primary"
+                      className="text-sm font-medium text-[var(--color-text)] hover:text-primary"
                     >
                       {req.displayName ?? t("pages.publicProfile.anonymous")}
                     </Link>
-                    <p className="text-xs text-gray-400 dark:text-warm-300">
+                    <p className="text-xs text-[var(--color-text-muted)]">
                       {new Date(req.createdAt).toLocaleDateString()}
                     </p>
                   </div>

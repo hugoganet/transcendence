@@ -82,7 +82,7 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("pages.dashboard.title")}
       </h1>
 
@@ -95,7 +95,7 @@ export function DashboardPage() {
       {/* Learning chain */}
       {chain && chain.blocks.length > 0 && (
         <div ref={chainRef}><Card>
-          <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
+          <h2 className="mb-3 text-sm font-semibold text-[var(--color-text)]">
             {t("pages.dashboard.learningChain", { count: chain.totalBlocks })}
           </h2>
           <div className="flex gap-2 overflow-x-auto pb-2">
@@ -108,7 +108,7 @@ export function DashboardPage() {
                 <span className="text-xs font-bold text-primary">
                   #{block.index + 1}
                 </span>
-                <span className="mt-0.5 max-w-[80px] truncate text-xs text-gray-600 dark:text-warm-200">
+                <span className="mt-0.5 max-w-[80px] truncate text-xs text-[var(--color-text-muted)]">
                   {block.missionTitle}
                 </span>
               </Link>
@@ -125,7 +125,7 @@ export function DashboardPage() {
       {/* Token history */}
       {transactions.length > 0 && (
         <div ref={txRef}><Card>
-          <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
+          <h2 className="mb-3 text-sm font-semibold text-[var(--color-text)]">
             {t("pages.dashboard.recentTransactions")}
           </h2>
           <div className="divide-y divide-gray-100 dark:divide-warm-700">
@@ -135,7 +135,7 @@ export function DashboardPage() {
                 className="flex items-center justify-between py-2"
               >
                 <div>
-                  <p className="text-sm text-gray-900 dark:text-warm-50">{tx.description}</p>
+                  <p className="text-sm text-[var(--color-text)]">{tx.description}</p>
                   <p className="text-xs text-gray-400 dark:text-warm-200">
                     {new Date(tx.createdAt).toLocaleDateString()}
                   </p>
@@ -158,7 +158,7 @@ export function DashboardPage() {
       {earnedAchievements.length > 0 && (
         <div ref={achRef}>
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-gray-900 dark:text-warm-50">
+            <h2 className="text-sm font-semibold text-[var(--color-text)]">
               {t("pages.dashboard.achievements", { earned: earnedAchievements.length, total: achievements.length })}
             </h2>
             <Link

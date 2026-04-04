@@ -28,13 +28,13 @@ export function SIExercise({
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg bg-gray-50 dark:bg-warm-900 p-4">
-        <p className="text-sm leading-relaxed text-gray-700 dark:text-warm-200">
+      <div className="rounded-lg bg-[var(--color-background)] p-4">
+        <p className="text-sm leading-relaxed text-[var(--color-text)]">
           {content.scenario}
         </p>
       </div>
 
-      <h3 className="text-base font-semibold text-gray-900 dark:text-warm-50">
+      <h3 className="text-base font-semibold text-[var(--color-text)]">
         {content.question}
       </h3>
 
@@ -47,7 +47,7 @@ export function SIExercise({
             className={`w-full rounded-lg border p-4 text-left text-sm transition-colors ${
               selected === option.id
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                : "border-gray-200 dark:border-warm-700 bg-white dark:bg-warm-800 hover:border-gray-300 dark:hover:border-warm-600"
+                : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-gray-300 dark:hover:border-warm-600"
             }`}
           >
             {option.text}

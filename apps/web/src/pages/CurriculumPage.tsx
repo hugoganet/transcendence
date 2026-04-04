@@ -25,15 +25,15 @@ function MissionNode({ mission }: { mission: MissionProgressOverlay }) {
     <div
       className={`flex items-center justify-between rounded-lg border px-3 py-2 transition-colors ${
         mission.status === "locked"
-          ? "border-gray-100 dark:border-warm-700 bg-gray-50 dark:bg-warm-900 text-gray-400 dark:text-warm-200"
+          ? "border-gray-100 dark:border-warm-700 bg-[var(--color-background)] text-gray-400 dark:text-warm-200"
           : mission.status === "completed"
             ? "border-green-100 dark:border-green-800 bg-green-50/50 dark:bg-green-900/20"
-            : "border-primary/20 bg-white dark:bg-warm-800 hover:border-primary/40"
+            : "border-primary/20 bg-[var(--color-surface)] hover:border-primary/40"
       }`}
     >
       <span
         className={`text-sm ${
-          mission.status === "locked" ? "text-gray-400 dark:text-warm-200" : "text-gray-900 dark:text-warm-50"
+          mission.status === "locked" ? "text-gray-400 dark:text-warm-200" : "text-[var(--color-text)]"
         }`}
       >
         {mission.missionId}
@@ -64,7 +64,7 @@ function ChapterSection({
   ).length;
 
   return (
-    <div className="rounded-lg border border-gray-200 dark:border-warm-700 bg-white dark:bg-warm-800">
+    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]">
       <button
         className="flex w-full items-center justify-between px-4 py-3 text-left"
         onClick={() => setOpen(!open)}
@@ -76,12 +76,12 @@ function ChapterSection({
           </span>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-900 dark:text-warm-50">
+              <span className="text-sm font-medium text-[var(--color-text)]">
                 {t("pages.curriculum.chapterLabel", { id: chapter.chapterId })}
               </span>
               <StatusBadge status={chapter.status} />
             </div>
-            <span className="text-xs text-gray-500 dark:text-warm-200">
+            <span className="text-xs text-[var(--color-text-muted)]">
               {completedCount}/{chapter.missions.length} {t("labels.missions")}
             </span>
           </div>
@@ -137,12 +137,12 @@ function CategorySection({ category, index }: { category: CategoryProgressOverla
           </span>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-base font-semibold text-gray-900 dark:text-warm-50">
+              <h2 className="text-base font-semibold text-[var(--color-text)]">
                 {t("pages.curriculum.categoryLabel", { id: category.categoryId })}
               </h2>
               <StatusBadge status={category.status} />
             </div>
-            <span className="text-xs text-gray-500 dark:text-warm-200">
+            <span className="text-xs text-[var(--color-text-muted)]">
               {completedMissions}/{totalMissions} {t("labels.missions")}
             </span>
           </div>
@@ -193,7 +193,7 @@ export function CurriculumPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+        <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
           {t("labels.curriculum")}
         </h1>
         <div className="mt-2 flex items-center gap-4">
@@ -203,7 +203,7 @@ export function CurriculumPage() {
             showLabel
             className="flex-1"
           />
-          <span className="text-sm text-gray-500 dark:text-warm-200">
+          <span className="text-sm text-[var(--color-text-muted)]">
             {curriculum.completedMissions}/{curriculum.totalMissions} {t("labels.missions")}
           </span>
         </div>

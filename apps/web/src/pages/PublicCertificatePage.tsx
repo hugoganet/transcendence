@@ -43,7 +43,7 @@ export function PublicCertificatePage() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-warm-900">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--color-background)]">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -51,19 +51,19 @@ export function PublicCertificatePage() {
 
   if (!token || error || !cert) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-warm-900 px-4">
+      <div className="flex min-h-screen items-center justify-center bg-[var(--color-background)] px-4">
         <Alert variant="error">{error || t("pages.certificate.notFound")}</Alert>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-warm-900 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-[var(--color-background)] px-4">
       <div className="w-full max-w-md">
         <Card>
           <div className="space-y-6 py-6 text-center">
             <div className="space-y-1">
-              <p className="text-xs font-medium uppercase tracking-wider text-gray-400 dark:text-warm-300">
+              <p className="text-xs font-medium uppercase tracking-wider text-[var(--color-text-muted)]">
                 {t("pages.certificate.certificateOfCompletion")}
               </p>
               <p className="text-xl font-bold text-primary font-heading">
@@ -72,33 +72,33 @@ export function PublicCertificatePage() {
             </div>
 
             <div>
-              <p className="text-sm text-gray-500 dark:text-warm-200">{t("pages.certificate.awardedTo")}</p>
-              <p className="text-lg font-semibold text-gray-900 dark:text-warm-50">
+              <p className="text-sm text-[var(--color-text-muted)]">{t("pages.certificate.awardedTo")}</p>
+              <p className="text-lg font-semibold text-[var(--color-text)]">
                 {cert.displayName ?? t("pages.publicProfile.defaultUser")}
               </p>
             </div>
 
-            <div className="flex justify-center gap-8 text-sm text-gray-500 dark:text-warm-200">
+            <div className="flex justify-center gap-8 text-sm text-[var(--color-text-muted)]">
               <div>
-                <p className="font-medium text-gray-900 dark:text-warm-50">
+                <p className="font-medium text-[var(--color-text)]">
                   {cert.totalMissions}
                 </p>
                 <p>{t("labels.missions")}</p>
               </div>
               <div>
-                <p className="font-medium text-gray-900 dark:text-warm-50">
+                <p className="font-medium text-[var(--color-text)]">
                   {cert.totalCategories}
                 </p>
                 <p>{t("labels.category")}</p>
               </div>
             </div>
 
-            <p className="text-sm text-gray-500 dark:text-warm-200">
+            <p className="text-sm text-[var(--color-text-muted)]">
               {t("certificate.completedOn")}{" "}
               {new Date(cert.completionDate).toLocaleDateString()}
             </p>
 
-            <p className="text-xs text-gray-400 dark:text-warm-300">
+            <p className="text-xs text-[var(--color-text-muted)]">
               {t("pages.certificate.verifiedOn")}
             </p>
           </div>

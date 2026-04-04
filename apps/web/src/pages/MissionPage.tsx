@@ -71,10 +71,10 @@ export function MissionPage() {
         <Card>
           <div className="py-6">
             <Lock className="mx-auto mb-4 h-12 w-12 text-gray-300" />
-            <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
+            <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">
               {t("pages.mission.lockedTitle")}
             </h2>
-            <p className="mb-6 text-sm text-gray-500 dark:text-warm-200">
+            <p className="mb-6 text-sm text-[var(--color-text-muted)]">
               {t("pages.mission.lockedBody")}
             </p>
             <Link to="/curriculum">
@@ -107,7 +107,7 @@ export function MissionPage() {
     <div className="mx-auto max-w-2xl space-y-6">
       <Link
         to="/curriculum"
-        className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-warm-200 hover:text-primary"
+        className="inline-flex items-center gap-1 text-sm text-[var(--color-text-muted)] hover:text-primary"
       >
         <ChevronLeft className="h-4 w-4" />
         {t("labels.curriculum")}
@@ -116,7 +116,7 @@ export function MissionPage() {
       <Card>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-gray-400 dark:text-warm-300">
+            <span className="text-xs font-medium text-[var(--color-text-muted)]">
               {mission.id}
             </span>
             <StatusBadge status={mission.status as MissionStatusValue} />
@@ -125,11 +125,11 @@ export function MissionPage() {
             />
           </div>
 
-          <h1 className="text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+          <h1 className="text-xl font-bold text-[var(--color-text)] font-heading">
             {mission.title}
           </h1>
 
-          <p className="text-sm text-gray-600 dark:text-warm-200">{mission.description}</p>
+          <p className="text-sm text-[var(--color-text-muted)]">{mission.description}</p>
 
           <div className="rounded-lg bg-blue-50 dark:bg-blue-900/20 px-4 py-3">
             <p className="text-sm font-medium text-blue-800 dark:text-blue-300">
@@ -140,7 +140,7 @@ export function MissionPage() {
             </p>
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-warm-200">
+          <div className="flex items-center gap-4 text-sm text-[var(--color-text-muted)]">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
               ~{mission.estimatedMinutes} {t("labels.minutes")}
@@ -169,14 +169,14 @@ export function MissionPage() {
 
       {mission.tooltipTerms && mission.tooltipTerms.length > 0 && (
         <Card>
-          <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
+          <h2 className="mb-3 text-sm font-semibold text-[var(--color-text)]">
             {t("pages.mission.keyTerms")}
           </h2>
           <div className="flex flex-wrap gap-2">
             {mission.tooltipTerms.map((term) => (
               <span
                 key={term}
-                className="rounded-full bg-gray-100 dark:bg-warm-700 px-3 py-1 text-xs text-gray-600 dark:text-warm-200"
+                className="rounded-full bg-[var(--color-border)] px-3 py-1 text-xs text-[var(--color-text-muted)]"
               >
                 {term}
               </span>

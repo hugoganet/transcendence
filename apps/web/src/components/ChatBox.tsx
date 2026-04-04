@@ -73,7 +73,7 @@ export function ChatBox({ userId, onClose }: Props) {
   return createPortal(
     <div className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] left-[max(0.75rem,env(safe-area-inset-left,0px))] right-[max(0.75rem,env(safe-area-inset-right,0px))] z-[100] box-border flex h-[min(50dvh,calc(100dvh-1.5rem))] max-h-[calc(100dvh-1.5rem)] min-h-0 w-auto flex-col rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800 sm:bottom-5 sm:left-auto sm:right-5 sm:h-[min(50dvh,calc(100vh-2.5rem))] sm:max-h-[calc(100vh-2.5rem)] sm:w-[min(50vw,36rem)] sm:max-w-[calc(100vw-2.5rem)]">
       <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-2 py-2 sm:px-3 dark:border-warm-700">
-        <strong className="text-sm font-semibold text-gray-900 dark:text-warm-50">{t("chat.title")}</strong>
+        <strong className="text-sm font-semibold text-[var(--color-text)]">{t("chat.title")}</strong>
         <button
           type="button"
           onClick={onClose}

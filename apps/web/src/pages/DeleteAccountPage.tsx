@@ -37,7 +37,7 @@ export function DeleteAccountPage() {
 
   return (
     <div className="mx-auto max-w-lg space-y-6">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-warm-50 font-heading">
+      <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("pages.deleteAccount.title")}
       </h1>
 
@@ -52,7 +52,7 @@ export function DeleteAccountPage() {
             </p>
           </div>
 
-          <p className="text-sm text-gray-600 dark:text-warm-200">
+          <p className="text-sm text-[var(--color-text-muted)]">
             {t("pages.deleteAccount.confirmationEmailNote")}
           </p>
 
@@ -63,7 +63,7 @@ export function DeleteAccountPage() {
               onChange={(e) => setConfirmed(e.target.checked)}
               className="mt-0.5 h-4 w-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
             />
-            <span className="text-sm text-gray-700 dark:text-warm-200">
+            <span className="text-sm text-[var(--color-text)]">
               {t("pages.deleteAccount.checkboxLabel")}
             </span>
           </label>

@@ -47,11 +47,11 @@ export class ErrorBoundary extends Component<Props, State> {
         <div className="flex items-center justify-center px-4 py-12">
           <Card>
             <div className="py-6 text-center">
-              <AlertTriangle className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-warm-500" />
-              <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
+              <AlertTriangle className="mx-auto mb-4 h-12 w-12 text-[var(--color-text-muted)]" />
+              <h2 className="mb-2 text-lg font-semibold text-[var(--color-text)]">
                 {i18n.t("errors.serverError")}
               </h2>
-              <p className="mb-4 text-sm text-gray-500 dark:text-warm-200">
+              <p className="mb-4 text-sm text-[var(--color-text-muted)]">
                 {i18n.t("errors.unexpectedError")}
               </p>
               <Button onClick={this.handleRetry}>{i18n.t("labels.tryAgain")}</Button>
