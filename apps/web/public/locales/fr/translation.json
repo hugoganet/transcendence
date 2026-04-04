@@ -705,5 +705,9 @@
       "s10Title": "10. Modifications des conditions",
       "s10Body": "Nous pouvons mettre à jour ces Conditions d'utilisation de temps à autre. Nous informerons les utilisateurs inscrits des changements significatifs par e-mail ou notification sur la plateforme. L'utilisation continue de la plateforme après les modifications constitue l'acceptation des conditions mises à jour."
     }
+  },
+  "footer": {
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation"
   }
 }

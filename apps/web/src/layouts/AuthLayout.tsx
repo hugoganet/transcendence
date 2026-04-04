@@ -3,10 +3,12 @@
  * FR: Layout Auth — layout centre pour les pages de login et inscription.
  */
 import { Outlet, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "../components/LanguageSwitcher.js";
 import { ThemeToggle } from "../components/ThemeToggle.js";
 
 export function AuthLayout() {
+  const { t } = useTranslation();
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50 px-4 dark:bg-warm-900">
       <div className="absolute end-4 top-4 flex items-center gap-2">
@@ -23,6 +25,11 @@ export function AuthLayout() {
       <div className="w-full max-w-md animate-fade-in-up">
         <Outlet />
       </div>
+      <footer className="absolute bottom-4 text-center text-xs text-gray-400 dark:text-warm-300">
+        <Link to="/privacy-policy" className="transition-colors hover:text-primary">{t("footer.privacy")}</Link>
+        {" · "}
+        <Link to="/terms-of-service" className="transition-colors hover:text-primary">{t("footer.terms")}</Link>
+      </footer>
     </div>
   );
 }

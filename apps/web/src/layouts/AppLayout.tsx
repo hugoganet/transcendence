@@ -99,7 +99,7 @@ export function AppLayout() {
     <div className="min-h-screen bg-gray-50 dark:bg-warm-900">
       {/* Top nav */}
       <header className="sticky top-0 z-50 border-b border-gray-200/50 bg-white/80 backdrop-blur-md dark:border-warm-700/50 dark:bg-warm-900/80">
-        <div className="mx-auto flex h-14 max-w-5xl items-center overflow-hidden px-4">
+        <div className="mx-auto flex h-14 max-w-5xl items-center px-4">
           <Link
             to="/home"
             className="flex shrink-0 items-center gap-2 text-lg font-bold font-heading"
@@ -195,6 +195,12 @@ export function AppLayout() {
       <main className="mx-auto max-w-5xl px-4 py-6 animate-fade-in-up">
         <Outlet />
       </main>
+
+      <footer className="border-t border-gray-200 dark:border-warm-700 py-4 text-center text-xs text-gray-400 dark:text-warm-300">
+        <Link to="/privacy-policy" className="transition-colors hover:text-primary">{t("footer.privacy")}</Link>
+        {" · "}
+        <Link to="/terms-of-service" className="transition-colors hover:text-primary">{t("footer.terms")}</Link>
+      </footer>
     </div>
   );
 }

@@ -705,5 +705,9 @@
       "s10Title": "10. Cambios en los términos",
       "s10Body": "Podemos actualizar estos Términos de servicio de vez en cuando. Notificaremos a los usuarios registrados sobre cambios significativos por correo electrónico o notificación en la plataforma. El uso continuado de la plataforma después de los cambios constituye la aceptación de los términos actualizados."
     }
+  },
+  "footer": {
+    "privacy": "Política de privacidad",
+    "terms": "Términos de servicio"
   }
 }

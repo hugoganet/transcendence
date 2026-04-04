@@ -716,5 +716,9 @@
       "s10Title": "10. Changes to Terms",
       "s10Body": "We may update these Terms of Service from time to time. We will notify registered users of significant changes via email or platform notification. Continued use of the platform after changes constitutes acceptance of the updated terms."
     }
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
   }
 }

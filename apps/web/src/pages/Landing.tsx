@@ -178,15 +178,6 @@ export function Landing() {
         </div>
       </section>
 
-      {/* Footer links */}
-      <nav className="flex justify-center gap-4 pb-8 text-sm text-gray-400 dark:text-warm-300">
-        <Link to="/privacy-policy" className="transition-colors hover:text-primary">
-          {t("pages.landing.privacyPolicy")}
-        </Link>
-        <Link to="/terms-of-service" className="transition-colors hover:text-primary">
-          {t("pages.landing.termsOfService")}
-        </Link>
-      </nav>
     </div>
   );
 }
