@@ -93,10 +93,10 @@ export function STExercise({
             key={option.id}
             type="button"
             onClick={() => handleSelect(option.id)}
-            className={`w-full rounded-lg border p-4 text-left text-sm transition-colors ${
+            className={`w-full rounded-lg border p-4 text-left text-sm text-[var(--color-text)] transition-colors ${
               currentAnswer === option.id
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
-                : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-gray-300 dark:hover:border-warm-600"
+                : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"
             }`}
           >
             {option.text}

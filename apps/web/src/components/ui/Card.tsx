@@ -23,7 +23,7 @@ export function Card({ children, className = "", glow = true }: CardProps) {
   return (
     <div
       ref={ref}
-      className={`group relative overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg dark:border-warm-700 dark:bg-warm-800 ${className}`}
+      className={`group relative overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 text-[var(--color-text)] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg ${className}`}
     >
       {showGlow && (
         <div

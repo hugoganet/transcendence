@@ -178,7 +178,7 @@ export function ProfilePage() {
               maxLength={300}
               rows={3}
               placeholder={t("pages.profile.bioPlaceholder")}
-              className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-sm transition-colors placeholder:text-gray-400 hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2.5 text-sm text-[var(--color-text)] transition-colors placeholder:text-[var(--color-text-muted)] hover:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </FormField>
           <Button type="submit" isLoading={isSaving}>

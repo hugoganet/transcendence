@@ -118,12 +118,12 @@ export function IPExercise({
             onDragOver={(e) => handleDragOver(e, idx)}
             onDragEnd={handleDragEnd}
             onClick={() => handleTap(idx)}
-            className={`flex cursor-grab items-center gap-3 rounded-lg border p-3 text-sm transition-colors active:cursor-grabbing ${
+            className={`flex cursor-grab items-center gap-3 rounded-lg border p-3 text-sm text-[var(--color-text)] transition-colors active:cursor-grabbing ${
               selectedIdx === idx
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
                 : draggedIdx === idx
                   ? "border-primary/40 bg-primary/5 opacity-70"
-                  : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-gray-300 dark:hover:border-warm-600"
+                  : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"
             }`}
           >
             <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-border)] text-xs font-medium text-[var(--color-text-muted)]">

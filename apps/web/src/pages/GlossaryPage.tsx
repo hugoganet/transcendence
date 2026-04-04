@@ -72,7 +72,7 @@ export function GlossaryPage() {
           placeholder={t("pages.glossary.searchPlaceholder")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-10 pr-4 text-sm transition-all placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary dark:border-warm-700 dark:bg-warm-800 dark:text-warm-50 dark:placeholder:text-warm-400"
+          className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] py-3 pl-10 pr-4 text-sm text-[var(--color-text)] transition-all placeholder:text-[var(--color-text-muted)] focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary dark:border-warm-700 dark:bg-warm-800 dark:text-warm-50 dark:placeholder:text-warm-400"
         />
       </div>
 
