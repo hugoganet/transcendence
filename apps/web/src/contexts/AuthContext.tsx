@@ -93,7 +93,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authApi.getMe().then(
       (user) => {
         if (!cancelled) {
-          syncLocaleOnLogin(user?.locale);
+          if (user) syncLocaleOnLogin(user.locale);
           setState({
             user: user ?? null,
             isLoading: false,
