@@ -50,7 +50,6 @@ model User {
   revealTokens           Boolean   @default(false)
   revealWallet           Boolean   @default(false)
   revealGas              Boolean   @default(false)
-  revealDashboard        Boolean   @default(false)
   sentFriendRequests     Friendship[] @relation("FriendshipRequester")
   receivedFriendRequests Friendship[] @relation("FriendshipAddressee")
   certificate            Certificate?

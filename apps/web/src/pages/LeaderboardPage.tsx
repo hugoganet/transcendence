@@ -140,7 +140,7 @@ export function LeaderboardPage() {
                 }}
                 className={`flex items-center gap-4 py-3 ${
                   currentUser && entry.userId === currentUser.userId
-                    ? "bg-primary/5 -mx-6 px-6 rounded"
+                    ? "bg-primary/5 rounded"
                     : ""
                 }`}
               >

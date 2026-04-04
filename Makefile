@@ -1,3 +1,6 @@
+# Host port for standalone dev containers (transcendence-db). Use 54322 to avoid clashing with another Postgres on 5432.
+DB_HOST_PORT := 54322
+
 .PHONY: all start stop down full-down re ensure-certs \
        setup dev db-setup db-test-setup install
 
@@ -31,20 +34,27 @@ db-setup:
 	@docker start transcendence-db 2>/dev/null || \
 		docker run -d --name transcendence-db \
 		  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres \
-		  -p 54322:5432 postgres:17
+		  -p $(DB_HOST_PORT):5432 postgres:17
 	@docker start transcendence-redis 2>/dev/null || \
 		docker run -d --name transcendence-redis -p 6379:6379 redis:7-alpine
-	@sleep 2
-	@test -f apps/api/.env || printf 'DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/postgres\nDATABASE_POOL_SIZE=10\nSESSION_SECRET=%s\nSESSION_TTL_SECONDS=1800\n' "$$(openssl rand -hex 32)" > apps/api/.env
+	@echo "Waiting for PostgreSQL on port $(DB_HOST_PORT)..."; \
+	attempt=0; \
+	until docker exec transcendence-db pg_isready -U postgres -d postgres >/dev/null 2>&1; do \
+		attempt=$$((attempt + 1)); \
+		if [ $$attempt -gt 60 ]; then echo "PostgreSQL did not become ready in time (docker logs transcendence-db)."; exit 1; fi; \
+		sleep 1; \
+	done; \
+	echo "PostgreSQL is ready."
+	@test -f apps/api/.env || printf 'DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:$(DB_HOST_PORT)/postgres\nDATABASE_POOL_SIZE=10\nSESSION_SECRET=%s\nSESSION_TTL_SECONDS=1800\n' "$$(openssl rand -hex 32)" > apps/api/.env
 	pnpm --filter api db:generate
 	pnpm --filter api db:migrate
 	pnpm --filter api db:seed
 
 db-test-setup:
 	docker exec transcendence-db psql -U postgres -c "CREATE DATABASE transcendence_test;" 2>/dev/null || true
-	DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:54322/transcendence_test" \
+	DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:$(DB_HOST_PORT)/transcendence_test" \
 	  pnpm --filter api db:migrate:deploy
-	DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:54322/transcendence_test" \
+	DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:$(DB_HOST_PORT)/transcendence_test" \
 	  pnpm --filter api db:seed
 
 dev:

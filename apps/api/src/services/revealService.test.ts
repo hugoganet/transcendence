@@ -33,7 +33,6 @@ describe("getReveals", () => {
       revealTokens: false,
       revealWallet: false,
       revealGas: false,
-      revealDashboard: false,
     });
 
     const result = await getReveals("user-1");
@@ -42,7 +41,6 @@ describe("getReveals", () => {
       tokensRevealed: false,
       walletRevealed: false,
       gasRevealed: false,
-      dashboardRevealed: false,
     });
   });
 
@@ -51,7 +49,6 @@ describe("getReveals", () => {
       revealTokens: true,
       revealWallet: false,
       revealGas: true,
-      revealDashboard: false,
     });
 
     const result = await getReveals("user-1");
@@ -60,7 +57,6 @@ describe("getReveals", () => {
       tokensRevealed: true,
       walletRevealed: false,
       gasRevealed: true,
-      dashboardRevealed: false,
     });
   });
 
@@ -69,7 +65,6 @@ describe("getReveals", () => {
       revealTokens: true,
       revealWallet: true,
       revealGas: true,
-      revealDashboard: true,
     });
 
     const result = await getReveals("user-1");
@@ -78,7 +73,6 @@ describe("getReveals", () => {
       tokensRevealed: true,
       walletRevealed: true,
       gasRevealed: true,
-      dashboardRevealed: true,
     });
     expect(mockPrisma.user.findUniqueOrThrow).toHaveBeenCalledWith({
       where: { id: "user-1" },
@@ -86,7 +80,6 @@ describe("getReveals", () => {
         revealTokens: true,
         revealWallet: true,
         revealGas: true,
-        revealDashboard: true,
       },
     });
   });
@@ -164,19 +157,5 @@ describe("triggerRevealWithClient", () => {
     });
   });
 
-  it("handles dashboardRevealed mechanic", async () => {
-    mockPrisma.user.findUniqueOrThrow.mockResolvedValue({
-      revealDashboard: false,
-    });
-    mockPrisma.user.update.mockResolvedValue({});
-
-    const result = await triggerRevealWithClient(mockClient, "user-1", "dashboardRevealed");
-
-    expect(result).toBe(true);
-    expect(mockPrisma.user.update).toHaveBeenCalledWith({
-      where: { id: "user-1" },
-      data: { revealDashboard: true },
-    });
-  });
 });
 

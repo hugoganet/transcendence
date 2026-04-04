@@ -141,7 +141,6 @@ async function main() {
       revealTokens: true,
       revealWallet: true,
       revealGas: true,
-      revealDashboard: true,
     },
   });
   console.log("Seeded eval user:", evalUser.id);
@@ -187,6 +186,88 @@ async function main() {
     },
   });
   console.log(`Seeded ${COMPLETED_CHAPTERS.length + 1} chapter progress entries for eval user`);
+
+  // Create wallet-test user — completed up to mission 3.1.4 (wallet reveal)
+  // Login: a@a.a / aaa
+  const walletPasswordHash = await bcrypt.hash("aaa", 12);
+  const WALLET_TEST_MISSIONS = [
+    // Module 1
+    "1.1.1", "1.1.2", "1.1.3",
+    "1.2.1", "1.2.2", "1.2.3", "1.2.4", "1.2.5",
+    "1.3.1", "1.3.2", "1.3.3",
+    // Module 2
+    "2.1.1", "2.1.2", "2.1.3", "2.1.4",
+    "2.2.1", "2.2.2", "2.2.3", "2.2.4",
+    "2.3.1", "2.3.2", "2.3.3", "2.3.4",
+    // Module 3 chapter 1
+    "3.1.1", "3.1.2", "3.1.3", "3.1.4",
+  ];
+  const WALLET_TEST_CHAPTERS = [
+    "1.1", "1.2", "1.3",
+    "2.1", "2.2", "2.3",
+    "3.1",
+  ];
+
+  const walletTestUser = await prisma.user.upsert({
+    where: { email: "a@a.a" },
+    update: {},
+    create: {
+      email: "a@a.a",
+      passwordHash: walletPasswordHash,
+      displayName: "Alice",
+      locale: "en",
+      ageConfirmed: true,
+      disclaimerAcceptedAt: new Date(),
+      tokenBalance: 2000,
+      currentStreak: 5,
+      longestStreak: 5,
+      lastMissionCompletedAt: new Date(),
+      revealTokens: true,
+      revealWallet: true,
+      revealGas: false,
+    },
+  });
+  console.log("Seeded wallet-test user:", walletTestUser.id);
+
+  for (const missionId of WALLET_TEST_MISSIONS) {
+    await prisma.userProgress.upsert({
+      where: { userId_missionId: { userId: walletTestUser.id, missionId } },
+      update: {},
+      create: {
+        userId: walletTestUser.id,
+        missionId,
+        status: "COMPLETED",
+        completedAt,
+      },
+    });
+  }
+  console.log(`Seeded ${WALLET_TEST_MISSIONS.length} completed missions for wallet-test user`);
+
+  for (const chapterId of WALLET_TEST_CHAPTERS) {
+    await prisma.chapterProgress.upsert({
+      where: { userId_chapterId: { userId: walletTestUser.id, chapterId } },
+      update: {},
+      create: {
+        userId: walletTestUser.id,
+        chapterId,
+        status: "COMPLETED",
+        completedAt,
+      },
+    });
+  }
+  console.log(`Seeded ${WALLET_TEST_CHAPTERS.length} chapter progress entries for wallet-test user`);
+
+  // Make eval user and wallet-test user friends (ACCEPTED)
+  await prisma.friendship.upsert({
+    where: { requesterId_addresseeId: { requesterId: evalUser.id, addresseeId: walletTestUser.id } },
+    update: { status: "ACCEPTED" },
+    create: {
+      requesterId: evalUser.id,
+      addresseeId: walletTestUser.id,
+      status: "ACCEPTED",
+    },
+  });
+  console.log("Seeded friendship between eval user and wallet-test user");
 
   // Seed achievement definitions (idempotent via upsert on unique code)
   for (const def of ACHIEVEMENT_DEFINITIONS) {
