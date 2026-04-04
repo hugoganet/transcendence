@@ -268,6 +268,16 @@ function isStrategyConfigured(name: string): boolean {
   return configuredStrategies.has(name);
 }
 
+// GET /api/v1/auth/providers — returns which OAuth providers are configured
+authRouter.get("/providers", (_req: Request, res: Response) => {
+  res.json({
+    data: {
+      google: configuredStrategies.has("google"),
+      facebook: configuredStrategies.has("facebook"),
+    },
+  });
+});
+
 /** GET /google — redirect to Google consent screen. / FR: Redirige vers l'ecran de consentement Google. */
 authRouter.get(
   "/google",
@@ -292,6 +302,7 @@ authRouter.get(
       "google",
       (err: Error | null, user: Express.User | false) => {
         if (err || !user) {
+          console.error("[Google OAuth] callback error:", err, "user:", user);
           return res.redirect(`${FRONTEND_URL}/auth/callback?error=oauth_failed`);
         }
         req.login(user, (loginErr) => {

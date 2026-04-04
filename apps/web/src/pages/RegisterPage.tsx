@@ -12,6 +12,7 @@ import { Button } from "../components/ui/Button.js";
 import { Input } from "../components/ui/Input.js";
 import { FormField } from "../components/ui/FormField.js";
 import { Alert } from "../components/ui/Alert.js";
+import { OAuthButtons } from "../components/OAuthButtons.js";
 
 export function RegisterPage() {
   const { t } = useTranslation();
@@ -113,6 +114,7 @@ export function RegisterPage() {
           {t("auth.signup.submitButton")}
         </Button>
       </form>
+      <OAuthButtons />
       <p className="mt-4 text-center text-sm text-gray-500 dark:text-warm-200">
         {t("auth.signup.hasAccount")}{" "}
         <Link

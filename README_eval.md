@@ -1,4 +1,4 @@
-*This project has been created as part of the 42 curriculum by hgannet, agravier, jbriz, kamaral, theveste.*
+*This project has been created as part of the 42 curriculum by hgannet, agravier, jbriz, ktombola, theveste.*
 
 # TRANSCENDENCE — Unblock
 
@@ -265,3 +265,27 @@ The team claims 21 module points. Any extra scope beyond 14 is documented in the
 - Blockchain features require a reachable Avalanche RPC endpoint and a deployed contract matching `CONTRACT_ADDRESS`.
 - Email features (password reset, notifications) require a valid Resend API key with a verified domain for non-test recipients.
 - A third language beyond English and French may be partial unless explicitly completed in i18n files.
+13. Data — Minor — GDPR features: 1 pt — Export and deletion with confirmations — Hugo Ganet.
+
+14. Blockchain — Major — Adapted IV.9: 2 pts — Certificates recorded on Avalanche with a Solidity contract, ethers.js integration, fields nftTokenId, nftTxHash, contractAddress, and certificate APIs. The subject text mentions tournament scores; this project stores completion certificates instead because they match an education product. Same technical bar: deploy contract, call chain from backend, persist proofs, expose authenticated reads — Kauana (deployment and env wiring).
+
+
+INDIVIDUAL CONTRIBUTIONS
+
+Hugo Ganet built and tested the majority of the Express API, Prisma layer, auth and session stack, curriculum and exercise services, gamification and leaderboard logic, GDPR endpoints, test suites, and Docker/Nginx wiring. He integrated Socket.IO on the server and aligned REST shapes with the shared package.
+
+Arthur produced the bilingual curriculum (69 missions, tooltips, UI copy), specification documents under docs/, QA scenarios, and product wording for emails and legal pages. He kept narrative and learning goals consistent across JSON content files.
+
+JB implemented the React SPA: auth flows, curriculum and mission views, exercise UI, gamification dashboards, friends and messages, notifications client, settings, and i18n switching, using Tailwind and shared schemas for validation parity with the API.
+
+Kauana focused on certificates end to end, smart contract and Avalanche RPC usage from Node, persistence of chain fields, and co-owned backend areas such as tokens and heavy Prisma work alongside Hugo.
+
+Theo (theveste) acted as project manager for scheduling and follow-up, and contributed to Dockerfiles, docker-compose, Makefile, local and CI database seeding flow, environment and TLS setup for one-command startup, plus cross-cutting fixes so the stack runs reliably for the whole team.
+
+BONUS
+
+The team claims 19 module points. Any extra scope beyond 14 is documented in the module table above; no separate bonus-only module is listed beyond that headroom.
+
+LIMITATIONS
+
+Self-signed TLS on localhost produces browser warnings until a trusted certificate is installed. Blockchain features need a reachable RPC and a deployed contract matching CONTRACT_ADDRESS. Third natural language beyond English and French may be partial unless explicitly completed in i18n files.

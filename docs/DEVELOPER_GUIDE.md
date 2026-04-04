@@ -51,7 +51,6 @@ This document is your onboarding reference for the Transcendence project. It cov
 | Auth | Passport.js (local + Google + Facebook) | 0.7 |
 | Validation | Zod | 3.25 |
 | Email | Resend | 6.9 |
-| PDF generation | jsPDF | 4.2 |
 | Image processing | Sharp | 0.34 |
 | Frontend (scaffold) | React 19 + Vite 7 + Tailwind 4 | — |
 | Testing | Vitest + Supertest | 4.0 / 7.2 |
@@ -494,7 +493,6 @@ All responses follow the envelope format: `{ data: ... }` for success, `{ error:
 | Method | Path | Auth | Description |
 |--------|------|------|-------------|
 | GET | `/certificates/me` | Yes | Authenticated certificate with on-chain metadata (`nftTokenId`, `nftTxHash`, `contractAddress`) |
-| GET | `/certificates/me/pdf` | Yes | Download PDF certificate (includes blockchain fields when available) |
 | GET | `/certificates/:shareToken` | No | Public certificate view |
 
 ### Tooltips (`/tooltips`)
@@ -815,7 +813,7 @@ pnpm test:integration
 | `leaderboard.test.ts` | Weekly leaderboard with rankings |
 | `notifications.test.ts` | Notification creation, delivery, preferences |
 | `engagement.test.ts` | Streak reminders, re-engagement logic |
-| `certificate.test.ts` | Certificate generation, sharing on-chain metadata, and PDF endpoint |
+| `certificate.test.ts` | Certificate generation, sharing on-chain metadata |
 | `gdpr.test.ts` | Data export and account deletion |
 | `presence.test.ts` | Socket.IO online/offline tracking |
 | `publicProfile.test.ts` | Public profile endpoint |

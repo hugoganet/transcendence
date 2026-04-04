@@ -92,7 +92,7 @@ JB:       5,770 added  ( 7.0%)
 | **Backend Integration** | Implemented `blockchainService.ts` with ethers.js + Avalanche RPC integration |
 | **Certificate Flow** | Added async on-chain mint trigger after final mission completion (`mintNFTForCertificate`) with idempotent handling |
 | **Database** | Added `ethereumWallet` to `User` and `nftTokenId`/`nftTxHash`/`contractAddress` to `Certificate` |
-| **API/Output** | Added authenticated certificate on-chain endpoints and PDF output with blockchain metadata |
+| **API/Output** | Added authenticated certificate on-chain endpoints with blockchain metadata |
 | **CI/Env** | Added blockchain env vars to Turbo + CI using safe placeholder values and YAML-safe quoting |
 | **Documentation** | Updated README, TEAM_STATUS, and DEVELOPER_GUIDE to reflect blockchain implementation |
 

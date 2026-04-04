@@ -12,6 +12,7 @@ import { Button } from "../components/ui/Button.js";
 import { Input } from "../components/ui/Input.js";
 import { FormField } from "../components/ui/FormField.js";
 import { Alert } from "../components/ui/Alert.js";
+import { OAuthButtons } from "../components/OAuthButtons.js";
 
 export function LoginPage() {
   const { t } = useTranslation();
@@ -151,6 +152,7 @@ export function LoginPage() {
           {t("auth.login.submitButton")}
         </Button>
       </form>
+      <OAuthButtons />
       <div className="mt-4 space-y-2 text-center text-sm">
         <p>
           <Link
