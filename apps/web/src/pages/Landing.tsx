@@ -33,22 +33,22 @@ export function Landing() {
   const features = [
     {
       icon: BookOpen,
-      title: t("pages.landing.featureLearnTitle", { defaultValue: "Learn" }),
-      desc: t("pages.landing.featureLearnDesc", { defaultValue: "Bite-sized missions that explain blockchain concepts with real-world analogies." }),
+      title: t("pages.landing.featureLearnTitle"),
+      desc: t("pages.landing.featureLearnDesc"),
       color: "text-teal-500",
       bg: "bg-teal-500/10 dark:bg-teal-500/20",
     },
     {
       icon: Code2,
-      title: t("pages.landing.featurePracticeTitle", { defaultValue: "Practice" }),
-      desc: t("pages.landing.featurePracticeDesc", { defaultValue: "Interactive exercises that let you write, simulate, and verify on-chain logic." }),
+      title: t("pages.landing.featurePracticeTitle"),
+      desc: t("pages.landing.featurePracticeDesc"),
       color: "text-amber-500",
       bg: "bg-amber-500/10 dark:bg-amber-500/20",
     },
     {
       icon: Coins,
-      title: t("pages.landing.featureEarnTitle", { defaultValue: "Earn" }),
-      desc: t("pages.landing.featureEarnDesc", { defaultValue: "Collect tokens, unlock achievements, and build your on-chain learning certificate." }),
+      title: t("pages.landing.featureEarnTitle"),
+      desc: t("pages.landing.featureEarnDesc"),
       color: "text-green-500",
       bg: "bg-green-500/10 dark:bg-green-500/20",
     },
@@ -155,7 +155,7 @@ export function Landing() {
                 <AnimatedCounter target={50} suffix="+" />
               </div>
               <div className="mt-1 text-sm text-gray-500 dark:text-warm-200">
-                {t("pages.landing.statMissions", { defaultValue: "Missions" })}
+                {t("pages.landing.statMissions")}
               </div>
             </div>
             <div className="text-center">
@@ -163,7 +163,7 @@ export function Landing() {
                 <AnimatedCounter target={4} />
               </div>
               <div className="mt-1 text-sm text-gray-500 dark:text-warm-200">
-                {t("pages.landing.statExerciseTypes", { defaultValue: "Exercise Types" })}
+                {t("pages.landing.statExerciseTypes")}
               </div>
             </div>
             <div className="text-center">
@@ -171,7 +171,7 @@ export function Landing() {
                 <AnimatedCounter target={100} suffix="%" />
               </div>
               <div className="mt-1 text-sm text-gray-500 dark:text-warm-200">
-                {t("pages.landing.statFree", { defaultValue: "Free" })}
+                {t("pages.landing.statFree")}
               </div>
             </div>
           </div>
