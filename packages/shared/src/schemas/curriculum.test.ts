@@ -35,7 +35,7 @@ describe("progressiveRevealSchema", () => {
   });
 
   it("accepts all mechanic types", () => {
-    for (const mechanic of ["tokensRevealed", "walletRevealed", "gasRevealed", "dashboardRevealed"]) {
+    for (const mechanic of ["tokensRevealed", "walletRevealed", "gasRevealed"]) {
       expect(() =>
         progressiveRevealSchema.parse({ mechanic, description: "test" }),
       ).not.toThrow();
@@ -223,7 +223,6 @@ describe("curriculumStructureSchema", () => {
       { id: "2.2.4", mechanic: "tokensRevealed" },
       { id: "3.1.4", mechanic: "walletRevealed" },
       { id: "3.3.3", mechanic: "gasRevealed" },
-      { id: "6.3.4", mechanic: "dashboardRevealed" },
     ]);
   });
 });

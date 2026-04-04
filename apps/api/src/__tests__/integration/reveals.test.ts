@@ -31,7 +31,6 @@ describe("Progressive Reveal Integration", () => {
         tokensRevealed: false,
         walletRevealed: false,
         gasRevealed: false,
-        dashboardRevealed: false,
       });
     });
   });
@@ -47,7 +46,6 @@ describe("Progressive Reveal Integration", () => {
         tokensRevealed: false,
         walletRevealed: false,
         gasRevealed: false,
-        dashboardRevealed: false,
       });
     });
 
@@ -85,7 +83,6 @@ describe("Progressive Reveal Integration", () => {
       expect(revealsRes.body.data.tokensRevealed).toBe(true);
       expect(revealsRes.body.data.walletRevealed).toBe(false);
       expect(revealsRes.body.data.gasRevealed).toBe(false);
-      expect(revealsRes.body.data.dashboardRevealed).toBe(false);
     });
 
     it("re-completing a reveal trigger mission returns 409 but reveal flag remains true", async () => {
@@ -144,7 +141,6 @@ describe("Progressive Reveal Integration", () => {
       expect(revealsRes.body.data.tokensRevealed).toBe(true);
       expect(revealsRes.body.data.walletRevealed).toBe(true);
       expect(revealsRes.body.data.gasRevealed).toBe(false);
-      expect(revealsRes.body.data.dashboardRevealed).toBe(false);
     });
   });
 });

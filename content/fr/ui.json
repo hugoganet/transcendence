@@ -401,11 +401,6 @@
       "headline": "Vous payez maintenant du gas.",
       "body": "Chaque tentative d'exercice coûte 2 KT. C'est le même mécanisme que les frais de gas sur Ethereum — vous venez de l'étudier, maintenant vous le vivez. Répondez juste et votre solde progresse.",
       "ctaLabel": "Compris, on continue"
-    },
-    "dashboardRevealed": {
-      "headline": "Votre tableau de bord est complet.",
-      "body": "Progression, solde KT, classement, série de jours — tout est maintenant visible. Vous avez les outils pour suivre où vous en êtes et ce qui vous attend.",
-      "ctaLabel": "Explorer mon tableau de bord"
     }
   },
   "disclaimer": {
