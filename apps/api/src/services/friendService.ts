@@ -6,6 +6,9 @@
 import { prisma } from "../config/database.js";
 import { redisClient } from "../config/redis.js";
 import { AppError } from "../utils/AppError.js";
+import { createAndPushNotification } from "./notificationService.js";
+import { shouldSendNotification } from "./engagementService.js";
+import { getIO } from "../socket/index.js";
 import type { FriendListEntry, FriendRequestEntry, FriendshipResponse } from "@transcendence/shared";
 
 interface FriendshipRecord {
@@ -66,6 +69,27 @@ export async function sendFriendRequest(
       // Race condition: both A→B and B→A were created. Remove ours, keep the earlier one.
       await prisma.friendship.delete({ where: { id: friendship.id } });
       throw new AppError(409, "FRIENDSHIP_ALREADY_EXISTS", "Friendship already exists");
+    }
+
+    // Notify the addressee about the friend request (best-effort)
+    try {
+      if (await shouldSendNotification(addresseeId, "friendRequest")) {
+        const requester = await prisma.user.findUnique({
+          where: { id: requesterId },
+          select: { displayName: true },
+        });
+        const name = requester?.displayName ?? "Someone";
+        await createAndPushNotification(
+          getIO(),
+          addresseeId,
+          "FRIEND_REQUEST",
+          "New friend request",
+          `${name} sent you a friend request`,
+          { requesterId, friendshipId: friendship.id },
+        );
+      }
+    } catch {
+      // Notification failure must not break the friend request flow
     }
 
     return serializeFriendship(friendship);

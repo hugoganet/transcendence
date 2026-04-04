@@ -18,6 +18,8 @@ export function NotificationPreferencesPage() {
     moduleComplete: t("pages.notificationPreferences.moduleComplete"),
     tokenThreshold: t("pages.notificationPreferences.tokenThreshold"),
     streakMilestone: t("pages.notificationPreferences.streakMilestone"),
+    friendRequest: t("pages.notificationPreferences.friendRequest"),
+    messageReceived: t("pages.notificationPreferences.messageReceived"),
   };
   const [prefs, setPrefs] = useState<NotificationPreferences | null>(null);
   const [isLoading, setIsLoading] = useState(true);
