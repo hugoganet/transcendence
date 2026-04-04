@@ -454,7 +454,36 @@
   "settings": {
     "title": "Settings",
     "language": "Language",
-    "languageDescription": "Choose your preferred language"
+    "languageDescription": "Choose your preferred language",
+    "twoFactor": {
+      "title": "Two-Factor Authentication",
+      "description": "Add an extra layer of security to your account.",
+      "status": "Status",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "enableButton": "Enable 2FA",
+      "disableButton": "Disable 2FA",
+      "setup": {
+        "modalTitle": "Enable Two-Factor Authentication",
+        "step1": "Scan this QR code with your authenticator app",
+        "step2": "Or enter this key manually",
+        "step3": "Enter the 6-digit code to confirm",
+        "copyButton": "Copy",
+        "copied": "Copied!",
+        "verifyButton": "Verify & Enable",
+        "successTitle": "2FA Enabled",
+        "successMessage": "Two-factor authentication is now active on your account."
+      },
+      "disable": {
+        "modalTitle": "Disable Two-Factor Authentication",
+        "description": "Enter your current authentication code to confirm.",
+        "confirmButton": "Confirm Disable",
+        "successMessage": "Two-factor authentication has been disabled."
+      },
+      "codeLabel": "Verification code",
+      "invalidCode": "Invalid code. Please try again.",
+      "rateLimited": "Too many attempts. Wait a moment and try again."
+    }
   },
   "emptyStates": {
     "noFriends": "You haven't added any friends yet. Search by username to find someone to learn alongside.",

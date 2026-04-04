@@ -454,7 +454,36 @@
   "settings": {
     "title": "Ajustes",
     "language": "Idioma",
-    "languageDescription": "Elige tu idioma preferido"
+    "languageDescription": "Elige tu idioma preferido",
+    "twoFactor": {
+      "title": "Autenticación de dos factores",
+      "description": "Añade una capa extra de seguridad a tu cuenta.",
+      "status": "Estado",
+      "enabled": "Activado",
+      "disabled": "Desactivado",
+      "enableButton": "Activar 2FA",
+      "disableButton": "Desactivar 2FA",
+      "setup": {
+        "modalTitle": "Activar la autenticación de dos factores",
+        "step1": "Escanea este código QR con tu aplicación de autenticación",
+        "step2": "O introduce esta clave manualmente",
+        "step3": "Introduce el código de 6 dígitos para confirmar",
+        "copyButton": "Copiar",
+        "copied": "¡Copiado!",
+        "verifyButton": "Verificar y activar",
+        "successTitle": "2FA activado",
+        "successMessage": "La autenticación de dos factores ya está activa en tu cuenta."
+      },
+      "disable": {
+        "modalTitle": "Desactivar la autenticación de dos factores",
+        "description": "Introduce tu código de autenticación actual para confirmar.",
+        "confirmButton": "Confirmar desactivación",
+        "successMessage": "La autenticación de dos factores ha sido desactivada."
+      },
+      "codeLabel": "Código de verificación",
+      "invalidCode": "Código inválido. Por favor, inténtalo de nuevo.",
+      "rateLimited": "Demasiados intentos. Espera un momento e inténtalo de nuevo."
+    }
   },
   "emptyStates": {
     "noFriends": "Aún no has agregado amigos. Busca por nombre de usuario para encontrar a alguien con quien aprender.",

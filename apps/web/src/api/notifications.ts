@@ -24,8 +24,9 @@ export const notificationsApi = {
       `${BASE_URL}/api/v1/notifications?${params}`,
       { credentials: "include" },
     );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
-    return { notifications: json.data, meta: json.meta };
+    return { notifications: json.data ?? [], meta: json.meta };
   },
 
   markAsRead: (id: string) =>

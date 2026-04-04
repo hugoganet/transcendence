@@ -454,7 +454,36 @@
   "settings": {
     "title": "Paramètres",
     "language": "Langue",
-    "languageDescription": "Choisissez votre langue préférée"
+    "languageDescription": "Choisissez votre langue préférée",
+    "twoFactor": {
+      "title": "Authentification à deux facteurs",
+      "description": "Ajoutez une couche de sécurité supplémentaire à votre compte.",
+      "status": "Statut",
+      "enabled": "Activé",
+      "disabled": "Désactivé",
+      "enableButton": "Activer le 2FA",
+      "disableButton": "Désactiver le 2FA",
+      "setup": {
+        "modalTitle": "Activer l'authentification à deux facteurs",
+        "step1": "Scannez ce QR code avec votre application d'authentification",
+        "step2": "Ou entrez cette clé manuellement",
+        "step3": "Entrez le code à 6 chiffres pour confirmer",
+        "copyButton": "Copier",
+        "copied": "Copié !",
+        "verifyButton": "Vérifier et activer",
+        "successTitle": "2FA activé",
+        "successMessage": "L'authentification à deux facteurs est maintenant active sur votre compte."
+      },
+      "disable": {
+        "modalTitle": "Désactiver l'authentification à deux facteurs",
+        "description": "Entrez votre code d'authentification actuel pour confirmer.",
+        "confirmButton": "Confirmer la désactivation",
+        "successMessage": "L'authentification à deux facteurs a été désactivée."
+      },
+      "codeLabel": "Code de vérification",
+      "invalidCode": "Code invalide. Veuillez réessayer.",
+      "rateLimited": "Trop de tentatives. Attendez un moment et réessayez."
+    }
   },
   "emptyStates": {
     "noFriends": "Vous n'avez pas encore d'amis. Recherchez un nom d'utilisateur pour envoyer votre première demande.",

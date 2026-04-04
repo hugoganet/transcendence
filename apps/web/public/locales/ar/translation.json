@@ -448,9 +448,38 @@
     "send": "Send"
   },
   "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "languageDescription": "Choose your preferred language"
+    "title": "الإعدادات",
+    "language": "اللغة",
+    "languageDescription": "اختر لغتك المفضلة",
+    "twoFactor": {
+      "title": "المصادقة الثنائية",
+      "description": "أضف طبقة أمان إضافية إلى حسابك.",
+      "status": "الحالة",
+      "enabled": "مفعّل",
+      "disabled": "معطّل",
+      "enableButton": "تفعيل المصادقة الثنائية",
+      "disableButton": "تعطيل المصادقة الثنائية",
+      "setup": {
+        "modalTitle": "تفعيل المصادقة الثنائية",
+        "step1": "امسح رمز QR هذا باستخدام تطبيق المصادقة",
+        "step2": "أو أدخل هذا المفتاح يدويًا",
+        "step3": "أدخل الرمز المكون من 6 أرقام للتأكيد",
+        "copyButton": "نسخ",
+        "copied": "تم النسخ!",
+        "verifyButton": "تحقق وفعّل",
+        "successTitle": "تم تفعيل المصادقة الثنائية",
+        "successMessage": "المصادقة الثنائية نشطة الآن على حسابك."
+      },
+      "disable": {
+        "modalTitle": "تعطيل المصادقة الثنائية",
+        "description": "أدخل رمز المصادقة الحالي للتأكيد.",
+        "confirmButton": "تأكيد التعطيل",
+        "successMessage": "تم تعطيل المصادقة الثنائية."
+      },
+      "codeLabel": "رمز التحقق",
+      "invalidCode": "رمز غير صالح. يرجى المحاولة مرة أخرى.",
+      "rateLimited": "محاولات كثيرة جداً. انتظر لحظة وحاول مرة أخرى."
+    }
   },
   "emptyStates": {
     "noFriends": "You haven't added any friends yet. Search by username to find someone to learn alongside.",
