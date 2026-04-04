@@ -3,6 +3,7 @@
  * FR: DisclaimerModal — modale de consentement obligatoire avant de continuer.
  */
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/Button.js";
 
@@ -20,8 +21,11 @@ export function DisclaimerModal({ text, onAccept }: DisclaimerModalProps) {
   const { t } = useTranslation();
   const [accepted, setAccepted] = useState(false);
 
-  return (
-    <div className="fixed inset-0 z-60 flex items-start justify-center overflow-y-auto bg-black/50 px-4 py-8">
+  const modalContent = (
+    <div
+      className="fixed inset-0 flex items-start justify-center overflow-y-auto bg-black/50 px-4 py-8"
+      style={{ zIndex: 9999 }}
+    >
       <div className="w-full max-w-md rounded-xl bg-white dark:bg-warm-800 p-6 shadow-xl">
         <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("disclaimer.gateTitle")}
@@ -49,4 +53,6 @@ export function DisclaimerModal({ text, onAccept }: DisclaimerModalProps) {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
