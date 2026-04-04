@@ -1,18 +1,17 @@
+/**
+ * @file tokens API — fetch token balance and transaction history.
+ * FR: API tokens — recuperer le solde de jetons et l'historique.
+ */
 import type {
   TokenBalance,
   TokenTransaction,
   PaginationMeta,
 } from "@transcendence/shared";
-
-const BASE_URL = import.meta.env.VITE_API_URL ?? "";
+import { api, ApiError } from "./client.js";
 
 export const tokensApi = {
   getBalance: async (): Promise<TokenBalance> => {
-    const res = await fetch(`${BASE_URL}/api/v1/tokens/balance`, {
-      credentials: "include",
-    });
-    const json = await res.json();
-    return json.data;
+    return api.get<TokenBalance>("/api/v1/tokens/balance");
   },
 
   getHistory: async (
@@ -23,11 +22,16 @@ export const tokensApi = {
       page: String(page),
       pageSize: String(pageSize),
     });
+    const BASE_URL = import.meta.env.VITE_API_URL ?? "";
     const res = await fetch(
       `${BASE_URL}/api/v1/tokens/history?${params}`,
       { credentials: "include" },
     );
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new ApiError(res.status, err?.error?.code ?? "UNKNOWN", err?.error?.message ?? "Request failed");
+    }
     const json = await res.json();
-    return { transactions: json.data, meta: json.meta };
+    return { transactions: json.data ?? [], meta: json.meta };
   },
 };

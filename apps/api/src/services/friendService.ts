@@ -1,3 +1,8 @@
+/**
+ * @file Friend Service — handles friend requests, acceptance and friend list queries.
+ * FR: Service d'amis — gere les demandes d'amis, acceptations et requetes de liste d'amis.
+ */
+
 import { prisma } from "../config/database.js";
 import { redisClient } from "../config/redis.js";
 import { AppError } from "../utils/AppError.js";

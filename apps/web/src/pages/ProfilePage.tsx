@@ -1,3 +1,7 @@
+/**
+ * @file ProfilePage — Profile Page — view and edit user profile.
+ * FR: Page Profil — consultation et edition du profil.
+ */
 import { useEffect, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -21,7 +25,7 @@ export function ProfilePage() {
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    document.title = `${t("labels.profile")} — Transcendence`;
+    document.title = `${t("labels.profile")} — Unblock.chain`;
   }, []);
 
   const handleSave = async (e: FormEvent) => {
@@ -93,7 +97,7 @@ export function ProfilePage() {
               className="h-16 w-16 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-xl font-bold text-gray-400 dark:text-warm-500">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-200 dark:bg-warm-700 text-xl font-bold text-gray-400 dark:text-warm-200">
               {(user?.displayName ?? user?.email ?? "?")[0].toUpperCase()}
             </div>
           )}

@@ -1,12 +1,16 @@
+/**
+ * @file Settings — Settings Page — user account and security settings.
+ * FR: Page Parametres — parametres de compte et securite.
+ */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { LanguageSwitcher } from "../components/LanguageSwitcher";
+import { LanguageSwitcher } from "../components/LanguageSwitcher.js";
 
 export function Settings() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    document.title = `${t("settings.title")} — Transcendence`;
+    document.title = `${t("settings.title")} — Unblock.chain`;
   }, [t]);
 
   return (

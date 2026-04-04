@@ -1,3 +1,7 @@
+/**
+ * @file useMissionDetail — useMissionDetail — fetches mission details and exercises.
+ * FR: useMissionDetail ��� recupere les details de mission et exercices.
+ */
 import { useState, useEffect, useCallback } from "react";
 import type { MissionDetailResponse } from "@transcendence/shared";
 import { curriculumApi } from "../api/curriculum.js";

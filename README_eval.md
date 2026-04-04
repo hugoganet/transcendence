@@ -1,159 +1,270 @@
-*This project has been created as part of the 42 curriculum by hgannet, agravier, jbriz, kamaral, theveste.*
+*This project has been created as part of the 42 curriculum by hgannet, agravier, jbriz, ktombola, theveste.*
 
-TRANSCENDENCE — PROJECT README (EVALUATION)
+# TRANSCENDENCE — Unblock
 
-DESCRIPTION
+## DESCRIPTION
 
-Transcendence is a gamified web platform for learning blockchain: a structured curriculum (missions and exercises), Knowledge Tokens, streaks, achievements, leaderboards, friends, direct messages, notifications, profile and settings, legal pages (Privacy Policy and Terms of Service), GDPR-oriented export and account deletion, and certificates with optional on-chain metadata on Avalanche via a Solidity contract.
+Unblock is a gamified web platform for learning blockchain. It makes concepts like blockchain, RPC endpoints, wallets, smart contracts and decentralized applications accessible to anyone — no prior knowledge required.
 
-The repository is a TypeScript monorepo. The backend is Express with Prisma on PostgreSQL, Redis for sessions and rate limiting, Passport for local and OAuth sign-in and TOTP 2FA, and Socket.IO for live notifications and presence. The frontend is React with Vite and Tailwind. Curriculum text, tooltips, and UI strings live under content/ and are validated when the API starts. Production traffic uses Docker Compose, Nginx, and HTTPS on localhost with project-generated certificates.
+The platform uses a structured curriculum of missions and exercises, rewarding progress with Knowledge Tokens, streaks, and achievements. A leaderboard, friend system, real-time direct messaging, live notifications, and customizable profiles keep learners engaged.
 
-INSTRUCTIONS
+The repository is a TypeScript monorepo. The backend runs Express 5 with Prisma on PostgreSQL, Redis for sessions and rate limiting, Passport for local and OAuth sign-in with optional TOTP 2FA, and Socket.IO for real-time notifications and presence. The frontend is a React 19 SPA built with Vite and Tailwind CSS. Curriculum text, tooltips, and UI strings are validated at API startup. Production deployment uses Docker Compose with an Nginx reverse proxy and self-signed TLS certificates.
 
-Prerequisites: Node.js 22, pnpm, Docker and Docker Compose. Use a current stable Google Chrome to run the app. At the repo root, keep a .env file: copy from .env.example and set POSTGRES_*, SESSION_SECRET, FRONTEND_URL, REDIS_URL, blockchain variables (CONTRACT_ADDRESS, AVALANCHE_RPC_URL, BLOCKCHAIN_PRIVATE_KEY), and OAuth secrets if you use social login.
+---
 
-Execution is driven by the Makefile at the repository root.
+## INSTRUCTIONS
 
-make and make start are the same.
-They create .env from .env.example if it is missing, generate TLS certs when needed, rebuild Docker images without cache, and start the full stack with docker compose up in the background. Then open https://localhost (you may need to trust the local certificate).
+### Prerequisites
 
-make down
-stops and removes the Compose stack (containers and default network). make stop only stops containers without removing them. make full-down runs docker compose down and removes volumes. make re runs full-down then start for a clean database volume and a fresh bring-up.
+- **Software**: Docker, Docker Compose, Git
+- **Versions**: latest stable Docker and Git (tested with Docker 29.3.1, Git 2.53)
+- **Browser**: Google Chrome (recommended), Firefox and Safari also supported
 
+### Setup
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd transcendence
+   ```
+
+2. Create a `.env` file at the project root. Copy from the example:
+   ```bash
+   cp .env.example .env
+   ```
+
+3. Generate a secure session secret:
+   ```bash
+   # Replace the placeholder in .env with a strong random value:
+   openssl rand -hex 32
+   # Paste the output as SESSION_SECRET in your .env
+   ```
+
+4. Configure optional services in `.env`:
+   - **OAuth**: add Google (`GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`) and/or Facebook (`FACEBOOK_APP_ID`, `FACEBOOK_APP_SECRET`) credentials
+   - **2FA**: generate `TOTP_ENCRYPTION_KEY` with `openssl rand -hex 32`
+   - **Email**: set `RESEND_API_KEY` and `RESEND_FROM_EMAIL` for password reset emails
+   - **Blockchain**: provide `CONTRACT_ADDRESS`, `AVALANCHE_RPC_URL`, and `BLOCKCHAIN_PRIVATE_KEY` for NFT certificate minting
+
+5. Launch the full stack:
+   ```bash
+   make
+   ```
+
+6. Open **https://localhost:8443** in your browser (accept the self-signed certificate warning).
+
+### Makefile Commands
+
+| Command | Description |
+|---------|-------------|
+| `make` or `make start` | Build and start the full production stack (Docker Compose + Nginx + TLS) |
+| `make stop` | Stop containers without removing them |
+| `make down` | Stop and remove containers |
+| `make full-down` | Stop containers, remove containers and volumes (clean database) |
+| `make re` | Full restart: removes everything then rebuilds and starts |
+| `make setup` | Local development mode: installs dependencies, starts standalone Postgres and Redis containers, runs Prisma migrations and seed, then starts dev servers on the host |
+
+### Development Mode
+
+For local development without Docker Compose:
+```bash
 make setup
-is for local development without the full Compose app: it runs pnpm install, starts standalone Postgres and Redis containers, runs Prisma generate, migrate, and seed, then pnpm dev so the API and web dev servers run on the host.
+# API: http://localhost:3000 — Web: http://localhost:5173
+```
 
-For compilation checks, tests, and lint from source: pnpm build, pnpm test, pnpm test:integration, pnpm lint. More detail lives in docs/DEVELOPER_GUIDE.md.
+For compilation checks, tests, and lint:
+```bash
+pnpm build          # Build all workspaces
+pnpm test           # Run unit tests
+pnpm test:integration  # Run API integration tests
+pnpm lint           # Lint all workspaces
+```
 
-RESOURCES
+---
 
-Official documentation and tutorials used while building this stack (one primary entry point per area):
+## RESOURCES
 
-Node.js runtime: https://nodejs.org/docs/latest/api/
+Official documentation and tutorials used while building this stack:
 
-TypeScript: https://www.typescriptlang.org/docs/
+- Node.js runtime: https://nodejs.org/docs/latest/api/
+- TypeScript: https://www.typescriptlang.org/docs/
+- pnpm (workspaces): https://pnpm.io/workspaces
+- Docker: https://docs.docker.com/get-started/
+- Docker Compose: https://docs.docker.com/compose/
+- PostgreSQL: https://www.postgresql.org/docs/current/
+- Redis: https://redis.io/docs/latest/
+- Prisma ORM: https://www.prisma.io/docs
+- Express: https://expressjs.com/
+- React: https://react.dev/
+- Vite: https://vite.dev/guide/
+- Tailwind CSS: https://tailwindcss.com/docs
+- Passport (authentication): https://www.passportjs.org/
+- Socket.IO: https://socket.io/docs/v4/
+- Zod (validation): https://zod.dev/
+- Vitest: https://vitest.dev/guide/
+- Nginx: https://nginx.org/en/docs/
+- Solidity: https://docs.soliditylang.org/
+- ethers.js v6: https://docs.ethers.org/v6/
+- Avalanche: https://docs.avax.network/
+- i18next: https://www.i18next.com/overview/getting-started
 
-pnpm (workspaces and scripts): https://pnpm.io/workspaces
+Internal project documentation: `docs/DEVELOPER_GUIDE.md`, `docs/TEAM_STATUS.md`, and specification files under `docs/` for curriculum, UX, and QA.
 
-Docker: https://docs.docker.com/get-started/
+### Use of Artificial Intelligence
 
-Docker Compose: https://docs.docker.com/compose/
+AI tools (Claude, ChatGPT) were used in the following ways during development:
 
-PostgreSQL: https://www.postgresql.org/docs/current/
+- **Concept clarification**: to simplify and verify understanding of complex topics (blockchain internals, OAuth flows, Prisma relations) before implementing them.
+- **Test generation**: to produce comprehensive test suites covering edge cases that might not be immediately obvious, ensuring broader coverage across integration and unit tests.
+- **Code review and debugging**: to identify potential issues, suggest improvements, and validate architectural decisions.
+- **Content and documentation**: to assist with bilingual curriculum content (EN/FR), JSDoc documentation, and specification writing.
 
-Redis: https://redis.io/docs/latest/
+All AI-generated code was reviewed, tested, and adapted by team members before integration. The team maintained full ownership of architectural decisions, product design, and final implementation.
 
-Prisma ORM: https://www.prisma.io/docs
+---
 
-Express: https://expressjs.com/
+## TEAM INFORMATION
 
-React: https://react.dev/
+| 42 Login | Name | Role |
+|----------|------|------|
+| hgannet | Hugo Ganet | Technical Lead and Developer |
+| agravier | Arthur | Product Owner and Content Owner |
+| jbriz | JB | Developer, Frontend |
+| kamaral | Kauana | Developer, Backend and Blockchain |
+| theveste | Theo | Project Manager and Developer |
 
-Vite: https://vite.dev/guide/
+**Hugo Ganet (hgannet)** — Technical Lead and Developer. Owns backend architecture, Express API design, Prisma schema and migrations, integration tests, session and security middleware, and coordination of API contracts with the frontend.
 
-Tailwind CSS: https://tailwindcss.com/docs
+**Arthur (agravier)** — Product Owner and Content Owner. Defines curriculum scope, mission copy, tooltips, UI copy in English and French, QA scenarios, and alignment between pedagogy and product specifications.
 
-Passport (authentication): https://www.passportjs.org/
+**JB (jbriz)** — Developer, Frontend. Builds the React application, routing, forms, gamification and social screens, Tailwind layout, and hooks the UI to shared Zod types and REST plus Socket.IO.
 
-Socket.IO: https://socket.io/docs/v4/
+**Kauana (kamaral)** — Developer, Backend and Blockchain. Works on certificate flows, smart contract interaction, Avalanche RPC usage, and related persistence and API surfaces alongside core backend features.
 
-Zod (validation): https://zod.dev/
+**Theo (theveste)** — Project Manager and Developer. Keeps milestones and tasks visible, facilitates syncs and blockers, and contributes to the codebase (Docker, Makefile, deployment flow, and shared fixes across API and tooling).
 
-Vitest: https://vitest.dev/guide/
+---
 
-Nginx: https://nginx.org/en/docs/
+## PROJECT MANAGEMENT
 
-Solidity: https://docs.soliditylang.org/
+The team organized work by domain expertise: backend and data, frontend, content, blockchain, and infrastructure. Team members were assigned to areas matching their strengths.
 
-ethers.js v6: https://docs.ethers.org/v6/
+Communication and coordination:
+- **GitHub**: single repository with feature branches, pull requests with review, and GitHub Actions for CI validation before merging to main.
+- **Discord**: daily communication between team members for questions, blockers, and coordination.
+- **Meetings**: weekly meetings mixing remote (video call) and in-person sessions at 42, since some team members are remote.
 
-Avalanche (network and tooling): https://docs.avax.network/
+---
 
-i18next: https://www.i18next.com/overview/getting-started
+## TECHNICAL STACK
 
-Internal project docs: docs/DEVELOPER_GUIDE.md, docs/TEAM_STATUS.md, and specs under docs/ for curriculum, UX, and QA.
+**Frontend**: React 19, Vite 7, TypeScript, Tailwind CSS 4, react-router-dom, i18next for locales, Socket.IO client.
 
-Use of artificial intelligence: 
-need to explain
+**Backend**: Express 5, TypeScript, Prisma 7 with PostgreSQL 17, Redis 7, Passport (local, Google, Facebook), TOTP 2FA, express-rate-limit, multer for uploads, Resend for transactional email, Sharp for image processing, Socket.IO for WebSockets.
 
-TEAM INFORMATION
+**Blockchain**: ethers.js v6 against an Avalanche-compatible JSON-RPC endpoint and a deployed Solidity certificate contract.
 
-Hugo Ganet (hgannet) — Technical Lead and Developer. Owns backend architecture, Express API design, Prisma schema and migrations, integration tests, session and security middleware, and coordination of API contracts with the frontend.
+**Tooling**: pnpm workspaces, Turborepo, ESLint, Prettier, Vitest, Supertest.
 
-Arthur (agravier) — Product Owner and content owner. Defines curriculum scope, mission copy, tooltips, UI copy in English and French, QA scenarios, and alignment between pedagogy and product specs.
+**Deployment**: multi-stage Dockerfiles for API and web, docker-compose.yml, Nginx reverse proxy with self-signed TLS.
 
-JB (jbriz) — Developer, frontend. Builds the React application, routing, forms, gamification and social screens, Tailwind layout, and hooks the UI to shared Zod types and REST plus Socket.IO.
+PostgreSQL was chosen for strong relational modelling across users, progress, gamification, messaging, and audit-style tables, with Prisma migrations for reproducible schema changes. Express keeps the HTTP surface explicit and straightforward to test with Supertest.
 
-Kauana (ktombola) — Developer, backend and blockchain. Works on certificate flows, smart contract interaction, Avalanche RPC usage, and related persistence and API surfaces alongside core backend features.
+---
 
-Theo (theveste) — Project Manager and Developer. Keeps milestones and tasks visible, facilitates syncs and blockers, and contributes to the codebase (Docker, Makefile, deployment flow, and shared fixes across API and tooling).
+## DATABASE SCHEMA
 
-PROJECT MANAGEMENT
+The full model is in `apps/api/prisma/schema.prisma`. At a glance: User links to OAuth accounts, password reset tokens, progress rows (missions and chapters), token ledger, streak fields, achievements and user achievements, friendships, messages, notifications and preferences, GDPR-related entities, certificates with optional NFT fields, and supporting enums and indexes. Relations use foreign keys and unique constraints (for example one row per user per mission progress, one friendship pair, one user-achievement pair). Migration history lives in `apps/api/prisma/migrations`.
 
-Work is split by area: API and data, web client, content, and blockchain. Theo (theveste) tracks planning and check-ins; the team meets on a weekly rhythm for planning and blockers, uses GitHub for issues and pull requests, and discusses day-to-day questions on Discord. Mainline development targets the main branch; features land through reviewed PRs. Larger scope is tracked against the epic and story documents in the repository.
+---
 
-TECHNICAL STACK
+## FEATURES LIST
 
-Frontend: React 19, Vite 7, TypeScript, Tailwind 4, react-router-dom, i18next for locales, Socket.IO client. Backend: Express 5, TypeScript, Prisma 7 with PostgreSQL 17, Redis 7, Passport (local, Google, Facebook), TOTP 2FA, express-rate-limit, multer for uploads, Resend for email where configured, Sharp for images, Socket.IO for WebSockets. Blockchain: ethers.js v6 against an Avalanche-compatible JSON-RPC endpoint and a deployed certificate contract. Tooling: pnpm workspaces, Turborepo, ESLint, Prettier, Vitest, Supertest. Deployment: multi-stage Dockerfiles for api and web, docker-compose.yml, Nginx reverse proxy with TLS.
+**Authentication and account**: email registration and login, hashed passwords, logout, password reset mail flow, Google and Facebook OAuth, optional TOTP 2FA — Hugo Ganet, Kauana; UI JB.
 
-PostgreSQL was chosen for strong relational modelling across users, progress, gamification, messaging, and audit-style tables, with Prisma migrations for reproducible schema changes. Express keeps the HTTP surface explicit and easy to test with Supertest.
+**Curriculum and learning**: structure from `content/structure.json`, mission pages, exercises (several types), completion and progress tracking — Arthur (content), Hugo Ganet (engine), JB (UI).
 
-DATABASE SCHEMA
+**Gamification**: Knowledge Tokens, transactions, streaks, achievements, weekly-style leaderboard — Hugo Ganet, Kauana; UI JB.
 
-The full model is in apps/api/prisma/schema.prisma. At a glance: User links to OAuth accounts, password reset tokens, progress rows (missions and chapters), token ledger, streak fields, achievements and user achievements, friendships, messages, notifications and preferences, GDPR-related entities, certificates with optional NFT fields, and supporting enums and indexes. Relations use foreign keys and unique constraints (for example one row per user per mission progress, one friendship pair, one user–achievement pair). Migration history lives in apps/api/prisma/migrations. For a diagram, generate one from Prisma or refer to the Developer Guide sections on data.
+**Social**: friend requests and list, public profile, direct messages, online presence via sockets — Hugo Ganet, Kauana; UI JB.
 
-FEATURES LIST
+**Notifications**: REST listing and Socket.IO push for new events — Hugo Ganet; UI JB.
 
-Authentication and account: email registration and login, hashed passwords, logout, password reset mail flow, Google and Facebook OAuth, optional TOTP 2FA — Hugo Ganet, Kauana; UI JB.
+**Profile and files**: profile fields, avatar upload — Hugo Ganet, Kauana; UI JB.
 
-Curriculum and learning: structure from content/structure.json, mission pages, exercises (several types), completion and progress — Arthur (content), Hugo Ganet (engine), JB (UI).
+**Legal**: Privacy Policy and Terms of Service pages — Arthur (copy), JB (pages).
 
-Gamification: Knowledge Tokens, transactions, streaks, achievements, weekly-style leaderboard — Hugo Ganet, Kauana; UI JB.
+**GDPR**: data export and account deletion flows with email confirmation — Hugo Ganet, Kauana; UI JB.
 
-Social: friend requests and list, public profile, direct messages, online-style presence via sockets — Hugo Ganet, Kauana; UI JB.
+**Certificates**: completion certificate, PDF generation, mint and metadata fields on-chain — Kauana, Hugo Ganet; copy Arthur; UI JB.
 
-Notifications: REST listing and Socket.IO push for new events — Hugo Ganet; UI JB.
+**Internationalization**: English and French content and UI strings; i18n wiring in the web app — Arthur, JB.
 
-Profile and files: profile fields, avatar upload — Hugo Ganet, Kauana; UI JB.
+**Infrastructure**: Dockerfiles, docker-compose, Makefile (start and setup), TLS certificate generation, Prisma migrate and seed in the API container startup — Theo, Hugo Ganet.
 
-Legal: Privacy Policy and Terms of Service pages linked from the app — Arthur (copy), JB (pages).
+---
 
-GDPR: data export and account deletion flows with confirmation — Hugo Ganet, Kauana; UI JB.
+## MODULES
 
-Certificates: completion certificate, mint and metadata fields on chain — Kauana, Hugo Ganet; copy Arthur; UI JB.
+Point scale: Major = 2 points, Minor = 1 point. **Total claimed: 21 points** (7 points of headroom above the 14-point minimum).
 
-Internationalization: English and French content and UI strings; i18n wiring in the web app — Arthur, JB.
+| # | Module | Type | Pts | Description | Contributors |
+|---|--------|------|-----|-------------|--------------|
+| 1 | Web — Frontend and Backend Frameworks (React + Express) | Major | 2 | Full stack in `apps/web` and `apps/api` | Hugo, JB, Kauana, Theo, Arthur |
+| 2 | Web — Frontend Framework (React) | Minor | 1 | React 19 SPA with Vite, Tailwind, routing | JB, Arthur, Theo |
+| 3 | Web — Backend Framework (Express) | Minor | 1 | Express 5 API with Prisma, Redis, Passport | Hugo, Kauana |
+| 4 | Web — Real-time Features (Socket.IO) | Major | 2 | Notifications and presence | Hugo, Theo |
+| 5 | Web — User Interaction (chat, profiles, friends) | Major | 2 | Messaging, profiles, friends | Hugo, JB, Theo |
+| 6 | Web — ORM (Prisma) | Minor | 1 | All persistence through Prisma | Hugo |
+| 7 | Web — Notification System | Minor | 1 | Creation, read paths, real-time delivery | Hugo, JB |
+| 8 | Web — Custom Design System | Minor | 1 | Reusable UI components, palette, typography | Arthur, Theo |
+| 9 | User Management — Standard | Major | 2 | Profile, avatar, friends, status | Hugo, JB |
+| 10 | User Management — OAuth 2.0 | Minor | 1 | Google and Facebook | JB |
+| 11 | User Management — 2FA | Minor | 1 | TOTP enrollment and login step | Hugo, JB |
+| 12 | Gaming UX — Gamification | Minor | 1 | Tokens, streaks, achievements, leaderboard | Hugo, JB, Kauana |
+| 13 | Accessibility — Multiple Languages | Minor | 1 | English and French across content and UI | Arthur, JB |
+| 14 | Accessibility — Additional Browsers | Minor | 1 | Chrome (primary), Firefox and Safari verified | JB, Arthur |
+| 15 | Data — GDPR Features | Minor | 1 | Export and deletion with confirmations | Hugo |
+| 16 | Blockchain — Adapted IV.9 | Major | 2 | Certificates on Avalanche with Solidity contract | Kauana |
+| | **TOTAL** | | **21** | | |
 
-Infrastructure: Dockerfiles, docker-compose, Makefile (start and setup), TLS cert script, Prisma migrate and seed in the API container startup — Theo, Hugo Ganet.
+### Blockchain Module Justification (Adapted IV.9)
 
-MODULES
+The project implements the spirit of IV.9 Blockchain with a domain-adapted use case: **on-chain certificate issuance** instead of tournament score storage.
 
-Point scale: Major 2 points, Minor 1 point. Total claimed: 19 points (five points of headroom above the 14 minimum).
+- **Why this adaptation**: Unblock is an educational platform, so immutable proof of curriculum completion is a core business artifact, while tournament scores are not part of the product domain.
+- **What was implemented**: Solidity smart contract for certificate records, Avalanche RPC integration via ethers.js, backend minting and retrieval flows, persistence of `nftTokenId`, `nftTxHash`, and `contractAddress`, and authenticated API plus PDF exposure of blockchain certificate data.
+- **Technical challenges addressed**: smart contract interaction from backend services, idempotent minting flow, async blockchain failure handling without breaking certificate issuance, and DB/API schema evolution.
+- **Why this qualifies as Major**: it introduces a full extra technical layer (smart contract + chain integration + persistence + API contract changes) with non-trivial architecture and operational complexity.
 
-1. Web — Major — Frontend and backend frameworks (React + Express): 2 pts — Full stack in apps/web and apps/api — Hugo Ganet, JB, Kauana, Theo.
+---
 
-2. Web — Major — Real-time features (Socket.IO): 2 pts — Notifications and presence — Hugo Ganet, JB, Theo.
+## INDIVIDUAL CONTRIBUTIONS
 
-3. Web — Major — User interaction (chat, profiles, friends): 2 pts — Messaging, profiles, friends — Hugo Ganet, JB, Theo.
+**Hugo Ganet (hgannet)** built and tested the majority of the Express API, Prisma layer, auth and session stack, curriculum and exercise services, gamification and leaderboard logic, GDPR endpoints, test suites, and Docker/Nginx wiring. He integrated Socket.IO on the server and aligned REST shapes with the shared package.
 
-4. Web — Minor — ORM (Prisma): 1 pt — All persistence through Prisma — Hugo Ganet.
+**Arthur (agravier)** produced the bilingual curriculum (69 missions, tooltips, UI copy), specification documents under `docs/`, QA scenarios, and product wording for emails and legal pages. He kept narrative and learning goals consistent across JSON content files and oversaw product direction.
 
-5. Web — Minor — Notification system: 1 pt — Creation and read paths plus real-time delivery — Hugo Ganet, JB.
+**JB (jbriz)** implemented the React SPA: auth flows, curriculum and mission views, exercise UI, gamification dashboards, friends and messages, notifications client, settings, and i18n switching, using Tailwind and shared schemas for validation parity with the API.
 
-6. Web — Minor — Custom design system: 1 pt — Reusable UI components, palette, typography (Tailwind theme and components under apps/web) — Arthur.
+**Kauana (kamaral)** focused on certificates end to end: smart contract and Avalanche RPC usage from Node, persistence of chain fields, and co-owned backend areas such as tokens and heavy Prisma work alongside Hugo.
 
-7. User management — Major — Standard user management: 2 pts — Profile, avatar, friends, status — Hugo Ganet, JB.
+**Theo (theveste)** acted as project manager for scheduling and follow-up, and contributed to Dockerfiles, docker-compose, Makefile, local and CI database seeding flow, environment and TLS setup for one-command startup, plus cross-cutting fixes so the stack runs reliably for the whole team.
 
-8. User management — Minor — OAuth 2.0: 1 pt — Google and Facebook — Hugo Ganet.
+---
 
-9. User management — Minor — 2FA: 1 pt — TOTP enrollment and login step — Hugo Ganet, JB, Arthur.
+## BONUS
 
-10. Gaming UX — Minor — Gamification: 1 pt — Tokens, streaks, achievements, leaderboard — Hugo Ganet, JB.
+The team claims 21 module points. Any extra scope beyond 14 is documented in the module table above.
 
-11. Accessibility and i18n — Minor — Multiple languages: 1 pt — English and French across content and UI — Arthur, JB.
+---
 
-12. Accessibility — Minor — Additional browsers: 1 pt — Primary development on Chrome; Firefox and Safari checked on main flows — JB, Arthur.
+## LIMITATIONS
 
+- Self-signed TLS on localhost produces browser warnings until the certificate is manually trusted.
+- Blockchain features require a reachable Avalanche RPC endpoint and a deployed contract matching `CONTRACT_ADDRESS`.
+- Email features (password reset, notifications) require a valid Resend API key with a verified domain for non-test recipients.
+- A third language beyond English and French may be partial unless explicitly completed in i18n files.
 13. Data — Minor — GDPR features: 1 pt — Export and deletion with confirmations — Hugo Ganet.
 
 14. Blockchain — Major — Adapted IV.9: 2 pts — Certificates recorded on Avalanche with a Solidity contract, ethers.js integration, fields nftTokenId, nftTxHash, contractAddress, and certificate APIs. The subject text mentions tournament scores; this project stores completion certificates instead because they match an education product. Same technical bar: deploy contract, call chain from backend, persist proofs, expose authenticated reads — Kauana (deployment and env wiring).

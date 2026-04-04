@@ -1,12 +1,18 @@
+/**
+ * @file Tokens Routes — check balance, view transaction history.
+ * FR: Routes Tokens — consulte le solde, affiche l'historique des transactions.
+ */
+
 import { Router, type Request, type Response } from "express";
 import { requireAuth } from "../middleware/auth.js";
 import { validate } from "../middleware/validate.js";
 import { tokenHistoryQuerySchema } from "@transcendence/shared";
 import { getTokenBalance, getTokenHistory } from "../services/tokenService.js";
 
+/** Tokens router — all /api/v1/tokens endpoints. / FR: Routeur tokens. */
 export const tokensRouter = Router();
 
-// GET /api/v1/tokens/balance — authenticated, returns token balance summary
+/** GET /balance — return token balance summary. / FR: Retourne le resume du solde de tokens. */
 tokensRouter.get(
   "/balance",
   requireAuth,
@@ -17,7 +23,7 @@ tokensRouter.get(
   },
 );
 
-// GET /api/v1/tokens/history — authenticated, returns paginated transaction history
+/** GET /history — return paginated transaction history. / FR: Retourne l'historique des transactions pagine. */
 tokensRouter.get(
   "/history",
   requireAuth,

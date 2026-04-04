@@ -1,70 +1,40 @@
-#  Transcendence
+# Unblock — Transcendence
 
 A **gamified blockchain learning platform** — think Duolingo, but for blockchain technology.
 
-Most people are confused by blockchain, crypto, NFTs, and all that world. Existing education is either too shallow or too technical. Transcendence is a structured, progressive curriculum where you learn by doing — interactive missions, quizzes, simulations — all wrapped in crypto-themed gamification (Knowledge Tokens, streaks, leaderboards).
+Most people are confused by blockchain, crypto, NFTs, and all that world. Existing education is either too shallow or too technical. Unblock is a structured, progressive curriculum where you learn by doing — interactive missions, quizzes, simulations — all wrapped in crypto-themed gamification (Knowledge Tokens, streaks, leaderboards).
 
-## Current State
-
-**Backend: ✅ complete.** All 8 epics (50+ endpoints, 17 integration test files) are implemented and tested. This includes authentication (local + OAuth + 2FA), curriculum engine, exercise system, token economy, gamification, social features, notifications, GDPR compliance, and blockchain-backed certificate minting.
-
-**Content: ✅ complete.** All 69 missions in EN and FR, 40 tooltips (EN + FR), tooltip trigger maps, full UI copy (15 sections, EN + FR), and 9 QA/spec docs. Branch `feat/arthur-content-curriculum` is 6 commits ahead of main.
-
-**Frontend: 🚧 not started.** The `apps/web` directory contains only scaffolding (landing page, Privacy Policy, Terms of Service). The real frontend development begins now.
-
-### What's ready for the frontend team
-
-- 50+ REST API endpoints across 12 domains (auth, users, curriculum, exercises, tokens, gamification, friends, notifications, GDPR, certificates, tooltips, disclaimers)
-- Real-time Socket.IO events (notifications, presence)
-- Shared Zod schemas and TypeScript types in `@transcendence/shared` — use them for form validation and API response typing
-- Full integration test suite (17 test files) as living documentation of API behavior
-- Certificate APIs include metadata (`nftTokenId`, `nftTxHash`, `contractAddress`)
-- Docker Compose deployment with Nginx reverse proxy
-- Complete content layer: all mission text, exercise content, tooltips, and UI copy in EN + FR
-
-**Read the [Developer Guide](docs/DEVELOPER_GUIDE.md) to get started.** It covers everything: setup, architecture, full API reference, database schema, testing, and known gotchas.
-
-### Branch state
-
-| Branch | Status |
-|--------|--------|
-| `main` | Backend complete, original README/dev guide |
-| `feat/arthur-content-curriculum` | +6 commits — all content, specs, and QA docs |
+*Created as part of the 42 curriculum by hgannet, agravier, jbriz, ktombola, theveste.*
 
 ## Quick Start
 
+### Production (Docker Compose)
+
 ```bash
-# Prerequisites: Node.js 22, pnpm 10.22+, Docker
+cp .env.example .env
+# Edit .env: set SESSION_SECRET (openssl rand -hex 32), OAuth keys, blockchain vars
 
-pnpm install
+make            # Build and start the full stack
+# Open https://localhost:8443 (accept self-signed cert warning)
+```
 
-# Start Postgres and Redis
-docker run -d --name transcendence-db -e POSTGRES_USER=transcendence -e POSTGRES_PASSWORD=transcendence -e POSTGRES_DB=transcendence -p 54322:5432 postgres:17
-docker run -d --name transcendence-redis -p 6379:6379 redis:7-alpine
+### Development (local)
 
-# Create .env at the repo root (see Developer Guide for all variables)
-cat > .env << 'EOF'
-DATABASE_URL=postgresql://transcendence:transcendence@localhost:54322/transcendence?schema=public
-DATABASE_POOL_SIZE=10
-REDIS_URL=redis://localhost:6379
-SESSION_SECRET=dev-secret-change-in-production
-FRONTEND_URL=http://localhost:5173
-CONTRACT_ADDRESS=0x000000000000000000000000000000000000dEaD
-AVALANCHE_RPC_URL=http://localhost:8545
-BLOCKCHAIN_PRIVATE_KEY=0x1111111111111111111111111111111111111111111111111111111111111111
-EOF
-
-# Setup database
-pnpm --filter api db:generate
-pnpm --filter api db:migrate
-pnpm --filter api db:seed
-
-# Start dev servers
-pnpm dev
+```bash
+make setup      # Install deps, start DB + Redis, migrate, seed, run dev servers
 # API: http://localhost:3000 — Web: http://localhost:5173
 ```
 
-For the full setup (test database, environment variables, Docker deployment), see the [Developer Guide](docs/DEVELOPER_GUIDE.md#4-getting-started).
+| Command | Description |
+|---------|-------------|
+| `make` / `make start` | Production stack (Docker + Nginx + TLS) |
+| `make stop` | Stop containers |
+| `make down` | Stop and remove containers |
+| `make full-down` | Remove containers and volumes |
+| `make re` | Clean restart |
+| `make setup` | Local dev mode |
+
+For the full setup guide, see the [Developer Guide](docs/DEVELOPER_GUIDE.md).
 
 ## Content Files
 
@@ -189,9 +159,10 @@ The project implements the spirit of IV.9 Blockchain with a domain-adapted use c
 
 ## Team
 
-| Name | Role |
-|------|------|
-| Hugo Ganet | Backend |
-| Arthur | Content & Product |
-| JB | Frontend |
-| Kauana | Backend & Blockchain |
+| 42 Login | Name | Role |
+|----------|------|------|
+| hgannet | Hugo Ganet | Technical Lead, Backend |
+| agravier | Arthur | Product Owner, Content |
+| jbriz | JB | Frontend |
+| ktombola | Kauana | Backend, Blockchain |
+| theveste | Theo | Project Manager, DevOps |

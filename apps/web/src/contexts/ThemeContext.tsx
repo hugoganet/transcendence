@@ -1,3 +1,7 @@
+/**
+ * @file ThemeContext — Theme Context — manages light/dark theme toggling.
+ * FR: Contexte Theme — gere le basculement theme clair/sombre.
+ */
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
 type Theme = "light" | "dark";

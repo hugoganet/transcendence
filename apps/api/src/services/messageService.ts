@@ -1,3 +1,8 @@
+/**
+ * @file Message Service — sends and retrieves direct messages between users.
+ * FR: Service de messagerie — envoie et recupere les messages directs entre utilisateurs.
+ */
+
 import { prisma } from "../config/database.js";
 
 export async function sendMessage(senderId: string, receiverId: string, content: string){

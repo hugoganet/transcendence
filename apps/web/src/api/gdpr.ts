@@ -1,3 +1,7 @@
+/**
+ * @file gdpr API — request data export and account deletion.
+ * FR: API gdpr — demander l'export de donnees et la suppression de compte.
+ */
 import type {
   GdprExportResponse,
   GdprDeletionResponse,

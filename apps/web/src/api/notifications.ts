@@ -1,3 +1,7 @@
+/**
+ * @file notifications API — fetch and manage user notifications.
+ * FR: API notifications — recuperer et gerer les notifications.
+ */
 import type {
   Notification,
   NotificationPreferences,

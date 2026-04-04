@@ -1,3 +1,8 @@
+/**
+ * @file GDPR Service — processes data export and account deletion requests.
+ * FR: Service RGPD — traite les demandes d'export de donnees et de suppression de compte.
+ */
+
 import { randomBytes } from "crypto";
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";
@@ -189,7 +194,8 @@ export async function requestDataExport(
 
   const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
   const downloadLink = `${frontendUrl}/gdpr/export/${token}`;
-  await sendGdprExportEmail(userEmail, downloadLink);
+  const userRecord = await prisma.user.findUnique({ where: { id: userId }, select: { locale: true } });
+  await sendGdprExportEmail(userEmail, downloadLink, userRecord?.locale || "en");
 
   await logGdprAction(userId, "EXPORT_REQUESTED", ipAddress);
 }
@@ -253,7 +259,8 @@ export async function requestAccountDeletion(
 
   const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
   const confirmLink = `${frontendUrl}/gdpr/delete/confirm/${token}`;
-  await sendGdprDeletionConfirmEmail(userEmail, confirmLink);
+  const delUser = await prisma.user.findUnique({ where: { id: userId }, select: { locale: true } });
+  await sendGdprDeletionConfirmEmail(userEmail, confirmLink, delUser?.locale || "en");
 
   await logGdprAction(userId, "DELETION_REQUESTED", ipAddress);
 }

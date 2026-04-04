@@ -1,3 +1,7 @@
+/**
+ * @file ForgotPasswordPage — Forgot Password Page — request a password reset email.
+ * FR: Page Mot de Passe Oublie — demande d'email de reinitialisation.
+ */
 import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -40,7 +44,7 @@ export function ForgotPasswordPage() {
   if (sent) {
     return (
       <Card>
-        <h1 className="mb-4 text-center text-xl font-bold text-gray-900 font-heading">
+        <h1 className="mb-4 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("auth.forgotPassword.emailSent")}
         </h1>
         <Alert variant="info">
@@ -60,10 +64,10 @@ export function ForgotPasswordPage() {
 
   return (
     <Card>
-      <h1 className="mb-2 text-center text-xl font-bold text-gray-900 font-heading">
+      <h1 className="mb-2 text-center text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
         {t("auth.forgotPassword.title")}
       </h1>
-      <p className="mb-6 text-center text-sm text-gray-500">
+      <p className="mb-6 text-center text-sm text-gray-500 dark:text-warm-200">
         {t("auth.forgotPassword.subtitle")}
       </p>
       <form onSubmit={handleSubmit} className="space-y-4">

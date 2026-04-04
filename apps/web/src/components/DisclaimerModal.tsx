@@ -1,25 +1,34 @@
+/**
+ * @file DisclaimerModal — gate modal requiring user acceptance before proceeding.
+ * FR: DisclaimerModal — modale de consentement obligatoire avant de continuer.
+ */
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "./ui/Button.js";
 
+/** Props for DisclaimerModal. / FR: Props pour DisclaimerModal. */
 interface DisclaimerModalProps {
   text: string;
   onAccept: () => void;
 }
 
+/**
+ * Shows a disclaimer with checkbox confirmation; blocks access until accepted.
+ * FR: Affiche un avertissement avec case à cocher ; bloque l'accès tant qu'il n'est pas accepté.
+ */
 export function DisclaimerModal({ text, onAccept }: DisclaimerModalProps) {
   const { t } = useTranslation();
   const [accepted, setAccepted] = useState(false);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-        <h2 className="mb-4 text-lg font-bold text-gray-900 font-heading">
+      <div className="w-full max-w-md rounded-xl bg-white dark:bg-warm-800 p-6 shadow-xl">
+        <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("disclaimer.gateTitle")}
         </h2>
 
-        <div className="mb-4 max-h-60 overflow-y-auto rounded-lg bg-gray-50 px-4 py-3">
-          <p className="text-sm text-gray-700 leading-relaxed">{text}</p>
+        <div className="mb-4 max-h-60 overflow-y-auto rounded-lg bg-gray-50 dark:bg-warm-900 px-4 py-3">
+          <p className="text-sm text-gray-700 dark:text-warm-200 leading-relaxed">{text}</p>
         </div>
 
         <label className="mb-4 flex items-start gap-3">
@@ -29,7 +38,7 @@ export function DisclaimerModal({ text, onAccept }: DisclaimerModalProps) {
             onChange={(e) => setAccepted(e.target.checked)}
             className="mt-0.5 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
           />
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-gray-600 dark:text-warm-200">
             {t("disclaimer.acceptButton")}
           </span>
         </label>

@@ -1,3 +1,7 @@
+/**
+ * @file AES-256-GCM encryption/decryption for TOTP secrets at rest.
+ * FR: Chiffrement/dechiffrement AES-256-GCM des secrets TOTP au repos.
+ */
 import { createCipheriv, createDecipheriv, randomBytes } from "node:crypto";
 
 const ALGORITHM = "aes-256-gcm";
@@ -21,6 +25,7 @@ function getKey(): Buffer {
   return key;
 }
 
+/** Encrypt a TOTP secret for storage. FR: Chiffre un secret TOTP pour le stockage. */
 export function encryptTotpSecret(plaintext: string): string {
   const key = getKey();
   const iv = randomBytes(IV_LENGTH);
@@ -34,6 +39,7 @@ export function encryptTotpSecret(plaintext: string): string {
   return Buffer.concat([iv, authTag, encrypted]).toString("hex");
 }
 
+/** Decrypt a stored TOTP secret. FR: Dechiffre un secret TOTP stocke. */
 export function decryptTotpSecret(stored: string): string {
   const key = getKey();
   const data = Buffer.from(stored, "hex");

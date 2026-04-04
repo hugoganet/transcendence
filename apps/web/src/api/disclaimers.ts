@@ -1,3 +1,7 @@
+/**
+ * @file disclaimers API — fetch and accept legal disclaimers.
+ * FR: API disclaimers — recuperer et accepter les avertissements legaux.
+ */
 import { api } from "./client.js";
 
 interface DisclaimerResponse {

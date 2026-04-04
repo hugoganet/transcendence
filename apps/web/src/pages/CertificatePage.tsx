@@ -1,3 +1,7 @@
+/**
+ * @file CertificatePage — view and manage earned curriculum certificates.
+ * FR: Page Certificats — consultation et gestion des certificats obtenus.
+ */
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { GraduationCap, Copy, Check, ExternalLink } from "lucide-react";

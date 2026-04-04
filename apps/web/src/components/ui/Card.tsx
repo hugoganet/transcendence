@@ -1,12 +1,21 @@
+/**
+ * @file Card — container card with optional mouse-tracking glow effect.
+ * FR: Card — carte conteneur avec effet lumineux optionnel suivant la souris.
+ */
 import { type ReactNode } from "react";
 import { useMouse } from "../../hooks/useMouse.js";
 
+/** Props for Card. / FR: Props pour Card. */
 interface CardProps {
   children: ReactNode;
   className?: string;
   glow?: boolean;
 }
 
+/**
+ * Renders a bordered card with hover lift and an optional radial glow on mouse move.
+ * FR: Affiche une carte bordée avec effet de levée au survol et un halo radial optionnel au mouvement de souris.
+ */
 export function Card({ children, className = "", glow = true }: CardProps) {
   const { mouse, ref } = useMouse<HTMLDivElement>();
   const showGlow = glow && mouse.x !== null && mouse.y !== null;
@@ -22,8 +31,8 @@ export function Card({ children, className = "", glow = true }: CardProps) {
           style={{
             width: 300,
             height: 300,
-            left: mouse.x!,
-            top: mouse.y!,
+            left: mouse.x as number,
+            top: mouse.y as number,
             background: "radial-gradient(circle, rgba(43,158,158,0.12) 0%, transparent 70%)",
           }}
         />

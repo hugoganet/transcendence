@@ -1,9 +1,13 @@
+/**
+ * @file useLocale — useLocale — detects and manages the active locale.
+ * FR: useLocale — detecte et gere la locale active.
+ */
 import { useTranslation } from "react-i18next";
 import { useCallback } from "react";
 
-type SupportedLocale = "en" | "fr" | "es";
+type SupportedLocale = "en" | "fr" | "es" | "ar";
 
-const VALID_LOCALES: ReadonlySet<string> = new Set(["en", "fr", "es"]);
+const VALID_LOCALES: ReadonlySet<string> = new Set(["en", "fr", "es", "ar"]);
 
 export function useLocale() {
   const { i18n } = useTranslation();

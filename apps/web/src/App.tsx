@@ -1,3 +1,7 @@
+/**
+ * @file App — App — root component with router, providers, and global layout.
+ * FR: App — composant racine avec routeur, providers et layout global.
+ */
 import { Routes, Route } from "react-router-dom";
 import { AuthLayout } from "./layouts/AuthLayout.js";
 import { AppLayout } from "./layouts/AppLayout.js";

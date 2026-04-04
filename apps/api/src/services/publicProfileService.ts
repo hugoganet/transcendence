@@ -1,3 +1,8 @@
+/**
+ * @file Public Profile Service — builds public-facing user profiles with achievements.
+ * FR: Service de profil public — construit les profils utilisateur publics avec les succes.
+ */
+
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import type { PublicProfile } from "@transcendence/shared";

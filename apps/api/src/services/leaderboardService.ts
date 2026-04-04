@@ -1,3 +1,8 @@
+/**
+ * @file Leaderboard Service — computes and returns ranked leaderboard entries.
+ * FR: Service du classement — calcule et renvoie les entrees du classement.
+ */
+
 import { prisma } from "../config/database.js";
 import type { LeaderboardEntry, LeaderboardCurrentUser } from "@transcendence/shared";
 

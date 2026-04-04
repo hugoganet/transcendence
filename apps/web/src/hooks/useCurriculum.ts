@@ -1,3 +1,7 @@
+/**
+ * @file useCurriculum — useCurriculum — fetches curriculum tree with user progress.
+ * FR: useCurriculum — recupere l'arbre du curriculum avec la progression.
+ */
 import { useState, useEffect, useCallback } from "react";
 import type { CurriculumWithProgress } from "@transcendence/shared";
 import { curriculumApi } from "../api/curriculum.js";

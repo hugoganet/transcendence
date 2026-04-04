@@ -1,3 +1,7 @@
+/**
+ * @file AppLayout — App Layout — authenticated layout with sidebar, header, and navigation.
+ * FR: Layout App — layout authentifie avec sidebar, header et navigation.
+ */
 import { useState, useEffect } from "react";
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
@@ -46,28 +50,28 @@ export function AppLayout() {
     <>
       <Link
         to="/home"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.home")}
       </Link>
       <Link
         to="/curriculum"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.curriculum")}
       </Link>
       <Link
         to="/leaderboard"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.leaderboard")}
       </Link>
       <Link
         to="/achievements"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.achievements")}
@@ -75,7 +79,7 @@ export function AppLayout() {
       {dashboardRevealed && (
         <Link
           to="/dashboard"
-          className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+          className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
           onClick={onClick}
         >
           {t("labels.dashboard")}
@@ -83,14 +87,14 @@ export function AppLayout() {
       )}
       <Link
         to="/friends"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.friends")}
       </Link>
       <Link
         to="/glossary"
-        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+        className="text-sm font-medium text-gray-600 transition-colors hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
         onClick={onClick}
       >
         {t("labels.glossary")}
@@ -102,16 +106,23 @@ export function AppLayout() {
     <div className="min-h-screen bg-gray-50 dark:bg-warm-900">
       {/* Top nav */}
       <header className="sticky top-0 z-50 border-b border-gray-200/50 bg-white/80 backdrop-blur-md dark:border-warm-700/50 dark:bg-warm-900/80">
-        <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+        <div className="mx-auto flex h-14 max-w-5xl items-center px-4">
           <Link
             to="/home"
-            className="text-lg font-bold text-primary font-heading dark:text-teal-400"
+            className="flex shrink-0 items-center gap-2 text-lg font-bold font-heading"
           >
-            Transcendence
+            <img src="/blocky-logo.svg" alt="" className="h-8 w-8 rounded" />
+            <span>
+              <span className="text-primary dark:text-teal-400">Unblock</span>
+              <span className="text-amber-500">.chain</span>
+            </span>
           </Link>
 
+          {/* Spacer — min-w ensures brand and nav never overlap */}
+          <div className="min-w-8 flex-1" />
+
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-5 md:flex ml-8">
+          <nav className="hidden items-center gap-4 md:flex">
             {navLinks()}
 
             {/* Streak + Tokens in nav */}
@@ -126,13 +137,13 @@ export function AppLayout() {
               <NotificationBell />
               <Link
                 to="/profile"
-                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
               >
                 {user?.displayName || user?.email}
               </Link>
               <button
                 onClick={handleLogout}
-                className="text-sm text-gray-500 hover:text-red-600 dark:text-warm-400"
+                className="text-sm text-gray-500 hover:text-red-600 dark:text-warm-200"
               >
                 {t("labels.logout")}
               </button>
@@ -150,9 +161,9 @@ export function AppLayout() {
               aria-label={t("labels.toggleMenu")}
             >
               {menuOpen ? (
-                <X className="h-6 w-6 text-gray-600 dark:text-warm-300" />
+                <X className="h-6 w-6 text-gray-600 dark:text-warm-200" />
               ) : (
-                <Menu className="h-6 w-6 text-gray-600 dark:text-warm-300" />
+                <Menu className="h-6 w-6 text-gray-600 dark:text-warm-200" />
               )}
             </button>
           </div>
@@ -165,7 +176,7 @@ export function AppLayout() {
               {navLinks(() => setMenuOpen(false))}
               <Link
                 to="/profile"
-                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-300 dark:hover:text-teal-400"
+                className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
                 onClick={() => setMenuOpen(false)}
               >
                 {t("labels.profile")}

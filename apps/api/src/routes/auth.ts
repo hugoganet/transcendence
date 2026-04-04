@@ -1,3 +1,8 @@
+/**
+ * @file Auth Routes — handles register, login, logout, OAuth, 2FA, password reset.
+ * FR: Routes d'authentification — gere inscription, connexion, deconnexion, OAuth, 2FA, reinitialisation mdp.
+ */
+
 import { Router, type Request, type Response, type NextFunction } from "express";
 import rateLimit from "express-rate-limit";
 import { RedisStore } from "rate-limit-redis";
@@ -24,13 +29,14 @@ import {
 } from "../services/authService.js";
 import { AppError } from "../utils/AppError.js";
 
+/** Auth router — all /api/v1/auth endpoints. / FR: Routeur d'authentification. */
 export const authRouter = Router();
 
 // Must match the cookie name used by express-session (default: "connect.sid").
 // If a custom `name` is ever set in config/session.ts, update this constant.
 const SESSION_COOKIE_NAME = "connect.sid";
 
-// POST /api/v1/auth/register
+/** POST /register — create account, hash password, auto-login. / FR: Cree un compte, hash le mdp, auto-login. */
 authRouter.post(
   "/register",
   validate({ body: registerSchema }),
@@ -46,7 +52,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/login
+/** POST /login — verify credentials via Passport; sets pending2FA if enabled. / FR: Verifie les identifiants; active pending2FA si 2FA actif. */
 authRouter.post(
   "/login",
   validate({ body: loginSchema }),
@@ -73,7 +79,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/logout
+/** POST /logout — destroy session in Redis and clear cookie. / FR: Detruit la session Redis et supprime le cookie. */
 authRouter.post(
   "/logout",
   requireAuth,
@@ -97,7 +103,7 @@ authRouter.post(
   },
 );
 
-// GET /api/v1/auth/me — returns null (not 401) when unauthenticated to avoid console errors
+/** GET /me — return current user or null if unauthenticated. / FR: Retourne l'utilisateur courant ou null si non authentifie. */
 authRouter.get("/me", (req: Request, res: Response) => {
   if (!req.isAuthenticated() || !req.user) {
     return res.json({ data: null });
@@ -126,7 +132,7 @@ const forgotPasswordLimiter = rateLimit({
   },
 });
 
-// POST /api/v1/auth/forgot-password
+/** POST /forgot-password — send reset email; silent if email not found. / FR: Envoie un email de reinitialisation; silencieux si email inconnu. */
 authRouter.post(
   "/forgot-password",
   forgotPasswordLimiter,
@@ -163,7 +169,7 @@ const resetPasswordLimiter = rateLimit({
   },
 });
 
-// POST /api/v1/auth/reset-password
+/** POST /reset-password — verify token, hash new password, invalidate sessions. / FR: Verifie le token, hash le nouveau mdp, invalide les sessions. */
 authRouter.post(
   "/reset-password",
   resetPasswordLimiter,
@@ -198,7 +204,7 @@ const twoFactorVerifyLimiter = rateLimit({
   },
 });
 
-// POST /api/v1/auth/2fa/setup
+/** POST /2fa/setup — generate TOTP secret and QR code. / FR: Genere le secret TOTP et le QR code. */
 authRouter.post(
   "/2fa/setup",
   requireAuth,
@@ -208,7 +214,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/2fa/verify-setup
+/** POST /2fa/verify-setup — confirm first TOTP code to enable 2FA. / FR: Confirme le premier code TOTP pour activer le 2FA. */
 authRouter.post(
   "/2fa/verify-setup",
   requireAuth,
@@ -222,8 +228,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/2fa/verify (special auth — pending2FA session only)
-// Auth check runs before rate limiter so unauthenticated requests don't consume rate limit quota
+/** POST /2fa/verify — verify TOTP code at login (pending2FA only). / FR: Verifie le code TOTP a la connexion (pending2FA uniquement). */
 authRouter.post(
   "/2fa/verify",
   (req: Request, _res: Response, next: NextFunction) => {
@@ -243,7 +248,7 @@ authRouter.post(
   },
 );
 
-// POST /api/v1/auth/2fa/disable
+/** POST /2fa/disable — disable 2FA after verifying current TOTP code. / FR: Desactive le 2FA apres verification du code TOTP. */
 authRouter.post(
   "/2fa/disable",
   requireAuth,
@@ -273,7 +278,7 @@ authRouter.get("/providers", (_req: Request, res: Response) => {
   });
 });
 
-// GET /api/v1/auth/google — initiates Google OAuth flow
+/** GET /google — redirect to Google consent screen. / FR: Redirige vers l'ecran de consentement Google. */
 authRouter.get(
   "/google",
   (req: Request, res: Response, next: NextFunction) => {
@@ -285,7 +290,7 @@ authRouter.get(
   },
 );
 
-// GET /api/v1/auth/google/callback — handles Google callback
+/** GET /google/callback — exchange code for token, create/link user, redirect. / FR: Echange le code contre un token, cree/lie l'utilisateur, redirige. */
 authRouter.get(
   "/google/callback",
   (req: Request, res: Response, next: NextFunction) => {
@@ -311,7 +316,7 @@ authRouter.get(
   },
 );
 
-// GET /api/v1/auth/facebook — initiates Facebook OAuth flow
+/** GET /facebook — redirect to Facebook consent screen. / FR: Redirige vers l'ecran de consentement Facebook. */
 authRouter.get(
   "/facebook",
   (req: Request, res: Response, next: NextFunction) => {
@@ -323,7 +328,7 @@ authRouter.get(
   },
 );
 
-// GET /api/v1/auth/facebook/callback — handles Facebook callback
+/** GET /facebook/callback — exchange code for token, create/link user, redirect. / FR: Echange le code contre un token, cree/lie l'utilisateur, redirige. */
 authRouter.get(
   "/facebook/callback",
   (req: Request, res: Response, next: NextFunction) => {

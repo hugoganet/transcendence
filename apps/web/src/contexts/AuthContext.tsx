@@ -1,3 +1,7 @@
+/**
+ * @file AuthContext — Auth Context — provides authentication state and actions.
+ * FR: Contexte Auth — fournit l'etat d'authentification et les actions.
+ */
 import {
   createContext,
   useContext,
@@ -13,6 +17,7 @@ import type {
 } from "@transcendence/shared";
 import { authApi } from "../api/auth.js";
 import { ApiError } from "../api/client.js";
+import i18n from "../i18n.js";
 
 interface AuthState {
   user: UserProfile | null;
@@ -63,6 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     authApi.getMe().then(
       (user) => {
         if (!cancelled) {
+          if (user?.locale) i18n.changeLanguage(user.locale);
           setState({
             user: user ?? null,
             isLoading: false,
@@ -93,8 +99,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setState((prev) => ({ ...prev, requires2FA: true }));
       return;
     }
+    const profile = result as UserProfile;
+    if (profile.locale) i18n.changeLanguage(profile.locale);
     setState({
-      user: result as UserProfile,
+      user: profile,
       isLoading: false,
       isAuthenticated: true,
       requires2FA: false,
@@ -123,6 +131,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const verify2FA = useCallback(async (code: string) => {
     const user = await authApi.verify2FA(code);
+    if (user?.locale) i18n.changeLanguage(user.locale);
     setState({
       user,
       isLoading: false,

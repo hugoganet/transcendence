@@ -1,3 +1,8 @@
+/**
+ * @file Curriculum Service — builds curriculum trees with user progress overlays.
+ * FR: Service du programme — construit les arbres de cours avec la progression utilisateur.
+ */
+
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";
 import { AppError } from "../utils/AppError.js";
@@ -507,12 +512,12 @@ export async function completeMission(
     const highValueAwards = txResult.newAchievements.filter((a: AwardedAchievement) => HIGH_VALUE_ACHIEVEMENTS.includes(a.code));
 
     if (highValueAwards.length > 0) {
-      const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, displayName: true } });
+      const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, displayName: true, locale: true } });
       if (user?.email) {
         const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
         const achievementLink = `${frontendUrl}/achievements`;
         for (const award of highValueAwards) {
-          sendAchievementEmail(user.email, "en", user.displayName, award.title, award.description, achievementLink).catch(() => {});
+          sendAchievementEmail(user.email, user.locale || "en", user.displayName, award.title, award.description, achievementLink).catch(() => {});
         }
       }
     }
@@ -527,12 +532,12 @@ export async function completeMission(
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { email: true, displayName: true },
+      select: { email: true, displayName: true, locale: true },
     });
     if (user?.email) {
       const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
       const certLink = `${frontendUrl}/certificate`;
-      sendCompletionEmail(user.email, "en", user.displayName, certLink).catch(() => {});
+      sendCompletionEmail(user.email, user.locale || "en", user.displayName, certLink).catch(() => {});
     }
   }
 

@@ -1,15 +1,20 @@
+/**
+ * @file StatusBadge — colored pill showing item status (locked, available, inProgress, completed).
+ * FR: StatusBadge — pastille colorée indiquant le statut d'un élément (verrouillé, disponible, en cours, terminé).
+ */
 import { Check, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 type Status = "locked" | "available" | "inProgress" | "completed";
 
+/** Props for StatusBadge. / FR: Props pour StatusBadge. */
 interface StatusBadgeProps {
   status: Status;
   className?: string;
 }
 
 const statusClasses: Record<Status, string> = {
-  locked: "bg-gray-100 text-gray-500 dark:bg-warm-700 dark:text-warm-400",
+  locked: "bg-gray-100 text-gray-500 dark:bg-warm-700 dark:text-warm-200",
   available: "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
   inProgress: "bg-amber-50 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300",
   completed: "bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-300",
@@ -22,6 +27,10 @@ const statusKeys: Record<Status, string> = {
   completed: "labels.completed",
 };
 
+/**
+ * Displays a status pill with icon and translated label.
+ * FR: Affiche une pastille de statut avec icône et libellé traduit.
+ */
 export function StatusBadge({ status, className = "" }: StatusBadgeProps) {
   const { t } = useTranslation();
   const classes = statusClasses[status];

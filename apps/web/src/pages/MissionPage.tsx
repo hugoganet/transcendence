@@ -1,3 +1,7 @@
+/**
+ * @file MissionPage — Mission Page — mission detail with exercises list.
+ * FR: Page Mission — detail de mission avec liste d'exercices.
+ */
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -27,9 +31,9 @@ export function MissionPage() {
 
   useEffect(() => {
     if (mission) {
-      document.title = `${mission.title} — Transcendence`;
+      document.title = `${mission.title} — Unblock.chain`;
     } else {
-      document.title = `${t("labels.mission")} — Transcendence`;
+      document.title = `${t("labels.mission")} — Unblock.chain`;
     }
   }, [mission, t]);
 
@@ -67,10 +71,10 @@ export function MissionPage() {
         <Card>
           <div className="py-6">
             <Lock className="mx-auto mb-4 h-12 w-12 text-gray-300" />
-            <h2 className="mb-2 text-lg font-semibold text-gray-900">
+            <h2 className="mb-2 text-lg font-semibold text-gray-900 dark:text-warm-50">
               {t("pages.mission.lockedTitle")}
             </h2>
-            <p className="mb-6 text-sm text-gray-500">
+            <p className="mb-6 text-sm text-gray-500 dark:text-warm-200">
               {t("pages.mission.lockedBody")}
             </p>
             <Link to="/curriculum">
@@ -103,7 +107,7 @@ export function MissionPage() {
     <div className="mx-auto max-w-2xl space-y-6">
       <Link
         to="/curriculum"
-        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-primary"
+        className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-warm-200 hover:text-primary"
       >
         <ChevronLeft className="h-4 w-4" />
         {t("labels.curriculum")}
@@ -112,7 +116,7 @@ export function MissionPage() {
       <Card>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-medium text-gray-400">
+            <span className="text-xs font-medium text-gray-400 dark:text-warm-300">
               {mission.id}
             </span>
             <StatusBadge status={mission.status as MissionStatusValue} />
@@ -121,22 +125,22 @@ export function MissionPage() {
             />
           </div>
 
-          <h1 className="text-xl font-bold text-gray-900 font-heading">
+          <h1 className="text-xl font-bold text-gray-900 dark:text-warm-50 font-heading">
             {mission.title}
           </h1>
 
-          <p className="text-sm text-gray-600">{mission.description}</p>
+          <p className="text-sm text-gray-600 dark:text-warm-200">{mission.description}</p>
 
-          <div className="rounded-lg bg-blue-50 px-4 py-3">
-            <p className="text-sm font-medium text-blue-800">
+          <div className="rounded-lg bg-blue-50 dark:bg-blue-900/20 px-4 py-3">
+            <p className="text-sm font-medium text-blue-800 dark:text-blue-300">
               {t("labels.learningObjective")}
             </p>
-            <p className="mt-1 text-sm text-blue-700">
+            <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
               {mission.learningObjective}
             </p>
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-gray-500">
+          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-warm-200">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" />
               ~{mission.estimatedMinutes} {t("labels.minutes")}
@@ -165,14 +169,14 @@ export function MissionPage() {
 
       {mission.tooltipTerms && mission.tooltipTerms.length > 0 && (
         <Card>
-          <h2 className="mb-3 text-sm font-semibold text-gray-900">
+          <h2 className="mb-3 text-sm font-semibold text-gray-900 dark:text-warm-50">
             {t("pages.mission.keyTerms")}
           </h2>
           <div className="flex flex-wrap gap-2">
             {mission.tooltipTerms.map((term) => (
               <span
                 key={term}
-                className="rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600"
+                className="rounded-full bg-gray-100 dark:bg-warm-700 px-3 py-1 text-xs text-gray-600 dark:text-warm-200"
               >
                 {term}
               </span>

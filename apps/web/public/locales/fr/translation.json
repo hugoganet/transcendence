@@ -428,6 +428,10 @@
     "gas_deducted": "Gas déduit",
     "system_message": "Mise à jour de Transcendence"
   },
+  "theme": {
+    "switchToLight": "Passer en mode clair",
+    "switchToDark": "Passer en mode sombre"
+  },
   "errors": {
     "networkError": "Problème de connexion. Vérifiez votre réseau et réessayez.",
     "serverError": "Une erreur est survenue côté serveur. Réessayez dans un moment.",
@@ -445,7 +449,8 @@
     "label": "Langue",
     "en": "English",
     "fr": "Français",
-    "es": "Español"
+    "es": "Español",
+    "ar": "العربية"
   },
   "chat": {
     "title": "Discussion",
@@ -627,11 +632,74 @@
     },
     "privacyPolicy": {
       "title": "Politique de confidentialité",
-      "backToHome": "Retour à l'accueil"
+      "backToHome": "Retour à l'accueil",
+      "lastUpdated": "Dernière mise à jour : 7 mars 2026",
+      "s1Title": "1. Introduction",
+      "s1Body": "Bienvenue sur Transcendence. Nous nous engageons à protéger vos données personnelles et votre droit à la vie privée. Cette Politique de confidentialité explique comment nous collectons, utilisons, stockons et partageons vos informations lorsque vous utilisez notre plateforme d'éducation blockchain.",
+      "s2Title": "2. Données collectées",
+      "s2Intro": "Nous collectons les types d'informations suivants :",
+      "s2Item1": "Informations de compte : adresse e-mail, nom affiché et mot de passe (haché).",
+      "s2Item2": "Progression d'apprentissage : missions terminées, soumissions d'exercices, XP gagnés et soldes de jetons de connaissance.",
+      "s2Item3": "Données d'utilisation : pages visitées, durée des sessions et interactions avec les fonctionnalités.",
+      "s2Item4": "Données techniques : type de navigateur, informations sur l'appareil et adresse IP.",
+      "s3Title": "3. Utilisation de vos données",
+      "s3Intro": "Nous utilisons vos données pour :",
+      "s3Item1": "Fournir et maintenir notre service d'éducation blockchain.",
+      "s3Item2": "Suivre votre progression d'apprentissage et personnaliser votre expérience.",
+      "s3Item3": "Gérer votre compte et authentifier vos sessions.",
+      "s3Item4": "Envoyer des notifications sur vos séries d'apprentissage et vos succès.",
+      "s3Item5": "Améliorer notre plateforme en fonction des usages.",
+      "s4Title": "4. Stockage et sécurité des données",
+      "s4Body": "Vos données sont stockées dans des bases de données PostgreSQL sécurisées. Les sessions sont gérées via Redis avec un stockage côté serveur. Toutes les communications sont chiffrées via HTTPS/TLS. Nous mettons en œuvre des mesures de sécurité conformes aux standards de l'industrie, incluant la limitation de débit, la protection CSRF et la gestion sécurisée des cookies.",
+      "s5Title": "5. Cookies et sessions",
+      "s5Body": "Transcendence utilise des cookies de session pour maintenir votre état d'authentification. Ces cookies sont essentiels au fonctionnement de la plateforme et ne sont pas utilisés à des fins publicitaires ou de suivi. Les données de session sont stockées côté serveur dans Redis et sont automatiquement supprimées à l'expiration de votre session.",
+      "s6Title": "6. Partage avec des tiers",
+      "s6Intro": "Nous ne vendons, n'échangeons ni ne partageons vos données personnelles avec des tiers, sauf :",
+      "s6Item1": "Lorsque la loi ou une procédure judiciaire l'exige.",
+      "s6Item2": "Avec des prestataires de services qui nous aident à exploiter notre plateforme (par exemple, l'envoi d'e-mails), dans le cadre d'accords stricts de traitement des données.",
+      "s7Title": "7. Vos droits (RGPD)",
+      "s7Intro": "En vertu du Règlement général sur la protection des données (RGPD), vous avez le droit de :",
+      "s7Item1": "Accès : Demander une copie des données personnelles que nous détenons à votre sujet.",
+      "s7Item2": "Exportation : Télécharger vos données dans un format portable.",
+      "s7Item3": "Rectification : Demander la correction de données inexactes.",
+      "s7Item4": "Suppression : Demander la suppression définitive de votre compte et de toutes les données associées.",
+      "s7Item5": "Limitation : Demander que nous limitions le traitement de vos données.",
+      "s7Item6": "Opposition : Vous opposer à certains types de traitement de données.",
+      "s7Outro": "Pour exercer l'un de ces droits, veuillez utiliser les paramètres du compte dans la plateforme ou nous contacter à l'adresse ci-dessous.",
+      "s8Title": "8. Conservation des données",
+      "s8Body": "Nous conservons vos données personnelles tant que votre compte est actif. Si vous demandez la suppression de votre compte, toutes les données personnelles seront définitivement supprimées dans un délai de 30 jours. Les statistiques d'utilisation anonymisées peuvent être conservées à des fins d'amélioration de la plateforme.",
+      "s9Title": "9. Coordonnées",
+      "s9Body": "Si vous avez des questions sur cette Politique de confidentialité ou souhaitez exercer vos droits, veuillez nous contacter à :"
     },
     "termsOfService": {
       "title": "Conditions d'utilisation",
-      "backToHome": "Retour à l'accueil"
+      "backToHome": "Retour à l'accueil",
+      "lastUpdated": "Dernière mise à jour : 7 mars 2026",
+      "s1Title": "1. Acceptation des conditions",
+      "s1Body": "En accédant à Transcendence ou en l'utilisant, vous acceptez d'être lié par ces Conditions d'utilisation. Si vous n'acceptez pas ces conditions, vous ne pouvez pas utiliser la plateforme.",
+      "s2Title": "2. Description du service",
+      "s2Body": "Transcendence est une plateforme éducative conçue pour enseigner les concepts de la blockchain à des adultes non techniques à travers des leçons ludiques et courtes. La plateforme utilise des jetons simulés, des frais de gas et des portefeuilles à des fins éducatives uniquement. Aucune cryptomonnaie réelle, jeton ou actif numérique ayant une valeur monétaire n'est impliqué.",
+      "s3Title": "3. Comptes utilisateurs",
+      "s3Body": "Pour utiliser Transcendence, vous devez créer un compte. Vous devez avoir au moins 16 ans pour créer un compte. Vous êtes responsable de la confidentialité de vos identifiants et de toutes les activités effectuées sous votre compte.",
+      "s4Title": "4. Utilisation acceptable",
+      "s4Intro": "Vous acceptez d'utiliser Transcendence uniquement à des fins éducatives. Vous ne pouvez pas :",
+      "s4Item1": "Tenter d'accéder sans autorisation à d'autres comptes ou systèmes de la plateforme.",
+      "s4Item2": "Utiliser la plateforme pour distribuer du contenu nuisible, offensant ou illégal.",
+      "s4Item3": "Interférer avec le fonctionnement de la plateforme ou son infrastructure.",
+      "s4Item4": "Utiliser des outils automatisés pour accéder à la plateforme sans permission.",
+      "s4Item5": "Usurper l'identité d'un autre utilisateur.",
+      "s5Title": "5. Avertissement sur le contenu éducatif",
+      "s5Body": "Tout le contenu de Transcendence est fourni à des fins éducatives uniquement et ne constitue pas un conseil financier, d'investissement ou juridique. Les jetons simulés, les frais de gas et les mécanismes de portefeuille de cette plateforme sont des outils d'apprentissage et n'ont aucune valeur monétaire réelle. Consultez toujours un professionnel qualifié avant de prendre des décisions financières liées à la blockchain ou aux cryptomonnaies.",
+      "s6Title": "6. Propriété intellectuelle",
+      "s6Body": "Tout le contenu, le design, le code et les supports pédagogiques de Transcendence sont la propriété de l'équipe Transcendence ou de ses concédants. Vous ne pouvez pas reproduire, distribuer ou créer des œuvres dérivées de notre contenu sans autorisation explicite.",
+      "s7Title": "7. Limitation de responsabilité",
+      "s7Body": "Transcendence est fourni « tel quel » sans garantie d'aucune sorte. Nous ne sommes pas responsables des dommages indirects, accessoires ou consécutifs résultant de votre utilisation de la plateforme. Notre responsabilité totale ne saurait excéder le montant que vous avez payé pour utiliser le service, le cas échéant.",
+      "s8Title": "8. Résiliation",
+      "s8Body": "Nous nous réservons le droit de suspendre ou de résilier votre compte si vous violez ces Conditions d'utilisation. Vous pouvez supprimer votre compte à tout moment via les paramètres de la plateforme. En cas de suppression de compte, vos données personnelles seront traitées conformément à notre Politique de confidentialité.",
+      "s9Title": "9. Droit applicable",
+      "s9Body": "Ces Conditions d'utilisation sont régies et interprétées conformément au droit de l'Union européenne. Tout litige découlant de ces conditions sera soumis à la compétence exclusive des tribunaux compétents.",
+      "s10Title": "10. Modifications des conditions",
+      "s10Body": "Nous pouvons mettre à jour ces Conditions d'utilisation de temps à autre. Nous informerons les utilisateurs inscrits des changements significatifs par e-mail ou notification sur la plateforme. L'utilisation continue de la plateforme après les modifications constitue l'acceptation des conditions mises à jour."
     }
   }
 }

@@ -1,3 +1,8 @@
+/**
+ * @file Email Service — sends transactional emails via Resend (welcome, reset, GDPR, etc.).
+ * FR: Service email — envoie les emails transactionnels via Resend (bienvenue, reinitialisation, RGPD, etc.).
+ */
+
 import { Resend } from "resend";
 
 let resend: Resend | null = null;

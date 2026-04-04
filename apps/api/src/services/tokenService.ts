@@ -1,3 +1,8 @@
+/**
+ * @file Token Service — credits, debits and queries in-app token balances.
+ * FR: Service de jetons — credite, debite et consulte les soldes de jetons in-app.
+ */
+
 import { prisma } from "../config/database.js";
 import { MISSION_COMPLETION_TOKEN_REWARD, GAS_FEE_PER_SUBMISSION } from "@transcendence/shared";
 import type { TokenBalance } from "@transcendence/shared";

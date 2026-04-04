@@ -1,3 +1,7 @@
+/**
+ * @file Loads .env from monorepo root, then optional API-local override.
+ * FR: Charge le .env racine du monorepo, puis surcharge locale API optionnelle.
+ */
 import { config } from "dotenv";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";

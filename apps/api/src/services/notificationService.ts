@@ -1,3 +1,8 @@
+/**
+ * @file Notification Service — creates, pushes and manages user notifications.
+ * FR: Service de notifications — cree, envoie et gere les notifications utilisateur.
+ */
+
 import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../config/database.js";
 import { AppError } from "../utils/AppError.js";

@@ -1,3 +1,8 @@
+/**
+ * @file Exercise Service — validates exercise submissions and records progress.
+ * FR: Service des exercices — valide les soumissions d'exercices et enregistre la progression.
+ */
+
 import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../config/database.js";
 import { getContent } from "../utils/contentLoader.js";

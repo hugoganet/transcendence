@@ -1,3 +1,7 @@
+/**
+ * @file RegisterPage — Register Page — new user registration form.
+ * FR: Page Inscription — formulaire d'inscription.
+ */
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -99,7 +103,7 @@ export function RegisterPage() {
             onChange={(e) => setAgeConfirmed(e.target.checked)}
             className="mt-1 h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary dark:border-warm-600"
           />
-          <label htmlFor="age-confirm" className="text-sm text-gray-600 dark:text-warm-300">
+          <label htmlFor="age-confirm" className="text-sm text-gray-600 dark:text-warm-200">
             {t("auth.signup.ageConfirm")}
           </label>
         </div>
@@ -111,7 +115,7 @@ export function RegisterPage() {
         </Button>
       </form>
       <OAuthButtons />
-      <p className="mt-4 text-center text-sm text-gray-500">
+      <p className="mt-4 text-center text-sm text-gray-500 dark:text-warm-200">
         {t("auth.signup.hasAccount")}{" "}
         <Link
           to="/login"

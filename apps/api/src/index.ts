@@ -1,3 +1,7 @@
+/**
+ * @file Server Entry Point — boots HTTP server, Socket.IO, schedulers, and graceful shutdown.
+ * FR: Point d'entree serveur — demarre le serveur HTTP, Socket.IO, les planificateurs et l'arret gracieux.
+ */
 import { createServer } from "node:http";
 import { app, registerRoutes } from "./app.js";
 import { prisma, prismaPool } from "./config/database.js";
@@ -34,6 +38,10 @@ export { io };
 //   6. prismaPool.end()         — close pg connection pool
 // When adding new infrastructure (e.g., Resend, Passport), add shutdown here
 // AFTER consumers and BEFORE databases.
+/**
+ * Shuts down all connections in dependency order: HTTP, Socket.IO, Redis, Prisma, PG pool.
+ * FR: Arrete toutes les connexions dans l'ordre de dependance : HTTP, Socket.IO, Redis, Prisma, pool PG.
+ */
 function gracefulShutdown(signal: string) {
   console.log(`Received ${signal}. Shutting down...`);
   stopStreakReminderScheduler();

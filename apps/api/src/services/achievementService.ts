@@ -1,3 +1,8 @@
+/**
+ * @file Achievement Service — checks and awards user achievements.
+ * FR: Service des succes — verifie et attribue les succes utilisateur.
+ */
+
 import { prisma } from "../config/database.js";
 import type { AchievementStatus } from "@transcendence/shared";
 

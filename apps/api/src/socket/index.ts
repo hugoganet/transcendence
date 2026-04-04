@@ -1,3 +1,7 @@
+/**
+ * @file Socket.IO server setup — Redis adapter, session sharing, connection handling.
+ * FR: Configuration du serveur Socket.IO — adaptateur Redis, partage de session, gestion des connexions.
+ */
 import type { Server as HttpServer } from "node:http";
 import type { RequestHandler } from "express";
 import { Server, type Socket } from "socket.io";
