@@ -71,7 +71,7 @@ export function ChatBox({ userId, onClose }: Props) {
 
   /* Portal to body: AppLayout's main uses transform (animate-fade-in-up), which breaks viewport-fixed for descendants. */
   return createPortal(
-    <div className="fixed bottom-5 right-5 z-[100] box-border flex h-[50vh] w-[30vw] max-h-[calc(100vh-2.5rem)] max-w-[calc(100vw-2.5rem)] flex-col rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800">
+    <div className="fixed bottom-5 right-5 z-[100] box-border flex h-[50vh] w-[30vw] min-w-72 max-h-[calc(100vh-2.5rem)] max-w-[calc(100vw-2.5rem)] flex-col rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800">
       <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-3 py-2 dark:border-warm-700">
         <strong className="text-sm font-semibold text-gray-900 dark:text-warm-50">{t("chat.title")}</strong>
         <button

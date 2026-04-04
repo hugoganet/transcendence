@@ -81,7 +81,7 @@ export function Landing() {
         <div className="relative max-w-lg text-center">
           <div className="mb-4 flex flex-col items-center gap-4">
             <img src="/blocky-logo.svg" alt="Blocky mascot" className="h-20 w-20 rounded-xl" />
-            <h1 className="text-5xl font-bold tracking-tight font-heading">
+            <h1 className="text-3xl font-bold tracking-tight font-heading sm:text-5xl">
               <span className="text-primary dark:text-teal-400">Unblock</span>
               <span className="text-amber-500">.chain</span>
             </h1>
@@ -149,7 +149,7 @@ export function Landing() {
       {/* Stats section */}
       <section className="px-4 pb-20">
         <div ref={statsRef} className="mx-auto max-w-3xl">
-          <div className="grid grid-cols-3 gap-8 rounded-2xl border border-gray-200/50 bg-white/60 p-8 backdrop-blur-sm dark:border-warm-700/50 dark:bg-warm-800/60">
+          <div className="grid grid-cols-1 gap-4 rounded-2xl border border-gray-200/50 bg-white/60 p-4 backdrop-blur-sm sm:grid-cols-3 sm:gap-8 sm:p-8 dark:border-warm-700/50 dark:bg-warm-800/60">
             <div className="text-center">
               <div className="text-3xl font-bold text-primary dark:text-teal-400">
                 <AnimatedCounter target={50} suffix="+" />
