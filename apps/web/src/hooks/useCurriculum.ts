@@ -3,6 +3,7 @@
  * FR: useCurriculum — recupere l'arbre du curriculum avec la progression.
  */
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import type { CurriculumWithProgress } from "@transcendence/shared";
 import { curriculumApi } from "../api/curriculum.js";
 
@@ -14,6 +15,7 @@ interface UseCurriculumResult {
 }
 
 export function useCurriculum(): UseCurriculumResult {
+  const { i18n } = useTranslation();
   const [curriculum, setCurriculum] =
     useState<CurriculumWithProgress | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +36,7 @@ export function useCurriculum(): UseCurriculumResult {
 
   useEffect(() => {
     refresh();
-  }, [refresh]);
+  }, [refresh, i18n.language]);
 
   return { curriculum, isLoading, error, refresh };
 }

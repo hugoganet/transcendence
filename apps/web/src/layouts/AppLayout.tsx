@@ -122,7 +122,7 @@ export function AppLayout() {
           <div className="min-w-8 flex-1" />
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-4 md:flex">
+          <nav className="hidden items-center gap-4 lg:flex">
             {navLinks()}
 
             {/* Streak + Tokens in nav */}
@@ -151,7 +151,7 @@ export function AppLayout() {
           </nav>
 
           {/* Mobile: streak + tokens + hamburger */}
-          <div className="flex items-center gap-3 md:hidden">
+          <div className="flex items-center gap-3 lg:hidden">
             {streak && <StreakWidget streak={streak} compact />}
             {balance && <TokenBalanceDisplay balance={balance} compact />}
             <NotificationBell />
@@ -171,7 +171,7 @@ export function AppLayout() {
 
         {/* Mobile menu */}
         {menuOpen && (
-          <nav className="animate-fade-in-up border-t border-gray-100 bg-white px-4 py-3 md:hidden dark:border-warm-700 dark:bg-warm-900">
+          <nav className="animate-fade-in-up border-t border-gray-100 bg-white px-4 py-3 lg:hidden dark:border-warm-700 dark:bg-warm-900">
             <div className="flex flex-col gap-3">
               {navLinks(() => setMenuOpen(false))}
               <Link

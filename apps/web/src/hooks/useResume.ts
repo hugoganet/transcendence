@@ -3,6 +3,7 @@
  * FR: useResume — trouve la prochaine mission incomplete a reprendre.
  */
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import type { ResumeResponse } from "@transcendence/shared";
 import { curriculumApi } from "../api/curriculum.js";
 
@@ -14,6 +15,7 @@ interface UseResumeResult {
 }
 
 export function useResume(): UseResumeResult {
+  const { i18n } = useTranslation();
   const [resume, setResume] = useState<ResumeResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -33,7 +35,7 @@ export function useResume(): UseResumeResult {
 
   useEffect(() => {
     refresh();
-  }, [refresh]);
+  }, [refresh, i18n.language]);
 
   return { resume, isLoading, error, refresh };
 }
