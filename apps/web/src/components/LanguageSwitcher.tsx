@@ -139,7 +139,7 @@ export function LanguageSwitcher({ variant = "pill" }: LanguageSwitcherProps) {
         ? "bottom-full mb-2"
         : "top-full mt-2";
 
-    const widthClass = variant === "menu-item" ? "left-0 right-0" : "right-0 min-w-[160px]";
+    const widthClass = variant === "menu-item" ? "inset-x-0" : "end-0 min-w-[160px]";
 
     return (
       <ul

@@ -9,7 +9,7 @@ import { ThemeToggle } from "../components/ThemeToggle.js";
 export function PublicLayout() {
   return (
     <div className="relative min-h-screen">
-      <div className="absolute right-4 top-4 z-50 flex items-center gap-2">
+      <div className="absolute end-4 top-4 z-50 flex items-center gap-2">
         <ThemeToggle />
         <LanguageSwitcher variant="pill" />
       </div>
