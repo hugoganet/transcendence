@@ -4,6 +4,7 @@
  */
 import { useTranslation } from "react-i18next";
 import { useCallback } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 type SupportedLocale = "en" | "fr" | "es" | "ar";
 
@@ -11,6 +12,7 @@ const VALID_LOCALES: ReadonlySet<string> = new Set(["en", "fr", "es", "ar"]);
 
 export function useLocale() {
   const { i18n } = useTranslation();
+  const { isAuthenticated } = useAuth();
 
   const changeLocale = useCallback(
     (locale: SupportedLocale) => {
@@ -19,8 +21,9 @@ export function useLocale() {
       i18n.changeLanguage(locale);
       // document.documentElement.lang is set by the i18n.on("languageChanged") listener in i18n.ts
 
-      // Fire-and-forget: persist locale to user profile when authenticated.
-      // Silently ignores 401 (unauthenticated). Logs non-401 failures.
+      // Only persist to server when authenticated — no need to call API as guest.
+      if (!isAuthenticated) return;
+
       fetch("/api/v1/users/me", {
         method: "PATCH",
         credentials: "include",
@@ -28,7 +31,7 @@ export function useLocale() {
         body: JSON.stringify({ locale }),
       })
         .then((res) => {
-          if (!res.ok && res.status !== 401) {
+          if (!res.ok) {
             console.warn(`Failed to persist locale preference: ${res.status}`);
           }
         })
@@ -36,7 +39,7 @@ export function useLocale() {
           // Network error — preference is in localStorage via i18next
         });
     },
-    [i18n],
+    [i18n, isAuthenticated],
   );
 
   return {
