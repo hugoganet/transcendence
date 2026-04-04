@@ -10,7 +10,7 @@ import { ThemeToggle } from "../components/ThemeToggle.js";
 export function AuthLayout() {
   const { t } = useTranslation();
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-warm-900">
+    <div className="flex min-h-screen flex-col bg-[var(--color-background)]">
       <div className="absolute end-4 top-4 z-50 flex items-center gap-2">
         <ThemeToggle />
         <LanguageSwitcher variant="pill" />

@@ -14,7 +14,7 @@ export function TermsOfService() {
   }, [t]);
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6 lg:px-8">
+    <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 text-[var(--color-text)]">
       <Link to="/" className="mb-6 inline-block text-primary underline hover:text-primary/70">
         &larr; {t("pages.termsOfService.backToHome")}
       </Link>
