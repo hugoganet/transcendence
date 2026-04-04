@@ -13,28 +13,28 @@ export function useLocale() {
   const { i18n } = useTranslation();
 
   const changeLocale = useCallback(
-    (locale: SupportedLocale) => {
+    async (locale: SupportedLocale) => {
       if (!VALID_LOCALES.has(locale)) return;
 
-      i18n.changeLanguage(locale);
-      // document.documentElement.lang is set by the i18n.on("languageChanged") listener in i18n.ts
-
-      // Fire-and-forget: persist locale to user profile when authenticated.
-      // Silently ignores 401 (unauthenticated). Logs non-401 failures.
-      fetch("/api/v1/users/me", {
-        method: "PATCH",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ locale }),
-      })
-        .then((res) => {
-          if (!res.ok && res.status !== 401) {
-            console.warn(`Failed to persist locale preference: ${res.status}`);
-          }
-        })
-        .catch(() => {
-          // Network error — preference is in localStorage via i18next
+      // Persist to DB first so subsequent API re-fetches read the updated locale.
+      // Silently ignores 401 (unauthenticated) and network errors.
+      try {
+        const res = await fetch("/api/v1/users/me", {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ locale }),
         });
+        if (!res.ok && res.status !== 401) {
+          console.warn(`Failed to persist locale preference: ${res.status}`);
+        }
+      } catch {
+        // Network error — preference saved to localStorage via i18next
+      }
+
+      // Then switch i18n — triggers hook re-fetches with DB already updated.
+      // document.documentElement.lang is set by the i18n.on("languageChanged") listener in i18n.ts
+      i18n.changeLanguage(locale);
     },
     [i18n],
   );
