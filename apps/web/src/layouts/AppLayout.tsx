@@ -132,7 +132,7 @@ export function AppLayout() {
                 to="/profile"
                 className="text-sm font-medium text-gray-600 hover:text-primary dark:text-warm-200 dark:hover:text-teal-400"
               >
-                <span className="max-w-[100px] truncate">{user?.displayName || user?.email}</span>
+                {user?.displayName || user?.email}
               </Link>
               <button
                 onClick={handleLogout}

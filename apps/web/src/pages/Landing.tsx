@@ -55,7 +55,7 @@ export function Landing() {
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-teal-50 via-white to-warm-50 dark:from-teal-900/40 dark:via-warm-900 dark:to-warm-900">
+    <div className="relative min-h-screen bg-gradient-to-b from-teal-50 via-white to-warm-50 dark:from-teal-900/40 dark:via-warm-900 dark:to-warm-900">
       {/* Radial accents */}
       <div className="absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2 rounded-full bg-teal-400/10 blur-3xl dark:bg-teal-500/5" />
       <div className="absolute bottom-0 right-1/4 h-[300px] w-[600px] rounded-full bg-amber-400/5 blur-3xl dark:bg-amber-500/3" />

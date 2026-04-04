@@ -247,10 +247,10 @@
     },
     "gasFeeNotice": "This action costs {{amount}} Knowledge Tokens",
     "gasFeeFirstTime": "Each exercise attempt costs 2 KT. This is gas — the same mechanism you just studied. Your balance has been updated.",
-    "gasFeeStandard": "\u22122 KT gas",
-    "gasFeeLowBalance": "\u22122 KT gas \u00b7 Your balance is running low. Complete a mission to top up.",
-    "gasFeeZeroBalance": "\u22122 KT gas \u00b7 Your balance is at 0. You can still continue this mission, but you'll need to complete it before starting a new one.",
-    "gasFeeNegativeBalance": "\u22122 KT gas \u00b7 Your balance is below 0. Complete this mission to earn tokens and clear your debt before starting anything new."
+    "gasFeeStandard": "−2 KT gas",
+    "gasFeeLowBalance": "−2 KT gas · Your balance is running low. Complete a mission to top up.",
+    "gasFeeZeroBalance": "−2 KT gas · Your balance is at 0. You can still continue this mission, but you'll need to complete it before starting a new one.",
+    "gasFeeNegativeBalance": "−2 KT gas · Your balance is below 0. Complete this mission to earn tokens and clear your debt before starting anything new."
   },
   "gamification": {
     "achievements": {
@@ -599,7 +599,16 @@
       "getStarted": "Get Started",
       "signIn": "Sign In",
       "privacyPolicy": "Privacy Policy",
-      "termsOfService": "Terms of Service"
+      "termsOfService": "Terms of Service",
+      "featureLearnTitle": "تعلّم",
+      "featureLearnDesc": "مهام قصيرة تشرح مفاهيم البلوكتشين بتشبيهات من الحياة الواقعية.",
+      "featurePracticeTitle": "تدرّب",
+      "featurePracticeDesc": "تمارين تفاعلية لمحاكاة المنطق على السلسلة والتحقق منه.",
+      "featureEarnTitle": "اكسب",
+      "featureEarnDesc": "اجمع التوكنات، افتح الإنجازات، واحصل على شهادتك على السلسلة.",
+      "statMissions": "مهام",
+      "statExerciseTypes": "أنواع التمارين",
+      "statFree": "مجاني"
     },
     "notFound": {
       "body": "The page you're looking for doesn't exist.",
@@ -692,5 +701,13 @@
       "s10Title": "10. Changes to Terms",
       "s10Body": "We may update these Terms of Service from time to time. We will notify registered users of significant changes via email or platform notification. Continued use of the platform after changes constitutes acceptance of the updated terms."
     }
+  },
+  "footer": {
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الاستخدام"
+  },
+  "theme": {
+    "switchToDark": "التبديل إلى الوضع الداكن",
+    "switchToLight": "التبديل إلى الوضع الفاتح"
   }
 }
