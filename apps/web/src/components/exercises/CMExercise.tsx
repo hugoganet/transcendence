@@ -65,7 +65,7 @@ export function CMExercise({
   return (
     <div className="space-y-6">
       <div className="rounded-lg bg-[var(--color-background)] p-4">
-        <p className="text-sm text-[var(--color-text)]">{content.instruction}</p>
+        <p className="text-sm text-[var(--color-text)] sm:text-base">{content.instruction}</p>
       </div>
 
       {/* Matched pairs display */}
@@ -112,7 +112,7 @@ export function CMExercise({
                   key={pair.id}
                   type="button"
                   onClick={() => handleTermClick(pair.id)}
-                  className={`w-full rounded-lg border p-3 text-left text-sm text-[var(--color-text)] transition-colors ${
+                  className={`w-full rounded-lg border p-3 text-left text-sm text-[var(--color-text)] sm:text-base transition-colors ${
                     selectedTerm === pair.id
                       ? "border-primary bg-primary/5 ring-2 ring-primary/20"
                       : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"
@@ -131,7 +131,7 @@ export function CMExercise({
                   key={def.id}
                   type="button"
                   onClick={() => handleDefClick(def.id)}
-                  className={`w-full rounded-lg border p-3 text-left text-sm text-[var(--color-text)] transition-colors ${
+                  className={`w-full rounded-lg border p-3 text-left text-sm text-[var(--color-text)] sm:text-base transition-colors ${
                     selectedTerm
                       ? "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-primary/40"
                       : "cursor-default border-[var(--color-border)] bg-[var(--color-surface)]"

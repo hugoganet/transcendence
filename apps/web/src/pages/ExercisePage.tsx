@@ -90,7 +90,7 @@ export function ExercisePage() {
   // Mission already completed — show completion view or redirect message
   if (completionData) {
     return (
-      <div className="mx-auto max-w-2xl space-y-6">
+      <div className="mx-auto max-w-4xl space-y-6">
         <MissionComplete data={completionData} />
       </div>
     );
@@ -109,7 +109,7 @@ export function ExercisePage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6">
       <Link
         to={`/missions/${mission.id}`}
         className="inline-flex items-center gap-1 text-sm text-[var(--color-text-muted)] hover:text-primary"

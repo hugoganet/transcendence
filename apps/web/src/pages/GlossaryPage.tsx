@@ -60,7 +60,7 @@ export function GlossaryPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6">
       <h1 className="text-2xl font-bold text-[var(--color-text)] font-heading">
         {t("pages.glossary.title")}
       </h1>

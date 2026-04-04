@@ -135,7 +135,7 @@ export function CertificatePage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6 py-8">
+    <div className="mx-auto max-w-4xl space-y-6 py-8">
       <h1 className="text-2xl font-bold text-gray-900 font-heading text-center mb-8">
         {t("pages.certificate.title")}
       </h1>

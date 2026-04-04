@@ -58,7 +58,7 @@ export function ExerciseResultView({ result }: ExerciseResultProps) {
           {result.feedback.map((item) => (
             <div
               key={item.itemId}
-              className={`rounded-lg border p-3 text-sm ${
+              className={`rounded-lg border p-3 text-sm sm:text-base ${
                 item.correct
                   ? "border-green-200 dark:border-green-900/40 bg-green-50 dark:bg-green-900/20"
                   : "border-red-200 dark:border-red-900/40 bg-red-50 dark:bg-red-900/20"

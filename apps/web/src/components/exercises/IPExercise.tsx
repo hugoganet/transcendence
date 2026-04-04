@@ -89,7 +89,7 @@ export function IPExercise({
   return (
     <div className="space-y-6">
       <div className="rounded-lg bg-[var(--color-background)] p-4">
-        <p className="text-sm text-[var(--color-text)]">{content.instruction}</p>
+        <p className="text-sm text-[var(--color-text)] sm:text-base">{content.instruction}</p>
       </div>
 
       {content.zones && content.zones.length > 0 && (

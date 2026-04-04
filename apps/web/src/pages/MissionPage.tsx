@@ -104,7 +104,7 @@ export function MissionPage() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6">
+    <div className="mx-auto max-w-4xl space-y-6">
       <Link
         to="/curriculum"
         className="inline-flex items-center gap-1 text-sm text-[var(--color-text-muted)] hover:text-primary"
@@ -129,13 +129,13 @@ export function MissionPage() {
             {mission.title}
           </h1>
 
-          <p className="text-sm text-[var(--color-text-muted)]">{mission.description}</p>
+          <p className="text-sm text-[var(--color-text-muted)] sm:text-base">{mission.description}</p>
 
           <div className="rounded-lg bg-blue-50 dark:bg-blue-900/20 px-4 py-3">
-            <p className="text-sm font-medium text-blue-800 dark:text-blue-300">
+            <p className="text-sm font-medium text-blue-800 sm:text-base dark:text-blue-300">
               {t("labels.learningObjective")}
             </p>
-            <p className="mt-1 text-sm text-blue-700 dark:text-blue-300">
+            <p className="mt-1 text-sm text-blue-700 sm:text-base dark:text-blue-300">
               {mission.learningObjective}
             </p>
           </div>

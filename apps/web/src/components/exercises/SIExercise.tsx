@@ -29,7 +29,7 @@ export function SIExercise({
   return (
     <div className="space-y-6">
       <div className="rounded-lg bg-[var(--color-background)] p-4">
-        <p className="text-sm leading-relaxed text-[var(--color-text)]">
+        <p className="text-sm leading-relaxed text-[var(--color-text)] sm:text-base">
           {content.scenario}
         </p>
       </div>
@@ -44,7 +44,7 @@ export function SIExercise({
             key={option.id}
             type="button"
             onClick={() => setSelected(option.id)}
-            className={`w-full rounded-lg border p-4 text-left text-sm text-[var(--color-text)] transition-colors ${
+            className={`w-full rounded-lg border p-4 text-left text-sm text-[var(--color-text)] sm:text-base transition-colors ${
               selected === option.id
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
                 : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"

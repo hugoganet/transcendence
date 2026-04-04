@@ -57,7 +57,7 @@ export function STExercise({
   return (
     <div className="space-y-6">
       <div className="rounded-lg bg-[var(--color-background)] p-4">
-        <p className="text-sm text-[var(--color-text)]">{content.instruction}</p>
+        <p className="text-sm text-[var(--color-text)] sm:text-base">{content.instruction}</p>
       </div>
 
       {/* Step progress */}
@@ -93,7 +93,7 @@ export function STExercise({
             key={option.id}
             type="button"
             onClick={() => handleSelect(option.id)}
-            className={`w-full rounded-lg border p-4 text-left text-sm text-[var(--color-text)] transition-colors ${
+            className={`w-full rounded-lg border p-4 text-left text-sm text-[var(--color-text)] sm:text-base transition-colors ${
               currentAnswer === option.id
                 ? "border-primary bg-primary/5 ring-2 ring-primary/20"
                 : "border-[var(--color-border)] bg-[var(--color-surface)] hover:border-[var(--color-primary)]"
