@@ -28,6 +28,10 @@ export function ProfilePage() {
     document.title = `${t("labels.profile")} — Unblock.chain`;
   }, []);
 
+  useEffect(() => {
+    setEthereumWallet(user?.ethereumWallet ?? "");
+  }, [user?.ethereumWallet]);
+
   const handleSave = async (e: FormEvent) => {
     e.preventDefault();
     setErrors({});

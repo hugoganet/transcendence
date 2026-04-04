@@ -71,8 +71,8 @@ export function ChatBox({ userId, onClose }: Props) {
 
   /* Portal to body: AppLayout's main uses transform (animate-fade-in-up), which breaks viewport-fixed for descendants. */
   return createPortal(
-    <div className="fixed bottom-5 right-5 z-[100] box-border flex h-[50vh] w-[30vw] min-w-72 max-h-[calc(100vh-2.5rem)] max-w-[calc(100vw-2.5rem)] flex-col rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800">
-      <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-3 py-2 dark:border-warm-700">
+    <div className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom,0px))] left-[max(0.75rem,env(safe-area-inset-left,0px))] right-[max(0.75rem,env(safe-area-inset-right,0px))] z-[100] box-border flex h-[min(50dvh,calc(100dvh-1.5rem))] max-h-[calc(100dvh-1.5rem)] min-h-0 w-auto flex-col rounded-lg border border-gray-200 bg-white shadow-lg dark:border-warm-700 dark:bg-warm-800 sm:bottom-5 sm:left-auto sm:right-5 sm:h-[min(50dvh,calc(100vh-2.5rem))] sm:max-h-[calc(100vh-2.5rem)] sm:w-[min(50vw,36rem)] sm:max-w-[calc(100vw-2.5rem)]">
+      <div className="flex shrink-0 items-center justify-between border-b border-gray-100 px-2 py-2 sm:px-3 dark:border-warm-700">
         <strong className="text-sm font-semibold text-gray-900 dark:text-warm-50">{t("chat.title")}</strong>
         <button
           type="button"
@@ -85,7 +85,7 @@ export function ChatBox({ userId, onClose }: Props) {
 
       <div
         ref={scrollAreaRef}
-        className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overscroll-contain p-3"
+        className="flex min-h-0 flex-1 flex-col gap-2 overflow-y-auto overscroll-contain p-2 sm:p-3"
       >
         {messages.map((m) => {
           const isMine = m.senderId === user?.id;
@@ -95,7 +95,7 @@ export function ChatBox({ userId, onClose }: Props) {
               className={`flex min-w-0 ${isMine ? "justify-end" : "justify-start"}`}
             >
               <span
-                className="inline-block max-w-[min(85%,32rem)] min-w-0 break-words rounded-lg border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm leading-snug text-gray-900 [overflow-wrap:anywhere] dark:border-warm-700 dark:bg-warm-700 dark:text-warm-50"
+                className="inline-block max-w-[min(92%,28rem)] min-w-0 break-words rounded-lg border border-gray-200 bg-gray-50 px-2 py-1.5 text-sm leading-snug text-gray-900 [overflow-wrap:anywhere] dark:border-warm-700 dark:bg-warm-700 dark:text-warm-50 sm:max-w-[min(85%,32rem)]"
               >
                 {m.content}
               </span>
@@ -104,18 +104,18 @@ export function ChatBox({ userId, onClose }: Props) {
         })}
       </div>
 
-      <div className="flex shrink-0 gap-2 border-t border-gray-100 px-3 py-2 dark:border-warm-700">
+      <div className="flex min-h-0 shrink-0 gap-1.5 border-t border-gray-100 px-2 py-2 sm:gap-2 sm:px-3 dark:border-warm-700">
         <input
           maxLength={2000}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSend()}
-          className="flex-1 rounded border border-gray-200 bg-white px-2 py-1 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary dark:border-warm-700 dark:bg-warm-800 dark:text-warm-50"
+          className="min-w-0 flex-1 rounded border border-gray-200 bg-white px-2 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-1 focus:ring-primary dark:border-warm-700 dark:bg-warm-800 dark:text-warm-50"
         />
         <button
           type="button"
           onClick={handleSend}
-          className="rounded bg-primary px-3 py-1 text-sm font-medium text-white hover:bg-primary/90"
+          className="shrink-0 rounded bg-primary px-2 py-1.5 text-xs font-medium text-white hover:bg-primary/90 sm:px-3 sm:text-sm"
         >
           {t("chat.send")}
         </button>
