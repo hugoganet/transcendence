@@ -192,7 +192,7 @@ export function AppLayout() {
       </header>
 
       {/* Main content */}
-      <main className="mx-auto max-w-5xl flex-1 px-4 py-6 animate-fade-in-up">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 animate-fade-in-up">
         <Outlet />
       </main>
 
