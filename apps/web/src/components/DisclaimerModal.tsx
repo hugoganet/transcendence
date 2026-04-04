@@ -21,13 +21,13 @@ export function DisclaimerModal({ text, onAccept }: DisclaimerModalProps) {
   const [accepted, setAccepted] = useState(false);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 px-4 py-8">
       <div className="w-full max-w-md rounded-xl bg-white dark:bg-warm-800 p-6 shadow-xl">
         <h2 className="mb-4 text-lg font-bold text-gray-900 dark:text-warm-50 font-heading">
           {t("disclaimer.gateTitle")}
         </h2>
 
-        <div className="mb-4 max-h-60 overflow-y-auto rounded-lg bg-gray-50 dark:bg-warm-900 px-4 py-3">
+        <div className="mb-4 max-h-[50vh] overflow-y-auto rounded-lg bg-gray-50 dark:bg-warm-900 px-4 py-3">
           <p className="text-sm text-gray-700 dark:text-warm-200 leading-relaxed">{text}</p>
         </div>
 
