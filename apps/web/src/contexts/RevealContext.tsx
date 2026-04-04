@@ -18,7 +18,6 @@ const defaultReveals: RevealStatus = {
   tokensRevealed: false,
   walletRevealed: false,
   gasRevealed: false,
-  dashboardRevealed: false,
 };
 
 interface RevealContextValue extends RevealStatus {

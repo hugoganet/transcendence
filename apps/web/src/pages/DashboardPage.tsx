@@ -25,7 +25,7 @@ import { LoadingSpinner } from "../components/ui/LoadingSpinner.js";
 
 export function DashboardPage() {
   const { t } = useTranslation();
-  const { dashboardRevealed } = useReveals();
+  const { walletRevealed } = useReveals();
   const [balance, setBalance] = useState<TokenBalance | null>(null);
   const [transactions, setTransactions] = useState<TokenTransaction[]>([]);
   const [streak, setStreak] = useState<StreakStatus | null>(null);
@@ -66,7 +66,7 @@ export function DashboardPage() {
     };
   }, [t]);
 
-  if (!dashboardRevealed) {
+  if (!walletRevealed) {
     return <Navigate to="/home" replace />;
   }
 

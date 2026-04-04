@@ -37,7 +37,6 @@ declare global {
       revealTokens: boolean;
       revealWallet: boolean;
       revealGas: boolean;
-      revealDashboard: boolean;
       notificationPreferences: unknown;
       createdAt: Date;
       updatedAt: Date;

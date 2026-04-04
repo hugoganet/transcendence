@@ -94,7 +94,6 @@ const mockUser = {
   revealTokens: false,
   revealWallet: false,
   revealGas: false,
-  revealDashboard: false,
   notificationPreferences: JSON.parse('{"streakReminder":true,"reengagement":true,"moduleComplete":true,"tokenThreshold":true,"streakMilestone":true}'),
 };
 
@@ -246,7 +245,6 @@ describe("Users Routes", () => {
         tokensRevealed: true,
         walletRevealed: false,
         gasRevealed: false,
-        dashboardRevealed: false,
       });
 
       const app = createTestApp(true);
@@ -257,7 +255,6 @@ describe("Users Routes", () => {
         tokensRevealed: true,
         walletRevealed: false,
         gasRevealed: false,
-        dashboardRevealed: false,
       });
       expect(mockGetReveals).toHaveBeenCalledWith("user-1");
     });

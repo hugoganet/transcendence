@@ -165,7 +165,6 @@ describe("getPublicProfile", () => {
     expect(profileKeys).not.toContain("revealTokens");
     expect(profileKeys).not.toContain("revealWallet");
     expect(profileKeys).not.toContain("revealGas");
-    expect(profileKeys).not.toContain("revealDashboard");
   });
 
   it("user with zero progress returns xp=0, currentStreak=0, achievements=[], completionPercentage=0", async () => {
