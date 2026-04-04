@@ -217,7 +217,6 @@ describe("revealStatusSchema", () => {
       tokensRevealed: false,
       walletRevealed: false,
       gasRevealed: false,
-      dashboardRevealed: false,
     };
     expect(revealStatusSchema.parse(data)).toEqual(data);
   });
@@ -227,7 +226,6 @@ describe("revealStatusSchema", () => {
       tokensRevealed: true,
       walletRevealed: true,
       gasRevealed: true,
-      dashboardRevealed: true,
     };
     expect(revealStatusSchema.parse(data)).toEqual(data);
   });
@@ -237,7 +235,6 @@ describe("revealStatusSchema", () => {
       tokensRevealed: true,
       walletRevealed: false,
       gasRevealed: true,
-      dashboardRevealed: false,
     };
     expect(revealStatusSchema.parse(data)).toEqual(data);
   });
@@ -253,7 +250,6 @@ describe("revealStatusSchema", () => {
         tokensRevealed: "true",
         walletRevealed: false,
         gasRevealed: false,
-        dashboardRevealed: false,
       }),
     ).toThrow();
   });
@@ -263,7 +259,6 @@ describe("revealStatusSchema", () => {
       tokensRevealed: false,
       walletRevealed: false,
       gasRevealed: false,
-      dashboardRevealed: false,
       extraField: true,
     };
     // Zod strips extra fields by default, so parse succeeds

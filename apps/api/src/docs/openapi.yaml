@@ -216,8 +216,6 @@ components:
           type: boolean
         gasRevealed:
           type: boolean
-        dashboardRevealed:
-          type: boolean
 
     PublicProfile:
       type: object
@@ -352,7 +350,7 @@ components:
           properties:
             mechanic:
               type: string
-              enum: [tokensRevealed, walletRevealed, gasRevealed, dashboardRevealed]
+              enum: [tokensRevealed, walletRevealed, gasRevealed]
             description:
               type: string
 

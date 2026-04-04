@@ -401,11 +401,6 @@
       "headline": "Gas fees: now it's personal.",
       "body": "From this point on, every exercise attempt costs 2 KT. That's gas — the same mechanism that powers every real blockchain transaction. Complete missions to keep your balance topped up.",
       "ctaLabel": "I understand"
-    },
-    "dashboardRevealed": {
-      "headline": "Your dashboard is ready.",
-      "body": "Track your streak, your token balance, your rank on the leaderboard, and every achievement you've unlocked — all in one place.",
-      "ctaLabel": "Explore dashboard"
     }
   },
   "disclaimer": {
