@@ -7,8 +7,6 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { BookOpen, Code2, Coins, ChevronDown } from "lucide-react";
 import { Button } from "../components/ui/Button.js";
-import { ThemeToggle } from "../components/ThemeToggle.js";
-import { LanguageSwitcher } from "../components/LanguageSwitcher.js";
 import { AnimatedCounter } from "../components/AnimatedCounter.js";
 import { useScrollReveal } from "../hooks/useScrollReveal.js";
 
@@ -77,12 +75,6 @@ export function Landing() {
           }}
         />
       ))}
-
-      {/* Top bar */}
-      <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
-        <ThemeToggle />
-        <LanguageSwitcher variant="pill" />
-      </div>
 
       {/* Hero section */}
       <section className="flex min-h-screen flex-col items-center justify-center px-4">
