@@ -1,4 +1,4 @@
-# Transcendence
+#  Transcendence
 
 A **gamified blockchain learning platform** — think Duolingo, but for blockchain technology.
 
